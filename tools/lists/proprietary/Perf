@@ -1,0 +1,5 @@
+vendor/bin/energy-awareness
+vendor/bin/msm_irqbalance
+vendor/etc/powerhint.xml
+vendor/lib/libperfgluelayer.so
+vendor/lib64/libperfgluelayer.so

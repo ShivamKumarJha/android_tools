@@ -1,0 +1,1 @@
+    <!-- Shutdown if the battery temperature exceeds (this value * 0.1) Celsius. -->

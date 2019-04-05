@@ -1,0 +1,9 @@
+    <!-- Dhcp range (min, max) to use for tethering purposes -->
+    <!-- USB is  192.168.42.1 and 255.255.255.0
+         Wifi is 192.168.43.1 and 255.255.255.0
+         BT is limited to max default of 5 connections. 192.168.44.1 to 192.168.48.1
+         with 255.255.255.0
+         P2P is 192.168.49.1 and 255.255.255.0
+         Wigig is 192.168.50.1 and 255.255.255.0
+         Wigig P2P is 192.168.51.1 and 255.255.255.0
+    -->
