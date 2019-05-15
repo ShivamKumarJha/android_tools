@@ -28,9 +28,6 @@ fi
 # array variable storing potential partitions to be extracted
 declare -a arr=("system" "vendor" "xrom")
 
-# tgz?
-IS_TGZ=n
-
 clean_up()
 {
 	echo -e "${bold}${cyan}Unmounting images & performing cleanup.${nocol}"
@@ -58,7 +55,7 @@ extract_subcomponent()
 	if [ -e working/$ZIPDIR.img ]; then
 		echo -e "${bold}${cyan}Mounting working/${ZIPDIR}.img${nocol}"
 		mkdir -p working/$ZIPDIR
-		if [ "$IS_TGZ" = "y" ]; then
+		if [ "$IS_FASTBOOT" = "y" ]; then
 			simg2img working/$ZIPDIR.img working/$ZIPDIR.ext4.img > /dev/null 2>&1
 			echo $user_password | sudo -S mount -t ext4 -o loop working/$ZIPDIR.ext4.img working/$ZIPDIR/ > /dev/null 2>&1
 		else
@@ -192,12 +189,17 @@ else
 	if [ -e $PROJECT_DIR/input/*.zip ]; then
 		for file in $PROJECT_DIR/input/*.zip; do
 			unzip ${file} -d $PROJECT_DIR/working
+			if ! [ $(find $PROJECT_DIR/working/ -name 'META-INF' | wc -l) -gt 0 ]; then
+				IS_FASTBOOT=y
+			else
+				IS_FASTBOOT=n
+			fi
 			core
 		done
 	fi
 	if [ -e $PROJECT_DIR/input/*.tgz ]; then
 		for file in $PROJECT_DIR/input/*.tgz; do
-			IS_TGZ=y
+			IS_FASTBOOT=y
 			tar -zxvf ${file} -C $PROJECT_DIR/working
 			for i in "${arr[@]}" "boot" "modem"; do
 				find working/ -name "$i.img" -exec mv {} $PROJECT_DIR/working/$i.img \;
