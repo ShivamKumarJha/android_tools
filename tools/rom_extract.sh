@@ -157,13 +157,12 @@ else
 fi
 
 # boot.img operations
-find working/ -name 'boot.img' -exec mv {} dumps/$DEVICE/boot.img \;
-if [ -e dumps/$DEVICE/boot.img ]; then
-	./tools/mkbootimg_tools/mkboot dumps/$DEVICE/boot.img dumps/$DEVICE/boot > /dev/null 2>&1
-	mv dumps/$DEVICE/boot/kernel dumps/$DEVICE/Image.gz-dtb
+find working/ -name 'boot.img' -exec mv {} working/bootdevice.img \;
+if [ -e working/bootdevice.img ]; then
+	./tools/mkbootimg_tools/mkboot working/bootdevice.img dumps/$DEVICE/boot > /dev/null 2>&1
+	mv dumps/$DEVICE/boot/kernel dumps/$DEVICE/boot/Image.gz-dtb
 	echo -e "${bold}${cyan}boot_info: $(ls dumps/$DEVICE/boot/img_info)${nocol}"
-	echo -e "${bold}${cyan}Prebuilt kernel: $(ls dumps/$DEVICE/Image.gz-dtb)${nocol}"
-	rm -rf dumps/$DEVICE/boot.img
+	echo -e "${bold}${cyan}Prebuilt kernel: $(ls dumps/$DEVICE/boot/Image.gz-dtb)${nocol}"
 fi
 
 # Store trustzone version in board-info.txt
