@@ -22,6 +22,13 @@ else
 	user_password=$1
 fi
 
+# Create repo?
+if [ -z "$2" ]; then
+	read -p "Create repo (y/n): " create_repo
+else
+	create_repo=$2
+fi
+
 # Dependecies check
 . $PROJECT_DIR/tools/dependencies.sh "$user_password" > /dev/null 2>&1
 
@@ -38,6 +45,42 @@ clean_up()
 		fi
 	done
 	rm -rf working/*
+}
+
+repo_push()
+{
+	cd dumps/$DEVICE/
+	# Set variables
+	BRAND_TEMP=$( cat system/build.prop | grep "ro.product.brand=" | sed "s|ro.product.brand=||g" )
+	BRAND=${BRAND_TEMP,,}
+	if [ "$BRAND" = "vivo" ]; then
+		DEVICE=$( cat system/build.prop | grep "ro.vivo.product.release.name=" | sed "s|ro.vivo.product.release.name=||g" )
+	else
+		DEVICE=$( cat system/build.prop | grep "ro.product.device=" | sed "s|ro.product.device=||g" | sed "s|ASUS_||g" )
+	fi
+	if [ -z "$DEVICE" ]; then
+		DEVICE=$( cat system/build.prop | grep "ro.build.product=" | sed "s|ro.build.product=||g" | sed "s|ASUS_||g" )
+	fi
+	DESCRIPTION=$( cat system/build.prop | grep "ro.build.description=" | sed "s|ro.build.description=||g" )
+	FINGERPRINT=$( cat system/build.prop | grep "ro.build.fingerprint=" | sed "s|ro.build.fingerprint=||g" )
+	VERSION=$( cat system/build.prop | grep "ro.build.version.release=" | sed "s|ro.build.version.release=||g" | head -c 1)
+	COMMIT_MSG=$(echo "$DEVICE: $FINGERPRINT")
+	REPO=$(echo dump_$BRAND\_$DEVICE)
+	REPO_DESC=$(echo "$DEVICE-dump")
+	BRANCH=$(echo $DESCRIPTION | tr ' ' '-')
+	# Create repository in GitHub
+	curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name":"'${REPO}'","description":"'${REPO_DESC}'","private": true,"has_issues": false,"has_projects": false,"has_wiki": false}'
+	# Add files & push
+	if [ ! -d .git ]; then
+		git init .
+	fi
+	git checkout --orphan $BRANCH
+	find -size +97M -printf '%P\n' > .gitignore
+	git add --all
+	git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "$COMMIT_MSG"
+	git remote add origin https://github.com/ShivamKumarJha/"$REPO".git
+	git push https://"$GIT_TOKEN"@github.com/ShivamKumarJha/"$REPO".git $BRANCH
+	cd $PROJECT_DIR
 }
 
 extract_subcomponent()
@@ -173,6 +216,11 @@ if [ $? -eq 0 ]; then
 	echo -e "${bold}${cyan}Extract time: $(($duration / 60)) minutes and $(($duration % 60)) seconds.${nocol}"
 else
 	echo -e "${bold}${red}Extract failed.${nocol}"
+fi
+
+# Create repo
+if [ "$create_repo" = "y" ]; then
+	repo_push
 fi
 }
 

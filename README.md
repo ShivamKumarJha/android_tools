@@ -26,7 +26,7 @@ Usage:
 4. **rom_extract.sh**: A script to extract ROM zip. Supports A only, A/B & fastboot images.  
 Usage:  
 Place ROM(s) to `input/` folder & run script.  
-`./tools/rom_extract.sh` OR `./tools/rom_extract.sh <user password>`  
+`./tools/rom_extract.sh` OR `./tools/rom_extract.sh <user password> <push repo (y/n)>`  
 
 5. **rootdir.sh**: A script to prepare rootdir from a ROM dump along with Makefile.  
 Usage:  
