@@ -51,19 +51,6 @@ repo_push()
 {
 	cd dumps/$DEVICE/
 	# Set variables
-	BRAND_TEMP=$( cat system/build.prop | grep "ro.product.brand=" | sed "s|ro.product.brand=||g" )
-	BRAND=${BRAND_TEMP,,}
-	if [ "$BRAND" = "vivo" ]; then
-		DEVICE=$( cat system/build.prop | grep "ro.vivo.product.release.name=" | sed "s|ro.vivo.product.release.name=||g" )
-	else
-		DEVICE=$( cat system/build.prop | grep "ro.product.device=" | sed "s|ro.product.device=||g" | sed "s|ASUS_||g" )
-	fi
-	if [ -z "$DEVICE" ]; then
-		DEVICE=$( cat system/build.prop | grep "ro.build.product=" | sed "s|ro.build.product=||g" | sed "s|ASUS_||g" )
-	fi
-	DESCRIPTION=$( cat system/build.prop | grep "ro.build.description=" | sed "s|ro.build.description=||g" )
-	FINGERPRINT=$( cat system/build.prop | grep "ro.build.fingerprint=" | sed "s|ro.build.fingerprint=||g" )
-	VERSION=$( cat system/build.prop | grep "ro.build.version.release=" | sed "s|ro.build.version.release=||g" | head -c 1)
 	COMMIT_MSG=$(echo "$DEVICE: $FINGERPRINT")
 	REPO=$(echo dump_$BRAND\_$DEVICE)
 	REPO_DESC=$(echo "$DEVICE-dump")
@@ -108,6 +95,7 @@ repo_push()
 		. $PROJECT_DIR/tools/telegram.sh "$TG_API" "@android_dumps" "$PROJECT_DIR/working/tg.html" "HTML" "$PROJECT_DIR/working/telegram.php" > /dev/null 2>&1
 	fi
 	cd $PROJECT_DIR
+	rm -rf $PROJECT_DIR/working/*
 }
 
 extract_subcomponent()
@@ -158,22 +146,28 @@ do
 	fi
 done
 
-# set device name
+# set variables
 if [ -e working/system/system/build.prop ]; then
-	DEVICE=$( cat working/system/system/build*.prop | grep "ro.product.device=" | sed "s|ro.product.device=||g" )
-	if [ -z "$DEVICE" ]; then
-		DEVICE=$( cat working/system/system/build*.prop | grep "ro.build.product=" | sed "s|ro.build.product=||g" )
-	fi
+	SYSTEM_PATH="system/system"
 elif [ -e working/system/build.prop ]; then
-	DEVICE=$( cat working/system/build*.prop | grep "ro.product.device=" | sed "s|ro.product.device=||g" )
-	if [ -z "$DEVICE" ]; then
-		DEVICE=$( cat working/system/build*.prop | grep "ro.build.product=" | sed "s|ro.build.product=||g" )
-	fi
+	SYSTEM_PATH="system"
 fi
-
+BRAND_TEMP=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.product.brand=" | sed "s|ro.product.brand=||g" )
+BRAND=${BRAND_TEMP,,}
+if [ "$BRAND" = "vivo" ]; then
+	DEVICE=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.vivo.product.release.name=" | sed "s|ro.vivo.product.release.name=||g" )
+else
+	DEVICE=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.product.device=" | sed "s|ro.product.device=||g" | sed "s|ASUS_||g" )
+fi
+if [ -z "$DEVICE" ]; then
+	DEVICE=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.build.product=" | sed "s|ro.build.product=||g" | sed "s|ASUS_||g" )
+fi
 if [ -z "$DEVICE" ]; then
 	DEVICE=target
 fi
+DESCRIPTION=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.build.description=" | sed "s|ro.build.description=||g" )
+FINGERPRINT=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.build.fingerprint=" | sed "s|ro.build.fingerprint=||g" )
+VERSION=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.build.version.release=" | sed "s|ro.build.version.release=||g" | head -c 1)
 
 # Copy to device folder
 if [ ! -d dumps/$DEVICE ]; then
@@ -203,16 +197,12 @@ fi
 
 # Copy to dumps
 echo -e "${bold}${cyan}Copying to dumps/${DEVICE}${nocol}"
-if [ -e working/system/system/build.prop ]; then
-	cp -a working/system/system/ dumps/$DEVICE > /dev/null 2>&1
-else
-	cp -a working/system/ dumps/$DEVICE > /dev/null 2>&1
-fi
+cp -a working/system/ dumps/$DEVICE > /dev/null 2>&1
 
 if [ -e working/vendor.img ]; then
-	rm -rf dumps/$DEVICE/system/vendor
+	rm -rf dumps/$DEVICE/$SYSTEM_PATH/vendor
 	cp -a working/vendor/ dumps/$DEVICE/ > /dev/null 2>&1
-	ln -s $PROJECT_DIR/dumps/$DEVICE/vendor $PROJECT_DIR/dumps/$DEVICE/system/vendor
+	ln -s $PROJECT_DIR/dumps/$DEVICE/vendor $PROJECT_DIR/dumps/$DEVICE/$SYSTEM_PATH/vendor
 fi
 
 # modem
@@ -232,7 +222,7 @@ for imgdir in xrom modem; do
 done
 
 # List ROM
-find dumps/$DEVICE/system/ -type f -printf '%P\n' | sort > dumps/$DEVICE/all_files.txt
+find dumps/$DEVICE/ -type f -printf '%P\n' | sort > dumps/$DEVICE/all_files.txt
 
 # Cleanup
 clean_up
