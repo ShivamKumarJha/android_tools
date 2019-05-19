@@ -211,7 +211,8 @@ fi
 
 if [ -e working/vendor.img ]; then
 	rm -rf dumps/$DEVICE/system/vendor
-	cp -a working/vendor/ dumps/$DEVICE/system > /dev/null 2>&1
+	cp -a working/vendor/ dumps/$DEVICE/ > /dev/null 2>&1
+	ln -s $PROJECT_DIR/dumps/$DEVICE/vendor $PROJECT_DIR/dumps/$DEVICE/system/vendor
 fi
 
 # modem
