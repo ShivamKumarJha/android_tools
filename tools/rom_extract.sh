@@ -33,7 +33,7 @@ fi
 . $PROJECT_DIR/tools/dependencies.sh "$user_password" > /dev/null 2>&1
 
 # array variable storing potential partitions to be extracted
-declare -a arr=("system" "vendor" "xrom")
+declare -a arr=("system" "vendor" "xrom" "cust" "odm" "oem")
 
 clean_up()
 {
@@ -195,16 +195,6 @@ else
 	echo -e "${bold}${cyan}tz not found!${nocol}"
 fi
 
-# Copy to dumps
-echo -e "${bold}${cyan}Copying to dumps/${DEVICE}${nocol}"
-cp -a working/system/ dumps/$DEVICE > /dev/null 2>&1
-
-if [ -e working/vendor.img ]; then
-	rm -rf dumps/$DEVICE/$SYSTEM_PATH/vendor
-	cp -a working/vendor/ dumps/$DEVICE/ > /dev/null 2>&1
-	ln -s $PROJECT_DIR/dumps/$DEVICE/vendor $PROJECT_DIR/dumps/$DEVICE/$SYSTEM_PATH/vendor
-fi
-
 # modem
 find working/ -name 'NON-HLOS.bin' -exec mv {} working/modem.img \;
 if [ -e working/modem.img ]; then
@@ -214,12 +204,19 @@ if [ -e working/modem.img ]; then
 	echo $user_password | sudo -S chmod -R 777 working/modem > /dev/null 2>&1
 fi
 
-for imgdir in xrom modem; do
+# Copy to dumps
+for imgdir in "${arr[@]}" "modem"; do
 	if [ -e working/$imgdir.img ]; then
 		echo -e "${bold}${cyan}Copying ${imgdir} to dumps/${DEVICE}/${nocol}"
 		cp -a working/$imgdir/ dumps/$DEVICE/ > /dev/null 2>&1
 	fi
 done
+
+# Fix /vendor symlink in /system.
+if [ -e working/vendor.img ]; then
+	rm -rf dumps/$DEVICE/$SYSTEM_PATH/vendor
+	ln -s $PROJECT_DIR/dumps/$DEVICE/vendor $PROJECT_DIR/dumps/$DEVICE/$SYSTEM_PATH/vendor
+fi
 
 # List ROM
 find dumps/$DEVICE/ -type f -printf '%P\n' | sort > dumps/$DEVICE/all_files.txt
