@@ -113,7 +113,7 @@ extract_subcomponent()
 	if [ -e working/$ZIPDIR.img ]; then
 		echo -e "${bold}${cyan}Mounting working/${ZIPDIR}.img${nocol}"
 		mkdir -p working/$ZIPDIR
-		if [ "$IS_FASTBOOT" = "y" ]; then
+		if [ "$IS_FASTBOOT" = "y" ] && [ "$ZIPDIR" != "modem" ]; then
 			simg2img working/$ZIPDIR.img working/$ZIPDIR.ext4.img > /dev/null 2>&1
 			echo $user_password | sudo -S mount -t ext4 -o loop working/$ZIPDIR.ext4.img working/$ZIPDIR/ > /dev/null 2>&1
 		elif [ "$ZIPDIR" = "modem" ]; then
@@ -125,10 +125,8 @@ extract_subcomponent()
 		echo $user_password | sudo -S chmod -R 777 working/$ZIPDIR/ > /dev/null 2>&1
 	fi
 
-	if [ -z "$(ls -A working/$ZIPDIR/)" ] || [ ! -e working/$ZIPDIR.img ] ; then
-		echo -e "${bold}${red}Error! Extracting sub-components failed.${nocol}"
-		clean_up
-		exit
+	if [ -z "$(ls -A working/$ZIPDIR/)" ]; then
+		echo -e "${bold}${red}Error! Extracting $ZIPDIR failed.${nocol}"
 	fi
 }
 
@@ -139,10 +137,8 @@ if [ -e working/payload.bin ]; then
 	./tools/extract_android_ota_payload/extract_android_ota_payload.py working/payload.bin working/
 fi
 
-# modem
-find working/ -name 'NON-HLOS.bin' -exec mv {} working/modem.img \;
-
 # Extraction
+find working/ -name 'NON-HLOS.bin' -exec mv {} working/modem.img \;
 for i in "${arr[@]}"
 do
 	if [ -e working/$i.img ] || [ -e working/$i.new.dat ] || [ -e working/$i.new.dat.br ] ; then
