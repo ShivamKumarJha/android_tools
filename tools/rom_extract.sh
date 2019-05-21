@@ -33,12 +33,12 @@ fi
 . $PROJECT_DIR/tools/dependencies.sh "$user_password" > /dev/null 2>&1
 
 # array variable storing potential partitions to be extracted
-declare -a arr=("system" "vendor" "xrom" "cust" "odm" "oem")
+declare -a arr=("system" "vendor" "xrom" "cust" "odm" "oem" "modem")
 
 clean_up()
 {
 	echo -e "${bold}${cyan}Unmounting images & performing cleanup.${nocol}"
-	for i in "${arr[@]}" "modem"
+	for i in "${arr[@]}"
 	do
 		if [ -d working/$i/ ]; then
 			echo $user_password | sudo -S umount -l working/$i/
@@ -116,6 +116,8 @@ extract_subcomponent()
 		if [ "$IS_FASTBOOT" = "y" ]; then
 			simg2img working/$ZIPDIR.img working/$ZIPDIR.ext4.img > /dev/null 2>&1
 			echo $user_password | sudo -S mount -t ext4 -o loop working/$ZIPDIR.ext4.img working/$ZIPDIR/ > /dev/null 2>&1
+		elif [ "$ZIPDIR" = "modem" ]; then
+			echo $user_password | sudo -S mount -t vfat -o loop working/$ZIPDIR.img working/$ZIPDIR/ > /dev/null 2>&1
 		else
 			echo $user_password | sudo -S mount -t ext4 -o loop working/$ZIPDIR.img working/$ZIPDIR/ > /dev/null 2>&1
 		fi
@@ -136,6 +138,9 @@ core()
 if [ -e working/payload.bin ]; then
 	./tools/extract_android_ota_payload/extract_android_ota_payload.py working/payload.bin working/
 fi
+
+# modem
+find working/ -name 'NON-HLOS.bin' -exec mv {} working/modem.img \;
 
 # Extraction
 for i in "${arr[@]}"
@@ -195,17 +200,8 @@ else
 	echo -e "${bold}${cyan}tz not found!${nocol}"
 fi
 
-# modem
-find working/ -name 'NON-HLOS.bin' -exec mv {} working/modem.img \;
-if [ -e working/modem.img ]; then
-	mkdir -p working/modem
-	echo $user_password | sudo -S mount -t vfat -o loop working/modem.img working/modem > /dev/null 2>&1
-	echo $user_password | sudo -S chown -R $USER:$USER working/modem > /dev/null 2>&1
-	echo $user_password | sudo -S chmod -R 777 working/modem > /dev/null 2>&1
-fi
-
 # Copy to dumps
-for imgdir in "${arr[@]}" "modem"; do
+for imgdir in "${arr[@]}"; do
 	if [ -e working/$imgdir.img ]; then
 		echo -e "${bold}${cyan}Copying ${imgdir} to dumps/${DEVICE}/${nocol}"
 		cp -a working/$imgdir/ dumps/$DEVICE/ > /dev/null 2>&1
@@ -263,7 +259,7 @@ else
 		for file in $PROJECT_DIR/input/*.tgz; do
 			IS_FASTBOOT=y
 			tar -zxvf ${file} -C $PROJECT_DIR/working
-			for i in "${arr[@]}" "boot" "modem"; do
+			for i in "${arr[@]}" "boot"; do
 				find working/ -name "$i.img" -exec mv {} $PROJECT_DIR/working/$i.img \;
 			done
 			core
