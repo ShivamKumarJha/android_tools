@@ -30,7 +30,7 @@ rm -rf $PROJECT_DIR/working/*
 cp -a $PROJECT_DIR/tools/lists/proprietary/ $PROJECT_DIR/working/
 
 # ADSP modules
-find $1 -type f -printf '%P\n' | sort | grep "vendor/lib/rfsa/adsp/" | grep -v "scve" | sort -u >> $PROJECT_DIR/working/proprietary/ADSP-Modules
+find $1 -type f -printf '%P\n' | sort | grep -iE "vendor/lib/rfsa/adsp/|vendor/dsp/" | grep -v "scve" | sort -u >> $PROJECT_DIR/working/proprietary/ADSP-Modules
 
 # Alarm
 find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "alarm" | sort -u >> $PROJECT_DIR/working/proprietary/Alarm
@@ -50,10 +50,11 @@ find $1 -type f -printf '%P\n' | sort | grep -iE "vendor/etc/acdbdata/" | sort -
 # Camera blobs
 find $1 -type f -printf '%P\n' | sort | grep -iE "vendor/lib/libactuator|vendor/lib64/libactuator" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-actuators
 find $1 -type f -printf '%P\n' | sort | grep -iE "vendor/lib/libarcsoft|vendor/lib64/libarcsoft" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-arcsoft
+find $1 -type f -printf '%P\n' | sort | grep "vendor/bin/" | grep -iE "camera" | grep -v "android.hardware.camera.provider@" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-bin
 find $1 -type f -printf '%P\n' | sort | grep -iE "vendor/lib/libchromatix|vendor/lib64/libchromatix" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-chromatix
-find $1 -type f -printf '%P\n' | sort | grep -iE "vendor/etc/camera/|vendor/etc/qvr/|vendor/camera3rd/" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-configs
+find $1 -type f -printf '%P\n' | sort | grep -iE "vendor/etc/camera|vendor/etc/qvr/|vendor/camera3rd/|vendor/camera_sound" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-configs
 find $1 -type f -printf '%P\n' | sort | grep "vendor/firmware/cpp_firmware" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-firmware
-find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "libremosaic|lib/camera/|lib64/camera/|libcamx|libcamera|mibokeh" | grep -v "vendor/lib/rfsa/adsp/" | sort -u >> $PROJECT_DIR/working/proprietary/Camera
+find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "libremosaic|lib/camera/|lib64/camera/|libcamx|libcamera|mibokeh|lib_camera|libgcam|libdualcam|libmakeup|libtriplecam" | grep -v "vendor/lib/rfsa/adsp/" | sort -u >> $PROJECT_DIR/working/proprietary/Camera
 find $1 -type f -printf '%P\n' | sort | grep -iE "vendor/lib/libois|vendor/lib64/libois" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-ois
 find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "scve" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-scve
 find $1 -type f -printf '%P\n' | sort | grep -iE "vendor/lib/libmmcamera|vendor/lib64/libmmcamera" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-sensors
@@ -76,8 +77,14 @@ find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "etc/dsi_|vide
 # Display calibration
 find $1 -type f -printf '%P\n' | sort | grep -iE "vendor/etc/qdcm_calib" | sort -u >> $PROJECT_DIR/working/proprietary/Display-calibration
 
+# Dolby
+find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "dolby" | sort -u >> $PROJECT_DIR/working/proprietary/Dolby
+
 # DPM
 find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "dpm.api@" | sort -u >> $PROJECT_DIR/working/proprietary/DPM
+
+# DTS
+find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "etc/dts/|libdts|libomx-dts" | sort -u >> $PROJECT_DIR/working/proprietary/DTS
 
 # ESE-Powermanager
 find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "esepowermanager" | sort -u >> $PROJECT_DIR/working/proprietary/ESE-Powermanager
@@ -97,6 +104,9 @@ find $1 -type f -printf '%P\n' | sort | grep -iE "vendor/firmware/|etc/firmware/
 # Gatekeeper
 find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "gatekeeper" | sort -u >> $PROJECT_DIR/working/proprietary/Gatekeeper
 
+# Google
+find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "google" | grep -v "etc/media_codecs_google" | sort -u >> $PROJECT_DIR/working/proprietary/Google
+
 # GPS
 find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "libizat_|liblowi_|libloc_|liblocation|qti.gnss|gnss@" | sort -u >> $PROJECT_DIR/working/proprietary/GPS
 
@@ -115,11 +125,20 @@ find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "keystore" | s
 # Listen
 find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "liblisten" | sort -u >> $PROJECT_DIR/working/proprietary/Listen
 
+# Meizu
+find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "meizu" | sort -u >> $PROJECT_DIR/working/proprietary/Meizu
+
 # Media
 find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "vendor.qti.hardware.vpp|libvpp" | sort -u >> $PROJECT_DIR/working/proprietary/Media
 
+# NFC
+find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "lib/libpn5" | sort -u >> $PROJECT_DIR/working/proprietary/NFC
+
 # Neural-networks
 find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "neuralnetworks|libhexagon" | sort -u >> $PROJECT_DIR/working/proprietary/Neural-networks
+
+# OnePlus
+find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "oneplus" | sort -u >> $PROJECT_DIR/working/proprietary/OnePlus
 
 # qdutils_disp
 find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "qdutils_disp" | sort -u >> $PROJECT_DIR/working/proprietary/Qdutils
@@ -140,7 +159,7 @@ find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "radio/|vendor
 find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "imsrtpservice|imscmservice|uceservice|vendor.qti.ims.|lib-ims|radio.ims@|vendor.qti.hardware.radio.ims" | sort -u >> $PROJECT_DIR/working/proprietary/Radio-IMS
 
 # Sensors
-find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "libsensor|lib64/sensors|lib/sensors" | sort -u >> $PROJECT_DIR/working/proprietary/Sensors
+find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "libsensor|lib64/sensors|lib/sensors|libAsusRGBSensorHAL|lib/hw/sensors|lib64/hw/sensors" | sort -u >> $PROJECT_DIR/working/proprietary/Sensors
 
 # Sensor calibrate
 find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "sensorscalibrate" | sort -u >> $PROJECT_DIR/working/proprietary/Sensor-calibrate
@@ -167,7 +186,7 @@ find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "etc/hbtp/|lib
 find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "tui_comm" | sort -u >> $PROJECT_DIR/working/proprietary/TUI
 
 # Vivo
-find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "vivo.hardware|hardware.vivoem|vivo_|libc.vivo|libvivo|_vivo" | sort -u >> $PROJECT_DIR/working/proprietary/Vivo
+find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "vivo" | sort -u >> $PROJECT_DIR/working/proprietary/Vivo
 
 # Voice
 find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "voiceprint@|vendor/etc/qvop/|libqvop" | sort -u >> $PROJECT_DIR/working/proprietary/Voice
@@ -179,7 +198,8 @@ find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "wifidisplayha
 find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "vendor.qti.hardware.wifi|vendor.qti.hardware.wigig" | sort -u >> $PROJECT_DIR/working/proprietary/WiFi
 
 # Xiaomi
-find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "xiaomi" | grep -v "camera" | grep -v "vendor/etc/nuance/" | sort -u >> $PROJECT_DIR/working/proprietary/Xiaomi
+find $1 -type f -printf '%P\n' | sort | grep -iE "vendor.xiaomi.hardware.misys" | sort -u >> $PROJECT_DIR/working/proprietary/Xiaomi
+find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "xiaomi|mlipay|mtd|tidad|libmt|libtida" | grep -v "camera" | grep -v "vendor/etc/nuance/" | sort -u >> $PROJECT_DIR/working/proprietary/Xiaomi
 
 # Delete empty lists
 find $PROJECT_DIR/working/proprietary -size  0 -print0 | xargs -0 rm --
@@ -214,7 +234,7 @@ do
 	# Missing
 	if ! grep -q "$line" $PROJECT_DIR/working/staging.txt; then
 		if ! grep -q "$line" $PROJECT_DIR/tools/lists/ignore.txt; then
-			if echo "$line" | grep -iE "app/"; then
+			if echo "$line" | grep -iE "apk|jar"; then
 				echo "-$line" >> $PROJECT_DIR/working/misc.txt
 			else
 				echo "$line" >> $PROJECT_DIR/working/misc.txt

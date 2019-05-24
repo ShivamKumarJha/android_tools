@@ -8,6 +8,7 @@ vendor/lib/libSecureUILib.so
 vendor/lib/libStDrvInt.so
 vendor/lib/libcpion.so
 vendor/lib/libcppf.so
+vendor/lib/libcrypto_vendor.so
 vendor/lib/libdrmfs.so
 vendor/lib/libdrmtime.so
 vendor/lib/liboemcrypto.so

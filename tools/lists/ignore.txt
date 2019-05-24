@@ -20,8 +20,8 @@ vendor/etc/NOTICE.xml.gz
 vendor/etc/a2dp_audio_policy_configuration.xml
 vendor/etc/apdr.conf
 vendor/etc/appboosts.xml
-vendor/etc/audio/audio_policy_configuration.xml
-vendor/etc/default_volume_tables.xml
+vendor/etc/audio/audio_policy_configuration
+vendor/etc/default_volume_tables
 vendor/etc/flp.conf
 vendor/etc/fs_config_dirs
 vendor/etc/fs_config_files

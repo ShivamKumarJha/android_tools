@@ -66,9 +66,6 @@ call_methods () {
 
 	# proprietary-files.txt
 	proprietary
-	if [ "$BRAND" != "xiaomi" ]; then
-		sed -i "s|# Xiaomi||g" "$DT_DIR"/proprietary-files.txt
-	fi
 
 	# proprietary-files-system.txt
 	echo -e "${bold}${cyan}Preparing proprietary-files-system.txt${nocol}"
