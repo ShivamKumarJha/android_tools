@@ -130,7 +130,11 @@ get_configs () {
 	do
 		if [ -z "$ROM_PATH" ] || [ ! -d "$ROM_PATH" ]; then
 			echo -e "${bold}${cyan}Downloading $config_file${nocol}"
-			wget "$device_line/$config_file" > /dev/null 2>&1
+			if [ -z "$GIT_TOKEN" ]; then
+				wget "$device_line/$config_file" > /dev/null 2>&1
+			else
+				curl -O -J -u username:$GIT_TOKEN "$device_line/$config_file" > /dev/null 2>&1
+			fi
 		else
 			cp -a "$ROM_PATH/$config_file" .
 		fi
