@@ -360,9 +360,9 @@ common_overlay () {
 }
 
 # Init git if not already
-if [ ! -d "$PROJECT_DIR"/dummy_dt/ ]; then
+if [ ! -d "$PROJECT_DIR"/dummy_dt/ ] && [ ! -z "$TG_API" ]; then
 	echo -e "${bold}${cyan}Cloning Dummy_DT${nocol}"
-	git clone -q https://github.com/ShivamKumarJha/Dummy_DT.git "$PROJECT_DIR"/dummy_dt
+	git clone -q https://"$GIT_TOKEN"@github.com/ShivamKumarJha/Dummy_DT.git "$PROJECT_DIR"/dummy_dt
 fi
 
 # Create working directory if it does not exist
