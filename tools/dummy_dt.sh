@@ -18,7 +18,7 @@ proprietary () {
 	if [ -z "$ROM_PATH" ] || [ ! -d "$ROM_PATH" ]; then
 		. $PROJECT_DIR/tools/deprecated/proprietary-files.sh "$device_line"/all_files.txt > /dev/null 2>&1
 	else
-		. $PROJECT_DIR/tools/proprietary-files.sh "$ROM_PATH" > /dev/null 2>&1
+		. $PROJECT_DIR/tools/deprecated/proprietary-files.sh "$PROJECT_DIR"/dummy_dt/working/all_files.txt > /dev/null 2>&1
 	fi
 	cp -a $PROJECT_DIR/working/proprietary-files.txt "$DT_DIR"/proprietary-files.txt
 }
