@@ -204,10 +204,10 @@ for imgdir in "${arr[@]}"; do
 	fi
 done
 
-# Fix /vendor symlink in /system.
+# Move /vendor into /system. This is required for dummy_dt.sh script.
 if [ -e working/vendor.img ]; then
 	rm -rf dumps/$DEVICE/$SYSTEM_PATH/vendor
-	ln -s $PROJECT_DIR/dumps/$DEVICE/vendor $PROJECT_DIR/dumps/$DEVICE/$SYSTEM_PATH/vendor
+	mv $PROJECT_DIR/dumps/$DEVICE/vendor $PROJECT_DIR/dumps/$DEVICE/$SYSTEM_PATH/vendor
 fi
 
 # List ROM
