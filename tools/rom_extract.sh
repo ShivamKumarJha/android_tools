@@ -236,31 +236,30 @@ if [ ! -d working ]; then
 fi
 
 # Extract ROM zip to working
-if [ ! -e $PROJECT_DIR/input/*.zip ] && [ ! -e $PROJECT_DIR/input/*.tgz ]; then
-	echo -e "${bold}${red}No zip or tgz file detected in input folder.${nocol}"
+if [ -z "$(ls -A $PROJECT_DIR/input/* | grep -v "place_rom_zip_here.txt")" ]; then
+	echo -e "${bold}${red}No zip or gz file detected in input folder.${nocol}"
 	exit
 else
-	if [ -e $PROJECT_DIR/input/*.zip ]; then
-		for file in $PROJECT_DIR/input/*.zip; do
-			unzip ${file} -d $PROJECT_DIR/working
+	rom_list=`find $PROJECT_DIR/input/ -type f,l -printf '%P\n' | sort | grep -v "place_rom_zip_here.txt"`
+	for file in $rom_list; do
+		ZIP_FORMAT=`echo $file | sed 's|.*\.||'`
+		echo -e "${bold}${cyan}Extracting $file${nocol}"
+		if echo "$ZIP_FORMAT" | grep -iE "zip"; then
+			unzip $PROJECT_DIR/input/${file} -d $PROJECT_DIR/working
 			if ! [ $(find $PROJECT_DIR/working/ -name 'META-INF' | wc -l) -gt 0 ]; then
 				IS_FASTBOOT=y
 			else
 				IS_FASTBOOT=n
 			fi
-			core
-		done
-	fi
-	if [ -e $PROJECT_DIR/input/*.tgz ]; then
-		for file in $PROJECT_DIR/input/*.tgz; do
+		elif echo "$ZIP_FORMAT" | grep -iE "gz"; then
 			IS_FASTBOOT=y
-			tar -zxvf ${file} -C $PROJECT_DIR/working
+			tar -zxvf $PROJECT_DIR/input/${file} -C $PROJECT_DIR/working
 			for i in "${arr[@]}" "boot"; do
 				find working/ -name "$i.img" -exec mv {} $PROJECT_DIR/working/$i.img \;
 			done
-			core
-		done
-	fi
+		fi
+		core
+	done
 fi
 
 exit
