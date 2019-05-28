@@ -20,12 +20,14 @@ https://raw.githubusercontent.com/TadiT7/vivo_pd1838_dump/sm6150-user-9-PKQ1.181
 https://raw.githubusercontent.com/TadiT7/xiaomi_andromeda_dump/andromeda-user-9-PKQ1.190223.001-V10.3.4.0.PEMEUXM-release-keys
 https://raw.githubusercontent.com/TadiT7/xiaomi_beryllium_dump/beryllium-user-9-PKQ1.180729.001-9.4.15-release-keys
 https://raw.githubusercontent.com/TadiT7/xiaomi_cepheus_dump/cepheus-user-9-PKQ1.181121.001-9.5.13-release-keys
+https://raw.githubusercontent.com/TadiT7/xiaomi_davinci_dump/davinci-user-9-PKQ1.190302.001-V10.3.6.0.PFJCNXM-release-keys
 https://raw.githubusercontent.com/TadiT7/xiaomi_dipper_dump/dipper-user-9-PKQ1.180729.001-9.3.1-release-keys
 https://raw.githubusercontent.com/TadiT7/xiaomi_grus_dump/grus-user-9-PKQ1.181121.001-9.4.11-release-keys
 https://raw.githubusercontent.com/TadiT7/xiaomi_nitrogen_dump/nitrogen-user-9-PKQ1.181007.001-9.4.11-release-keys
 https://raw.githubusercontent.com/TadiT7/xiaomi_onc_dump/onc-user-9-PKQ1.181021.001-V10.2.8.0.PFLEUXM-release-keys
 https://raw.githubusercontent.com/TadiT7/xiaomi_platina_dump/platina-user-9-PKQ1.181007.001-9.4.15-release-keys
 https://raw.githubusercontent.com/TadiT7/xiaomi_polaris_dump/polaris-user-9-PKQ1.180729.001-V10.3.1.0.PDGCNXM-release-keys
+https://raw.githubusercontent.com/TadiT7/xiaomi_raphael_dump/raphael-user-9-PKQ1.181121.001-V10.3.6.0.PFKCNXM-release-keys
 https://raw.githubusercontent.com/TadiT7/xiaomi_sagit_dump/sagit-user-9-PKQ1.190118.001-9.4.22-release-keys
 https://raw.githubusercontent.com/TadiT7/xiaomi_sakura_dump/sakura-user-9-PKQ1.180917.001-9.4.11-release-keys
 https://raw.githubusercontent.com/TadiT7/xiaomi_violet_dump/violet-user-9-PKQ1.181203.001-V10.2.7.0.PFHINXM-release-keys
