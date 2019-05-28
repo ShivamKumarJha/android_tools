@@ -192,7 +192,7 @@ done
 find $PROJECT_DIR/working/lists/ -size  0 -print0 | xargs -0 rm --
 
 # Add props from lists
-props_list=`find $PROJECT_DIR/working/lists -type f -printf '%P\n' | sort`
+props_list=`find $PROJECT_DIR/working/lists -type f,l -printf '%P\n' | sort`
 for list in $props_list ;
 do
 	awk 'NF{print $0 " \\"}' $PROJECT_DIR/working/lists/$list >> $PROJECT_DIR/working/temp_prop.mk
