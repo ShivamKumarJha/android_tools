@@ -13,6 +13,15 @@ ROM_PATH="$1"
 # Text format
 source $PROJECT_DIR/tools/colors.sh
 
+dir_check () {
+	cd "$PROJECT_DIR"/dummy_dt/working
+	if [ ! -d "$ROM_PATH" ]; then
+		echo -e "${bold}${red}Supply full dumps path${nocol}"
+		exit
+	fi
+	cd "$PROJECT_DIR"/
+}
+
 proprietary () {
 	echo -e "${bold}${cyan}Preparing proprietary-files.txt${nocol}"
 	if [ -z "$ROM_PATH" ] || [ ! -d "$ROM_PATH" ]; then
@@ -26,6 +35,9 @@ proprietary () {
 common_setup () {
 	clear
 	rm -rf $PROJECT_DIR/dummy_dt/working/*
+	cd $PROJECT_DIR/dummy_dt/
+	git clean -fd && git reset --hard
+	cd $PROJECT_DIR/
 	echo -e "${bold}${cyan}Fetching all_files.txt & build.prop ${nocol}"
 }
 
@@ -357,7 +369,7 @@ common_overlay () {
 }
 
 # Init git if not already
-if [ ! -d "$PROJECT_DIR"/dummy_dt/ ] && [ ! -z "$TG_API" ]; then
+if [ ! -d "$PROJECT_DIR"/dummy_dt/ ] && [ ! -z "$GIT_TOKEN" ]; then
 	echo -e "${bold}${cyan}Cloning Dummy_DT${nocol}"
 	git clone -q https://"$GIT_TOKEN"@github.com/ShivamKumarJha/Dummy_DT.git "$PROJECT_DIR"/dummy_dt
 fi
@@ -365,16 +377,6 @@ fi
 # Create working directory if it does not exist
 if [ ! -d "$PROJECT_DIR"/dummy_dt/working ]; then
 	mkdir -p "$PROJECT_DIR"/dummy_dt/working
-fi
-
-# Make sure dumps path is full
-if [ ! -z "$ROM_PATH" ]; then
-	cd "$PROJECT_DIR"/dummy_dt/working
-	if [ ! -d "$ROM_PATH" ]; then
-		echo -e "${bold}${red}Supply full dumps path${nocol}"
-		exit
-	fi
-	cd "$PROJECT_DIR"/
 fi
 
 # from roms.txt
@@ -399,6 +401,8 @@ else
 # local dumps
 	for var in "$@"
 	do
+		# Make sure dumps path is full
+		dir_check
 		# setup
 		ROM_PATH="$var"
 		common_setup
