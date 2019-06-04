@@ -211,7 +211,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "xiaomi|mlipay|
 find $PROJECT_DIR/working/proprietary -size  0 -print0 | xargs -0 rm --
 
 # Add blobs from lists
-blobs_list=`find $PROJECT_DIR/working/proprietary -type f,l -printf '%P\n' | sort`
+blobs_list=`find $PROJECT_DIR/working/proprietary -type f -printf '%P\n' | sort`
 for list in $blobs_list ;
 do
 	file_lines=`cat $PROJECT_DIR/working/proprietary/$list | sort -u`

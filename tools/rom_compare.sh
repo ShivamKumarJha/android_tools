@@ -33,10 +33,10 @@ if [ ! -d "$1" ] || [ ! -d "$2" ] ; then
 fi
 
 # List source ROM files
-find $1 -type f,l -printf '%P\n' | sort > $PROJECT_DIR/working/1.txt
+find $1 -type f -printf '%P\n' | sort > $PROJECT_DIR/working/1.txt
 
 # List target ROM files
-find $2 -type f,l -printf '%P\n' | sort > $PROJECT_DIR/working/2.txt
+find $2 -type f -printf '%P\n' | sort > $PROJECT_DIR/working/2.txt
 
 file_lines=`cat $PROJECT_DIR/working/1.txt`
 for line in $file_lines ;

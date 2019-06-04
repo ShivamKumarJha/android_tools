@@ -211,7 +211,7 @@ if [ -e working/vendor.img ]; then
 fi
 
 # List ROM
-find dumps/$DEVICE/ -type f,l -printf '%P\n' | sort | grep -v ".git/" > dumps/$DEVICE/all_files.txt
+find dumps/$DEVICE/ -type f -printf '%P\n' | sort | grep -v ".git/" > dumps/$DEVICE/all_files.txt
 
 # Cleanup
 clean_up

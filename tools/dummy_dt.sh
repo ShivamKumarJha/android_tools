@@ -289,7 +289,7 @@ common_overlay () {
 	cd "$PROJECT_DIR"/working/overlays
 	cat "$PROJECT_DIR"/dummy_dt/working/all_files.txt | grep -iE "framework/framework-res.apk|app/CarrierConfig/CarrierConfig.apk|app/Bluetooth/Bluetooth.apk" > "$PROJECT_DIR"/dummy_dt/working/configs.txt
 	get_configs
-	ovlist=`find "$PROJECT_DIR"/working/overlays -maxdepth 1 -type f,l -printf '%P\n' | sort`
+	ovlist=`find "$PROJECT_DIR"/working/overlays -maxdepth 1 -type f -printf '%P\n' | sort`
 	for list in $ovlist ;
 	do
 		echo -e "${bold}${cyan}Extracting $list${nocol}"
@@ -300,7 +300,7 @@ common_overlay () {
 	cp -a "$PROJECT_DIR"/working/overlays/Bluetooth/res/values/bools.xml "$DT_DIR"/overlay/packages/apps/Bluetooth/res/values/bools.xml > /dev/null 2>&1
 	cp -a "$PROJECT_DIR"/working/overlays/CarrierConfig/res/xml/* "$DT_DIR"/overlay/packages/apps/CarrierConfig/res/xml/ > /dev/null 2>&1
 	# Extract overlay configs
-	ovlist=`find "$PROJECT_DIR"/tools/lists/overlays/ -maxdepth 1 -type f,l -printf '%P\n' | sort`
+	ovlist=`find "$PROJECT_DIR"/tools/lists/overlays/ -maxdepth 1 -type f -printf '%P\n' | sort`
 	for list in $ovlist ;
 	do
 		overlay_configs=`cat "$PROJECT_DIR"/tools/lists/overlays/"$list" | sort`
@@ -406,7 +406,7 @@ else
 		# setup
 		ROM_PATH="$var"
 		common_setup
-		find "$ROM_PATH" -type f,l -printf '%P\n' | sort > $PROJECT_DIR/dummy_dt/working/all_files.txt
+		find "$ROM_PATH" -type f -printf '%P\n' | sort > $PROJECT_DIR/dummy_dt/working/all_files.txt
 		cp -a "$ROM_PATH/build.prop" $PROJECT_DIR/dummy_dt/working/system_build.prop
 		cp -a "$ROM_PATH/vendor/build.prop" $PROJECT_DIR/dummy_dt/working/vendor_build.prop
 

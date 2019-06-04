@@ -35,7 +35,7 @@ cp -a "$1"/vendor/etc/init/hw/* $PROJECT_DIR/working/rootdir/etc/
 printf "LOCAL_PATH := \$(call my-dir)" >> $PROJECT_DIR/working/rootdir/Android.mk
 printf "\ninclude \$(CLEAR_VARS)\n" >> $PROJECT_DIR/working/rootdir/Android.mk
 # bins
-rootdir_bins=`find $PROJECT_DIR/working/rootdir/bin/ -type f,l -printf '%P\n' | sort`
+rootdir_bins=`find $PROJECT_DIR/working/rootdir/bin/ -type f -printf '%P\n' | sort`
 for file_bins in $rootdir_bins;
 do
 	printf "\ninclude \$(CLEAR_VARS)" >> $PROJECT_DIR/working/rootdir/Android.mk
@@ -49,7 +49,7 @@ do
 	printf "$file_bins\n" >> $PROJECT_DIR/working/rootdir_temp.mk
 done
 # etc
-rootdir_etc=`find $PROJECT_DIR/working/rootdir/etc/ -type f,l -printf '%P\n' | sort`
+rootdir_etc=`find $PROJECT_DIR/working/rootdir/etc/ -type f -printf '%P\n' | sort`
 for file_etc in $rootdir_etc;
 do
 	printf "\ninclude \$(CLEAR_VARS)" >> $PROJECT_DIR/working/rootdir/Android.mk
