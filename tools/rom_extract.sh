@@ -33,7 +33,7 @@ fi
 . $PROJECT_DIR/tools/dependencies.sh "$user_password" > /dev/null 2>&1
 
 # array variable storing potential partitions to be extracted
-declare -a arr=("system" "vendor" "xrom" "cust" "odm" "oem" "modem")
+declare -a arr=("cust" "modem" "odm" "oem" "system" "vendor" "xrom")
 
 clean_up()
 {

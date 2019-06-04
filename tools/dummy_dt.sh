@@ -136,7 +136,7 @@ git_op () {
 		if [ -z "$TG_API" ]; then
 			echo -e "${bold}${cyan}Telegram API key not found! Skipping Telegram notification.${nocol}"
 		else
-		. $PROJECT_DIR/tools/telegram.sh "$TG_API" "@dummy_dt" "$PROJECT_DIR/dummy_dt/working/tg.html" "HTML" "$PROJECT_DIR/dummy_dt/working/telegram.php" > /dev/null 2>&1
+			. $PROJECT_DIR/tools/telegram.sh "$TG_API" "@dummy_dt" "$PROJECT_DIR/dummy_dt/working/tg.html" "HTML" "$PROJECT_DIR/dummy_dt/working/telegram.php" > /dev/null 2>&1
 		fi
 	fi
 }
