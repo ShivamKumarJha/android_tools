@@ -36,7 +36,8 @@ common_setup () {
 	clear
 	rm -rf $PROJECT_DIR/dummy_dt/working/*
 	cd $PROJECT_DIR/dummy_dt/
-	git clean -fd && git reset --hard
+	git clean -fd > /dev/null 2>&1
+	git reset --hard > /dev/null 2>&1
 	cd $PROJECT_DIR/
 	echo -e "${bold}${cyan}Fetching all_files.txt & build.prop ${nocol}"
 }
@@ -64,6 +65,10 @@ common_core () {
 	else
 		call_methods
 	fi
+}
+
+clean_up () {
+	rm -rf $PROJECT_DIR/dummy_dt/working/* $PROJECT_DIR/working/*
 }
 
 call_methods () {
@@ -99,6 +104,9 @@ call_methods () {
 
 	# Git commit
 	git_op
+
+	# clean
+	clean_up
 }
 
 git_op () {
@@ -404,8 +412,18 @@ else
 		# Make sure dumps path is full
 		dir_check
 		# setup
-		ROM_PATH="$var"
+		ROM_PATH="$PROJECT_DIR/dummy_dt/working/ROM"
 		common_setup
+		echo -e "${bold}${cyan}Copying ROM to working${nocol}"
+		mkdir -p $PROJECT_DIR/dummy_dt/working/ROM/
+		if [ -e "$var"/system/system/build.prop ]; then
+			SYSTEM_PATH="system/system"
+		elif [ -e "$var"/system/build.prop ]; then
+			SYSTEM_PATH="system"
+		fi
+		cp -a "$var"/"$SYSTEM_PATH"/* $PROJECT_DIR/dummy_dt/working/ROM/
+		rm -rf $PROJECT_DIR/dummy_dt/working/ROM/vendor
+		cp -a "$var"/vendor/ $PROJECT_DIR/dummy_dt/working/ROM/
 		find "$ROM_PATH" -type f -printf '%P\n' | sort > $PROJECT_DIR/dummy_dt/working/all_files.txt
 		cp -a "$ROM_PATH/build.prop" $PROJECT_DIR/dummy_dt/working/system_build.prop
 		cp -a "$ROM_PATH/vendor/build.prop" $PROJECT_DIR/dummy_dt/working/vendor_build.prop
