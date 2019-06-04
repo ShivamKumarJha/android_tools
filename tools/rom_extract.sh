@@ -53,7 +53,11 @@ repo_push()
 	# Set variables
 	COMMIT_MSG=$(echo "$DEVICE: $FINGERPRINT")
 	REPO=$(echo dump_$BRAND\_$DEVICE)
-	REPO_DESC=$(echo "$DEVICE-dump")
+	if [ -z "$MODEL" ]; then
+		REPO_DESC=$(echo "$DEVICE-dump")
+	else
+		REPO_DESC=$(echo "$MODEL-dump" | tr ' ' '-')
+	fi
 	BRANCH=$(echo $DESCRIPTION | tr ' ' '-')
 	# Create repository in GitHub
 	echo -e "${bold}${cyan}Creating https://github.com/ShivamKumarJha/$REPO${nocol}"
@@ -168,6 +172,7 @@ if [ -z "$DEVICE" ]; then
 fi
 DESCRIPTION=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.build.description=" | sed "s|ro.build.description=||g" )
 FINGERPRINT=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.build.fingerprint=" | sed "s|ro.build.fingerprint=||g" )
+MODEL=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.product.model=" | sed "s|ro.product.model=||g" )
 VERSION=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.build.version.release=" | sed "s|ro.build.version.release=||g" | head -c 1)
 
 # Copy to device folder
