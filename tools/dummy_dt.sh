@@ -15,7 +15,7 @@ source $PROJECT_DIR/tools/colors.sh
 
 dir_check () {
 	cd "$PROJECT_DIR"/dummy_dt/working
-	if [ ! -d "$ROM_PATH" ]; then
+	if [ ! -d "$var" ]; then
 		echo -e "${bold}${red}Supply full dumps path${nocol}"
 		exit
 	fi
