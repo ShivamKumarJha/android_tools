@@ -15,7 +15,7 @@ source $PROJECT_DIR/tools/colors.sh
 
 dir_check () {
 	cd "$PROJECT_DIR"/dummy_dt/working
-	if [ ! -d "$var" ]; then
+	if [ ! -d "$ROM_PATH" ]; then
 		echo -e "${bold}${red}Supply full dumps path${nocol}"
 		exit
 	fi
@@ -409,23 +409,17 @@ else
 # local dumps
 	for var in "$@"
 	do
-		# Make sure dumps path is full
-		dir_check
 		# setup
-		ROM_PATH="$PROJECT_DIR/dummy_dt/working/ROM"
-		common_setup
-		echo -e "${bold}${cyan}Copying ROM to working${nocol}"
-		mkdir -p $PROJECT_DIR/dummy_dt/working/ROM/
-		if [ -e "$var"/system/system/build.prop ]; then
+		ROM_PATH="$var"
+		if [ -e "$ROM_PATH"/system/system/build.prop ]; then
 			SYSTEM_PATH="system/system"
-		elif [ -e "$var"/system/build.prop ]; then
+		elif [ -e "$ROM_PATH"/system/build.prop ]; then
 			SYSTEM_PATH="system"
 		fi
-		cp -a "$var"/"$SYSTEM_PATH"/* $PROJECT_DIR/dummy_dt/working/ROM/
-		rm -rf $PROJECT_DIR/dummy_dt/working/ROM/vendor
-		cp -a "$var"/vendor/ $PROJECT_DIR/dummy_dt/working/ROM/
+		dir_check
+		common_setup
 		find "$ROM_PATH" -type f -printf '%P\n' | sort > $PROJECT_DIR/dummy_dt/working/all_files.txt
-		cp -a "$ROM_PATH/build.prop" $PROJECT_DIR/dummy_dt/working/system_build.prop
+		cp -a "$ROM_PATH/$SYSTEM_PATH/build.prop" $PROJECT_DIR/dummy_dt/working/system_build.prop
 		cp -a "$ROM_PATH/vendor/build.prop" $PROJECT_DIR/dummy_dt/working/vendor_build.prop
 
 		# operation
