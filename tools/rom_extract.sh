@@ -68,7 +68,7 @@ repo_push()
 		git init . > /dev/null 2>&1
 	fi
 	echo -e "${bold}${cyan}Creating branch $BRANCH${nocol}"
-	git checkout --orphan $BRANCH > /dev/null 2>&1
+	git checkout -b $BRANCH > /dev/null 2>&1
 	find -size +97M -printf '%P\n' > .gitignore
 	echo -e "${bold}${cyan}Ignoring following files:\n${nocol}$(cat .gitignore)"
 	echo -e "${bold}${cyan}Adding files ...${nocol}"
