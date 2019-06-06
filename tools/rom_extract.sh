@@ -209,12 +209,6 @@ for imgdir in "${arr[@]}"; do
 	fi
 done
 
-# Fix /vendor symlink in /system.
-if [ -e working/vendor.img ]; then
-	rm -rf dumps/$DEVICE/$SYSTEM_PATH/vendor
-	ln -s $PROJECT_DIR/dumps/$DEVICE/vendor $PROJECT_DIR/dumps/$DEVICE/$SYSTEM_PATH/vendor
-fi
-
 # List ROM
 find dumps/$DEVICE/ -type f -printf '%P\n' | sort | grep -v ".git/" > dumps/$DEVICE/all_files.txt
 
