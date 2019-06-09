@@ -200,11 +200,8 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "voiceprint@|ve
 # WFD
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "wifidisplayhal|wfdservice|libwfd|wfdconfig" | sort -u >> $PROJECT_DIR/working/proprietary/WFD
 
-# WiFi
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "vendor.qti.hardware.wifi|vendor.qti.hardware.wigig" | sort -u >> $PROJECT_DIR/working/proprietary/WiFi
-
 # Xiaomi
-cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor.xiaomi.hardware.misys" | sort -u >> $PROJECT_DIR/working/proprietary/Xiaomi
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor.xiaomi.hardware.misys" | grep -v "odex" | grep -v "vdex" | sort -u >> $PROJECT_DIR/working/proprietary/Xiaomi
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "xiaomi|mlipay|mtd|tidad|libmt|libtida" | grep -v "camera" | grep -v "vendor/etc/nuance/" | sort -u >> $PROJECT_DIR/working/proprietary/Xiaomi
 
 # Delete empty lists

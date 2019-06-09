@@ -2,5 +2,4 @@ bin/iwpriv
 vendor/bin/cnss-daemon
 vendor/bin/cnss_diag
 vendor/bin/fstman
-vendor/lib/libqsap_sdk.so
-vendor/lib64/libqsap_sdk.so
+vendor/bin/nv_mac

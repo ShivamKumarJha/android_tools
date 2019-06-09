@@ -194,11 +194,8 @@ find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "voiceprint@|v
 # WFD
 find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "wifidisplayhal|wfdservice|libwfd|wfdconfig" | sort -u >> $PROJECT_DIR/working/proprietary/WFD
 
-# WiFi
-find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "vendor.qti.hardware.wifi|vendor.qti.hardware.wigig" | sort -u >> $PROJECT_DIR/working/proprietary/WiFi
-
 # Xiaomi
-find $1 -type f -printf '%P\n' | sort | grep -iE "vendor.xiaomi.hardware.misys" | sort -u >> $PROJECT_DIR/working/proprietary/Xiaomi
+find $1 -type f -printf '%P\n' | sort | grep -iE "vendor.xiaomi.hardware.misys" | grep -v "odex" | grep -v "vdex" | sort -u >> $PROJECT_DIR/working/proprietary/Xiaomi
 find $1 -type f -printf '%P\n' | sort | grep "vendor/" | grep -iE "xiaomi|mlipay|mtd|tidad|libmt|libtida" | grep -v "camera" | grep -v "vendor/etc/nuance/" | sort -u >> $PROJECT_DIR/working/proprietary/Xiaomi
 
 # Delete empty lists
