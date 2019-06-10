@@ -38,8 +38,7 @@ declare -a arr=("cust" "modem" "odm" "oem" "system" "vendor" "xrom")
 clean_up()
 {
 	echo -e "${bold}${cyan}Unmounting images & performing cleanup.${nocol}"
-	for i in "${arr[@]}"
-	do
+	for i in "${arr[@]}"; do
 		if [ -d working/$i/ ]; then
 			echo $user_password | sudo -S umount -l working/$i/
 		fi
@@ -141,10 +140,14 @@ if [ -e working/payload.bin ]; then
 	./tools/extract_android_ota_payload/extract_android_ota_payload.py working/payload.bin working/
 fi
 
-# Extraction
+# Find modem
 find working/ -name 'NON-HLOS.bin' -exec mv {} working/modem.img \;
-for i in "${arr[@]}"
-do
+if [ ! -e working/modem.img ]; then
+	find working/ -name '*modem*' -exec mv {} working/modem.img \;
+fi
+
+# Extraction
+for i in "${arr[@]}"; do
 	if [ -e working/$i.img ] || [ -e working/$i.new.dat ] || [ -e working/$i.new.dat.br ] ; then
 		ZIPDIR=$i
 		extract_subcomponent
@@ -194,6 +197,9 @@ fi
 
 # Store trustzone version in board-info.txt
 find working/ -name 'tz.*' -exec mv {} working/tz \;
+if [ ! -e working/tz ]; then
+	find working/ -name 'tz_*' -exec mv {} working/tz \;
+fi
 if [ -e working/tz ]; then
 	strings working/tz | grep QC_IMAGE_VERSION_STRING | sed "s|QC_IMAGE_VERSION_STRING|require version-trustzone|g" > dumps/$DEVICE/board-info.txt
 	echo -e "${bold}${cyan}$(cat dumps/${DEVICE}/board-info.txt)${nocol}"
@@ -260,5 +266,3 @@ else
 		core
 	done
 fi
-
-exit
