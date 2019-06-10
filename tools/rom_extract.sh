@@ -12,8 +12,8 @@ SECONDS=0
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 cd $PROJECT_DIR
 
-# Text format
-source $PROJECT_DIR/tools/colors.sh
+# Common stuff
+source $PROJECT_DIR/tools/common_script.sh
 
 # Password
 if [ -z "$1" ]; then
@@ -175,11 +175,6 @@ if [ "$create_repo" = "y" ]; then
 	. "$PROJECT_DIR"/tools/dump_push.sh "$PROJECT_DIR"/dumps/"$DEVICE"
 fi
 }
-
-# Create working directory if it does not exist
-if [ ! -d working ]; then
-	mkdir -p working
-fi
 
 # Extract ROM zip to working
 if [ -z "$(ls -A $PROJECT_DIR/input/* | grep -v "place_rom_zip_here.txt")" ]; then

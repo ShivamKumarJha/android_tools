@@ -9,22 +9,14 @@
 # Store project path
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
-# Text format
-source $PROJECT_DIR/tools/colors.sh
+# Common stuff
+source $PROJECT_DIR/tools/common_script.sh
 
 # Arguement checking
 if [ -z "$1" ] || [ ! -d "$1" ]; then
 	echo -e "${bold}${red}Supply ROM directory as arguement!${nocol}"
 	exit 1
 fi
-
-# Create $PROJECT_DIR/working directory if it does not exist
-if [ ! -d $PROJECT_DIR/working ]; then
-	mkdir -p $PROJECT_DIR/working
-fi
-
-# clean old
-rm -rf $PROJECT_DIR/working/*
 
 # Copy lists to $PROJECT_DIR/working
 cp -a $PROJECT_DIR/tools/lists/proprietary/ $PROJECT_DIR/working/

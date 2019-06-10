@@ -9,16 +9,8 @@
 # Store project path
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
-# Text format
-source $PROJECT_DIR/tools/colors.sh
-
-# Create $PROJECT_DIR/working directory if it does not exist
-if [ ! -d $PROJECT_DIR/working ]; then
-	mkdir -p $PROJECT_DIR/working
-fi
-
-# clean up
-rm -rf $PROJECT_DIR/working/*
+# Common stuff
+source $PROJECT_DIR/tools/common_script.sh
 
 # Exit if no arguements
 if [ -z "$1" ] ; then

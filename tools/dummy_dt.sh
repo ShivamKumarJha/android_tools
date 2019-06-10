@@ -10,8 +10,8 @@
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 ROM_PATH="$1"
 
-# Text format
-source $PROJECT_DIR/tools/colors.sh
+# Common stuff
+source $PROJECT_DIR/tools/common_script.sh
 
 dir_check () {
 	cd "$PROJECT_DIR"/dummy_dt/working
