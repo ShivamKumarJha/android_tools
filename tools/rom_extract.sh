@@ -46,61 +46,6 @@ clean_up()
 	rm -rf working/*
 }
 
-repo_push()
-{
-	cd dumps/$DEVICE/
-	# Set variables
-	COMMIT_MSG=$(echo "$DEVICE: $FINGERPRINT")
-	REPO=$(echo dump_$BRAND\_$DEVICE)
-	if [ -z "$MODEL" ]; then
-		REPO_DESC=$(echo "$DEVICE-dump")
-	else
-		REPO_DESC=$(echo "$MODEL-dump" | tr ' ' '-')
-	fi
-	BRANCH=$(echo $DESCRIPTION | tr ' ' '-')
-	# Create repository in GitHub
-	echo -e "${bold}${cyan}Creating https://github.com/ShivamKumarJha/$REPO${nocol}"
-	curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name":"'${REPO}'","description":"'${REPO_DESC}'","private": true,"has_issues": false,"has_projects": false,"has_wiki": false}' > /dev/null 2>&1
-	# Add files & push
-	if [ ! -d .git ]; then
-		echo -e "${bold}${cyan}Initializing git.${nocol}"
-		git init . > /dev/null 2>&1
-	fi
-	echo -e "${bold}${cyan}Creating branch $BRANCH${nocol}"
-	git checkout -b $BRANCH > /dev/null 2>&1
-	find -size +97M -printf '%P\n' > .gitignore
-	echo -e "${bold}${cyan}Ignoring following files:\n${nocol}$(cat .gitignore)"
-	echo -e "${bold}${cyan}Adding files ...${nocol}"
-	git add --all > /dev/null 2>&1
-	echo -e "${bold}${cyan}Commiting $COMMIT_MSG${nocol}"
-	git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
-	git remote add origin https://github.com/ShivamKumarJha/"$REPO".git > /dev/null 2>&1
-	if [ -z "$GIT_TOKEN" ]; then
-		echo -e "${bold}${cyan}GitHub token not found! Skipping GitHub push.${nocol}"
-	else
-		git push https://"$GIT_TOKEN"@github.com/ShivamKumarJha/"$REPO".git $BRANCH
-	fi
-	COMMIT_HEAD=$(git log --format=format:%H | head -n 1)
-	COMMIT_LINK=$(echo "https://github.com/ShivamKumarJha/$REPO/commit/$COMMIT_HEAD")
-
-	# Telegram
-	echo -e "${bold}${cyan}Sending telegram notification${nocol}"
-	printf "<b>Brand: $BRAND</b>" > $PROJECT_DIR/working/tg.html
-	printf "\n<b>Device: $DEVICE</b>" >> $PROJECT_DIR/working/tg.html
-	printf "\n<b>Version:</b> $VERSION" >> $PROJECT_DIR/working/tg.html
-	printf "\n<b>Fingerprint:</b> $FINGERPRINT" >> $PROJECT_DIR/working/tg.html
-	printf "\n<b>GitHub:</b>" >> $PROJECT_DIR/working/tg.html
-	printf "\n<a href=\"$COMMIT_LINK\">Commit</a>" >> $PROJECT_DIR/working/tg.html
-	printf "\n<a href=\"https://github.com/ShivamKumarJha/$REPO/tree/$BRANCH/\">$DEVICE</a>" >> $PROJECT_DIR/working/tg.html
-	if [ -z "$TG_API" ]; then
-		echo -e "${bold}${cyan}Telegram API key not found! Skipping Telegram notification.${nocol}"
-	else
-		. $PROJECT_DIR/tools/telegram.sh "$TG_API" "@android_dumps" "$PROJECT_DIR/working/tg.html" "HTML" "$PROJECT_DIR/working/telegram.php" > /dev/null 2>&1
-	fi
-	cd $PROJECT_DIR
-	rm -rf $PROJECT_DIR/working/*
-}
-
 extract_subcomponent()
 {
 	if [ -e working/$ZIPDIR.new.dat.br ]; then
@@ -173,10 +118,6 @@ fi
 if [ -z "$DEVICE" ]; then
 	DEVICE=target
 fi
-DESCRIPTION=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.build.description=" | sed "s|ro.build.description=||g" )
-FINGERPRINT=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.build.fingerprint=" | sed "s|ro.build.fingerprint=||g" )
-MODEL=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.product.model=" | sed "s|ro.product.model=||g" )
-VERSION=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.build.version.release=" | sed "s|ro.build.version.release=||g" | head -c 1)
 
 # Copy to device folder
 if [ ! -d dumps/$DEVICE ]; then
@@ -231,7 +172,7 @@ fi
 
 # Create repo
 if [ "$create_repo" = "y" ]; then
-	repo_push
+	. "$PROJECT_DIR"/tools/dump_push.sh "$PROJECT_DIR"/dumps/"$DEVICE"
 fi
 }
 
