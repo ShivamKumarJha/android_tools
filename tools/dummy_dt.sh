@@ -44,17 +44,22 @@ common_setup () {
 
 common_core () {
 	# Variables
-	BRAND_TEMP=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.product.brand=" | sed "s|ro.product.brand=||g" )
+	BRAND_TEMP=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.product.brand=" | sed "s|ro.product.brand=||g" | sort -u | head -n 1 )
 	BRAND=${BRAND_TEMP,,}
 	if [ "$BRAND" = "vivo" ]; then
-		DEVICE=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.vivo.product.release.name=" | sed "s|ro.vivo.product.release.name=||g" )
+		DEVICE=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.vivo.product.release.name=" | sed "s|ro.vivo.product.release.name=||g" | sort -u | head -n 1 )
 	else
-		DEVICE=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.product.device=" | sed "s|ro.product.device=||g" | sed "s|ASUS_||g" )
+		DEVICE=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.product.device=" | sed "s|ro.product.device=||g" | sed "s|ASUS_||g" | sort -u | head -n 1 )
 	fi
 	if [ -z "$DEVICE" ]; then
-		DEVICE=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.build.product=" | sed "s|ro.build.product=||g" | sed "s|ASUS_||g" )
+		DEVICE=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.build.product=" | sed "s|ro.build.product=||g" | sed "s|ASUS_||g" | sort -u | head -n 1 )
 	fi
-	FINGERPRINT=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.build.fingerprint=" | sed "s|ro.build.fingerprint=||g" )
+	FINGERPRINT=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.build.fingerprint=" | sed "s|ro.build.fingerprint=||g" | sort -u | head -n 1 )
+	MODEL=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.product.model=" | sed "s|ro.product.model=||g" )
+	DESC=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.build.description=" | sed "s|ro.build.description=||g" )
+	if [ -z "$FINGERPRINT" ]; then
+		FINGERPRINT="$DESC"
+	fi
 	VERSION=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.build.version.release=" | sed "s|ro.build.version.release=||g" | head -c 1)
 	DT_DIR="$PROJECT_DIR"/dummy_dt/"$BRAND"/"$DEVICE"
 	echo -e "${bold}${cyan}$BRAND : $DEVICE : $VERSION : $FINGERPRINT ${nocol}"
@@ -281,8 +286,6 @@ common_dt () {
 	printf "\nPRODUCT_DEVICE := "$DEVICE"" >> "$DT_DIR"/lineage_"$DEVICE".mk
 	printf "\nPRODUCT_MANUFACTURER := "$BRAND"" >> "$DT_DIR"/lineage_"$DEVICE".mk
 	printf "\nPRODUCT_NAME := lineage_"$DEVICE"\n" >> "$DT_DIR"/lineage_"$DEVICE".mk
-	MODEL=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.product.model=" | sed "s|ro.product.model=||g" )
-	DESC=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.build.description=" | sed "s|ro.build.description=||g" )
 	echo "PRODUCT_MODEL := "$MODEL"" >> "$DT_DIR"/lineage_"$DEVICE".mk
 	printf "\nPRODUCT_GMS_CLIENTID_BASE := android-"$BRAND"" >> "$DT_DIR"/lineage_"$DEVICE".mk
 	printf "\nTARGET_VENDOR := "$BRAND"" >> "$DT_DIR"/lineage_"$DEVICE".mk
@@ -419,7 +422,7 @@ else
 		dir_check
 		common_setup
 		find "$ROM_PATH" -type f -printf '%P\n' | sort > $PROJECT_DIR/dummy_dt/working/all_files.txt
-		cp -a "$ROM_PATH/$SYSTEM_PATH/build.prop" $PROJECT_DIR/dummy_dt/working/system_build.prop
+		find "$ROM_PATH/$SYSTEM_PATH" -name "build*prop" -exec cat {} >> $PROJECT_DIR/dummy_dt/working/system_build.prop \;
 		cp -a "$ROM_PATH/vendor/build.prop" $PROJECT_DIR/dummy_dt/working/vendor_build.prop
 
 		# operation
