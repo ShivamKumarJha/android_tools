@@ -54,9 +54,13 @@ common_core () {
 	if [ -z "$DEVICE" ]; then
 		DEVICE=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.build.product=" | sed "s|ro.build.product=||g" | sed "s|ASUS_||g" | sort -u | head -n 1 )
 	fi
+	if [ "$BRAND" = "oppo" ] || [ "$BRAND" = "realme" ]; then
+		MODEL=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.oppo.market.name=" | sed "s|ro.oppo.market.name=||g" | sort -u | head -n 1 )
+	else
+		MODEL=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.product.model=" | sed "s|ro.product.model=||g" | sort -u | head -n 1 )
+	fi
+	DESC=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.build.description=" | sed "s|ro.build.description=||g" | sort -u | head -n 1 )
 	FINGERPRINT=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.build.fingerprint=" | sed "s|ro.build.fingerprint=||g" | sort -u | head -n 1 )
-	MODEL=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.product.model=" | sed "s|ro.product.model=||g" )
-	DESC=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.build.description=" | sed "s|ro.build.description=||g" )
 	if [ -z "$FINGERPRINT" ]; then
 		FINGERPRINT="$DESC"
 	fi
@@ -132,6 +136,7 @@ git_op () {
 		echo -e "${bold}${cyan}Sending telegram notification${nocol}"
 		printf "<b>Brand: $BRAND</b>" > $PROJECT_DIR/dummy_dt/working/tg.html
 		printf "\n<b>Device: $DEVICE</b>" >> $PROJECT_DIR/dummy_dt/working/tg.html
+		printf "\n<b>Model: $MODEL</b>" >> $PROJECT_DIR/dummy_dt/working/tg.html
 		printf "\n<b>Version:</b> $VERSION" >> $PROJECT_DIR/dummy_dt/working/tg.html
 		printf "\n<b>Fingerprint:</b> $FINGERPRINT" >> $PROJECT_DIR/dummy_dt/working/tg.html
 		printf "\n<b>GitHub:</b>" >> $PROJECT_DIR/dummy_dt/working/tg.html
