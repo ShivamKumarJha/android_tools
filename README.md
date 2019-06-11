@@ -3,7 +3,7 @@
 Collection of my scripts.  
   
 Usage:  
-`chmod +x tools/* tools/deprecated/*`  
+`chmod +x tools/*`  
 `./tools/<script.sh>`
   
 1. **dummy_dt.sh**: A script which prepares a dummy device tree from ROM dump. Can handle dump stored both locally OR in online git repository (as long as all_files.txt exists in its root). See its GitHub [repo](https://github.com/ShivamKumarJha/Dummy_DT/).  
@@ -20,8 +20,8 @@ Usage:
 
 3. **proprietary-files.sh**: A script to prepare proprietary blobs list from ROM.  
 Usage:  
-From online git repo: `./tools/deprecated/proprietary-files.sh <raw file link of all_files.txt>`  
-From local dump: `./tools/proprietary-files.sh <full path to ROM dump>`
+For online git repo: `./tools/proprietary-files.sh <raw file link of all_files.txt>`  
+For local dump: `./tools/proprietary-files.sh <full path to ROM dump>`
 
 4. **rom_compare.sh**: A script to compare source & target ROM. It lists `Added, common, missing & modified` blobs.  
 Usage:  
