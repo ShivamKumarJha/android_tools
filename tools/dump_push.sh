@@ -51,7 +51,11 @@ for var in "$@"; do
 	if [ -z "$FINGERPRINT" ]; then
 		FINGERPRINT=$DESCRIPTION
 	fi
-	MODEL=$( cat "$SYSTEM_PATH"/build*.prop | grep "ro.product.model=" | sed "s|ro.product.model=||g" | sort -u | head -n 1 )
+	if [ "$BRAND" = "oppo" ] || [ "$BRAND" = "realme" ]; then
+		MODEL=$( cat "$SYSTEM_PATH"/build*.prop | grep "ro.oppo.market.name=" | sed "s|ro.oppo.market.name=||g" | sort -u | head -n 1 )
+	else
+		MODEL=$( cat "$SYSTEM_PATH"/build*.prop | grep "ro.product.model=" | sed "s|ro.product.model=||g" | sort -u | head -n 1 )
+	fi
 	VERSION=$( cat "$SYSTEM_PATH"/build*.prop | grep "ro.build.version.release=" | sed "s|ro.build.version.release=||g" | head -c 1 | sort -u | head -n 1 )
 	COMMIT_MSG=$(echo "$DEVICE: $FINGERPRINT" | sort -u | head -n 1 )
 	REPO=$(echo dump_$BRAND\_$DEVICE | sort -u | head -n 1 )
