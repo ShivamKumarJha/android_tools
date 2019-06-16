@@ -39,9 +39,8 @@ sed -n "${TSTART},${TEND}p" $PROJECT_DIR/working/system_working.prop | sort | se
 
 # vendor.prop
 if [ ! -z "$2" ] ; then
-	TSTART=$(grep -nr "# end build properties" $PROJECT_DIR/working/vendor_working.prop | sed "s|:.*||g")
-	echo "###ENDDD" >> $PROJECT_DIR/working/vendor_working.prop
-	TEND=$(grep -nr "###ENDDD" $PROJECT_DIR/working/vendor_working.prop | sed "s|:.*||g")
+	TSTART=$(grep -nr "ADDITIONAL VENDOR BUILD PROPERTIES" $PROJECT_DIR/working/vendor_working.prop | sed "s|:.*||g")
+	TEND=$(wc -l $PROJECT_DIR/working/vendor_working.prop | sed "s| .*||g")
 	sed -n "${TSTART},${TEND}p" $PROJECT_DIR/working/vendor_working.prop | sort | sed "s|#.*||g" | sed '/^[[:space:]]*$/d' > $PROJECT_DIR/working/vendor_new.prop
 fi
 
