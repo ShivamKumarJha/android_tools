@@ -58,9 +58,4 @@ fi
 VERSION=$( cat "$CAT_FILE" | grep "build.version.release=" | sed "s|.*=||g" | head -c 2 | sort -u | head -n 1 )
 
 # Display var's
-echo -e "${bold}${cyan}BRAND: ${BRAND} ${nocol}"
-echo -e "${bold}${cyan}DEVICE: ${DEVICE} ${nocol}"
-echo -e "${bold}${cyan}DESCRIPTION: ${DESCRIPTION} ${nocol}"
-echo -e "${bold}${cyan}FINGERPRINT: ${FINGERPRINT} ${nocol}"
-echo -e "${bold}${cyan}MODEL: ${MODEL} ${nocol}"
-echo -e "${bold}${cyan}VERSION: ${VERSION} ${nocol}"
+printf "${bold}${cyan}BRAND: ${BRAND}\nDEVICE: ${DEVICE}\nDESCRIPTION: ${DESCRIPTION}\nFINGERPRINT: ${FINGERPRINT}\nMODEL: ${MODEL}\nVERSION: ${VERSION}\n${nocol}"
