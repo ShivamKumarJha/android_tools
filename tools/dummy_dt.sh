@@ -249,6 +249,9 @@ common_dt () {
 		printf "\n# HIDL" >> "$DT_DIR"/BoardConfig.mk
 		printf "\nDEVICE_MANIFEST_FILE := \$(DEVICE_PATH)/manifest.xml" >> "$DT_DIR"/BoardConfig.mk
 	fi
+	if [ -e "$DT_DIR"/android.hardware.cas@1.1-service.xml ]; then
+		printf "\nDEVICE_MANIFEST_FILE += \$(DEVICE_PATH)/android.hardware.cas@1.1-service.xml" >> "$DT_DIR"/BoardConfig.mk
+	fi
 	if [ -e "$DT_DIR"/compatibility_matrix.xml ]; then
 		printf "\nDEVICE_MATRIX_FILE := \$(DEVICE_PATH)/compatibility_matrix.xml" >> "$DT_DIR"/BoardConfig.mk
 	fi
