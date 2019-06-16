@@ -45,7 +45,8 @@ if [ -d "$1" ]; then
 	fi
 	if [ "$BRAND" = "oppo" ] || [ "$BRAND" = "realme" ]; then
 		MODEL=$( cat "$1"/"$SYSTEM_PATH"/build*.prop | grep "ro.oppo.market.name=" | sed "s|ro.oppo.market.name=||g" | sort -u | head -n 1 )
-	else
+	fi
+	if [ -z "$MODEL" ]; then
 		MODEL=$( cat "$1"/"$SYSTEM_PATH"/build*.prop | grep "ro.product" | grep "model=" | sed "s|.*=||g" | sort -u | head -n 1 )
 	fi
 	VERSION=$( cat "$1"/"$SYSTEM_PATH"/build*.prop | grep "build.version.release=" | sed "s|.*=||g" | head -c 2 | sort -u | head -n 1 )
@@ -70,7 +71,8 @@ else
 	fi
 	if [ "$BRAND" = "oppo" ] || [ "$BRAND" = "realme" ]; then
 		MODEL=$( cat "$1" | grep "ro.oppo.market.name=" | sed "s|ro.oppo.market.name=||g" | sort -u | head -n 1 )
-	else
+	fi
+	if [ -z "$MODEL" ]; then
 		MODEL=$( cat "$1" | grep "ro.product" | grep "model=" | sed "s|.*=||g" | sort -u | head -n 1 )
 	fi
 	VERSION=$( cat "$1" | grep "build.version.release=" | sed "s|.*=||g" | head -c 2 | sort -u | head -n 1 )
