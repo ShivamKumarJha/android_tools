@@ -11,10 +11,7 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 WORK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../working" >/dev/null && pwd )"
 
 # Text format
-bold=$(tput bold)
-cyan='\033[0;36m'
-nocol='\033[0m'
-red='\033[0;31m'
+source $PROJECT_DIR/tools/colors.sh
 
 # create lists dir if not exits
 if [ ! -d "$WORK_DIR"/mklists/ ]; then
