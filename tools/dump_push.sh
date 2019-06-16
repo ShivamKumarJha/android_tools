@@ -28,35 +28,7 @@ fi
 for var in "$@"; do
 	cd "$var"
 	# Set variables
-	if [ -e system/system/build.prop ]; then
-		SYSTEM_PATH="system/system"
-	elif [ -e system/build.prop ]; then
-		SYSTEM_PATH="system"
-	fi
-	BRAND_TEMP=$( cat "$SYSTEM_PATH"/build*.prop | grep "ro.product.brand=" | sed "s|ro.product.brand=||g" | sort -u | head -n 1 )
-	BRAND=${BRAND_TEMP,,}
-	if [ "$BRAND" = "vivo" ]; then
-		DEVICE=$( cat "$SYSTEM_PATH"/build*.prop | grep "ro.vivo.product.release.name=" | sed "s|ro.vivo.product.release.name=||g" | sort -u | head -n 1 )
-	else
-		DEVICE=$( cat "$SYSTEM_PATH"/build*.prop | grep "ro.product.device=" | sed "s|ro.product.device=||g" | sed "s|ASUS_||g" | sort -u | head -n 1 )
-	fi
-	if [ -z "$DEVICE" ]; then
-		DEVICE=$( cat "$SYSTEM_PATH"/build*.prop | grep "ro.build.product=" | sed "s|ro.build.product=||g" | sed "s|ASUS_||g" | sort -u | head -n 1 )
-	fi
-	if [ -z "$DEVICE" ]; then
-		DEVICE=target
-	fi
-	DESCRIPTION=$( cat "$SYSTEM_PATH"/build*.prop | grep "ro.build.description=" | sed "s|ro.build.description=||g" | sort -u | head -n 1 )
-	FINGERPRINT=$( cat "$SYSTEM_PATH"/build*.prop | grep "ro.build.fingerprint=" | sed "s|ro.build.fingerprint=||g" | sort -u | head -n 1 )
-	if [ -z "$FINGERPRINT" ]; then
-		FINGERPRINT=$DESCRIPTION
-	fi
-	if [ "$BRAND" = "oppo" ] || [ "$BRAND" = "realme" ]; then
-		MODEL=$( cat "$SYSTEM_PATH"/build*.prop | grep "ro.oppo.market.name=" | sed "s|ro.oppo.market.name=||g" | sort -u | head -n 1 )
-	else
-		MODEL=$( cat "$SYSTEM_PATH"/build*.prop | grep "ro.product.model=" | sed "s|ro.product.model=||g" | sort -u | head -n 1 )
-	fi
-	VERSION=$( cat "$SYSTEM_PATH"/build*.prop | grep "ro.build.version.release=" | sed "s|ro.build.version.release=||g" | head -c 1 | sort -u | head -n 1 )
+	source $PROJECT_DIR/tools/rom_vars.sh "$var" > /dev/null 2>&1
 	COMMIT_MSG=$(echo "$DEVICE: $FINGERPRINT" | sort -u | head -n 1 )
 	REPO=$(echo dump_$BRAND\_$DEVICE | sort -u | head -n 1 )
 	if [ -z "$MODEL" ]; then

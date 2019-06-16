@@ -100,24 +100,7 @@ for i in "${arr[@]}"; do
 done
 
 # set variables
-if [ -e working/system/system/build.prop ]; then
-	SYSTEM_PATH="system/system"
-elif [ -e working/system/build.prop ]; then
-	SYSTEM_PATH="system"
-fi
-BRAND_TEMP=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.product.brand=" | sed "s|ro.product.brand=||g" )
-BRAND=${BRAND_TEMP,,}
-if [ "$BRAND" = "vivo" ]; then
-	DEVICE=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.vivo.product.release.name=" | sed "s|ro.vivo.product.release.name=||g" )
-else
-	DEVICE=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.product.device=" | sed "s|ro.product.device=||g" | sed "s|ASUS_||g" )
-fi
-if [ -z "$DEVICE" ]; then
-	DEVICE=$( cat working/"$SYSTEM_PATH"/build*.prop | grep "ro.build.product=" | sed "s|ro.build.product=||g" | sed "s|ASUS_||g" )
-fi
-if [ -z "$DEVICE" ]; then
-	DEVICE=target
-fi
+source $PROJECT_DIR/tools/rom_vars.sh "$PROJECT_DIR/working" > /dev/null 2>&1
 
 # Copy to device folder
 if [ ! -d dumps/$DEVICE ]; then
