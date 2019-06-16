@@ -221,7 +221,7 @@ common_dt () {
 	rm -rf "$DT_DIR"/rootdir-temp/
 	# root
 	cd "$DT_DIR"/
-	cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep "vendor/" | grep -iE "compatibility_matrix.xml|manifest.xml|vendor/etc/vintf/|vendor/ext_xml/compatibility_matrix|vendor/ext_xml/manifest" > $PROJECT_DIR/dummy_dt/working/configs.txt
+	cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep -iE "vendor/compatibility_matrix.xml|vendor/manifest.xml|vendor/etc/vintf/compatibility_matrix|vendor/etc/vintf/manifest|vendor/ext_xml/compatibility_matrix|vendor/ext_xml/manifest" > $PROJECT_DIR/dummy_dt/working/configs.txt
 	get_configs
 
 	# device.mk
@@ -241,7 +241,7 @@ common_dt () {
 	# BoardConfig.mk
 	printf "DEVICE_PATH := device/"$BRAND"/"$DEVICE"" >> "$DT_DIR"/BoardConfig.mk
 	printf "\nBOARD_VENDOR := "$BRAND"\n" >> "$DT_DIR"/BoardConfig.mk
-	if [ $(grep "ro.build.version.release=" $PROJECT_DIR/dummy_dt/working/system_build.prop | sed "s|ro.build.version.release=||g" | head -c 1) -gt 8 ]; then
+	if [ "$VERSION" -gt 8 ]; then
 		printf "\n# Security patch level\n" >> "$DT_DIR"/BoardConfig.mk
 		grep "ro.build.version.security_patch=" $PROJECT_DIR/dummy_dt/working/system_build.prop | sed "s|ro.build.version.security_patch=|VENDOR_SECURITY_PATCH := |g" >> "$DT_DIR"/BoardConfig.mk
 	fi
