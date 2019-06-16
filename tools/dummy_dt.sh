@@ -44,27 +44,7 @@ common_setup () {
 
 common_core () {
 	# Variables
-	BRAND_TEMP=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.product.brand=" | sed "s|ro.product.brand=||g" | sort -u | head -n 1 )
-	BRAND=${BRAND_TEMP,,}
-	if [ "$BRAND" = "vivo" ]; then
-		DEVICE=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.vivo.product.release.name=" | sed "s|ro.vivo.product.release.name=||g" | sort -u | head -n 1 )
-	else
-		DEVICE=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.product.device=" | sed "s|ro.product.device=||g" | sed "s|ASUS_||g" | sort -u | head -n 1 )
-	fi
-	if [ -z "$DEVICE" ]; then
-		DEVICE=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.build.product=" | sed "s|ro.build.product=||g" | sed "s|ASUS_||g" | sort -u | head -n 1 )
-	fi
-	if [ "$BRAND" = "oppo" ] || [ "$BRAND" = "realme" ]; then
-		MODEL=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.oppo.market.name=" | sed "s|ro.oppo.market.name=||g" | sort -u | head -n 1 )
-	else
-		MODEL=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.product.model=" | sed "s|ro.product.model=||g" | sort -u | head -n 1 )
-	fi
-	DESC=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.build.description=" | sed "s|ro.build.description=||g" | sort -u | head -n 1 )
-	FINGERPRINT=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.build.fingerprint=" | sed "s|ro.build.fingerprint=||g" | sort -u | head -n 1 )
-	if [ -z "$FINGERPRINT" ]; then
-		FINGERPRINT="$DESC"
-	fi
-	VERSION=$( cat $PROJECT_DIR/dummy_dt/working/system_build.prop | grep "ro.build.version.release=" | sed "s|ro.build.version.release=||g" | head -c 1)
+	source $PROJECT_DIR/tools/rom_vars.sh "$PROJECT_DIR/dummy_dt/working/system_build.prop" > /dev/null 2>&1
 	DT_DIR="$PROJECT_DIR"/dummy_dt/"$BRAND"/"$DEVICE"
 	echo -e "${bold}${cyan}$BRAND : $DEVICE : $VERSION : $FINGERPRINT ${nocol}"
 
@@ -295,7 +275,7 @@ common_dt () {
 	printf "\nPRODUCT_GMS_CLIENTID_BASE := android-"$BRAND"" >> "$DT_DIR"/lineage_"$DEVICE".mk
 	printf "\nTARGET_VENDOR := "$BRAND"" >> "$DT_DIR"/lineage_"$DEVICE".mk
 	printf "\nTARGET_VENDOR_PRODUCT_NAME := "$DEVICE"\n" >> "$DT_DIR"/lineage_"$DEVICE".mk
-	echo "PRODUCT_BUILD_PROP_OVERRIDES += PRIVATE_BUILD_DESC=\""$DESC"\"" >> "$DT_DIR"/lineage_"$DEVICE".mk
+	echo "PRODUCT_BUILD_PROP_OVERRIDES += PRIVATE_BUILD_DESC=\""$DESCRIPTION"\"" >> "$DT_DIR"/lineage_"$DEVICE".mk
 	printf "\n# Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop\n" >> "$DT_DIR"/lineage_"$DEVICE".mk
 	echo "BUILD_FINGERPRINT := "$FINGERPRINT"" >> "$DT_DIR"/lineage_"$DEVICE".mk
 }
