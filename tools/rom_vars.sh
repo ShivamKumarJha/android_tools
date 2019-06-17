@@ -26,6 +26,9 @@ if [ -d "$1" ]; then
 		SYSTEM_PATH="system"
 	fi
 	CAT_FILE=""$1"/"$SYSTEM_PATH"/build.prop"
+elif echo "$1" | grep "https" ; then
+	wget -O $PROJECT_DIR/working/system_build.prop $1
+	CAT_FILE="$PROJECT_DIR/working/system_build.prop"
 else
 	CAT_FILE="$1"
 fi
