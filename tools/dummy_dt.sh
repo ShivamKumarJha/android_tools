@@ -56,10 +56,6 @@ common_core () {
 	fi
 }
 
-clean_up () {
-	rm -rf $PROJECT_DIR/dummy_dt/working/* $PROJECT_DIR/working/*
-}
-
 call_methods () {
 	# Set commit message
 	if [ ! -d "$DT_DIR" ]; then
@@ -95,7 +91,7 @@ call_methods () {
 	git_op
 
 	# clean
-	clean_up
+	rm -rf $PROJECT_DIR/dummy_dt/working/* $PROJECT_DIR/working/*
 }
 
 git_op () {
