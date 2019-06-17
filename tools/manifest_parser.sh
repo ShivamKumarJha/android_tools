@@ -20,8 +20,6 @@ fi
 
 # o/p
 for var in "$@"; do
-	# Copy files
-	cp -a "$var" "$PROJECT_DIR"/working/manifest.xml
 	while IFS= read -r line
 	do
 		if echo "$line" | grep "<project"; then
