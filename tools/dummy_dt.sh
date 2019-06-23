@@ -22,12 +22,7 @@ dir_check () {
 	cd "$PROJECT_DIR"/
 }
 
-proprietary () {
-	echo -e "${bold}${cyan}Preparing proprietary-files.txt${nocol}"
-	. $PROJECT_DIR/tools/proprietary-files.sh "$PROJECT_DIR"/dummy_dt/working/all_files.txt > /dev/null 2>&1
-	cp -a $PROJECT_DIR/working/proprietary-files.txt "$DT_DIR"/proprietary-files.txt
-
-	# find bin's in # Misc which exist in rootdir/
+proprietary_rootdir () {
 	TSTART=$(grep -nr "# Misc" "$DT_DIR"/proprietary-files.txt | sed "s|:.*||g")
 	TEND=$(wc -l "$DT_DIR"/proprietary-files.txt | sed "s| .*||g")
 	sed -n "${TSTART},${TEND}p" "$DT_DIR"/proprietary-files.txt > "$PROJECT_DIR"/dummy_dt/working/misc.txt
@@ -51,6 +46,19 @@ proprietary () {
 	cat "$PROJECT_DIR"/dummy_dt/working/newmisc.txt >> "$PROJECT_DIR"/dummy_dt/working/staging.txt
 	rm -rf "$PROJECT_DIR"/dummy_dt/working/misc.txt "$PROJECT_DIR"/dummy_dt/working/newmisc.txt "$PROJECT_DIR"/dummy_dt/working/rootdir.txt "$DT_DIR"/proprietary-files.txt
 	mv "$PROJECT_DIR"/dummy_dt/working/staging.txt "$DT_DIR"/proprietary-files.txt
+}
+
+proprietary () {
+	echo -e "${bold}${cyan}Preparing proprietary-files.txt${nocol}"
+	. $PROJECT_DIR/tools/proprietary-files.sh "$PROJECT_DIR"/dummy_dt/working/all_files.txt > /dev/null 2>&1
+	cp -a $PROJECT_DIR/working/proprietary-files.txt "$DT_DIR"/proprietary-files.txt
+
+	# find bin's in # Misc which exist in rootdir/
+	proprietary_rootdir > /dev/null 2>&1
+
+	# proprietary-files-system.txt
+	echo -e "${bold}${cyan}Preparing proprietary-files-system.txt${nocol}"
+	cat "$DT_DIR"/proprietary-files.txt | grep -v "vendor/" | sort -u | sed "s|#.*||g" | sed '/^$/d' > "$DT_DIR"/proprietary-files-system.txt
 }
 
 common_setup () {
@@ -101,12 +109,8 @@ call_methods () {
 	common_dt
 	common_overlay
 
-	# proprietary-files.txt
+	# proprietary-files
 	proprietary
-
-	# proprietary-files-system.txt
-	echo -e "${bold}${cyan}Preparing proprietary-files-system.txt${nocol}"
-	cat "$DT_DIR"/proprietary-files.txt | grep -v "vendor/" | sort -u | sed "s|#.*||g" | sed '/^$/d' > "$DT_DIR"/proprietary-files-system.txt
 
 	# Git commit
 	git_op
