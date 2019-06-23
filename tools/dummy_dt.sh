@@ -299,7 +299,9 @@ common_dt () {
 	printf "\nPRODUCT_GMS_CLIENTID_BASE := android-"$BRAND"" >> "$DT_DIR"/lineage_"$DEVICE".mk
 	printf "\nTARGET_VENDOR := "$BRAND"" >> "$DT_DIR"/lineage_"$DEVICE".mk
 	printf "\nTARGET_VENDOR_PRODUCT_NAME := "$DEVICE"\n" >> "$DT_DIR"/lineage_"$DEVICE".mk
-	echo "PRODUCT_BUILD_PROP_OVERRIDES += PRIVATE_BUILD_DESC=\""$DESCRIPTION"\"" >> "$DT_DIR"/lineage_"$DEVICE".mk
+	if [ ! -z "$DESCRIPTION" ]; then
+		echo "PRODUCT_BUILD_PROP_OVERRIDES += PRIVATE_BUILD_DESC=\""$DESCRIPTION"\"" >> "$DT_DIR"/lineage_"$DEVICE".mk
+	fi
 	printf "\n# Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop\n" >> "$DT_DIR"/lineage_"$DEVICE".mk
 	echo "BUILD_FINGERPRINT := "$FINGERPRINT"" >> "$DT_DIR"/lineage_"$DEVICE".mk
 }
@@ -383,9 +385,10 @@ common_overlay () {
 	done
 
 	# Make xml proper
-	sed -i '1 i\<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">' "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
-	sed -i '1 i\<?xml version="1.0" encoding="utf-8"?>' "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
+	mv "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml "$DT_DIR"/overlay/frameworks/base/core/res/res/values/staging.xml
+	cat "$PROJECT_DIR"/tools/lists/overlays/comments/HEADER "$DT_DIR"/overlay/frameworks/base/core/res/res/values/staging.xml > "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
 	printf "\n</resources>" >> "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
+	rm -rf "$DT_DIR"/overlay/frameworks/base/core/res/res/values/staging.xml
 }
 
 # Init git if not already
