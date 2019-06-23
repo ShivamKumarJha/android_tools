@@ -1,0 +1,4 @@
+vendor/lib/libstreamparser.so
+vendor/lib/libUBWC.so
+vendor/lib64/libstreamparser.so
+vendor/lib64/libUBWC.so
