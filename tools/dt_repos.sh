@@ -30,15 +30,9 @@ for var in "$@"; do
 	DT_REPO=$(echo device_$BRAND\_$DEVICE | sort -u | head -n 1 )
 	KT_REPO=$(echo kernel_$BRAND\_$DEVICE | sort -u | head -n 1 )
 	VT_REPO=$(echo vendor_$BRAND\_$DEVICE | sort -u | head -n 1 )
-	if [ -z "$MODEL" ]; then
-		DT_REPO_DESC=$(echo "Device-tree-for-$DEVICE" | sort -u | head -n 1 )
-		KT_REPO_DESC=$(echo "Kernel-tree-for-$DEVICE" | sort -u | head -n 1 )
-		VT_REPO_DESC=$(echo "Vendor-tree-for-$DEVICE" | sort -u | head -n 1 )
-	else
-		DT_REPO_DESC=$(echo "Device-tree-for-$MODEL" | tr ' ' '-' | sort -u | head -n 1 )
-		KT_REPO_DESC=$(echo "Kernel-tree-for-$MODEL" | tr ' ' '-' | sort -u | head -n 1 )
-		VT_REPO_DESC=$(echo "Vendor-tree-for-$MODEL" | tr ' ' '-' | sort -u | head -n 1 )
-	fi
+	DT_REPO_DESC=$(echo "Device-tree-for-$MODEL" | tr ' ' '-' | sort -u | head -n 1 )
+	KT_REPO_DESC=$(echo "Kernel-tree-for-$MODEL" | tr ' ' '-' | sort -u | head -n 1 )
+	VT_REPO_DESC=$(echo "Vendor-tree-for-$MODEL" | tr ' ' '-' | sort -u | head -n 1 )
 	# Create repository in GitHub
 	printf "${bold}${cyan}Creating\nhttps://github.com/ShivamKumarJha/$DT_REPO\nhttps://github.com/ShivamKumarJha/$KT_REPO\nhttps://github.com/ShivamKumarJha/$VT_REPO\n${nocol}"
 	curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name":"'${DT_REPO}'","description":"'${DT_REPO_DESC}'","private": true,"has_issues": true,"has_projects": false,"has_wiki": true}' > /dev/null 2>&1

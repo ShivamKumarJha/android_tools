@@ -58,6 +58,9 @@ fi
 if [ -z "$MODEL" ]; then
 	MODEL=$( cat "$CAT_FILE" | grep "ro.product" | grep "model=" | sed "s|.*=||g" | sort -u | head -n 1 )
 fi
+if [ -z "$MODEL" ]; then
+	MODEL=$DEVICE
+fi
 VERSION=$( cat "$CAT_FILE" | grep "build.version.release=" | sed "s|.*=||g" | head -c 2 | sort -u | head -n 1 )
 
 # Display var's

@@ -31,11 +31,7 @@ for var in "$@"; do
 	source $PROJECT_DIR/tools/rom_vars.sh "$var" > /dev/null 2>&1
 	COMMIT_MSG=$(echo "$DEVICE: $FINGERPRINT" | sort -u | head -n 1 )
 	REPO=$(echo dump_$BRAND\_$DEVICE | sort -u | head -n 1 )
-	if [ -z "$MODEL" ]; then
-		REPO_DESC=$(echo "$DEVICE-dump" | sort -u | head -n 1 )
-	else
-		REPO_DESC=$(echo "$MODEL-dump" | tr ' ' '-' | sort -u | head -n 1 )
-	fi
+	REPO_DESC=$(echo "$MODEL-dump" | tr ' ' '-' | sort -u | head -n 1 )
 	BRANCH=$(echo $DESCRIPTION | tr ' ' '-' | sort -u | head -n 1 )
 	# Create repository in GitHub
 	echo -e "${bold}${cyan}Creating https://github.com/ShivamKumarJha/$REPO${nocol}"
