@@ -30,6 +30,30 @@ proprietary () {
 		. $PROJECT_DIR/tools/proprietary-files.sh "$PROJECT_DIR"/dummy_dt/working/all_files.txt > /dev/null 2>&1
 	fi
 	cp -a $PROJECT_DIR/working/proprietary-files.txt "$DT_DIR"/proprietary-files.txt
+	# find bin's in # Misc which exist in rootdir/
+	TSTART=$(grep -nr "# Misc" "$DT_DIR"/proprietary-files.txt | sed "s|:.*||g")
+	TEND=$(wc -l "$DT_DIR"/proprietary-files.txt | sed "s| .*||g")
+	sed -n "${TSTART},${TEND}p" "$DT_DIR"/proprietary-files.txt > "$PROJECT_DIR"/dummy_dt/working/misc.txt
+	while IFS= read -r line
+	do
+		if grep -ril "$line" "$DT_DIR"/rootdir/; then
+			if echo "$line" | grep -iE "apk|jar"; then
+				echo "$line" >> "$PROJECT_DIR"/dummy_dt/working/newmisc.txt
+			else
+				echo "$line" >> "$PROJECT_DIR"/dummy_dt/working/rootdir.txt
+			fi
+		else
+			echo "$line" >> "$PROJECT_DIR"/dummy_dt/working/newmisc.txt
+		fi
+	done < ""$PROJECT_DIR"/dummy_dt/working/misc.txt"
+	TSTART=$((TSTART-1))
+	sed -n "1,${TSTART}p" "$DT_DIR"/proprietary-files.txt > "$PROJECT_DIR"/dummy_dt/working/staging.txt
+	echo "# rootdir" >> "$PROJECT_DIR"/dummy_dt/working/staging.txt
+	cat "$PROJECT_DIR"/dummy_dt/working/rootdir.txt >> "$PROJECT_DIR"/dummy_dt/working/staging.txt
+	printf "\n" >> "$PROJECT_DIR"/dummy_dt/working/staging.txt
+	cat "$PROJECT_DIR"/dummy_dt/working/newmisc.txt >> "$PROJECT_DIR"/dummy_dt/working/staging.txt
+	rm -rf "$PROJECT_DIR"/dummy_dt/working/misc.txt "$PROJECT_DIR"/dummy_dt/working/newmisc.txt "$PROJECT_DIR"/dummy_dt/working/rootdir.txt "$DT_DIR"/proprietary-files.txt
+	mv "$PROJECT_DIR"/dummy_dt/working/staging.txt "$DT_DIR"/proprietary-files.txt
 }
 
 common_setup () {
@@ -66,13 +90,6 @@ call_methods () {
 		COMMIT_MSG=$(echo "Update: $DEVICE: $FINGERPRINT")
 	fi
 
-	# proprietary-files.txt
-	proprietary
-
-	# proprietary-files-system.txt
-	echo -e "${bold}${cyan}Preparing proprietary-files-system.txt${nocol}"
-	cat "$DT_DIR"/proprietary-files.txt | grep -v "vendor/" | sort -u | sed "s|#.*||g" | sed '/^$/d' > "$DT_DIR"/proprietary-files-system.txt
-
 	# vendor_prop.mk
 	echo -e "${bold}${cyan}Preparing vendor_prop.mk${nocol}"
 	. $PROJECT_DIR/tools/vendor_prop.sh $PROJECT_DIR/dummy_dt/working/system_build.prop $PROJECT_DIR/dummy_dt/working/vendor_build.prop > /dev/null 2>&1
@@ -86,6 +103,13 @@ call_methods () {
 	# Device configs
 	common_dt
 	common_overlay
+
+	# proprietary-files.txt
+	proprietary
+
+	# proprietary-files-system.txt
+	echo -e "${bold}${cyan}Preparing proprietary-files-system.txt${nocol}"
+	cat "$DT_DIR"/proprietary-files.txt | grep -v "vendor/" | sort -u | sed "s|#.*||g" | sed '/^$/d' > "$DT_DIR"/proprietary-files-system.txt
 
 	# Git commit
 	git_op
