@@ -14,7 +14,7 @@ source $PROJECT_DIR/tools/common_script.sh
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
-	echo -e "${bold}${red}Supply dir's as arguements!${nocol}"
+	echo -e "${bold}${red}Supply dir's or raw build.prop link as arguements!${nocol}"
 	exit
 fi
 

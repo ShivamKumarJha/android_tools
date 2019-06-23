@@ -6,6 +6,12 @@
 #
 # Helper functions
 
+# Store project path
+PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
+
+# Text format
+source $PROJECT_DIR/tools/colors.sh
+
 # Exit if no arguements
 if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]; then
 	echo -e "${bold}${red}Supply apiToken, chat_id, text-file, parse_mode & php-output-path as arguements!${nocol}"
