@@ -45,7 +45,7 @@ echo "ro.am.reschedule_service=true" >> $PROJECT_DIR/working/system.prop
 echo "ro.sys.fw.use_trim_settings=true" >> $PROJECT_DIR/working/system.prop
 
 # Lineage vendor security patch support
-if [ $(grep "ro.build.version.release=" $PROJECT_DIR/working/system_working.prop | sed "s|ro.build.version.release=||g" | head -c 1) -lt 9 ]; then
+if [ $(grep "ro.build.version.release=" $PROJECT_DIR/working/system_working.prop | sed "s|ro.build.version.release=||g" | head -c 2) -lt 9 ]; then
 	grep "ro.build.version.security_patch=" $PROJECT_DIR/working/system_working.prop | sed "s|ro.build.version.security_patch|ro.lineage.build.vendor_security_patch|g" >> $PROJECT_DIR/working/system.prop
 fi
 
