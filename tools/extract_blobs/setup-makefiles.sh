@@ -17,19 +17,22 @@
 
 set -e
 
-# Required!
-DEVICE=X00T
-VENDOR=asus
+# Store project path
+PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." >/dev/null && pwd )"
 
-INITIAL_COPYRIGHT_YEAR=2018
+# Required!
+DEVICE="$DEVICE"
+VENDOR="$BRAND"
+
+INITIAL_COPYRIGHT_YEAR=$( date +"%Y" )
 
 # Load extract_utils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
 
-LINEAGE_ROOT="$MY_DIR"/../../..
+LINEAGE_ROOT="$PROJECT_DIR"
 
-HELPER="$LINEAGE_ROOT"/vendor/lineage/build/tools/extract_utils.sh
+HELPER="$LINEAGE_ROOT"/tools/extract_blobs/extract_utils.sh
 if [ ! -f "$HELPER" ]; then
     echo "Unable to find helper script at $HELPER"
     exit 1
@@ -42,7 +45,7 @@ setup_vendor "$DEVICE" "$VENDOR" "$LINEAGE_ROOT"
 # Copyright headers and guards
 write_headers
 
-write_makefiles "$MY_DIR"/proprietary-files.txt true
+write_makefiles $PROJECT_DIR/working/proprietary-files.txt true
 
 # Finish
 write_footers

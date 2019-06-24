@@ -17,16 +17,27 @@
 
 set -e
 
-DEVICE=X00T
-VENDOR=asus
+# Store project path
+PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." >/dev/null && pwd )"
+
+# Common stuff
+source $PROJECT_DIR/tools/common_script.sh
+
+# Prepare blobs list
+. $PROJECT_DIR/tools/proprietary-files.sh "$1"/all_files.txt
+
+# Set values
+source $PROJECT_DIR/tools/rom_vars.sh "$1"
+DEVICE="$DEVICE"
+VENDOR="$BRAND"
 
 # Load extract_utils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
 
-LINEAGE_ROOT="$MY_DIR"/../../..
+LINEAGE_ROOT="$PROJECT_DIR"
 
-HELPER="$LINEAGE_ROOT"/vendor/lineage/build/tools/extract_utils.sh
+HELPER="$LINEAGE_ROOT"/tools/extract_blobs/extract_utils.sh
 if [ ! -f "$HELPER" ]; then
     echo "Unable to find helper script at $HELPER"
     exit 1
@@ -57,6 +68,6 @@ fi
 # Initialize the helper
 setup_vendor "$DEVICE" "$VENDOR" "$LINEAGE_ROOT" false "$CLEAN_VENDOR"
 
-extract "$MY_DIR"/proprietary-files.txt "$SRC" "$SECTION"
+extract $PROJECT_DIR/working/proprietary-files.txt "$SRC" "$SECTION"
 
 . "$MY_DIR"/setup-makefiles.sh
