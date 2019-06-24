@@ -2,6 +2,7 @@ dumps/
 dummy_dt/
 input/
 working/
+vendor/
 tools/extract_android_ota_payload/
 tools/mkbootimg_tools/
 tools/sdat2img/
