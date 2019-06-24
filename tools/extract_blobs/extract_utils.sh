@@ -949,11 +949,7 @@ function fix_xml() {
 function get_hash() {
     local FILE="$1"
 
-    if [ "$(uname)" == "Darwin" ]; then
-        shasum "${FILE}" | awk '{print $1}'
-    else
-        sha1sum "${FILE}" | awk '{print $1}'
-    fi
+    sha1sum "${FILE}" | awk '{print $1}'
 }
 
 function print_spec() {
@@ -1297,20 +1293,13 @@ function extract_img_data() {
         mkdir -p "$out_dir"
     fi
 
-    if [[ "$HOST_OS" == "Darwin" ]]; then
-        debugfs -R "rdump / \"$out_dir\"" "$image_file" &> "$logFile" || {
+    debugfs -R 'ls -p' "$image_file" 2>/dev/null | cut -d '/' -f6 | while read -r entry
+    do
+        debugfs -R "rdump \"$entry\" \"$out_dir\"" "$image_file" >> "$logFile" 2>&1 || {
             echo "[-] Failed to extract data from '$image_file'"
             abort 1
         }
-    else
-        debugfs -R 'ls -p' "$image_file" 2>/dev/null | cut -d '/' -f6 | while read -r entry
-        do
-            debugfs -R "rdump \"$entry\" \"$out_dir\"" "$image_file" >> "$logFile" 2>&1 || {
-                echo "[-] Failed to extract data from '$image_file'"
-                abort 1
-            }
-        done
-    fi
+    done
 
     local symlink_err="rdump: Attempt to read block from filesystem resulted in short read while reading symlink"
     if grep -Fq "$symlink_err" "$logFile"; then
