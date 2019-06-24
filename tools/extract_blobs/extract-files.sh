@@ -20,11 +20,10 @@ set -e
 # Store project path
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." >/dev/null && pwd )"
 
-# Common stuff
-source $PROJECT_DIR/tools/common_script.sh
-
 # Prepare blobs list
-. $PROJECT_DIR/tools/proprietary-files.sh "$1"/all_files.txt
+if [ ! -e $PROJECT_DIR/working/proprietary-files.txt ]; then
+	. $PROJECT_DIR/tools/proprietary-files.sh "$1"/all_files.txt
+fi
 
 # Set values
 source $PROJECT_DIR/tools/rom_vars.sh "$1"
