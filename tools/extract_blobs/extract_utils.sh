@@ -1309,26 +1309,6 @@ function extract_img_data() {
     fi
 }
 
-declare -ra VENDOR_SKIP_FILES=(
-  "bin/toybox_vendor"
-  "bin/toolbox"
-  "bin/grep"
-  "build.prop"
-  "compatibility_matrix.xml"
-  "default.prop"
-  "etc/NOTICE.xml.gz"
-  "etc/vintf/compatibility_matrix.xml"
-  "etc/vintf/manifest.xml"
-  "etc/wifi/wpa_supplicant.conf"
-  "manifest.xml"
-  "overlay/DisplayCutoutEmulationCorner/DisplayCutoutEmulationCornerOverlay.apk"
-  "overlay/DisplayCutoutEmulationDouble/DisplayCutoutEmulationDoubleOverlay.apk"
-  "overlay/DisplayCutoutEmulationTall/DisplayCutoutEmulationTallOverlay.apk"
-  "overlay/DisplayCutoutNoCutout/NoCutoutOverlay.apk"
-  "overlay/framework-res__auto_generated_rro.apk"
-  "overlay/SysuiDarkTheme/SysuiDarkThemeOverlay.apk"
-)
-
 function array_contains() {
     local element
     for element in "${@:2}"; do [[ "$element" == "$1" ]] && return 0; done
@@ -1346,10 +1326,6 @@ function generate_prop_list_from_image() {
 
     find "$image_dir" -not -type d | sed "s#^$image_dir/##" | while read -r FILE
     do
-        # Skip VENDOR_SKIP_FILES since it will be re-generated at build time
-        if array_contains "$FILE" "${VENDOR_SKIP_FILES[@]}"; then
-            continue
-        fi
         # Skip device defined skipped files since they will be re-generated at build time
         if array_contains "$FILE" "${skipped_vendor_files[@]}"; then
             continue
