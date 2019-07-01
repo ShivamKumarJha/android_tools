@@ -52,6 +52,7 @@ FINGERPRINT=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s
 if [ -z "$FINGERPRINT" ]; then
 	FINGERPRINT=$DESCRIPTION
 fi
+MODEL=$( cat "$CAT_FILE" | grep "ro.product" | grep "model=" | sed "s|.*=||g" | sort -u | head -n 1 )
 if [ "$BRAND" = "oppo" ] || [ "$BRAND" = "realme" ]; then
 	MODEL=$( cat "$CAT_FILE" | grep "ro.oppo.market.name=" | sed "s|ro.oppo.market.name=||g" | sort -u | head -n 1 )
 fi
