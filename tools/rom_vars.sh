@@ -36,34 +36,27 @@ fi
 # Set variables
 BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "brand=" | sed "s|.*=||g" | sort -u | head -n 1 )
 BRAND=${BRAND_TEMP,,}
-if [ "$BRAND" = "vivo" ]; then
+if grep -q "ro.vivo.product.release.name" "$CAT_FILE"; then
 	DEVICE=$( cat "$CAT_FILE" | grep "ro.vivo.product.release.name=" | sed "s|ro.vivo.product.release.name=||g" | sort -u | head -n 1 )
+elif grep -q "# from vendor/oneplus/config/" "$CAT_FILE"; then
+	DEVICE=$( cat "$CAT_FILE" | grep "# from vendor/oneplus/config/" | sed "s|# from vendor/oneplus/config/||g" | sed "s|/system.prop||g" | sort -u | head -n 1 )
 else
 	DEVICE=$( cat "$CAT_FILE" | grep "ro.product" | grep "device=" | sed "s|.*=||g" | sed "s|ASUS_||g" | sort -u | head -n 1 )
 fi
-if grep -q "# from vendor/oneplus/config/" "$CAT_FILE"; then
-	DEVICE=$( cat "$CAT_FILE" | grep "# from vendor/oneplus/config/" | sed "s|# from vendor/oneplus/config/||g" | sed "s|/system.prop||g" | sort -u | head -n 1 )
-fi
 if [ -z "$DEVICE" ]; then
 	DEVICE=$( cat "$CAT_FILE" | grep "ro.build" | grep "product=" | sed "s|.*=||g" | sed "s|ASUS_||g" | sort -u | head -n 1 )
-fi
-if [ -z "$DEVICE" ]; then
-	DEVICE=target
 fi
 DESCRIPTION=$( cat "$CAT_FILE" | grep "ro." | grep "build.description=" | sed "s|.*=||g" | sort -u | head -n 1 )
 FINGERPRINT=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | sort -u | head -n 1 )
 if [ -z "$FINGERPRINT" ]; then
 	FINGERPRINT=$DESCRIPTION
 fi
-MODEL=$( cat "$CAT_FILE" | grep "ro.product" | grep "model=" | sed "s|.*=||g" | sort -u | head -n 1 )
-if [ "$BRAND" = "oppo" ] || [ "$BRAND" = "realme" ]; then
+if grep -q "ro.oppo.market.name" "$CAT_FILE"; then
 	MODEL=$( cat "$CAT_FILE" | grep "ro.oppo.market.name=" | sed "s|ro.oppo.market.name=||g" | sort -u | head -n 1 )
-fi
-if [ -z "$MODEL" ]; then
-	MODEL=$( cat "$CAT_FILE" | grep "ro.product" | grep "model=" | sed "s|.*=||g" | sort -u | head -n 1 )
-fi
-if [ "$BRAND" = "oneplus" ]; then
+elif [ "$BRAND" = "oneplus" ]; then
 	MODEL=$( cat "$CAT_FILE" | grep "ro.product" | grep "device=" | sed "s|.*=||g" | sort -u | head -n 1 )
+else
+	MODEL=$( cat "$CAT_FILE" | grep "ro.product" | grep "model=" | sed "s|.*=||g" | sort -u | head -n 1 )
 fi
 if [ -z "$MODEL" ]; then
 	MODEL=$DEVICE
