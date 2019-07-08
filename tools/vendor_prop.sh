@@ -44,10 +44,6 @@ if [ ! -z "$2" ] ; then
 	sed -n "${TSTART},${TEND}p" $PROJECT_DIR/working/vendor_working.prop | sort | sed "s|#.*||g" | sed '/^[[:space:]]*$/d' > $PROJECT_DIR/working/vendor_new.prop
 fi
 
-# put some properties
-echo "ro.am.reschedule_service=true" > $PROJECT_DIR/working/staging.mk
-echo "ro.sys.fw.use_trim_settings=true" >> $PROJECT_DIR/working/staging.mk
-
 # Lineage vendor security patch support
 if [ $(grep "ro.build.version.release=" $PROJECT_DIR/working/system_working.prop | sed "s|ro.build.version.release=||g" | head -c 2) -lt 9 ]; then
 	grep "ro.build.version.security_patch=" $PROJECT_DIR/working/system_working.prop | sed "s|ro.build.version.security_patch|ro.lineage.build.vendor_security_patch|g" >> $PROJECT_DIR/working/staging.mk
