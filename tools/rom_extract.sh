@@ -170,17 +170,16 @@ else
 		echo -e "${bold}${cyan}Extracting $file${nocol}"
 		if echo "$ZIP_FORMAT" | grep -iE "zip"; then
 			unzip $PROJECT_DIR/input/${file} -d $PROJECT_DIR/working
-			if ! [ $(find $PROJECT_DIR/working/ -name 'META-INF' | wc -l) -gt 0 ]; then
-				IS_FASTBOOT=y
-			else
-				IS_FASTBOOT=n
-			fi
 		elif echo "$ZIP_FORMAT" | grep -iE "gz"; then
-			IS_FASTBOOT=y
 			tar -zxvf $PROJECT_DIR/input/${file} -C $PROJECT_DIR/working
 			for i in "${arr[@]}" "boot"; do
 				find working/ -name "$i.img" -exec mv {} $PROJECT_DIR/working/$i.img \;
 			done
+		fi
+		if ! [ $(find $PROJECT_DIR/working/ -name 'META-INF' | wc -l) -gt 0 ]; then
+			IS_FASTBOOT=y
+		else
+			IS_FASTBOOT=n
 		fi
 		core
 	done
