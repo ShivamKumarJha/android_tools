@@ -40,6 +40,7 @@ for var in "$@"; do
 	if [ ! -d .git ]; then
 		echo -e "${bold}${cyan}Initializing git.${nocol}"
 		git init . > /dev/null 2>&1
+		git remote add origin https://github.com/ShivamKumarJha/"$REPO".git > /dev/null 2>&1
 	fi
 	if [[ ! -z $(git status -s) ]]; then
 		echo -e "${bold}${cyan}Creating branch $BRANCH${nocol}"
@@ -50,7 +51,6 @@ for var in "$@"; do
 		git add --all > /dev/null 2>&1
 		echo -e "${bold}${cyan}Commiting $COMMIT_MSG${nocol}"
 		git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
-		git remote add origin https://github.com/ShivamKumarJha/"$REPO".git > /dev/null 2>&1
 		git push https://"$GIT_TOKEN"@github.com/ShivamKumarJha/"$REPO".git $BRANCH
 		COMMIT_HEAD=$(git log --format=format:%H | head -n 1)
 		COMMIT_LINK=$(echo "https://github.com/ShivamKumarJha/$REPO/commit/$COMMIT_HEAD")
