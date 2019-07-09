@@ -17,7 +17,7 @@ else
 fi
 
 # Clone repo's
-for toolsdir in "extract_android_ota_payload" "mkbootimg_tools" "sdat2img"; do
+for toolsdir in "extract_android_ota_payload" "extract-dtb" "mkbootimg_tools" "sdat2img"; do
 	if [ ! -d "$PROJECT_DIR/tools/$toolsdir" ]; then
 		git clone -q https://gitlab.com/ShivamKumarJha/$toolsdir $PROJECT_DIR/tools/$toolsdir --depth 1
 		chmod +x $PROJECT_DIR/tools/$toolsdir/*
@@ -25,4 +25,4 @@ for toolsdir in "extract_android_ota_payload" "mkbootimg_tools" "sdat2img"; do
 done
 
 # Install some packages
-echo "$user_password" | sudo -S apt-get install -y android-tools-fsutils brotli git
+echo "$user_password" | sudo -S apt-get install -y android-tools-fsutils brotli git device-tree-compiler

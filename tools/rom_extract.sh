@@ -113,10 +113,24 @@ fi
 # boot.img operations
 find working/ -name 'boot.img' -exec mv {} working/bootdevice.img \;
 if [ -e working/bootdevice.img ]; then
+	# Extract kernel
 	./tools/mkbootimg_tools/mkboot working/bootdevice.img dumps/$DEVICE/boot > /dev/null 2>&1
 	mv dumps/$DEVICE/boot/kernel dumps/$DEVICE/boot/Image.gz-dtb
 	echo -e "${bold}${cyan}boot_info: $(ls dumps/$DEVICE/boot/img_info)${nocol}"
 	echo -e "${bold}${cyan}Prebuilt kernel: $(ls dumps/$DEVICE/boot/Image.gz-dtb)${nocol}"
+
+	# Extract dtb
+	python3 tools/extract-dtb/extract-dtb.py working/bootdevice.img -o dumps/$DEVICE/bootdtb
+
+	# Extract dtsi
+	mkdir dumps/$DEVICE/bootdtsi
+	dtb_list=`find dumps/$DEVICE/bootdtb -type f -printf '%P\n' | sort`
+	for dtb_file in $dtb_list; do
+		DTB_FORMAT=`echo $dtb_file | sed 's|.*\.||'`
+		if echo "$DTB_FORMAT" | grep -iE "dtb"; then
+			dtc -I dtb -O dts -o dumps/$DEVICE/bootdtsi/$dtb_file dumps/$DEVICE/bootdtb/$dtb_file
+		fi
+	done
 fi
 
 # Store trustzone version in board-info.txt

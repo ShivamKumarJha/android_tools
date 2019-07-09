@@ -4,6 +4,7 @@ input/
 working/
 vendor/
 tools/extract_android_ota_payload/
+tools/extract-dtb/
 tools/mkbootimg_tools/
 tools/sdat2img/
 .fuse_*
