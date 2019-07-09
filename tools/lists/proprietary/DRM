@@ -12,12 +12,14 @@ vendor/lib/libcrypto_vendor.so
 vendor/lib/libdrmfs.so
 vendor/lib/libdrmtime.so
 vendor/lib/liboemcrypto.so
+vendor/lib/libops.so
 vendor/lib/libqisl.so
 vendor/lib/librmp.so
 vendor/lib/librpmb.so
 vendor/lib/libsdedrm.so
 vendor/lib/libsecureui.so
 vendor/lib/libsecureui_svcsock.so
+vendor/lib/libspl.so
 vendor/lib/libssd.so
 vendor/lib/libtzdrmgenprov.so
 vendor/lib/libtzplayready.so
@@ -33,6 +35,7 @@ vendor/lib64/libcppf.so
 vendor/lib64/libdrmfs.so
 vendor/lib64/libdrmtime.so
 vendor/lib64/liboemcrypto.so
+vendor/lib64/libops.so
 vendor/lib64/libprdrmdecrypt.so
 vendor/lib64/libqisl.so
 vendor/lib64/librmp.so
@@ -40,6 +43,7 @@ vendor/lib64/librpmb.so
 vendor/lib64/libsdedrm.so
 vendor/lib64/libsecureui.so
 vendor/lib64/libsecureui_svcsock.so
+vendor/lib64/libspl.so
 vendor/lib64/libssd.so
 vendor/lib64/libtzdrmgenprov.so
 vendor/lib64/libtzplayready.so

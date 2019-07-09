@@ -1,0 +1,10 @@
+app/NxpNfcNci/NxpNfcNci.apk
+app/NxpSecureElement/NxpSecureElement.apk
+etc/nfcee_access.xml
+etc/permissions/com.nxp.nfc.xml
+framework/com.nxp.nfc.jar
+lib64/libnxpnfc-nci.so
+lib64/libnxpnfc_nci_jni.so
+vendor/lib/libp61-jcop-kit.so
+vendor/lib64/libp61-jcop-kit.so
+vendor/lib64/ls_client.so
