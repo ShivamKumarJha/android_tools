@@ -12,12 +12,6 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 # Text format
 source $PROJECT_DIR/tools/colors.sh
 
-# Exit if no arguements
-if [ ! -d "$1" ] ; then
-	echo -e "${bold}${red}Supply ROM path as arguement!${nocol}"
-	exit
-fi
-
 # Exit if missing token
 if [ -z "$GIT_TOKEN" ]; then
 	echo -e "${bold}${red}Missing GitHub token. Exiting.${nocol}"
@@ -26,6 +20,12 @@ fi
 
 # o/p
 for var in "$@"; do
+	# Check if directory
+	if [ ! -d "$var" ] ; then
+		echo -e "${bold}${red}Supply ROM path as arguement!${nocol}"
+		break
+	fi
+
 	# Create vendor tree repo
 	source $PROJECT_DIR/tools/rom_vars.sh "$var" > /dev/null 2>&1
 	VT_REPO=$(echo vendor_$BRAND\_$DEVICE | sort -u | head -n 1 )
