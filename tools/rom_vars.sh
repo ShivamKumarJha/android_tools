@@ -38,6 +38,8 @@ BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "brand=" | sed "s|.*=||
 BRAND=${BRAND_TEMP,,}
 if grep -q "ro.vivo.product.release.name" "$CAT_FILE"; then
 	DEVICE=$( cat "$CAT_FILE" | grep "ro.vivo.product.release.name=" | sed "s|ro.vivo.product.release.name=||g" | sort -u | head -n 1 )
+elif grep -q "ro.product.system.name" "$CAT_FILE"; then
+	DEVICE=$( cat "$CAT_FILE" | grep "ro.product.system.name=" | sed "s|ro.product.system.name=||g" | sort -u | head -n 1 )
 elif grep -q "# from vendor/oneplus/config/" "$CAT_FILE"; then
 	DEVICE=$( cat "$CAT_FILE" | grep "# from vendor/oneplus/config/" | sed "s|# from vendor/oneplus/config/||g" | sed "s|/system.prop||g" | sort -u | head -n 1 )
 else

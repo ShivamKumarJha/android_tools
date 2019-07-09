@@ -1,5 +1,5 @@
-https://raw.githubusercontent.com/AndroidDumps/oneplus_oneplus6_dump/OnePlus6-user-9-PKQ1.180716.001-1810252315-release-keys
-https://raw.githubusercontent.com/AndroidDumps/oneplus_oneplus6t_dump/OnePlus6T-user-9-PKQ1.180716.001-1810242027-release-keys
+https://raw.githubusercontent.com/AndroidDumps/oneplus_oneplus6_dump/OnePlus6-user-10-QKQ1.190406.002-1905032135-release-keys
+https://raw.githubusercontent.com/AndroidDumps/oneplus_oneplus6t_dump/OnePlus6T-user-10-QKQ1.190406.002-1905032135-release-keys
 https://raw.githubusercontent.com/AndroidDumps/oneplus_oneplus7pro_dump/OnePlus7Pro-user-9-PKQ1.190110.001-1906032330-release-keys
 https://raw.githubusercontent.com/AndroidDumps/vivo_1818_dump/sm6150-user-9-PKQ1.181203.001-compiler05071942-release-keys
 https://raw.githubusercontent.com/AndroidDumps/vivo_pd1832_dump/sm6150-user-9-PKQ1.181203.001-compiler06062011-release-keys
