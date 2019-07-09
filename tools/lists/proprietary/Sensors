@@ -1,6 +1,7 @@
 vendor/bin/sensors.qcom
 vendor/bin/sensors.qti
 vendor/etc/elliptic_sensor.xml
+vendor/lib/hw/activity_recognition.msm8937.so
 vendor/lib/hw/activity_recognition.msm8953.so
 vendor/lib/hw/activity_recognition.msm8998.so
 vendor/lib/hw/activity_recognition.msmnile.so
@@ -9,6 +10,7 @@ vendor/lib/hw/activity_recognition.sdm710.so
 vendor/lib/hw/activity_recognition.sdm845.so
 vendor/lib/hw/activity_recognition.sm6150.so
 vendor/lib/hw/activity_recognition.sm8150.so
+vendor/lib/hw/sensors.msm8937.so
 vendor/lib/hw/sensors.msm8953.so
 vendor/lib/hw/sensors.msm8998.so
 vendor/lib/hw/sensors.msmnile.so
@@ -25,6 +27,7 @@ vendor/lib/libssc_default_listener.so
 vendor/lib/sensor_calibrate.so
 vendor/lib/sensors.native.so
 vendor/lib/sensors.ssc.so
+vendor/lib64/hw/activity_recognition.msm8937.so
 vendor/lib64/hw/activity_recognition.msm8953.so
 vendor/lib64/hw/activity_recognition.msm8998.so
 vendor/lib64/hw/activity_recognition.msmnile.so
@@ -33,6 +36,7 @@ vendor/lib64/hw/activity_recognition.sdm710.so
 vendor/lib64/hw/activity_recognition.sdm845.so
 vendor/lib64/hw/activity_recognition.sm6150.so
 vendor/lib64/hw/activity_recognition.sm8150.so
+vendor/lib64/hw/sensors.msm8937.so
 vendor/lib64/hw/sensors.msm8953.so
 vendor/lib64/hw/sensors.msm8998.so
 vendor/lib64/hw/sensors.msmnile.so

@@ -12,6 +12,9 @@ source $PROJECT_DIR/tools/common_script.sh
 # Store project path
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
+# clean previous list
+rm -rf $PROJECT_DIR/working/proprietary-files.txt
+
 if [ -z "$1" ]; then
 	echo -e "${bold}${red}Supply ROM file list as arguement!${nocol}"
 	exit 1
@@ -43,7 +46,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "tfa98xx|libsrs
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/acdbdata/" | sort -u >> $PROJECT_DIR/working/proprietary/Audio-ACDB
 
 # Bluetooth
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "btnvtool|hci_qcomm_init|wcnss_filter|bluetooth|libbt" | grep -v "vendor/etc/permissions" | grep -v "libbthost_if" | grep -v "overlay/" | sort -u >> $PROJECT_DIR/working/proprietary/Bluetooth
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libbthost_if|btnvtool|hci_qcomm_init|wcnss_filter|bluetooth|libbt" | grep -v "vendor/etc/permissions" | grep -v "libbthost_if" | grep -v "overlay/" | sort -u >> $PROJECT_DIR/working/proprietary/Bluetooth
 
 # Bluetooth-AptX
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "aptx" | grep -v "lib/rfsa/adsp" | sort -u >> $PROJECT_DIR/working/proprietary/Bluetooth-AptX
@@ -55,7 +58,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/bin/" | grep -iE "camera" | 
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/libchromatix|vendor/lib64/libchromatix" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-chromatix
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/camera|vendor/etc/qvr/|vendor/camera3rd/|vendor/camera_sound" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-configs
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/firmware/cpp_firmware" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-firmware
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libremosaic|lib/camera/|lib64/camera/|libcamx|libcamera|mibokeh|lib_camera|libgcam|libdualcam|libmakeup|libtriplecam|SuperSensor|SonyIMX|libmialgo|libsnpe" | grep -v "vendor/lib/rfsa/adsp/" | sort -u >> $PROJECT_DIR/working/proprietary/Camera
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libtriplecam|libremosaic|lib/camera/|lib64/camera/|libcamx|libcamera|mibokeh|lib_camera|libgcam|libdualcam|libmakeup|libtriplecam|SuperSensor|SonyIMX|libmialgo|libsnpe" | grep -v "vendor/lib/rfsa/adsp/" | sort -u >> $PROJECT_DIR/working/proprietary/Camera
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "motor" | grep -v "odex" | grep -v "vdex" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-motor
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/libois|vendor/lib64/libois" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-ois
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/libmmcamera|vendor/lib64/libmmcamera" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-sensors
@@ -100,7 +103,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "data.factory|h
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "fido" | sort -u >> $PROJECT_DIR/working/proprietary/Fido
 
 # Fingerprint
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "biometrics|etc/qti_fp/|libgf_|fingerprint|goodix|cdfinger|qfp-daemon|init_qfp_daemon|libqfp|fp_hal|libsl_fp|libarm_proxy_skel|libhvx_proxy_stub" | grep -v "android.hardware.fingerprint.xml" | sort -u >> $PROJECT_DIR/working/proprietary/Fingerprint
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "silead|biometrics|etc/qti_fp/|libgf_|fingerprint|goodix|cdfinger|qfp-daemon|init_qfp_daemon|libqfp|fp_hal|libsl_fp|libarm_proxy_skel|libhvx_proxy_stub" | grep -v "android.hardware.fingerprint.xml" | sort -u >> $PROJECT_DIR/working/proprietary/Fingerprint
 
 # Fingerprint-Firmware
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "etc/firmware/goodixfp|etc/firmware/fpctzappfingerprint" | sort -u >> $PROJECT_DIR/working/proprietary/Fingerprint-Firmware
@@ -145,7 +148,8 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "vendor.qti.har
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "mlshal" | sort -u >> $PROJECT_DIR/working/proprietary/Machine-Learning
 
 # NFC
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "lib/libpn5|nfc|secure_element|etc/libese|nxp" | grep -v "etc/permissions/android.hardware.nfc" | sort -u >> $PROJECT_DIR/working/proprietary/NFC
+cat $PROJECT_DIR/working/rom_all.txt | grep -v "vendor/" | grep -iE "app/NxpNfcNci/NxpNfcNci.apk|app/NxpSecureElement/NxpSecureElement.apk|etc/nfcee_access.xml|etc/permissions/com.nxp.nfc.xml|framework/com.nxp.nfc.jar|libnxpnfc" | sort -u >> $PROJECT_DIR/working/proprietary/NFC
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "lib/libpn5|nfc|secure_element|etc/libese|nxp|libp61|ls_client" | grep -v "etc/permissions/android.hardware.nfc" | sort -u >> $PROJECT_DIR/working/proprietary/NFC
 
 # Neural-networks
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "neuralnetworks|libhexagon" | sort -u >> $PROJECT_DIR/working/proprietary/Neural-networks

@@ -1,6 +1,7 @@
 vendor/bin/remosaic_daemon
 vendor/bin/vl53l1_daemon_main
 vendor/lib/hw/bbktouchscreen.default.so
+vendor/lib/hw/camera.msm8937.so
 vendor/lib/hw/camera.msm8953.so
 vendor/lib/hw/camera.msm8998.so
 vendor/lib/hw/camera.msmnile.so
@@ -31,6 +32,7 @@ vendor/lib/libVDDualCameraBlurlessAPI.so
 vendor/lib/libVDHDRAPI.so
 vendor/lib/libVDSuperPhotoAPI.so
 vendor/lib/libXMFD_AgeGender.so
+vendor/lib/lib_denoiser3.so
 vendor/lib/lib_lowlight.so
 vendor/lib/lib_oneplus_watermark.so
 vendor/lib/libalLDC.so
@@ -117,9 +119,6 @@ vendor/lib/libswregistrationalgo.so
 vendor/lib/libswvdec.so
 vendor/lib/libsymphony-cpu.so
 vendor/lib/libsymphonypower.so
-vendor/lib/libtriplecam_image_optical_zoom.so
-vendor/lib/libtriplecam_optical_zoom_control.so
-vendor/lib/libtriplecam_video_optical_zoom.so
 vendor/lib/libts_detected_face_hal.so
 vendor/lib/libts_face_beautify_hal.so
 vendor/lib/libubifocus.so
@@ -129,6 +128,7 @@ vendor/lib/libvidhance.so
 vendor/lib/libvidhance_gyro.so
 vendor/lib/libvl53l1_daemon.so
 vendor/lib/sensors.hal.tof.so
+vendor/lib64/hw/camera.msm8937.so
 vendor/lib64/hw/camera.msm8953.so
 vendor/lib64/hw/camera.msm8998.so
 vendor/lib64/hw/camera.msmnile.so
@@ -147,6 +147,7 @@ vendor/lib64/libMegviiFacepp-0.5.2.so
 vendor/lib64/libMiWatermark.so
 vendor/lib64/libSNPE.so
 vendor/lib64/libVDClearShot.so
+vendor/lib64/libVDDualCameraClearShot.so
 vendor/lib64/libVDSuperPhotoAPI.so
 vendor/lib64/libXMFD_AgeGender.so
 vendor/lib64/lib_denoiser3.so
@@ -204,9 +205,6 @@ vendor/lib64/libswvdec.so
 vendor/lib64/libsymphony-cpu.so
 vendor/lib64/libsymphonypower.so
 vendor/lib64/libsysmon_cdsp_skel.so
-vendor/lib64/libtriplecam_image_optical_zoom.so
-vendor/lib64/libtriplecam_optical_zoom_control.so
-vendor/lib64/libtriplecam_video_optical_zoom.so
 vendor/lib64/libts_detected_face_hal.so
 vendor/lib64/libts_face_beautify_hal.so
 vendor/lib64/libubifocus.so
@@ -219,3 +217,4 @@ vendor/lib64/sensors.hal.tof.so
 vendor/lib64/vendor.qti.hardware.camera.device@1.0.so
 vendor/lib64/vendor.qti.hardware.camera.device@1.1.so
 vendor/lib64/vendor.qti.hardware.camera.device@1.2.so
+vendor/lib64/vendor.qti.hardware.camera.device@3.2.so

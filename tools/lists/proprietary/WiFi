@@ -2,4 +2,5 @@ bin/iwpriv
 vendor/bin/cnss-daemon
 vendor/bin/cnss_diag
 vendor/bin/fstman
+vendor/bin/iwpriv
 vendor/bin/nv_mac
