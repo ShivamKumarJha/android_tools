@@ -175,16 +175,28 @@ done
 # Delete empty lists
 find $PROJECT_DIR/working/lists/ -size  0 -print0 | xargs -0 rm --
 
+# var for my format o/p. staging hence use untill ready.
+WILL_CHECK=n
+
 # Add props from lists
 props_list=`find $PROJECT_DIR/working/lists -type f -printf '%P\n' | sort`
 for list in $props_list; do
+	if [ "$WILL_CHECK" = "y" ]; then
+		echo "# $list" >> $PROJECT_DIR/working/temp_prop.mk
+		echo "PRODUCT_PROPERTY_OVERRIDES += \\" >> $PROJECT_DIR/working/temp_prop.mk
+	fi
 	awk 'NF{print $0 " \\"}' $PROJECT_DIR/working/lists/$list >> $PROJECT_DIR/working/temp_prop.mk
 done
 
 # Remove duplicate props & text formatting
-awk '!seen[$0]++' $PROJECT_DIR/working/temp_prop.mk > $PROJECT_DIR/working/vendor_prop.mk
+awk '/^PRODUCT_PROPERTY_OVERRIDES/ || !seen[$0]++' $PROJECT_DIR/working/temp_prop.mk > $PROJECT_DIR/working/vendor_prop.mk
 sed -i -e 's/^/    /' $PROJECT_DIR/working/vendor_prop.mk
-sed -i '1 i\PRODUCT_PROPERTY_OVERRIDES += \\' $PROJECT_DIR/working/vendor_prop.mk
+if [ "$WILL_CHECK" = "y" ]; then
+	sed -i "s|    #|#|g" $PROJECT_DIR/working/vendor_prop.mk
+	sed -i "s|    PRODUCT_PROPERTY_OVERRIDES|PRODUCT_PROPERTY_OVERRIDES|g" $PROJECT_DIR/working/vendor_prop.mk
+else
+	sed -i '1 i\PRODUCT_PROPERTY_OVERRIDES += \\' $PROJECT_DIR/working/vendor_prop.mk
+fi
 
 # cleanup temp files
 find $PROJECT_DIR/working/* ! -name 'vendor_prop.mk' -type d,f -exec rm -rf {} +
