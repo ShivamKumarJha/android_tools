@@ -92,9 +92,7 @@ sed -i "s|persist.sys.disable_rescue=.*||g" $PROJECT_DIR/working/staging.mk
 sed -i "s|persist.sys.enable_rescue=.*||g" $PROJECT_DIR/working/staging.mk
 sed -i "s|persist.sys.onehandctrl.enable=.*||g" $PROJECT_DIR/working/staging.mk
 sed -i "s|ro.product.first_api_level=.*||g" $PROJECT_DIR/working/staging.mk
-
-# Text formatting
-sed '/^$/d' $PROJECT_DIR/working/staging.mk | sort > $PROJECT_DIR/working/temp.mk
+sed '/^$/d' $PROJECT_DIR/working/staging.mk | sort -u > $PROJECT_DIR/working/temp.mk
 
 # Prop's grouping
 mkdir -p $PROJECT_DIR/working/lists/
@@ -168,8 +166,7 @@ cat $PROJECT_DIR/working/temp.mk | grep -iE "zram" | sort -u > $PROJECT_DIR/work
 # Store missing props as Misc
 cat $PROJECT_DIR/working/lists/* > $PROJECT_DIR/working/tempall.mk
 file_lines=`cat $PROJECT_DIR/working/temp.mk`
-for line in $file_lines;
-do
+for line in $file_lines; do
 	if ! grep -q "$line" $PROJECT_DIR/working/tempall.mk; then
 		echo "$line" >> $PROJECT_DIR/working/lists/Misc
 	fi
@@ -180,8 +177,7 @@ find $PROJECT_DIR/working/lists/ -size  0 -print0 | xargs -0 rm --
 
 # Add props from lists
 props_list=`find $PROJECT_DIR/working/lists -type f -printf '%P\n' | sort`
-for list in $props_list ;
-do
+for list in $props_list; do
 	awk 'NF{print $0 " \\"}' $PROJECT_DIR/working/lists/$list >> $PROJECT_DIR/working/temp_prop.mk
 done
 
@@ -191,11 +187,9 @@ sed -i -e 's/^/    /' $PROJECT_DIR/working/vendor_prop.mk
 sed -i '1 i\PRODUCT_PROPERTY_OVERRIDES += \\' $PROJECT_DIR/working/vendor_prop.mk
 
 # cleanup temp files
-if [ ! -z "$2" ] ; then
-	find $PROJECT_DIR/working/* ! -name 'vendor_prop.mk' -type d,f -exec rm -rf {} +
-else
+find $PROJECT_DIR/working/* ! -name 'vendor_prop.mk' -type d,f -exec rm -rf {} +
+if [ -z "$2" ] ; then
 	mv $PROJECT_DIR/working/vendor_prop.mk $PROJECT_DIR/working/system_prop.mk
-	find $PROJECT_DIR/working/* ! -name 'system_prop.mk' -type d,f -exec rm -rf {} +
 fi
 
 echo -e "${bold}${cyan}$(ls -d $PROJECT_DIR/working/*.mk) prepared!${nocol}"
