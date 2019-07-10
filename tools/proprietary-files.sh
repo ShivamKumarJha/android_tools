@@ -20,6 +20,8 @@ fi
 # copy $1
 if echo "$1" | grep "https" ; then
 	wget -O $PROJECT_DIR/working/rom_all.txt $1
+elif [ -d "$1" ]; then
+	find "$1" -type f -printf '%P\n' | sort > $PROJECT_DIR/working/rom_all.txt
 else
 	cp -a $1 $PROJECT_DIR/working/rom_all.txt
 fi
