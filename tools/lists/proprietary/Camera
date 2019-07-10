@@ -1,3 +1,5 @@
+lib/libchromaflash.so
+lib64/libseemore.so
 vendor/bin/remosaic_daemon
 vendor/bin/vl53l1_daemon_main
 vendor/lib/hw/bbktouchscreen.default.so
@@ -128,6 +130,10 @@ vendor/lib/libvidhance.so
 vendor/lib/libvidhance_gyro.so
 vendor/lib/libvl53l1_daemon.so
 vendor/lib/sensors.hal.tof.so
+vendor/lib/vendor.qti.hardware.camera.device@1.0.so
+vendor/lib/vendor.qti.hardware.camera.device@1.1.so
+vendor/lib/vendor.qti.hardware.camera.device@1.2.so
+vendor/lib/vendor.qti.hardware.camera.device@3.2.so
 vendor/lib64/hw/camera.msm8937.so
 vendor/lib64/hw/camera.msm8953.so
 vendor/lib64/hw/camera.msm8998.so
