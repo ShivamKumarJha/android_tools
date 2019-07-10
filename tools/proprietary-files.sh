@@ -6,14 +6,11 @@
 #
 # Helper functions
 
-# Common stuff
-source $PROJECT_DIR/tools/common_script.sh "y"
-
 # Store project path
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
-# clean previous list
-rm -rf $PROJECT_DIR/working/proprietary-files.txt
+# Common stuff
+source $PROJECT_DIR/tools/common_script.sh "y"
 
 if [ -z "$1" ]; then
 	echo -e "${bold}${red}Supply ROM file list as arguement!${nocol}"
