@@ -120,15 +120,15 @@ if [ -e working/bootdevice.img ]; then
 	echo -e "${bold}${cyan}Prebuilt kernel: $(ls dumps/$DEVICE/boot/Image.gz-dtb)${nocol}"
 	# Extract dtb
 	echo -e "${bold}${cyan}Extracting dtb${nocol}"
-	python3 tools/extract-dtb/extract-dtb.py working/bootdevice.img -o dumps/$DEVICE/bootdtb > /dev/null 2>&1
+	python3 tools/extract-dtb/extract-dtb.py working/bootdevice.img -o working/bootdtb > /dev/null 2>&1
 	# Extract dtsi
 	mkdir dumps/$DEVICE/bootdtsi
-	dtb_list=`find dumps/$DEVICE/bootdtb -type f -printf '%P\n' | sort`
+	dtb_list=`find working/bootdtb -type f -printf '%P\n' | sort`
 	for dtb_file in $dtb_list; do
 		DTB_FORMAT=`echo $dtb_file | sed 's|.*\.||'`
 		if [ "$DTB_FORMAT" = "dtb" ]; then
 			echo -e "${bold}${cyan}Extracting dtsi from $dtb_file${nocol}"
-			dtc -I dtb -O dts -o dumps/$DEVICE/bootdtsi/$dtb_file dumps/$DEVICE/bootdtb/$dtb_file > /dev/null 2>&1
+			dtc -I dtb -O dts -o dumps/$DEVICE/bootdtsi/$dtb_file working/bootdtb/$dtb_file > /dev/null 2>&1
 		fi
 	done
 fi
