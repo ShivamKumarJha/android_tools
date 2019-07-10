@@ -25,7 +25,9 @@ if [ -d "$1" ]; then
 	elif [ -e "$1"/system/build.prop ]; then
 		SYSTEM_PATH="system"
 	fi
-	CAT_FILE=""$1"/"$SYSTEM_PATH"/build.prop"
+	rm -rf $PROJECT_DIR/working/system_build.prop
+	find "$1/$SYSTEM_PATH" -maxdepth 1 -name "build*prop" -exec cat {} >> $PROJECT_DIR/working/system_build.prop \;
+	CAT_FILE="$PROJECT_DIR/working/system_build.prop"
 elif echo "$1" | grep "https" ; then
 	wget -O $PROJECT_DIR/working/system_build.prop $1
 	CAT_FILE="$PROJECT_DIR/working/system_build.prop"
@@ -34,7 +36,11 @@ else
 fi
 
 # Set variables
-BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "brand=" | sed "s|.*=||g" | sort -u | head -n 1 )
+if grep -q "brand=" "$CAT_FILE"; then
+	BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "brand=" | sed "s|.*=||g" | sort -u | head -n 1 )
+elif grep -q "manufacturer=" "$CAT_FILE"; then
+	BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "manufacturer=" | sed "s|.*=||g" | sort -u | head -n 1 )
+fi
 BRAND=${BRAND_TEMP,,}
 if grep -q "ro.vivo.product.release.name" "$CAT_FILE"; then
 	DEVICE=$( cat "$CAT_FILE" | grep "ro.vivo.product.release.name=" | sed "s|ro.vivo.product.release.name=||g" | sort -u | head -n 1 )
@@ -47,6 +53,9 @@ else
 fi
 if [ -z "$DEVICE" ]; then
 	DEVICE=$( cat "$CAT_FILE" | grep "ro.build" | grep "product=" | sed "s|.*=||g" | sed "s|ASUS_||g" | sort -u | head -n 1 )
+fi
+if [ -z "$DEVICE" ]; then
+	read -p "Enter device name manually: " DEVICE
 fi
 DESCRIPTION=$( cat "$CAT_FILE" | grep "ro." | grep "build.description=" | sed "s|.*=||g" | sort -u | head -n 1 )
 FINGERPRINT=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | sort -u | head -n 1 )
