@@ -109,7 +109,7 @@ cat $PROJECT_DIR/working/temp.mk | grep -iE "audio|af.|ro.af.|ro.config.media|ro
 # Bluetooth
 cat $PROJECT_DIR/working/temp.mk | grep -iE "bt.|bluetooth" | sort -u > $PROJECT_DIR/working/lists/Bluetooth
 # Camera
-cat $PROJECT_DIR/working/temp.mk | grep -iE "ts.|camera" | sort -u > $PROJECT_DIR/working/lists/Camera
+cat $PROJECT_DIR/working/temp.mk | grep -iE "ts.|camera" | grep -v "dalvik" | sort -u > $PROJECT_DIR/working/lists/Camera
 # Charging
 cat $PROJECT_DIR/working/temp.mk | grep -iE "persist.chg|chg.|cutoff_voltage_mv" | sort -u > $PROJECT_DIR/working/lists/Charging
 # CNE
