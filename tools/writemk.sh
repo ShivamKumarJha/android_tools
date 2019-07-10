@@ -11,7 +11,7 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 WORK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../working" >/dev/null && pwd )"
 
 # Text format
-source $PROJECT_DIR/tools/colors.sh
+source $PROJECT_DIR/tools/common_script.sh
 
 # create lists dir if not exits
 if [ ! -d "$WORK_DIR"/mklists/ ]; then

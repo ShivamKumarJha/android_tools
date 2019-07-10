@@ -11,7 +11,7 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 ROM_PATH="$1"
 
 # Common stuff
-source $PROJECT_DIR/tools/common_script.sh
+source $PROJECT_DIR/tools/common_script.sh "y"
 
 dir_check () {
 	cd "$PROJECT_DIR"/dummy_dt/working

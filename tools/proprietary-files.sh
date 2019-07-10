@@ -7,7 +7,7 @@
 # Helper functions
 
 # Common stuff
-source $PROJECT_DIR/tools/common_script.sh
+source $PROJECT_DIR/tools/common_script.sh "y"
 
 # Store project path
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
