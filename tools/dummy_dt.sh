@@ -187,7 +187,7 @@ common_dt () {
 	# GPS
 	mkdir -p "$DT_DIR"/configs/gps
 	cd "$DT_DIR"/configs/gps
-	cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep "vendor/etc" | grep -iE "adpr|flp|gps|izat|lowi|sap|xtwifi" | grep ".*\.conf" > $PROJECT_DIR/dummy_dt/working/configs.txt
+	cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep "vendor/etc" | grep -iE "apdr.conf|flp|gps|izat|lowi|sap|xtwifi" | grep ".*\.conf" > $PROJECT_DIR/dummy_dt/working/configs.txt
 	get_configs
 	# IDC
 	mkdir -p "$DT_DIR"/configs/idc
@@ -202,7 +202,7 @@ common_dt () {
 	# Media
 	mkdir -p "$DT_DIR"/configs/media
 	cd "$DT_DIR"/configs/media
-	cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep -iE "vendor/etc/media_" > $PROJECT_DIR/dummy_dt/working/configs.txt
+	cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep -iE "vendor/etc/media_|vendor/etc/system_properties.xml" > $PROJECT_DIR/dummy_dt/working/configs.txt
 	get_configs
 	# Seccomp
 	mkdir -p "$DT_DIR"/configs/seccomp
