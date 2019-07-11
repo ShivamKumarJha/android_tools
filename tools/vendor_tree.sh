@@ -18,6 +18,12 @@ if [ -z "$GIT_TOKEN" ]; then
 	exit
 fi
 
+# Exit if no arguements
+if [ -z "$1" ] ; then
+	echo -e "${bold}${red}Supply ROM source as arguement!${nocol}"
+	exit
+fi
+
 # o/p
 for var in "$@"; do
 	# Check if directory
@@ -41,7 +47,7 @@ for var in "$@"; do
 		echo -e "${bold}${cyan}Initializing git.${nocol}"
 		git init . > /dev/null 2>&1
 		echo -e "${bold}${cyan}Adding origin: git@github.com:ShivamKumarJha/"$VT_REPO".git ${nocol}"
-		git remote add origin https://github.com/ShivamKumarJha/"$VT_REPO".git > /dev/null 2>&1
+		git remote add origin git@github.com:ShivamKumarJha/"$VT_REPO".git > /dev/null 2>&1
 	fi
 	BRANCH=$(echo $DESCRIPTION | tr ' ' '-' | sort -u | head -n 1 )
 	COMMIT_MSG=$(echo "$DEVICE: $FINGERPRINT" | sort -u | head -n 1 )
