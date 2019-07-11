@@ -32,14 +32,14 @@ cat $PROJECT_DIR/working/Modified.txt >> $TMPDIR/dt_common/target/blobs_list.txt
 
 # Prepare proprietary-files.txt
 . $PROJECT_DIR/tools/proprietary-files.sh $TMPDIR/dt_common/common/blobs_list.txt > /dev/null 2>&1
-cat $PROJECT_DIR/working/proprietary-files.txt > $TMPDIR/dt_common/common/proprietary-files.txt
+cat $PROJECT_DIR/working/proprietary-files.txt > $TMPDIR/dt_common/common-proprietary-files.txt
 . $PROJECT_DIR/tools/proprietary-files.sh $TMPDIR/dt_common/source/blobs_list.txt > /dev/null 2>&1
-cat $PROJECT_DIR/working/proprietary-files.txt > $TMPDIR/dt_common/source/proprietary-files.txt
+cat $PROJECT_DIR/working/proprietary-files.txt > $TMPDIR/dt_common/source-proprietary-files.txt
 . $PROJECT_DIR/tools/proprietary-files.sh $TMPDIR/dt_common/target/blobs_list.txt > /dev/null 2>&1
-cat $PROJECT_DIR/working/proprietary-files.txt > $TMPDIR/dt_common/target/proprietary-files.txt
+cat $PROJECT_DIR/working/proprietary-files.txt > $TMPDIR/dt_common/target-proprietary-files.txt
 
 # Final results
 rm -rf $PROJECT_DIR/working/*
-find $TMPDIR/dt_common/ -name 'blobs_list.txt' -type f -exec rm -rf {} +
-cp -a $TMPDIR/dt_common/* $PROJECT_DIR/working/
+cp -a $TMPDIR/dt_common/*-proprietary-files.txt $PROJECT_DIR/working/
+rm -rf $TMPDIR/dt_common/
 echo -e "${bold}${cyan}Files prepared. Check $PROJECT_DIR/working/${nocol}"
