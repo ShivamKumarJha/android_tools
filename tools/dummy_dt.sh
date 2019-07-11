@@ -242,7 +242,7 @@ common_dt () {
 	rm -rf "$DT_DIR"/rootdir-temp/
 	# root
 	cd "$DT_DIR"/
-	cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep -iE "vendor/compatibility_matrix.xml|vendor/manifest.xml|vendor/etc/vintf/compatibility_matrix|vendor/etc/vintf/manifest|vendor/ext_xml/compatibility_matrix|vendor/ext_xml/manifest|vendor/etc/ext_xml/compatibility_matrix|vendor/etc/ext_xml/manifest" > $PROJECT_DIR/dummy_dt/working/configs.txt
+	cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep -iE "compatibility_matrix.device.xml|vendor/compatibility_matrix.xml|vendor/manifest.xml|vendor/etc/vintf/compatibility_matrix|vendor/etc/vintf/manifest|vendor/ext_xml/compatibility_matrix|vendor/ext_xml/manifest|vendor/etc/ext_xml/compatibility_matrix|vendor/etc/ext_xml/manifest" > $PROJECT_DIR/dummy_dt/working/configs.txt
 	get_configs
 
 	# device.mk
@@ -275,6 +275,10 @@ common_dt () {
 	fi
 	if [ -e "$DT_DIR"/compatibility_matrix.xml ]; then
 		printf "\nDEVICE_MATRIX_FILE := \$(DEVICE_PATH)/compatibility_matrix.xml" >> "$DT_DIR"/BoardConfig.mk
+	fi
+	if [ -e "$DT_DIR"/compatibility_matrix.device.xml ]; then
+		mv "$DT_DIR"/compatibility_matrix.device.xml "$DT_DIR"/framework_compatibility_matrix.xml
+		printf "\nDEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \$(DEVICE_PATH)/framework_compatibility_matrix.xml" >> "$DT_DIR"/BoardConfig.mk
 	fi
 	printf "\n\n-include vendor/"$BRAND"/"$DEVICE"/BoardConfigVendor.mk" >> "$DT_DIR"/BoardConfig.mk
 	# lineage_"$DEVICE".mk
