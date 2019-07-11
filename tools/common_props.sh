@@ -13,7 +13,7 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 source $PROJECT_DIR/tools/common_script.sh
 
 # Exit if invalid arguements
-if [ ! -d "$1" ] || [ ! -d "$2" ]; then
+if [ -z "$1" ] || [ -z "$2" ]; then
 	echo -e "${bold}${red}Supply source & target ROM path's as arguements!${nocol}"
 	exit
 fi
