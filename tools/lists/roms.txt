@@ -1,6 +1,7 @@
 https://raw.githubusercontent.com/AndroidDumps/oneplus_oneplus6_dump/OnePlus6-user-10-QKQ1.190406.002-1905032135-release-keys
 https://raw.githubusercontent.com/AndroidDumps/oneplus_oneplus6t_dump/OnePlus6T-user-10-QKQ1.190406.002-1905032135-release-keys
 https://raw.githubusercontent.com/AndroidDumps/oneplus_oneplus7pro_dump/OnePlus7Pro-user-9-PKQ1.190110.001-1906032330-release-keys
+https://raw.githubusercontent.com/AndroidDumps/razer_cheryl_dump/cheryl-user-8.1.0-OPM1.171019.011-RZR-180803-6033-release-keys
 https://raw.githubusercontent.com/AndroidDumps/vivo_1818_dump/sm6150-user-9-PKQ1.181203.001-compiler05071942-release-keys
 https://raw.githubusercontent.com/AndroidDumps/vivo_pd1832_dump/sm6150-user-9-PKQ1.181203.001-compiler06062011-release-keys
 https://raw.githubusercontent.com/AndroidDumps/xiaomi_andromeda_dump/andromeda-user-10-QKQ1.190406.002-9.04.30.2.native.google.user-release-keys
@@ -12,6 +13,7 @@ https://raw.githubusercontent.com/AndroidDumps/xiaomi_pine_dump/pine-user-9-PKQ1
 https://raw.githubusercontent.com/AndroidDumps/xiaomi_raphael_dump/raphael-user-9-PKQ1.181121.001-V10.3.12.0.PFKCNXM-release-keys
 https://raw.githubusercontent.com/AndroidDumps/xiaomi_wayne_dump/wayne-user-9-PKQ1.180904.001-V10.3.4.0.PDCCNXM-release-keys
 https://raw.githubusercontent.com/AndroidDumps/xiaomi_whyred_dump/whyred-user-9-PKQ1.180904.001-9.6.27-release-keys
+https://raw.githubusercontent.com/AndroidDumps/xiaomi_ysl_dump/ysl-user-9-PKQ1.181203.001-V10.3.3.0.PEFCNXM-release-keys
 https://raw.githubusercontent.com/TadiT7/google_bonito_dump/bonito-user-9-PD2A.190115.032-5340326-release-keys
 https://raw.githubusercontent.com/TadiT7/meizu_16_dump/meizu_16-user-8.1.0-OPM1.171019.026-1537501340-release-keys
 https://raw.githubusercontent.com/TadiT7/meizu_16th_dump/meizu_16th-user-8.1.0-OPM1.171019.026-1539831741-release-keys
@@ -38,5 +40,4 @@ https://raw.githubusercontent.com/TadiT7/xiaomi_polaris_dump/polaris-user-9-PKQ1
 https://raw.githubusercontent.com/TadiT7/xiaomi_sagit_dump/sagit-user-9-PKQ1.190118.001-9.4.22-release-keys
 https://raw.githubusercontent.com/TadiT7/xiaomi_sakura_dump/sakura-user-9-PKQ1.180917.001-9.4.11-release-keys
 https://raw.githubusercontent.com/TadiT7/xiaomi_violet_dump/violet-user-9-PKQ1.181203.001-V10.2.7.0.PFHINXM-release-keys
-https://raw.githubusercontent.com/TadiT7/xiaomi_ysl_dump/ysl-user-8.1.0-OPM1.171019.011-9.2.21-release-keys
 https://raw.githubusercontent.com/twistloop/xiaomi_perseus_dump/perseus-user-9-PKQ1.180729.001-9.3.7-release-keys
