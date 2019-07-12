@@ -40,7 +40,7 @@ for var in "$@"; do
 	if [ ! -d .git ]; then
 		echo -e "${bold}${cyan}Initializing git.${nocol}"
 		git init . > /dev/null 2>&1
-		git remote add origin https://github.com/ShivamKumarJha/"$REPO".git > /dev/null 2>&1
+		git remote add origin git@github.com:ShivamKumarJha/"$VT_REPO".git > /dev/null 2>&1
 	fi
 	if [[ ! -z $(git status -s) ]]; then
 		echo -e "${bold}${cyan}Creating branch $BRANCH${nocol}"
