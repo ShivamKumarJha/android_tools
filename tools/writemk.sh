@@ -37,7 +37,7 @@ if [ -e "$WORK_DIR"/temp.mk ]; then
 	sed -i '1 i\PRODUCT_COPY_FILES += \\' "$WORK_DIR"/temp.mk
 	sed -i '1 i\'"$3"'' "$WORK_DIR"/temp.mk
 	printf "\n" >> "$WORK_DIR"/temp.mk
-	NAME=$(echo "$3" | sed "s|# ||g" | sed "s| .*||g")
+	NAME=$(echo "$3" | sed "s|# ||g" | tr ' ' '-')
 	cat "$WORK_DIR"/temp.mk >> "$WORK_DIR"/mklists/"$NAME"
 	rm -rf "$WORK_DIR"/temp.mk
 fi
