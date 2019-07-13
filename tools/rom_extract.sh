@@ -133,18 +133,6 @@ if [ -e working/bootdevice.img ]; then
 	done
 fi
 
-# Store trustzone version in board-info.txt
-find working/ -name 'tz.*' -exec mv {} working/tz \;
-if [ ! -e working/tz ]; then
-	find working/ -name 'tz_*' -exec mv {} working/tz \;
-fi
-if [ -e working/tz ]; then
-	strings working/tz | grep QC_IMAGE_VERSION_STRING | sed "s|QC_IMAGE_VERSION_STRING|require version-trustzone|g" > dumps/$DEVICE/board-info.txt
-	echo -e "${bold}${cyan}$(cat dumps/${DEVICE}/board-info.txt)${nocol}"
-else
-	echo -e "${bold}${cyan}tz not found!${nocol}"
-fi
-
 # Copy to dumps
 for imgdir in "${arr[@]}"; do
 	if [ -e working/$imgdir.img ]; then
@@ -152,6 +140,22 @@ for imgdir in "${arr[@]}"; do
 		cp -a working/$imgdir/ dumps/$DEVICE/ > /dev/null 2>&1
 	fi
 done
+
+# Store baseband, trustzone & vendor version in board-info.txt
+if [ -e working/modem.img ]; then
+	strings working/modem.img | grep "QC_IMAGE_VERSION_STRING=MPSS.AT." | sed "s|QC_IMAGE_VERSION_STRING=MPSS.AT.|require version-baseband=|g" >> dumps/$DEVICE/board-info.txt
+fi
+find working/ -name 'tz.*' -exec mv {} working/tz \;
+if [ ! -e working/tz ]; then
+	find working/ -name 'tz_*' -exec mv {} working/tz \;
+fi
+if [ -e working/tz ]; then
+	strings working/tz | grep "QC_IMAGE_VERSION_STRING" | sed "s|QC_IMAGE_VERSION_STRING|require version-trustzone|g" >> dumps/$DEVICE/board-info.txt
+fi
+if [ -e dumps/$DEVICE/vendor/build.prop ]; then
+	strings dumps/$DEVICE/vendor/build.prop | grep "ro.vendor.build.date.utc" | sed "s|ro.vendor.build.date.utc|require version-vendor|g" >> dumps/$DEVICE/board-info.txt
+fi
+echo -e "${bold}${cyan}$(cat dumps/${DEVICE}/board-info.txt)${nocol}"
 
 # List ROM
 find dumps/$DEVICE/ -type f -printf '%P\n' | sort | grep -v ".git/" > dumps/$DEVICE/all_files.txt
