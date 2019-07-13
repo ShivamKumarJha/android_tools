@@ -58,7 +58,11 @@ if [ -z "$DEVICE" ]; then
 	read -p "Enter device name manually: " DEVICE
 fi
 DESCRIPTION=$( cat "$CAT_FILE" | grep "ro." | grep "build.description=" | sed "s|.*=||g" | sort -u | head -n 1 )
-FINGERPRINT=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | sort -u | head -n 1 )
+if grep -q "build.fingerprint=" "$CAT_FILE"; then
+	FINGERPRINT=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | sort -u | head -n 1 )
+elif grep -q "build.thumbprint=" "$CAT_FILE"; then
+	FINGERPRINT=$( cat "$CAT_FILE" | grep "ro." | grep "build.thumbprint=" | sed "s|.*=||g" | sort -u | head -n 1 )
+fi
 if [ -z "$FINGERPRINT" ]; then
 	FINGERPRINT=$DESCRIPTION
 fi

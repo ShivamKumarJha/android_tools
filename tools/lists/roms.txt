@@ -1,3 +1,17 @@
+https://raw.githubusercontent.com/AndroidDumps/motorola_ahannah_dump/user-8.0.0-OPP27.91-179-8-5-release-keys
+https://raw.githubusercontent.com/AndroidDumps/motorola_aljeter_dump/user-9-PPPS29.55-25-4-da341-release-keys
+https://raw.githubusercontent.com/AndroidDumps/motorola_channel_dump/user-9-PPYS29.105-57-4-d6c0f-release-keys
+https://raw.githubusercontent.com/AndroidDumps/motorola_deen_sprout_dump/user-9-PPKS29.68-16-33-5-e8ba0-release-keys
+https://raw.githubusercontent.com/AndroidDumps/motorola_evert_dump/user-9-PPWS29.116-11-6-9c4de2-release-keys
+https://raw.githubusercontent.com/AndroidDumps/motorola_foles_dump/user-9-PPF29.105-25-5-84f8c-release-keys
+https://raw.githubusercontent.com/AndroidDumps/motorola_jeter_dump/user-9-PPP29.118-9-8e176-release-keys
+https://raw.githubusercontent.com/AndroidDumps/motorola_lake_dump/user-9-PCW29.83-56-49edb-release-keys
+https://raw.githubusercontent.com/AndroidDumps/motorola_messi_dump/user-9-PDX29.84-42-1cb30-release-keys
+https://raw.githubusercontent.com/AndroidDumps/motorola_ocean_dump/user-9-PPO29.80-79-16772-release-keys
+https://raw.githubusercontent.com/AndroidDumps/motorola_rhannah_dump/user-8.0.0-OPPS27.91-122-4-4-release-keys
+https://raw.githubusercontent.com/AndroidDumps/motorola_river_dump/user-9-PPOS29.114-16-5-2-6e14b-release-keys
+https://raw.githubusercontent.com/AndroidDumps/motorola_rjames_go_dump/user-8.1.0-OPP28.151-22-5-42293-release-keys
+https://raw.githubusercontent.com/AndroidDumps/motorola_surfna_dump/user-9-PCB29.73-39-5bf3c-release-keys
 https://raw.githubusercontent.com/AndroidDumps/oneplus_oneplus6_dump/OnePlus6-user-10-QKQ1.190406.002-1905032135-release-keys
 https://raw.githubusercontent.com/AndroidDumps/oneplus_oneplus6t_dump/OnePlus6T-user-10-QKQ1.190406.002-1905032135-release-keys
 https://raw.githubusercontent.com/AndroidDumps/oneplus_oneplus7pro_dump/OnePlus7Pro-user-9-PKQ1.190110.001-1906032330-release-keys

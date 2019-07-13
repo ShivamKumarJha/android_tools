@@ -26,6 +26,7 @@ vendor/lib/libSTDualCamCaptureBokeh.so
 vendor/lib/libSTDualCamPreviewBokeh.so
 vendor/lib/libSTdisp.so
 vendor/lib/libSTdisp_cpu.so
+vendor/lib/libSonyDefocus.so
 vendor/lib/libStereoblur.so
 vendor/lib/libSunnyDPCProcess.so
 vendor/lib/libVDBlurlessAPI_v2.so
