@@ -244,13 +244,22 @@ common_dt () {
 	cd "$DT_DIR"/
 	cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep -iE "compatibility_matrix.device.xml|vendor/compatibility_matrix.xml|vendor/manifest.xml|vendor/etc/vintf/compatibility_matrix|vendor/etc/vintf/manifest|vendor/ext_xml/compatibility_matrix|vendor/ext_xml/manifest|vendor/etc/ext_xml/compatibility_matrix|vendor/etc/ext_xml/manifest" > $PROJECT_DIR/dummy_dt/working/configs.txt
 	get_configs
-
+	# board-info.txt
+	cd $PROJECT_DIR/dummy_dt/working/
+	cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep -iE "modem.b16|tz.mbn" > $PROJECT_DIR/dummy_dt/working/configs.txt
+	get_configs
+	if [ -e modem.b16 ]; then
+		strings modem.b16 | grep "QC_IMAGE_VERSION_STRING=MPSS.AT." | sed "s|QC_IMAGE_VERSION_STRING=MPSS.AT.|require version-baseband=|g" >> "$DT_DIR"/board-info.txt
+	fi
+	if [ -e tz.mbn ]; then
+		strings tz.mbn | grep "QC_IMAGE_VERSION_STRING" | sed "s|QC_IMAGE_VERSION_STRING|require version-trustzone|g" >> "$DT_DIR"/board-info.txt
+	fi
+	strings vendor_build.prop | grep "ro.vendor.build.date.utc" | sed "s|ro.vendor.build.date.utc|require version-vendor|g" >> "$DT_DIR"/board-info.txt
 	# device.mk
 	. $PROJECT_DIR/tools/dt_mk.sh "$DT_DIR"
 	# Inherit vendor
 	printf "# Inherit vendor" >> "$DT_DIR"/device.mk
 	printf "\n\$(call inherit-product, vendor/"$BRAND"/"$DEVICE"/"$DEVICE"-vendor.mk)" >> "$DT_DIR"/device.mk
-
 	# Android.mk
 	printf "LOCAL_PATH := \$(call my-dir)" >> "$DT_DIR"/Android.mk
 	printf "\nifeq (\$(TARGET_DEVICE),"$DEVICE")" >> "$DT_DIR"/Android.mk
