@@ -143,13 +143,7 @@ done
 if [ -e working/modem.img ]; then
 	strings working/modem.img | grep "QC_IMAGE_VERSION_STRING=MPSS.AT." | sed "s|QC_IMAGE_VERSION_STRING=MPSS.AT.|require version-baseband=|g" >> dumps/$DEVICE/board-info.txt
 fi
-find working/ -name 'tz.*' -exec mv {} working/tz \;
-if [ ! -e working/tz ]; then
-	find working/ -name 'tz_*' -exec mv {} working/tz \;
-fi
-if [ -e working/tz ]; then
-	strings working/tz | grep "QC_IMAGE_VERSION_STRING" | sed "s|QC_IMAGE_VERSION_STRING|require version-trustzone|g" >> dumps/$DEVICE/board-info.txt
-fi
+find working/ -type f \( -name "tz.mbn" -o -name "tz.img" -o -name "tz_*" \) -exec strings {} \; | grep "QC_IMAGE_VERSION_STRING" | sed "s|QC_IMAGE_VERSION_STRING|require version-trustzone|g" >> dumps/$DEVICE/board-info.txt
 if [ -e dumps/$DEVICE/vendor/build.prop ]; then
 	strings dumps/$DEVICE/vendor/build.prop | grep "ro.vendor.build.date.utc" | sed "s|ro.vendor.build.date.utc|require version-vendor|g" >> dumps/$DEVICE/board-info.txt
 fi
