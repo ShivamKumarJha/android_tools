@@ -128,6 +128,7 @@ if [ -e working/bootdevice.img ]; then
 		echo -e "${bold}${cyan}Extracting dtsi from $dtb_file${nocol}"
 		dtc -I dtb -O dts -o dumps/$DEVICE/bootdtsi/$dtb_file working/bootdtb/$dtb_file > /dev/null 2>&1
 	done
+	find dumps/$DEVICE/bootdtsi -name "*.dtb" -exec rename 's/\.dtb$/.dtsi/' '{}' \;
 fi
 
 # Copy to dumps
