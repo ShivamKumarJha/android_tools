@@ -123,13 +123,10 @@ if [ -e working/bootdevice.img ]; then
 	python3 tools/extract-dtb/extract-dtb.py working/bootdevice.img -o working/bootdtb > /dev/null 2>&1
 	# Extract dtsi
 	mkdir dumps/$DEVICE/bootdtsi
-	dtb_list=`find working/bootdtb -type f -printf '%P\n' | sort`
+	dtb_list=`find working/bootdtb -name '*.dtb' -type f -printf '%P\n' | sort`
 	for dtb_file in $dtb_list; do
-		DTB_FORMAT=`echo $dtb_file | sed 's|.*\.||'`
-		if [ "$DTB_FORMAT" = "dtb" ]; then
-			echo -e "${bold}${cyan}Extracting dtsi from $dtb_file${nocol}"
-			dtc -I dtb -O dts -o dumps/$DEVICE/bootdtsi/$dtb_file working/bootdtb/$dtb_file > /dev/null 2>&1
-		fi
+		echo -e "${bold}${cyan}Extracting dtsi from $dtb_file${nocol}"
+		dtc -I dtb -O dts -o dumps/$DEVICE/bootdtsi/$dtb_file working/bootdtb/$dtb_file > /dev/null 2>&1
 	done
 fi
 
