@@ -121,14 +121,14 @@ if [ -e working/bootdevice.img ]; then
 	# Extract dtb
 	echo -e "${bold}${cyan}Extracting dtb${nocol}"
 	python3 tools/extract-dtb/extract-dtb.py working/bootdevice.img -o working/bootdtb > /dev/null 2>&1
-	# Extract dtsi
-	mkdir dumps/$DEVICE/bootdtsi
+	# Extract dts
+	mkdir dumps/$DEVICE/bootdts
 	dtb_list=`find working/bootdtb -name '*.dtb' -type f -printf '%P\n' | sort`
 	for dtb_file in $dtb_list; do
-		echo -e "${bold}${cyan}Extracting dtsi from $dtb_file${nocol}"
-		dtc -I dtb -O dts -o dumps/$DEVICE/bootdtsi/$dtb_file working/bootdtb/$dtb_file > /dev/null 2>&1
+		echo -e "${bold}${cyan}Extracting dts from $dtb_file${nocol}"
+		dtc -I dtb -O dts -o dumps/$DEVICE/bootdts/$dtb_file working/bootdtb/$dtb_file > /dev/null 2>&1
 	done
-	find dumps/$DEVICE/bootdtsi -name "*.dtb" -exec rename 's/\.dtb$/.dtsi/' '{}' \;
+	find dumps/$DEVICE/bootdts -name "*.dtb" -exec rename 's/\.dtb$/.dts/' '{}' \;
 fi
 
 # Copy to dumps
