@@ -162,6 +162,9 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "neuralnetworks
 # OnePlus
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "oneplus" | sort -u >> $PROJECT_DIR/working/proprietary/OnePlus
 
+# Oppo
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "oppo" | sort -u >> $PROJECT_DIR/working/proprietary/Oppo
+
 # Qdutils_disp
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "qdutils_disp" | sort -u >> $PROJECT_DIR/working/proprietary/Qdutils
 

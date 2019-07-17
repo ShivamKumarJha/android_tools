@@ -73,9 +73,8 @@ common_setup () {
 
 common_core () {
 	# Variables
-	source $PROJECT_DIR/tools/rom_vars.sh "$PROJECT_DIR/dummy_dt/working/system_build.prop" > /dev/null 2>&1
+	source $PROJECT_DIR/tools/rom_vars.sh "$PROJECT_DIR/dummy_dt/working/system_build.prop"
 	DT_DIR="$PROJECT_DIR"/dummy_dt/"$BRAND"/"$DEVICE"
-	echo -e "${bold}${cyan}$BRAND : $DEVICE : $VERSION : $FINGERPRINT ${nocol}"
 
 	# skip or proceed
 	if [ -z "$BRAND" ] || [ -z "$DEVICE" ] || [ -z "$FINGERPRINT" ] || [ -z "$VERSION" ] || [ ! -e $PROJECT_DIR/dummy_dt/working/system_build.prop ] || [ ! -e $PROJECT_DIR/dummy_dt/working/vendor_build.prop ] ; then
@@ -278,8 +277,7 @@ common_dt () {
 	printf "DEVICE_PATH := device/"$BRAND"/"$DEVICE"" >> "$DT_DIR"/BoardConfig.mk
 	printf "\nBOARD_VENDOR := "$BRAND"\n" >> "$DT_DIR"/BoardConfig.mk
 	if [ "$VERSION" -gt 8 ]; then
-		printf "\n# Security patch level\n" >> "$DT_DIR"/BoardConfig.mk
-		grep "ro.build.version.security_patch=" $PROJECT_DIR/dummy_dt/working/system_build.prop | sed "s|ro.build.version.security_patch=|VENDOR_SECURITY_PATCH := |g" >> "$DT_DIR"/BoardConfig.mk
+		printf "\n# Security patch level\nVENDOR_SECURITY_PATCH := "$SECURITY_PATCH"\n" >> "$DT_DIR"/BoardConfig.mk
 	fi
 	if [ -e "$DT_DIR"/manifest.xml ]; then
 		printf "\n# HIDL" >> "$DT_DIR"/BoardConfig.mk
