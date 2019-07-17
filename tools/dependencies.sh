@@ -16,13 +16,14 @@ else
 	user_password=$1
 fi
 
+# Install some packages
+echo "$user_password" | sudo -S apt-get install -y android-tools-fsutils brotli git device-tree-compiler python3-pip
+pip3 install pycryptodome
+
 # Clone repo's
-for toolsdir in "extract_android_ota_payload" "extract-dtb" "mkbootimg_tools" "sdat2img"; do
+for toolsdir in "extract_android_ota_payload" "extract-dtb" "mkbootimg_tools" "oppo_ozip_decrypt" "sdat2img"; do
 	if [ ! -d "$PROJECT_DIR/tools/$toolsdir" ]; then
 		git clone -q https://gitlab.com/ShivamKumarJha/$toolsdir $PROJECT_DIR/tools/$toolsdir --depth 1
 		chmod +x $PROJECT_DIR/tools/$toolsdir/*
 	fi
 done
-
-# Install some packages
-echo "$user_password" | sudo -S apt-get install -y android-tools-fsutils brotli git device-tree-compiler

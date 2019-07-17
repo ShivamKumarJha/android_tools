@@ -6,5 +6,6 @@ vendor/
 tools/extract_android_ota_payload/
 tools/extract-dtb/
 tools/mkbootimg_tools/
+tools/oppo_ozip_decrypt/
 tools/sdat2img/
 .fuse_*
