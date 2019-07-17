@@ -174,6 +174,7 @@ if [ -z "$(ls -A $PROJECT_DIR/input/* | grep -v "place_rom_zip_here.txt")" ]; th
 	echo -e "${bold}${red}No zip or gz file detected in input folder.${nocol}"
 	exit
 else
+	find $PROJECT_DIR/input/ -type f,l -name "*.ozip" -exec python3 $PROJECT_DIR/tools/oppo_ozip_decrypt/ozipdecrypt.py {} \;
 	rom_list=`find $PROJECT_DIR/input/ -type f,l -printf '%P\n' | sort | grep -v "place_rom_zip_here.txt"`
 	for file in $rom_list; do
 		ZIP_FORMAT=`echo $file | sed 's|.*\.||'`
