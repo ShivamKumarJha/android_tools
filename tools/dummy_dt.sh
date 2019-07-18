@@ -245,7 +245,6 @@ common_dt () {
 	get_configs
 	# board-info.txt
 	if grep -q "board-info.txt" $PROJECT_DIR/dummy_dt/working/all_files.txt; then
-		cd "$DT_DIR"
 		cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep -iE "board-info.txt" > $PROJECT_DIR/dummy_dt/working/configs.txt
 		get_configs
 	else
