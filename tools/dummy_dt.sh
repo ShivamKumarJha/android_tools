@@ -13,15 +13,6 @@ ROM_PATH="$1"
 # Common stuff
 source $PROJECT_DIR/tools/common_script.sh "y"
 
-dir_check () {
-	cd "$PROJECT_DIR"/dummy_dt/working
-	if [ ! -d "$ROM_PATH" ]; then
-		echo -e "${bold}${red}Supply full dumps path${nocol}"
-		exit
-	fi
-	cd "$PROJECT_DIR"/
-}
-
 proprietary_rootdir () {
 	TSTART=$(grep -nr "# Misc" "$DT_DIR"/proprietary-files.txt | sed "s|:.*||g")
 	TEND=$(wc -l "$DT_DIR"/proprietary-files.txt | sed "s| .*||g")
@@ -441,13 +432,12 @@ else
 	for var in "$@"
 	do
 		# setup
-		ROM_PATH="$var"
+		ROM_PATH=$( realpath "$var" )
 		if [ -e "$ROM_PATH"/system/system/build.prop ]; then
 			SYSTEM_PATH="system/system"
 		elif [ -e "$ROM_PATH"/system/build.prop ]; then
 			SYSTEM_PATH="system"
 		fi
-		dir_check
 		common_setup
 		find "$ROM_PATH" -type f -printf '%P\n' | sort > $PROJECT_DIR/dummy_dt/working/all_files.txt
 		find "$ROM_PATH/$SYSTEM_PATH" -maxdepth 1 -name "build*prop" -exec cat {} >> $PROJECT_DIR/dummy_dt/working/system_build.prop \;
