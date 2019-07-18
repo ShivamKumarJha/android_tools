@@ -127,8 +127,8 @@ if [ -e working/bootdevice.img ]; then
 	for dtb_file in $dtb_list; do
 		echo -e "${bold}${cyan}Extracting dts from $dtb_file${nocol}"
 		dtc -I dtb -O dts -o dumps/$DEVICE/bootdts/$dtb_file working/bootdtb/$dtb_file > /dev/null 2>&1
+		mv dumps/$DEVICE/bootdts/$dtb_file $(echo "dumps/$DEVICE/bootdts/$dtb_file" | sed -r 's|.dtb|.dts|g')
 	done
-	find dumps/$DEVICE/bootdts -name "*.dtb" -exec rename 's/\.dtb$/.dts/' '{}' \;
 fi
 
 # Copy to dumps
