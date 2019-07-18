@@ -175,13 +175,14 @@ if [ -z "$(ls -A $PROJECT_DIR/input/* | grep -v "place_rom_zip_here.txt")" ]; th
 	exit
 else
 	find $PROJECT_DIR/input/ -type f,l -name "*.ozip" -exec python3 $PROJECT_DIR/tools/oppo_ozip_decrypt/ozipdecrypt.py {} \;
+	rm -rf $PROJECT_DIR/input/*.ozip
 	rom_list=`find $PROJECT_DIR/input/ -type f,l -printf '%P\n' | sort | grep -v "place_rom_zip_here.txt"`
 	for file in $rom_list; do
 		ZIP_FORMAT=`echo $file | sed 's|.*\.||'`
 		echo -e "${bold}${cyan}Extracting $file${nocol}"
-		if echo "$ZIP_FORMAT" | grep -iE "zip"; then
+		if [ "$ZIP_FORMAT" = "zip" ]; then
 			unzip $PROJECT_DIR/input/${file} -d $PROJECT_DIR/working
-		elif echo "$ZIP_FORMAT" | grep -iE "gz"; then
+		elif [ "$ZIP_FORMAT" = "gz" ] || [ "$ZIP_FORMAT" = "tgz" ]; then
 			tar -zxvf $PROJECT_DIR/input/${file} -C $PROJECT_DIR/working
 			for i in "${arr[@]}" "boot"; do
 				find working/ -name "$i.img" -exec mv {} $PROJECT_DIR/working/$i.img \;
