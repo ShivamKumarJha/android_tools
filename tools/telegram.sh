@@ -13,7 +13,7 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 source $PROJECT_DIR/tools/common_script.sh
 
 # Exit if no arguements
-if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]; then
+if [ $# -lt 5 ]; then
 	echo -e "${bold}${red}Supply apiToken, chat_id, text-file, parse_mode & php-output-path as arguements!${nocol}"
 	exit
 fi
