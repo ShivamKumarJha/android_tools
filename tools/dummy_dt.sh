@@ -136,7 +136,9 @@ git_op () {
 		if [ -z "$TG_API" ]; then
 			echo -e "${bold}${cyan}Telegram API key not found! Skipping Telegram notification.${nocol}"
 		else
-			bash $PROJECT_DIR/tools/telegram.sh "$TG_API" "@dummy_dt" "$PROJECT_DIR/dummy_dt/working/tg.html" "HTML" "$PROJECT_DIR/dummy_dt/working/telegram.php" > /dev/null 2>&1
+			CHAT_ID="@dummy_dt"
+			HTML_FILE=$(cat $PROJECT_DIR/dummy_dt/working/tg.html)
+			curl -s "https://api.telegram.org/bot${TG_API}/sendmessage" --data "text=${HTML_FILE}&chat_id=${CHAT_ID}&parse_mode=HTML&disable_web_page_preview=True" > /dev/null 2>&1
 		fi
 	fi
 }
