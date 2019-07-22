@@ -102,7 +102,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "data.factory|h
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "fido" | sort -u >> $PROJECT_DIR/working/proprietary/Fido
 
 # Fingerprint
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "silead|biometrics|etc/qti_fp/|libgf_|fingerprint|goodix|cdfinger|qfp-daemon|init_qfp_daemon|libqfp|fp_hal|libsl_fp|libarm_proxy_skel|libhvx_proxy_stub" | grep -v "android.hardware.fingerprint.xml" | sort -u >> $PROJECT_DIR/working/proprietary/Fingerprint
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "silead|biometrics|etc/qti_fp/|libgf_|fingerprint|goodix|cdfinger|qfp-daemon|init_qfp_daemon|libqfp|fp_hal|libsl_fp|libarm_proxy_skel|libhvx_proxy_stub" | grep -v "android.hardware.fingerprint.xml" | grep -v "firmware/" | sort -u >> $PROJECT_DIR/working/proprietary/Fingerprint
 
 # Fingerprint-Firmware
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "etc/firmware/goodixfp|etc/firmware/fpctzappfingerprint" | sort -u >> $PROJECT_DIR/working/proprietary/Fingerprint-Firmware
@@ -209,6 +209,9 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "bin/ssr_|subsy
 
 # Thermal
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "etc/thermal|bin/thermal|libthermal" | sort -u >> $PROJECT_DIR/working/proprietary/Thermal
+
+# Thermal-Hardware
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "lib/hw/thermal|lib64/hw/thermal" | sort -u >> $PROJECT_DIR/working/proprietary/Thermal-Hardware
 
 # Touch-improve
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "improvetouch" | sort -u >> $PROJECT_DIR/working/proprietary/Touch-improve
