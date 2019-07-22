@@ -1,3 +1,5 @@
+https://raw.githubusercontent.com/AndroidDumps/asus_asus_x00qd_dump/WW_Phone-user-9-PPR1.180610.009-16.0615.1905.100-0-release-keys
+https://raw.githubusercontent.com/AndroidDumps/asus_asus_x01bd_dump/sdm660_64-user-9-PKQ1-1244-release-keys
 https://raw.githubusercontent.com/AndroidDumps/motorola_ahannah_dump/user-8.0.0-OPP27.91-179-8-5-release-keys
 https://raw.githubusercontent.com/AndroidDumps/motorola_aljeter_dump/user-9-PPPS29.55-25-4-da341-release-keys
 https://raw.githubusercontent.com/AndroidDumps/motorola_channel_dump/user-9-PPYS29.105-57-4-d6c0f-release-keys
@@ -15,12 +17,14 @@ https://raw.githubusercontent.com/AndroidDumps/motorola_surfna_dump/user-9-PCB29
 https://raw.githubusercontent.com/AndroidDumps/oneplus_oneplus6_dump/OnePlus6-user-10-QKQ1.190406.002-1905032135-release-keys
 https://raw.githubusercontent.com/AndroidDumps/oneplus_oneplus6t_dump/OnePlus6T-user-10-QKQ1.190406.002-1905032135-release-keys
 https://raw.githubusercontent.com/AndroidDumps/oneplus_oneplus7pro_dump/OnePlus7Pro-user-9-PKQ1.190110.001-1906160616-release-keys
+https://raw.githubusercontent.com/AndroidDumps/oneplus_oneplus7pronr_dump/OnePlus7ProNR-user-9-PKQ1.190223.001-1906172217-release-keys
 https://raw.githubusercontent.com/AndroidDumps/razer_cheryl_dump/cheryl-user-8.1.0-OPM1.171019.011-RZR-180803-6033-release-keys
 https://raw.githubusercontent.com/AndroidDumps/vivo_1818_dump/sm6150-user-9-PKQ1.181203.001-compiler05071942-release-keys
 https://raw.githubusercontent.com/AndroidDumps/vivo_pd1832_dump/sm6150-user-9-PKQ1.181203.001-compiler06062011-release-keys
 https://raw.githubusercontent.com/AndroidDumps/xiaomi_andromeda_dump/andromeda-user-10-QKQ1.190406.002-9.04.30.2.native.google.user-release-keys
 https://raw.githubusercontent.com/AndroidDumps/xiaomi_cepheus_dump/cepheus-user-10-QKQ1.190406.002-9.04.30.2.native.google.user-release-keys
 https://raw.githubusercontent.com/AndroidDumps/xiaomi_davinciin_dump/davinciin-user-9-PKQ1.190302.001-V10.3.3.0.PFJINXM-release-keys
+https://raw.githubusercontent.com/AndroidDumps/xiaomi_laurel_sprout_dump/laurel_sprout-user-9-PKQ1.190416.001-V10.3.4.0.PFQEUXM-release-keys
 https://raw.githubusercontent.com/AndroidDumps/xiaomi_lavender_dump/lavender-user-9-PKQ1.180904.001-9.7.11-release-keys
 https://raw.githubusercontent.com/AndroidDumps/xiaomi_nitrogen_dump/nitrogen-user-9-PKQ1.181007.001-9.6.27-release-keys
 https://raw.githubusercontent.com/AndroidDumps/xiaomi_pine_dump/pine-user-9-PKQ1.190319.001-V10.2.8.0.PCMCNXM-release-keys

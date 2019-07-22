@@ -144,14 +144,13 @@ git_op () {
 
 get_configs () {
 	configs=`cat $PROJECT_DIR/dummy_dt/working/configs.txt | sort`
-	for config_file in $configs;
-	do
-		if [ -z "$ROM_PATH" ] || [ ! -d "$ROM_PATH" ]; then
+	for config_file in $configs; do
+		if [ -z "$ROM_PATH" ]; then
 			echo -e "${bold}${cyan}Downloading $config_file${nocol}"
-			if [ -z "$GIT_TOKEN" ]; then
-				wget "$device_line/$config_file" > /dev/null 2>&1
+			if echo "$config_file" | grep -iE "Bluetooth.apk|CarrierConfig.apk|framework-res.apk|modem.b16|tz.mbn" ; then
+				axel -a -n64 "$device_line/$config_file" > /dev/null 2>&1 || curl -O -J -u username:$GIT_TOKEN "$device_line/$config_file" > /dev/null 2>&1
 			else
-				curl -O -J -u username:$GIT_TOKEN "$device_line/$config_file" > /dev/null 2>&1
+				wget "$device_line/$config_file" > /dev/null 2>&1 || curl -O -J -u username:$GIT_TOKEN "$device_line/$config_file" > /dev/null 2>&1
 			fi
 		else
 			cp -a "$ROM_PATH/$config_file" .
