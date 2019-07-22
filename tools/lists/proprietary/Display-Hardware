@@ -11,6 +11,7 @@ vendor/lib/hw/gralloc.sdm710.so
 vendor/lib/hw/gralloc.sdm845.so
 vendor/lib/hw/gralloc.sm6150.so
 vendor/lib/hw/gralloc.sm8150.so
+vendor/lib/hw/gralloc.trinket.so
 vendor/lib/hw/hwcomposer.msm8937.so
 vendor/lib/hw/hwcomposer.msm8953.so
 vendor/lib/hw/hwcomposer.msm8998.so
@@ -21,6 +22,7 @@ vendor/lib/hw/hwcomposer.sdm710.so
 vendor/lib/hw/hwcomposer.sdm845.so
 vendor/lib/hw/hwcomposer.sm6150.so
 vendor/lib/hw/hwcomposer.sm8150.so
+vendor/lib/hw/hwcomposer.trinket.so
 vendor/lib/hw/memtrack.msm8937.so
 vendor/lib/hw/memtrack.msm8953.so
 vendor/lib/hw/memtrack.msm8998.so
@@ -31,6 +33,7 @@ vendor/lib/hw/memtrack.sdm710.so
 vendor/lib/hw/memtrack.sdm845.so
 vendor/lib/hw/memtrack.sm6150.so
 vendor/lib/hw/memtrack.sm8150.so
+vendor/lib/hw/memtrack.trinket.so
 vendor/lib/libdisplaydebug.so
 vendor/lib/libdisplayqos.so
 vendor/lib/libdpps.so
@@ -63,6 +66,7 @@ vendor/lib64/hw/gralloc.sdm710.so
 vendor/lib64/hw/gralloc.sdm845.so
 vendor/lib64/hw/gralloc.sm6150.so
 vendor/lib64/hw/gralloc.sm8150.so
+vendor/lib64/hw/gralloc.trinket.so
 vendor/lib64/hw/hwcomposer.msm8937.so
 vendor/lib64/hw/hwcomposer.msm8953.so
 vendor/lib64/hw/hwcomposer.msm8998.so
@@ -73,6 +77,7 @@ vendor/lib64/hw/hwcomposer.sdm710.so
 vendor/lib64/hw/hwcomposer.sdm845.so
 vendor/lib64/hw/hwcomposer.sm6150.so
 vendor/lib64/hw/hwcomposer.sm8150.so
+vendor/lib64/hw/hwcomposer.trinket.so
 vendor/lib64/hw/memtrack.msm8937.so
 vendor/lib64/hw/memtrack.msm8953.so
 vendor/lib64/hw/memtrack.msm8998.so
@@ -83,6 +88,7 @@ vendor/lib64/hw/memtrack.sdm710.so
 vendor/lib64/hw/memtrack.sdm845.so
 vendor/lib64/hw/memtrack.sm6150.so
 vendor/lib64/hw/memtrack.sm8150.so
+vendor/lib64/hw/memtrack.trinket.so
 vendor/lib64/libdisplaydebug.so
 vendor/lib64/libdisplayqos.so
 vendor/lib64/libdpps.so

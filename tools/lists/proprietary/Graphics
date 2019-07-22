@@ -14,6 +14,7 @@ vendor/lib/hw/vulkan.sdm710.so
 vendor/lib/hw/vulkan.sdm845.so
 vendor/lib/hw/vulkan.sm6150.so
 vendor/lib/hw/vulkan.sm8150.so
+vendor/lib/hw/vulkan.trinket.so
 vendor/lib/libC2D2.so
 vendor/lib/libCB.so
 vendor/lib/libEGL_adreno.so
@@ -52,6 +53,7 @@ vendor/lib64/hw/vulkan.sdm710.so
 vendor/lib64/hw/vulkan.sdm845.so
 vendor/lib64/hw/vulkan.sm6150.so
 vendor/lib64/hw/vulkan.sm8150.so
+vendor/lib64/hw/vulkan.trinket.so
 vendor/lib64/libC2D2.so
 vendor/lib64/libCB.so
 vendor/lib64/libEGL_adreno.so

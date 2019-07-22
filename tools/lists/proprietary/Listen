@@ -7,6 +7,7 @@ vendor/lib/hw/sound_trigger.primary.sdm710.so
 vendor/lib/hw/sound_trigger.primary.sdm845.so
 vendor/lib/hw/sound_trigger.primary.sm6150.so
 vendor/lib/hw/sound_trigger.primary.sm8150.so
+vendor/lib/hw/sound_trigger.primary.trinket.so
 vendor/lib/libadpcmdec.so
 vendor/lib/libgcs-calwrapper.so
 vendor/lib/libgcs-ipc.so
@@ -24,6 +25,7 @@ vendor/lib64/hw/sound_trigger.primary.sdm710.so
 vendor/lib64/hw/sound_trigger.primary.sdm845.so
 vendor/lib64/hw/sound_trigger.primary.sm6150.so
 vendor/lib64/hw/sound_trigger.primary.sm8150.so
+vendor/lib64/hw/sound_trigger.primary.trinket.so
 vendor/lib64/libgcs-calwrapper.so
 vendor/lib64/libgcs-ipc.so
 vendor/lib64/libgcs-osal.so

@@ -10,6 +10,7 @@ vendor/lib/hw/activity_recognition.sdm710.so
 vendor/lib/hw/activity_recognition.sdm845.so
 vendor/lib/hw/activity_recognition.sm6150.so
 vendor/lib/hw/activity_recognition.sm8150.so
+vendor/lib/hw/activity_recognition.trinket.so
 vendor/lib/hw/sensors.msm8937.so
 vendor/lib/hw/sensors.msm8953.so
 vendor/lib/hw/sensors.msm8998.so
@@ -22,6 +23,7 @@ vendor/lib/hw/sensors.sdm845.so
 vendor/lib/hw/sensors.sdm845_64.so
 vendor/lib/hw/sensors.sm6150.so
 vendor/lib/hw/sensors.sm8150.so
+vendor/lib/hw/sensors.trinket.so
 vendor/lib/libcalmodule_common.so
 vendor/lib/libssc_default_listener.so
 vendor/lib/sensor_calibrate.so
@@ -36,6 +38,7 @@ vendor/lib64/hw/activity_recognition.sdm710.so
 vendor/lib64/hw/activity_recognition.sdm845.so
 vendor/lib64/hw/activity_recognition.sm6150.so
 vendor/lib64/hw/activity_recognition.sm8150.so
+vendor/lib64/hw/activity_recognition.trinket.so
 vendor/lib64/hw/sensors.msm8937.so
 vendor/lib64/hw/sensors.msm8953.so
 vendor/lib64/hw/sensors.msm8998.so
@@ -48,6 +51,7 @@ vendor/lib64/hw/sensors.sdm845.so
 vendor/lib64/hw/sensors.sdm845_64.so
 vendor/lib64/hw/sensors.sm6150.so
 vendor/lib64/hw/sensors.sm8150.so
+vendor/lib64/hw/sensors.trinket.so
 vendor/lib64/libcalmodule_common.so
 vendor/lib64/libnotifyaudiohal.so
 vendor/lib64/libssc_default_listener.so

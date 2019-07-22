@@ -13,6 +13,7 @@ vendor/lib/hw/camera.sdm710.so
 vendor/lib/hw/camera.sdm845.so
 vendor/lib/hw/camera.sm6150.so
 vendor/lib/hw/camera.sm8150.so
+vendor/lib/hw/camera.trinket.so
 vendor/lib/hw/com.qti.chi.override.so
 vendor/lib/libAltek_DualCam3D_DLL.so
 vendor/lib/libDxHdcp.so
@@ -145,6 +146,7 @@ vendor/lib64/hw/camera.sdm710.so
 vendor/lib64/hw/camera.sdm845.so
 vendor/lib64/hw/camera.sm6150.so
 vendor/lib64/hw/camera.sm8150.so
+vendor/lib64/hw/camera.trinket.so
 vendor/lib64/hw/com.qti.chi.override.so
 vendor/lib64/hw/com.qti.chi.override_moorea.so
 vendor/lib64/libDxHdcp.so
