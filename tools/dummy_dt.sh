@@ -242,7 +242,7 @@ common_dt () {
 		cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep -iE "modem.b16|tz.mbn" > $PROJECT_DIR/dummy_dt/working/configs.txt
 		get_configs
 		if [ -e modem.b16 ]; then
-			strings modem.b16 | grep "QC_IMAGE_VERSION_STRING=MPSS.AT." | sed "s|QC_IMAGE_VERSION_STRING=MPSS.AT.|require version-baseband=|g" >> "$DT_DIR"/board-info.txt
+			strings modem.b16 | grep "QC_IMAGE_VERSION_STRING=MPSS." | sed "s|QC_IMAGE_VERSION_STRING=MPSS.||g" | cut -c 4- | sed -e 's/^/require version-baseband=/' >> "$DT_DIR"/board-info.txt
 		fi
 		if [ -e tz.mbn ]; then
 			strings tz.mbn | grep "QC_IMAGE_VERSION_STRING" | sed "s|QC_IMAGE_VERSION_STRING|require version-trustzone|g" >> "$DT_DIR"/board-info.txt
