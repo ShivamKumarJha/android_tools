@@ -37,47 +37,47 @@ fi
 
 # Set variables
 if grep -q "brand=" "$CAT_FILE"; then
-	BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "brand=" | sed "s|.*=||g" | sort -u | head -n 1 )
+	BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "brand=" | sed "s|.*=||g" | head -n 1 )
 elif grep -q "manufacturer=" "$CAT_FILE"; then
-	BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "manufacturer=" | sed "s|.*=||g" | sort -u | head -n 1 )
+	BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "manufacturer=" | sed "s|.*=||g" | head -n 1 )
 fi
 BRAND=${BRAND_TEMP,,}
 if grep -q "ro.vivo.product.release.name" "$CAT_FILE"; then
-	DEVICE=$( cat "$CAT_FILE" | grep "ro.vivo.product.release.name=" | sed "s|ro.vivo.product.release.name=||g" | sort -u | head -n 1 )
+	DEVICE=$( cat "$CAT_FILE" | grep "ro.vivo.product.release.name=" | sed "s|ro.vivo.product.release.name=||g" | head -n 1 )
 elif grep -q "ro.product.system.name" "$CAT_FILE"; then
-	DEVICE=$( cat "$CAT_FILE" | grep "ro.product.system.name=" | sed "s|ro.product.system.name=||g" | sort -u | head -n 1 )
+	DEVICE=$( cat "$CAT_FILE" | grep "ro.product.system.name=" | sed "s|ro.product.system.name=||g" | head -n 1 )
 elif grep -q "# from vendor/oneplus/config/" "$CAT_FILE"; then
-	DEVICE=$( cat "$CAT_FILE" | grep "# from vendor/oneplus/config/" | sed "s|# from vendor/oneplus/config/||g" | sed "s|/system.prop||g" | sort -u | head -n 1 )
+	DEVICE=$( cat "$CAT_FILE" | grep "# from vendor/oneplus/config/" | sed "s|# from vendor/oneplus/config/||g" | sed "s|/system.prop||g" | head -n 1 )
 else
-	DEVICE=$( cat "$CAT_FILE" | grep "ro.product" | grep "device=" | sed "s|.*=||g" | sed "s|ASUS_||g" | sort -u | head -n 1 )
+	DEVICE=$( cat "$CAT_FILE" | grep "ro.product" | grep "device=" | sed "s|.*=||g" | sed "s|ASUS_||g" | head -n 1 )
 fi
 if [ -z "$DEVICE" ]; then
-	DEVICE=$( cat "$CAT_FILE" | grep "ro.build" | grep "product=" | sed "s|.*=||g" | sed "s|ASUS_||g" | sort -u | head -n 1 )
+	DEVICE=$( cat "$CAT_FILE" | grep "ro.build" | grep "product=" | sed "s|.*=||g" | sed "s|ASUS_||g" | head -n 1 )
 fi
 if [ -z "$DEVICE" ]; then
 	read -p "Enter device name manually: " DEVICE
 fi
-DESCRIPTION=$( cat "$CAT_FILE" | grep "ro." | grep "build.description=" | sed "s|.*=||g" | sort -u | head -n 1 )
+DESCRIPTION=$( cat "$CAT_FILE" | grep "ro." | grep "build.description=" | sed "s|.*=||g" | head -n 1 )
 if grep -q "build.fingerprint=" "$CAT_FILE"; then
-	FINGERPRINT=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | sort -u | head -n 1 )
+	FINGERPRINT=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | head -n 1 )
 elif grep -q "build.thumbprint=" "$CAT_FILE"; then
-	FINGERPRINT=$( cat "$CAT_FILE" | grep "ro." | grep "build.thumbprint=" | sed "s|.*=||g" | sort -u | head -n 1 )
+	FINGERPRINT=$( cat "$CAT_FILE" | grep "ro." | grep "build.thumbprint=" | sed "s|.*=||g" | head -n 1 )
 fi
 if [ -z "$FINGERPRINT" ]; then
 	FINGERPRINT=$DESCRIPTION
 fi
 if grep -q "ro.oppo.market.name" "$CAT_FILE"; then
-	MODEL=$( cat "$CAT_FILE" | grep "ro.oppo.market.name=" | sed "s|ro.oppo.market.name=||g" | sort -u | head -n 1 )
+	MODEL=$( cat "$CAT_FILE" | grep "ro.oppo.market.name=" | sed "s|ro.oppo.market.name=||g" | head -n 1 )
 elif [ "$BRAND" = "oneplus" ]; then
-	MODEL=$( cat "$CAT_FILE" | grep "ro.product" | grep "device=" | sed "s|.*=||g" | sort -u | head -n 1 )
+	MODEL=$( cat "$CAT_FILE" | grep "ro.product" | grep "device=" | sed "s|.*=||g" | head -n 1 )
 else
-	MODEL=$( cat "$CAT_FILE" | grep "ro.product" | grep "model=" | sed "s|.*=||g" | sort -u | head -n 1 )
+	MODEL=$( cat "$CAT_FILE" | grep "ro.product" | grep "model=" | sed "s|.*=||g" | head -n 1 )
 fi
 if [ -z "$MODEL" ]; then
 	MODEL=$DEVICE
 fi
-SECURITY_PATCH=$( cat "$CAT_FILE" | grep "build.version.security_patch=" | sed "s|.*=||g" | sort -u | head -n 1 )
-VERSION=$( cat "$CAT_FILE" | grep "build.version.release=" | sed "s|.*=||g" | head -c 2 | sort -u | head -n 1 )
+SECURITY_PATCH=$( cat "$CAT_FILE" | grep "build.version.security_patch=" | sed "s|.*=||g" | head -n 1 )
+VERSION=$( cat "$CAT_FILE" | grep "build.version.release=" | sed "s|.*=||g" | head -c 2 | head -n 1 )
 
 # Display var's
 printf "${bold}${cyan}BRAND: ${BRAND}\nDEVICE: ${DEVICE}\nDESCRIPTION: ${DESCRIPTION}\nFINGERPRINT: ${FINGERPRINT}\nMODEL: ${MODEL}\nSECURITY PATCH: ${SECURITY_PATCH}\nVERSION: ${VERSION}\n${nocol}"
