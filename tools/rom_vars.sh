@@ -63,12 +63,12 @@ if grep -q "build.fingerprint=" "$CAT_FILE"; then
 elif grep -q "build.thumbprint=" "$CAT_FILE"; then
 	FINGERPRINT=$( cat "$CAT_FILE" | grep "ro." | grep "build.thumbprint=" | sed "s|.*=||g" | head -n 1 )
 fi
-if [ -z "$FINGERPRINT" ]; then
+if [ -z "$FINGERPRINT" ] && [ ! -z "$DESCRIPTION" ]; then
 	FINGERPRINT=$DESCRIPTION
 fi
 if grep -q "ro.oppo.market.name" "$CAT_FILE"; then
 	MODEL=$( cat "$CAT_FILE" | grep "ro.oppo.market.name=" | sed "s|ro.oppo.market.name=||g" | head -n 1 )
-elif [ "$BRAND" = "oneplus" ]; then
+elif [ "$BRAND" == "oneplus" ]; then
 	MODEL=$( cat "$CAT_FILE" | grep "ro.product" | grep "device=" | sed "s|.*=||g" | head -n 1 )
 else
 	MODEL=$( cat "$CAT_FILE" | grep "ro.product" | grep "model=" | sed "s|.*=||g" | head -n 1 )
