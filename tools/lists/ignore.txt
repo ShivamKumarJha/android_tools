@@ -3,6 +3,8 @@ vendor/bin/btconfig
 vendor/bin/grep
 vendor/bin/hostapd_cli
 vendor/bin/hw/hostapd
+vendor/bin/hw/vendor.mokee.livedisplay@2.0-service-sdm
+vendor/bin/hw/vendor.mokee.trust@1.0-service
 vendor/bin/hw/wpa_supplicant
 vendor/bin/ipacm
 vendor/bin/logwrapper
@@ -32,6 +34,8 @@ vendor/etc/gps.conf
 vendor/etc/graphite_ipc_platform_info.xml
 vendor/etc/group
 vendor/etc/init/hostapd.android.rc
+vendor/etc/init/vendor.mokee.livedisplay@2.0-service-sdm.rc
+vendor/etc/init/vendor.mokee.trust@1.0-service.rc
 vendor/etc/init/vndservicemanager.rc
 vendor/etc/izat.conf
 vendor/etc/listen_platform_info.xml
@@ -58,6 +62,7 @@ vendor/etc/silense.wav
 vendor/etc/speaker_playback.wav
 vendor/etc/spk_pb.wav
 vendor/etc/sweep.wav
+vendor/etc/system_properties.xml
 vendor/etc/usb_audio_policy_configuration.xml
 vendor/etc/whitelistedapps.xml
 vendor/etc/xtwifi.conf
@@ -214,5 +219,8 @@ vendor/lib64/soundfx/libqcomvoiceprocessing.so
 vendor/lib64/soundfx/libreverbwrapper.so
 vendor/lib64/soundfx/libvisualizer.so
 vendor/lib64/soundfx/libvolumelistener.so
+vendor/lib64/vendor.mokee.livedisplay@2.0.so
+vendor/lib64/vendor.mokee.power@1.0.so
+vendor/lib64/vendor.mokee.trust@1.0.so
 vendor/manifest.xml
 vendor/ueventd.rc
