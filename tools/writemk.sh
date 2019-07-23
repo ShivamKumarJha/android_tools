@@ -29,8 +29,7 @@ if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ ! -e "$WORK_DIR"/mklist.txt ];
 fi
 
 all_configs=`cat "$WORK_DIR"/mklist.txt | sort`
-for config_line in $all_configs;
-do
+for config_line in $all_configs; do
 	echo "    ""$1""$config_line""$2""$config_line"" \\" >> "$WORK_DIR"/temp.mk
 done
 if [ -e "$WORK_DIR"/temp.mk ]; then

@@ -31,8 +31,7 @@ find $1 -type f -printf '%P\n' | sort > $PROJECT_DIR/working/1.txt
 find $2 -type f -printf '%P\n' | sort > $PROJECT_DIR/working/2.txt
 
 file_lines=`cat $PROJECT_DIR/working/1.txt`
-for line in $file_lines ;
-do
+for line in $file_lines ; do
 	# Missing
 	if ! grep -q "$line" $PROJECT_DIR/working/2.txt; then
 		echo "$line" >> $PROJECT_DIR/working/Missing.txt
@@ -44,16 +43,14 @@ do
 	fi
 done
 file_lines=`cat $PROJECT_DIR/working/2.txt`
-for line in $file_lines ;
-do
+for line in $file_lines ; do
 	# Added
 	if ! grep -q "$line" $PROJECT_DIR/working/1.txt; then
 		echo "$line" >> $PROJECT_DIR/working/Added.txt
 	fi
 done
 
-for i in "Added" "Common" "Missing" "Modified"
-do
+for i in "Added" "Common" "Missing" "Modified"; do
 	if [ -e $PROJECT_DIR/working/$i.txt ]; then
 		echo -e "${bold}${cyan}$i files stored: $(ls -d $PROJECT_DIR/working/$i.txt)${nocol}"
 	fi

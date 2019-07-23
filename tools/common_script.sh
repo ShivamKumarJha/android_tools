@@ -21,6 +21,6 @@ if [ ! -d $PROJECT_DIR/working ]; then
 fi
 
 # clean up
-if [ "$1" = "y" ]; then
+if [ "$1" == "y" ]; then
 	rm -rf $PROJECT_DIR/working/*
 fi

@@ -243,12 +243,10 @@ find $PROJECT_DIR/working/proprietary -size  0 -print0 | xargs -0 rm --
 
 # Add blobs from lists
 blobs_list=`find $PROJECT_DIR/working/proprietary -type f -printf '%P\n' | sort`
-for list in $blobs_list ;
-do
+for list in $blobs_list ; do
 	file_lines=`cat $PROJECT_DIR/working/proprietary/$list | sort -u`
 	printf "\n# $list\n" >> $PROJECT_DIR/working/proprietary-files.txt
-	for line in $file_lines ;
-	do
+	for line in $file_lines ; do
 		if cat $PROJECT_DIR/working/rom_all.txt | grep "$line"; then
 			if echo "$line" | grep -iE "vendor.qti.hardware.fm@1.0.so" | grep -v "vendor/"; then
 				echo "-$line" >> $PROJECT_DIR/working/proprietary-files.txt
@@ -268,8 +266,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | sort -u > $PROJECT_DIR/w
 
 # Clean up misc
 file_lines=`cat $PROJECT_DIR/tools/lists/remove.txt`
-for line in $file_lines;
-do
+for line in $file_lines; do
 	sed -i "s|$line.*||g" $PROJECT_DIR/working/staging.txt
 done
 sed -i "s|.*\.sh||g" $PROJECT_DIR/working/staging.txt
@@ -278,8 +275,7 @@ sed -i '/^$/d' $PROJECT_DIR/working/staging.txt
 # Add missing blobs as misc
 printf "\n# Misc\n" >> $PROJECT_DIR/working/proprietary-files.txt
 file_lines=`cat $PROJECT_DIR/working/staging.txt`
-for line in $file_lines;
-do
+for line in $file_lines; do
 	# Missing
 	if ! grep -q "$line" $PROJECT_DIR/working/proprietary-files.txt; then
 		if ! grep -q "$line" $PROJECT_DIR/tools/lists/ignore.txt; then

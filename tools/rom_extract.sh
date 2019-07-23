@@ -180,9 +180,9 @@ else
 	for file in $rom_list; do
 		ZIP_FORMAT=`echo $file | sed 's|.*\.||'`
 		echo -e "${bold}${cyan}Extracting $file${nocol}"
-		if [ "$ZIP_FORMAT" = "zip" ]; then
+		if [ "$ZIP_FORMAT" == "zip" ]; then
 			unzip $PROJECT_DIR/input/${file} -d $PROJECT_DIR/working
-		elif [ "$ZIP_FORMAT" = "gz" ] || [ "$ZIP_FORMAT" = "tgz" ]; then
+		elif [ "$ZIP_FORMAT" == "gz" ] || [ "$ZIP_FORMAT" == "tgz" ]; then
 			tar -zxvf $PROJECT_DIR/input/${file} -C $PROJECT_DIR/working
 			for i in "${arr[@]}" "boot"; do
 				find working/ -name "$i.img" -exec mv {} $PROJECT_DIR/working/$i.img \;

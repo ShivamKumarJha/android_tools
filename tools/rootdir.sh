@@ -28,8 +28,7 @@ printf "LOCAL_PATH := \$(call my-dir)" >> $PROJECT_DIR/working/rootdir/Android.m
 printf "\ninclude \$(CLEAR_VARS)\n" >> $PROJECT_DIR/working/rootdir/Android.mk
 # bins
 rootdir_bins=`find $PROJECT_DIR/working/rootdir/bin/ -type f -printf '%P\n' | sort`
-for file_bins in $rootdir_bins;
-do
+for file_bins in $rootdir_bins; do
 	printf "\ninclude \$(CLEAR_VARS)" >> $PROJECT_DIR/working/rootdir/Android.mk
 	printf "\nLOCAL_MODULE       := $file_bins" >> $PROJECT_DIR/working/rootdir/Android.mk
 	printf "\nLOCAL_MODULE_TAGS  := optional eng" >> $PROJECT_DIR/working/rootdir/Android.mk
@@ -42,8 +41,7 @@ do
 done
 # etc
 rootdir_etc=`find $PROJECT_DIR/working/rootdir/etc/ -type f -printf '%P\n' | sort`
-for file_etc in $rootdir_etc;
-do
+for file_etc in $rootdir_etc; do
 	printf "\ninclude \$(CLEAR_VARS)" >> $PROJECT_DIR/working/rootdir/Android.mk
 	printf "\nLOCAL_MODULE       := $file_etc" >> $PROJECT_DIR/working/rootdir/Android.mk
 	printf "\nLOCAL_MODULE_TAGS  := optional eng" >> $PROJECT_DIR/working/rootdir/Android.mk

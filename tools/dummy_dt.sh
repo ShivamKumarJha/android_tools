@@ -147,7 +147,7 @@ get_configs () {
 	for config_file in $configs; do
 		if [ -z "$ROM_PATH" ]; then
 			echo -e "${bold}${cyan}Downloading $config_file${nocol}"
-			if echo "$config_file" | grep -iE "Bluetooth.apk|CarrierConfig.apk|framework-res.apk|modem.b16|tz.mbn" ; then
+			if echo "$config_file" | grep -iE "Bluetooth.apk|CarrierConfig.apk|framework-res.apk|modem.b16|tz.mbn"; then
 				axel -a -n64 "$device_line/$config_file" > /dev/null 2>&1 || curl -O -J -u username:$GIT_TOKEN "$device_line/$config_file" > /dev/null 2>&1
 			else
 				wget "$device_line/$config_file" > /dev/null 2>&1 || curl -O -J -u username:$GIT_TOKEN "$device_line/$config_file" > /dev/null 2>&1
@@ -318,8 +318,7 @@ common_overlay () {
 	cat "$PROJECT_DIR"/dummy_dt/working/all_files.txt | grep -iE "framework/framework-res.apk|app/CarrierConfig/CarrierConfig.apk|app/Bluetooth/Bluetooth.apk" > "$PROJECT_DIR"/dummy_dt/working/configs.txt
 	get_configs
 	ovlist=`find "$PROJECT_DIR"/working/overlays -maxdepth 1 -type f -printf '%P\n' | sort`
-	for list in $ovlist ;
-	do
+	for list in $ovlist; do
 		echo -e "${bold}${cyan}Extracting $list${nocol}"
 		apktool -f d "$list" > /dev/null 2>&1
 	done
@@ -332,8 +331,7 @@ common_overlay () {
 	for list in $ovlist ;
 	do
 		overlay_configs=`cat "$PROJECT_DIR"/tools/lists/overlays/"$list" | sort`
-		for overlay_line in $overlay_configs;
-		do
+		for overlay_line in $overlay_configs; do
 			if grep -q "\""$overlay_line"\">" "$PROJECT_DIR"/working/overlays/framework-res/res/values/"$list".xml; then
 				if [ -e "$PROJECT_DIR"/tools/lists/overlays/comments/"$overlay_line" ]; then
 					printf "\n" >> "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
@@ -350,8 +348,7 @@ common_overlay () {
 		TSTART=$(grep -n "\"$target\">" "$PROJECT_DIR"/working/overlays/framework-res/res/values/arrays.xml | sed "s|:.*||g")
 		if [ ! -z "$TSTART" ]; then
 			configs=`grep -n "</integer-array>" "$PROJECT_DIR"/working/overlays/framework-res/res/values/arrays.xml | sed "s|:.*||g"`
-			for config_file in $configs;
-			do
+			for config_file in $configs; do
 				TEND="$config_file"
 				if [ ! -z "$TEND" ] && [ "$TEND" -gt "$TSTART" ]; then
 					break
@@ -373,8 +370,7 @@ common_overlay () {
 		TSTART=$(grep -n "\"$target\">" "$PROJECT_DIR"/working/overlays/framework-res/res/values/arrays.xml | sed "s|:.*||g")
 		if [ ! -z "$TSTART" ]; then
 			configs=`grep -n "</string-array>" "$PROJECT_DIR"/working/overlays/framework-res/res/values/arrays.xml | sed "s|:.*||g"`
-			for config_file in $configs;
-			do
+			for config_file in $configs; do
 				TEND="$config_file"
 				if [ ! -z "$TEND" ] && [ "$TEND" -gt "$TSTART" ]; then
 					break
@@ -411,8 +407,7 @@ fi
 # from roms.txt
 if [ -z "$ROM_PATH" ] || [ ! -d "$ROM_PATH" ]; then
 	devices=`cat $PROJECT_DIR/tools/lists/roms.txt | sort`
-	for device_line in $devices;
-	do
+	for device_line in $devices; do
 		# setup
 		common_setup
 		wget -O $PROJECT_DIR/dummy_dt/working/all_files.txt "$device_line"/all_files.txt > /dev/null 2>&1
@@ -428,8 +423,7 @@ if [ -z "$ROM_PATH" ] || [ ! -d "$ROM_PATH" ]; then
 	done
 else
 # local dumps
-	for var in "$@"
-	do
+	for var in "$@"; do
 		# setup
 		ROM_PATH=$( realpath "$var" )
 		if [ -e "$ROM_PATH"/system/system/build.prop ]; then
