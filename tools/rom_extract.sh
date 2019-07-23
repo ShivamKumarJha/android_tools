@@ -30,7 +30,7 @@ else
 fi
 
 # Dependecies check
-. $PROJECT_DIR/tools/dependencies.sh "$user_password" > /dev/null 2>&1
+bash $PROJECT_DIR/tools/dependencies.sh "$user_password" > /dev/null 2>&1
 
 # array variable storing potential partitions to be extracted
 declare -a arr=("cust" "modem" "odm" "oem" "system" "vendor" "xrom")

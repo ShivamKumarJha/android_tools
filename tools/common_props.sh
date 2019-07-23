@@ -22,10 +22,10 @@ fi
 mkdir -p $TMPDIR/dt_common/
 
 # List props
-. $PROJECT_DIR/tools/vendor_prop.sh "$1" > /dev/null 2>&1
+bash $PROJECT_DIR/tools/vendor_prop.sh "$1" > /dev/null 2>&1
 cat $PROJECT_DIR/working/*.mk > $TMPDIR/dt_common/prop_source
 
-. $PROJECT_DIR/tools/vendor_prop.sh "$2" > /dev/null 2>&1
+bash $PROJECT_DIR/tools/vendor_prop.sh "$2" > /dev/null 2>&1
 cat $PROJECT_DIR/working/*.mk > $TMPDIR/dt_common/prop_target
 rm -rf $PROJECT_DIR/working/*
 

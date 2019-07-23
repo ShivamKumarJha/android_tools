@@ -41,7 +41,7 @@ proprietary_rootdir () {
 
 proprietary () {
 	echo -e "${bold}${cyan}Preparing proprietary-files.txt${nocol}"
-	. $PROJECT_DIR/tools/proprietary-files.sh "$PROJECT_DIR"/dummy_dt/working/all_files.txt > /dev/null 2>&1
+	bash $PROJECT_DIR/tools/proprietary-files.sh "$PROJECT_DIR"/dummy_dt/working/all_files.txt > /dev/null 2>&1
 	cp -a $PROJECT_DIR/working/proprietary-files.txt "$DT_DIR"/proprietary-files.txt
 
 	# find bin's in # Misc which exist in rootdir/
@@ -87,12 +87,12 @@ call_methods () {
 
 	# vendor_prop.mk
 	echo -e "${bold}${cyan}Preparing vendor_prop.mk${nocol}"
-	. $PROJECT_DIR/tools/vendor_prop.sh $PROJECT_DIR/dummy_dt/working/system_build.prop $PROJECT_DIR/dummy_dt/working/vendor_build.prop > /dev/null 2>&1
+	bash $PROJECT_DIR/tools/vendor_prop.sh $PROJECT_DIR/dummy_dt/working/system_build.prop $PROJECT_DIR/dummy_dt/working/vendor_build.prop > /dev/null 2>&1
 	cp -a $PROJECT_DIR/working/vendor_prop.mk "$DT_DIR"/vendor_prop.mk
 
 	# system_prop.mk
 	echo -e "${bold}${cyan}Preparing system_prop.mk${nocol}"
-	. $PROJECT_DIR/tools/vendor_prop.sh $PROJECT_DIR/dummy_dt/working/system_build.prop > /dev/null 2>&1
+	bash $PROJECT_DIR/tools/vendor_prop.sh $PROJECT_DIR/dummy_dt/working/system_build.prop > /dev/null 2>&1
 	cp -a $PROJECT_DIR/working/system_prop.mk "$DT_DIR"/system_prop.mk
 
 	# Device configs
@@ -137,7 +137,7 @@ git_op () {
 		if [ -z "$TG_API" ]; then
 			echo -e "${bold}${cyan}Telegram API key not found! Skipping Telegram notification.${nocol}"
 		else
-			. $PROJECT_DIR/tools/telegram.sh "$TG_API" "@dummy_dt" "$PROJECT_DIR/dummy_dt/working/tg.html" "HTML" "$PROJECT_DIR/dummy_dt/working/telegram.php" > /dev/null 2>&1
+			bash $PROJECT_DIR/tools/telegram.sh "$TG_API" "@dummy_dt" "$PROJECT_DIR/dummy_dt/working/tg.html" "HTML" "$PROJECT_DIR/dummy_dt/working/telegram.php" > /dev/null 2>&1
 		fi
 	fi
 }
@@ -226,7 +226,7 @@ common_dt () {
 	cd "$DT_DIR"/rootdir-temp/vendor/
 	cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep -iE "vendor/ueventd.rc" > $PROJECT_DIR/dummy_dt/working/configs.txt
 	get_configs
-	. $PROJECT_DIR/tools/rootdir.sh "$DT_DIR"/rootdir-temp/ > /dev/null 2>&1
+	bash $PROJECT_DIR/tools/rootdir.sh "$DT_DIR"/rootdir-temp/ > /dev/null 2>&1
 	cp -a $PROJECT_DIR/working/* "$DT_DIR"/
 	rm -rf "$DT_DIR"/rootdir-temp/
 	# root
@@ -250,7 +250,7 @@ common_dt () {
 		strings vendor_build.prop | grep "ro.vendor.build.date.utc" | sed "s|ro.vendor.build.date.utc|require version-vendor|g" >> "$DT_DIR"/board-info.txt
 	fi
 	# device.mk
-	. $PROJECT_DIR/tools/dt_mk.sh "$DT_DIR"
+	bash $PROJECT_DIR/tools/dt_mk.sh "$DT_DIR"
 	# Inherit vendor
 	printf "# Inherit vendor" >> "$DT_DIR"/device.mk
 	printf "\n\$(call inherit-product, vendor/"$BRAND"/"$DEVICE"/"$DEVICE"-vendor.mk)" >> "$DT_DIR"/device.mk

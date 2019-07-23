@@ -41,4 +41,4 @@ target_line="vendor/lib64/hw/activity_recognition.REMOVEME.so" && target_file="$
 target_line="vendor/lib64/hw/sensors.REMOVEME.so" && target_file="$PROJECT_DIR/tools/lists/proprietary/Sensors" && add_platform
 
 # sort lists
-. $PROJECT_DIR/tools/lists_sort_all.sh
+bash $PROJECT_DIR/tools/lists_sort_all.sh

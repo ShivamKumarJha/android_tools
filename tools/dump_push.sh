@@ -64,7 +64,7 @@ for var in "$@"; do
 		printf "\n<b>GitHub:</b>" >> $PROJECT_DIR/working/tg.html
 		printf "\n<a href=\"$COMMIT_LINK\">Commit</a>" >> $PROJECT_DIR/working/tg.html
 		printf "\n<a href=\"https://github.com/ShivamKumarJha/$REPO/tree/$BRANCH/\">$DEVICE</a>" >> $PROJECT_DIR/working/tg.html
-		. $PROJECT_DIR/tools/telegram.sh "$TG_API" "@android_dumps" "$PROJECT_DIR/working/tg.html" "HTML" "$PROJECT_DIR/working/telegram.php" > /dev/null 2>&1
+		bash $PROJECT_DIR/tools/telegram.sh "$TG_API" "@android_dumps" "$PROJECT_DIR/working/tg.html" "HTML" "$PROJECT_DIR/working/telegram.php" > /dev/null 2>&1
 		rm -rf $PROJECT_DIR/working/*
 		cd $PROJECT_DIR
 	fi

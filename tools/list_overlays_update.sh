@@ -36,4 +36,4 @@ cat $PROJECT_DIR/working/config.xml | grep "<string-array name=" | sed "s|<strin
 cat $PROJECT_DIR/working/config.xml | grep "<string-array " | sed "s|<string-array||g" | sed "s|\">.*||g" | sed "s|name=\"||g" | sed "s|\s||g" | sed "s|translatable=\"false\"||g" >> $PROJECT_DIR/tools/lists/overlays/arrays/string-array
 
 # sort lists
-. $PROJECT_DIR/tools/lists_sort_all.sh
+bash $PROJECT_DIR/tools/lists_sort_all.sh
