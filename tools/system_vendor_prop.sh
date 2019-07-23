@@ -21,6 +21,14 @@ fi
 # Get files via either cp or wget
 if echo "$1" | grep "https" ; then
 	wget -O $PROJECT_DIR/working/system_working.prop $1
+elif [ -d "$1" ]; then
+	if [ -e "$1"/system/system/build.prop ]; then
+		SYSTEM_PATH="system/system"
+	elif [ -e "$1"/system/build.prop ]; then
+		SYSTEM_PATH="system"
+	fi
+	find "$1/$SYSTEM_PATH" -maxdepth 1 -name "build*prop" -exec cat {} >> $PROJECT_DIR/working/system_working.prop \;
+	find "$1/vendor" -maxdepth 1 -name "build*prop" -exec cat {} >> $PROJECT_DIR/working/vendor_working.prop \;
 else
 	cp -a $1 $PROJECT_DIR/working/system_working.prop
 fi
@@ -51,7 +59,7 @@ if ! grep -q "ro.sf.lcd_density=" $PROJECT_DIR/working/system.prop; then
 fi
 
 # vendor.prop
-if [ ! -z "$2" ] ; then
+if [ ! -z "$2" ] || [ -d "$1" ]; then
 	TSTART=$(grep -nr "ADDITIONAL VENDOR BUILD PROPERTIES" $PROJECT_DIR/working/vendor_working.prop | sed "s|:.*||g")
 	TEND=$(wc -l $PROJECT_DIR/working/vendor_working.prop | sed "s| .*||g")
 	sed -n "${TSTART},${TEND}p" $PROJECT_DIR/working/vendor_working.prop | sort | sed "s|#.*||g" | sed '/^[[:space:]]*$/d' > $PROJECT_DIR/working/vendor_new.prop
