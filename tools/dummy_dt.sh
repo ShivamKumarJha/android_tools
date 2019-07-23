@@ -171,7 +171,7 @@ common_dt () {
 	fi
 	get_configs
 	if [ -e "$DT_DIR"/configs/audio/audio_effects.conf ] && [ ! -e "$DT_DIR"/configs/audio/audio_effects.xml ]; then
-		aeffects-conf2xml "$DT_DIR"/configs/audio/audio_effects.conf "$DT_DIR"/configs/audio/audio_effects.xml
+		"$PROJECT_DIR"/tools/prebuilt/aeffects-conf2xml "$DT_DIR"/configs/audio/audio_effects.conf "$DT_DIR"/configs/audio/audio_effects.xml
 	fi
 	# GPS
 	mkdir -p "$DT_DIR"/configs/gps
