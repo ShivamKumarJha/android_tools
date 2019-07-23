@@ -102,10 +102,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "data.factory|h
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "fido" | sort -u >> $PROJECT_DIR/working/proprietary/Fido
 
 # Fingerprint
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "silead|biometrics|etc/qti_fp/|libgf_|fingerprint|goodix|cdfinger|qfp-daemon|init_qfp_daemon|libqfp|fp_hal|libsl_fp|libarm_proxy_skel|libhvx_proxy_stub" | grep -v "android.hardware.fingerprint.xml" | grep -v "firmware/" | sort -u >> $PROJECT_DIR/working/proprietary/Fingerprint
-
-# Fingerprint-Firmware
-cat $PROJECT_DIR/working/rom_all.txt | grep -iE "etc/firmware/goodixfp|etc/firmware/fpctzappfingerprint" | sort -u >> $PROJECT_DIR/working/proprietary/Fingerprint-Firmware
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "fpctzappfingerprint|silead|biometrics|etc/qti_fp/|libgf_|fingerprint|goodix|cdfinger|qfp-daemon|init_qfp_daemon|libqfp|fp_hal|libsl_fp|libarm_proxy_skel|libhvx_proxy_stub" | grep -v "android.hardware.fingerprint.xml" | sort -u >> $PROJECT_DIR/working/proprietary/Fingerprint
 
 # Firmware
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/firmware/|etc/firmware/" | grep -v "cpp_firmware" | grep -v "libpn5" | grep -v "ipa_fws" | sort -u >> $PROJECT_DIR/working/proprietary/Firmware
