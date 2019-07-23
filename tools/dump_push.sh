@@ -10,7 +10,7 @@
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
 # Common stuff
-source $PROJECT_DIR/tools/common_script.sh "y"
+source $PROJECT_DIR/tools/common_script.sh
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
@@ -19,8 +19,8 @@ if [ -z "$1" ] ; then
 fi
 
 # Exit if missing token's
-if [ -z "$GIT_TOKEN" ] || [ -z "$TG_API" ]; then
-	echo -e "${bold}${cyan}Missing GitHub or telegram token. Exiting.${nocol}"
+if [ -z "$GIT_TOKEN" ]; then
+	echo -e "${bold}${cyan}Missing GitHub token. Exiting.${nocol}"
 	exit
 fi
 
@@ -52,20 +52,5 @@ for var in "$@"; do
 		echo -e "${bold}${cyan}Commiting $COMMIT_MSG${nocol}"
 		git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
 		git push https://"$GIT_TOKEN"@github.com/ShivamKumarJha/"$REPO".git $BRANCH
-		COMMIT_HEAD=$(git log --format=format:%H | head -n 1)
-		COMMIT_LINK=$(echo "https://github.com/ShivamKumarJha/$REPO/commit/$COMMIT_HEAD")
-
-		# Telegram
-		echo -e "${bold}${cyan}Sending telegram notification${nocol}"
-		printf "<b>Brand: $BRAND</b>" > $PROJECT_DIR/working/tg.html
-		printf "\n<b>Device: $DEVICE</b>" >> $PROJECT_DIR/working/tg.html
-		printf "\n<b>Version:</b> $VERSION" >> $PROJECT_DIR/working/tg.html
-		printf "\n<b>Fingerprint:</b> $FINGERPRINT" >> $PROJECT_DIR/working/tg.html
-		printf "\n<b>GitHub:</b>" >> $PROJECT_DIR/working/tg.html
-		printf "\n<a href=\"$COMMIT_LINK\">Commit</a>" >> $PROJECT_DIR/working/tg.html
-		printf "\n<a href=\"https://github.com/ShivamKumarJha/$REPO/tree/$BRANCH/\">$DEVICE</a>" >> $PROJECT_DIR/working/tg.html
-		bash $PROJECT_DIR/tools/telegram.sh "$TG_API" "@android_dumps" "$PROJECT_DIR/working/tg.html" "HTML" "$PROJECT_DIR/working/telegram.php" > /dev/null 2>&1
-		rm -rf $PROJECT_DIR/working/*
-		cd $PROJECT_DIR
 	fi
 done
