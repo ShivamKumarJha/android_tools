@@ -189,7 +189,7 @@ WILL_CHECK=n
 # Add props from lists
 props_list=`find $PROJECT_DIR/working/lists -type f -printf '%P\n' | sort`
 for list in $props_list; do
-	if [ "$WILL_CHECK" = "y" ]; then
+	if [ "$WILL_CHECK" == "y" ]; then
 		echo "# $list" >> $PROJECT_DIR/working/temp_prop.mk
 		echo "PRODUCT_PROPERTY_OVERRIDES += \\" >> $PROJECT_DIR/working/temp_prop.mk
 	fi
@@ -199,7 +199,7 @@ done
 # Remove duplicate props & text formatting
 awk '/^PRODUCT_PROPERTY_OVERRIDES/ || !seen[$0]++' $PROJECT_DIR/working/temp_prop.mk > $PROJECT_DIR/working/vendor_prop.mk
 sed -i -e 's/^/    /' $PROJECT_DIR/working/vendor_prop.mk
-if [ "$WILL_CHECK" = "y" ]; then
+if [ "$WILL_CHECK" == "y" ]; then
 	sed -i "s|    #|#|g" $PROJECT_DIR/working/vendor_prop.mk
 	sed -i "s|    PRODUCT_PROPERTY_OVERRIDES|PRODUCT_PROPERTY_OVERRIDES|g" $PROJECT_DIR/working/vendor_prop.mk
 else

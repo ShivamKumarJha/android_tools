@@ -61,10 +61,10 @@ extract_subcomponent()
 	if [ -e working/$ZIPDIR.img ]; then
 		echo -e "${bold}${cyan}Mounting working/${ZIPDIR}.img${nocol}"
 		mkdir -p working/$ZIPDIR
-		if [ "$IS_FASTBOOT" = "y" ] && [ "$ZIPDIR" != "modem" ]; then
+		if [ "$IS_FASTBOOT" == "y" ] && [ "$ZIPDIR" != "modem" ]; then
 			simg2img working/$ZIPDIR.img working/$ZIPDIR.ext4.img > /dev/null 2>&1
 			echo $user_password | sudo -S mount -t ext4 -o loop working/$ZIPDIR.ext4.img working/$ZIPDIR/ > /dev/null 2>&1
-		elif [ "$ZIPDIR" = "modem" ]; then
+		elif [ "$ZIPDIR" == "modem" ]; then
 			echo $user_password | sudo -S mount -t vfat -o loop working/$ZIPDIR.img working/$ZIPDIR/ > /dev/null 2>&1
 		else
 			echo $user_password | sudo -S mount -t ext4 -o loop working/$ZIPDIR.img working/$ZIPDIR/ > /dev/null 2>&1
@@ -164,7 +164,7 @@ else
 fi
 
 # Create repo
-if [ "$create_repo" = "y" ]; then
+if [ "$create_repo" == "y" ]; then
 	. "$PROJECT_DIR"/tools/dump_push.sh "$PROJECT_DIR"/dumps/"$DEVICE"
 fi
 }
