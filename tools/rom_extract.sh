@@ -142,6 +142,7 @@ done
 # Store baseband, trustzone & vendor version in board-info.txt
 if [ -e working/modem.img ]; then
 	strings working/modem.img | grep "QC_IMAGE_VERSION_STRING=MPSS." | sed "s|QC_IMAGE_VERSION_STRING=MPSS.||g" | cut -c 4- | sed -e 's/^/require version-baseband=/' >> dumps/$DEVICE/board-info.txt
+	strings working/modem.img | grep "Time_Stamp\": \"" | tr -d ' ' | cut -c 15- | sed 's/.$//' | sed -e 's/^/require version-modem=/' >> dumps/$DEVICE/board-info.txt
 fi
 find working/ -type f \( -name "tz.mbn" -o -name "tz.img" -o -name "tz_*" \) -exec strings {} \; | grep "QC_IMAGE_VERSION_STRING" | sed "s|QC_IMAGE_VERSION_STRING|require version-trustzone|g" >> dumps/$DEVICE/board-info.txt
 if [ -e dumps/$DEVICE/vendor/build.prop ]; then
