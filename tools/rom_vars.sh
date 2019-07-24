@@ -78,6 +78,10 @@ if [ -z "$MODEL" ]; then
 fi
 SECURITY_PATCH=$( cat "$CAT_FILE" | grep "build.version.security_patch=" | sed "s|.*=||g" | head -n 1 )
 VERSION=$( cat "$CAT_FILE" | grep "build.version.release=" | sed "s|.*=||g" | head -c 2 | head -n 1 )
+re='^[0-9]+$'
+if ! [[ $VERSION =~ $re ]] ; then
+	VERSION=$( cat "$CAT_FILE" | grep "build.version.release=" | sed "s|.*=||g" | head -c 1 | head -n 1 )
+fi
 
 # Display var's
 printf "${bold}${cyan}BRAND: ${BRAND}\nDEVICE: ${DEVICE}\nDESCRIPTION: ${DESCRIPTION}\nFINGERPRINT: ${FINGERPRINT}\nMODEL: ${MODEL}\nSECURITY PATCH: ${SECURITY_PATCH}\nVERSION: ${VERSION}\n${nocol}"
