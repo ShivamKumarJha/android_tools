@@ -21,13 +21,16 @@ echo "$user_password" | sudo -S apt-get install -y android-tools-fsutils brotli 
 pip3 install pycryptodome
 
 # Clone repo's
-for toolsdir in "extract-dtb" "mkbootimg_tools"; do
-	if [ ! -d "$PROJECT_DIR/tools/$toolsdir" ]; then
-		git clone -q https://gitlab.com/ShivamKumarJha/$toolsdir $PROJECT_DIR/tools/$toolsdir --depth 1
-		chmod +x $PROJECT_DIR/tools/$toolsdir/*
-	fi
-done
-
+if [ -d "$PROJECT_DIR/tools/extract-dtb" ]; then
+	git -C $PROJECT_DIR/tools/extract-dtb pull
+else
+	git clone https://github.com/PabloCastellano/extract-dtb $PROJECT_DIR/tools/extract-dtb
+fi
+if [ -d "$PROJECT_DIR/tools/mkbootimg_tools" ]; then
+	git -C $PROJECT_DIR/tools/mkbootimg_tools pull
+else
+	git clone https://github.com/xiaolu/mkbootimg_tools $PROJECT_DIR/tools/mkbootimg_tools
+fi
 if [ -d "$PROJECT_DIR/tools/Firmware_extractor" ]; then
 	git -C $PROJECT_DIR/tools/Firmware_extractor pull --recurse-submodules
 else
