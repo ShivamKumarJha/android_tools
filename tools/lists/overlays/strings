@@ -3,5 +3,6 @@ config_ethernet_iface_regex
 config_ims_package
 config_mainBuiltInDisplayCutout
 config_mms_user_agent
+config_mms_user_agent_profile_url
 config_persistentDataPackageName
 config_wifi_tcp_buffers
