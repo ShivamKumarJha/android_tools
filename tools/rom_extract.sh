@@ -64,10 +64,12 @@ core () {
 
 	# extract partitions
 	for p in $PARTITIONS; do
-		mkdir $PROJECT_DIR/working/${UNZIP_DIR}/$p || rm -rf $PROJECT_DIR/working/${UNZIP_DIR}/$p/*
-		echo -e "${bold}${cyan}$p extracted${nocol}"
-		7z x $PROJECT_DIR/working/${UNZIP_DIR}/$p.img -y -o$PROJECT_DIR/working/${UNZIP_DIR}/$p/ 2>/dev/null
-		rm $PROJECT_DIR/working/${UNZIP_DIR}/$p.img 2>/dev/null
+		if [ -e "$PROJECT_DIR/working/${UNZIP_DIR}/$p.img" ]; then
+			mkdir $PROJECT_DIR/working/${UNZIP_DIR}/$p || rm -rf $PROJECT_DIR/working/${UNZIP_DIR}/$p/*
+			echo -e "${bold}${cyan}Extracting $p${nocol}"
+			7z x $PROJECT_DIR/working/${UNZIP_DIR}/$p.img -y -o$PROJECT_DIR/working/${UNZIP_DIR}/$p/ 2>/dev/null >> $PROJECT_DIR/working/${UNZIP_DIR}/zip.log
+			rm $PROJECT_DIR/working/${UNZIP_DIR}/$p.img $PROJECT_DIR/working/${UNZIP_DIR}/zip.log 2>/dev/null
+		fi
 	done
 
 	# board-info.txt
