@@ -21,9 +21,15 @@ echo "$user_password" | sudo -S apt-get install -y android-tools-fsutils brotli 
 pip3 install pycryptodome
 
 # Clone repo's
-for toolsdir in "extract_android_ota_payload" "extract-dtb" "mkbootimg_tools" "oppo_ozip_decrypt" "sdat2img"; do
+for toolsdir in "extract-dtb" "mkbootimg_tools"; do
 	if [ ! -d "$PROJECT_DIR/tools/$toolsdir" ]; then
 		git clone -q https://gitlab.com/ShivamKumarJha/$toolsdir $PROJECT_DIR/tools/$toolsdir --depth 1
 		chmod +x $PROJECT_DIR/tools/$toolsdir/*
 	fi
 done
+
+if [ -d "$PROJECT_DIR/tools/Firmware_extractor" ]; then
+	git -C $PROJECT_DIR/tools/Firmware_extractor pull --recurse-submodules
+else
+	git clone --recurse-submodules https://github.com/AndroidDumps/Firmware_extractor $PROJECT_DIR/tools/Firmware_extractor
+fi

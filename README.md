@@ -35,10 +35,9 @@ For local dump: `./tools/proprietary-files.sh <full path to ROM dump>`
 Usage:  
 `./tools/rom_compare.sh <full path to source ROM dump> <full path to target ROM dump>`
 
-7. **rom_extract.sh**: A script to extract ROM zip. Supports A only, A/B & fastboot images.  
+7. **rom_extract.sh**: A script to extract OTA files.  
 Usage:  
-Place ROM(s) to `input/` folder & run script.  
-`./tools/rom_extract.sh` OR `./tools/rom_extract.sh <user password> <push repo (y/n)>`  
+`./tools/rom_extract.sh <path to OTA file(s)>`
 
 8. **rootdir.sh**: A script to prepare rootdir from a ROM dump along with Makefile.  
 Usage:  

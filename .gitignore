@@ -1,11 +1,8 @@
 dumps/
 dummy_dt/
-input/
 working/
 vendor/
-tools/extract_android_ota_payload/
 tools/extract-dtb/
+tools/Firmware_extractor/
 tools/mkbootimg_tools/
-tools/oppo_ozip_decrypt/
-tools/sdat2img/
 .fuse_*
