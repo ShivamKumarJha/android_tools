@@ -89,6 +89,9 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "dolby" | sort 
 # DPM
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "dpm.api@" | sort -u >> $PROJECT_DIR/working/proprietary/DPM
 
+# DRM-Widevine
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "firmware/widevine" | sort -u >> $PROJECT_DIR/working/proprietary/DRM-Widevine
+
 # DTS
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "etc/dts/|libdts|libomx-dts" | sort -u >> $PROJECT_DIR/working/proprietary/DTS
 
