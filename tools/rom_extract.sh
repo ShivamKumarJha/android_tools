@@ -11,9 +11,6 @@ SECONDS=0
 # Store project path
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
-# Create repo?
-read -p "Create repo (y/n): " create_repo
-
 # Dependencies check
 if [ ! -d "$PROJECT_DIR/tools/Firmware_extractor" ] || [ ! -d "$PROJECT_DIR/tools/extract-dtb" ] || [ ! -d "$PROJECT_DIR/tools/mkbootimg_tools" ]; then
 	echo -e "${bold}${red}Missing dependencies!Run: bash tools/dependencies.sh${nocol}"
@@ -90,11 +87,6 @@ core () {
 		rm -rf $PROJECT_DIR/dumps/${UNZIP_DIR}/
 	fi
 	mv $PROJECT_DIR/working/${UNZIP_DIR}/ $PROJECT_DIR/dumps/${UNZIP_DIR}/
-
-	# Create repo
-	if [ "$create_repo" == "y" ]; then
-		bash "$PROJECT_DIR"/tools/dump_push.sh $PROJECT_DIR/dumps/${UNZIP_DIR}/
-	fi
 }
 
 for var in "$@"; do
