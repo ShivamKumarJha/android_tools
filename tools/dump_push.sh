@@ -26,9 +26,10 @@ fi
 
 # o/p
 for var in "$@"; do
-	cd "$var"
+	ROM_PATH=$( realpath "$var" )
+	cd "$ROM_PATH"
 	# Set variables
-	source $PROJECT_DIR/tools/rom_vars.sh "$var" > /dev/null 2>&1
+	source $PROJECT_DIR/tools/rom_vars.sh "$ROM_PATH" > /dev/null 2>&1
 	COMMIT_MSG=$(echo "$DEVICE: $FINGERPRINT" | sort -u | head -n 1 )
 	REPO=$(echo dump_$BRAND\_$DEVICE | sort -u | head -n 1 )
 	REPO_DESC=$(echo "$MODEL-dump" | tr ' ' '-' | sort -u | head -n 1 )
@@ -53,4 +54,5 @@ for var in "$@"; do
 		git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
 		git push https://"$GIT_TOKEN"@github.com/ShivamKumarJha/"$REPO".git $BRANCH
 	fi
+	cd "$PROJECT_DIR"
 done
