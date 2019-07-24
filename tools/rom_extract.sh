@@ -82,7 +82,7 @@ core () {
 	sort -u -o $PROJECT_DIR/working/${UNZIP_DIR}/board-info.txt $PROJECT_DIR/working/${UNZIP_DIR}/board-info.txt
 
 	# Permissions & store all_files.txt
-	sudo chown $(whoami) * -R ; chmod -R u+rwX *
+	chown $(whoami) * -R ; chmod -R u+rwX *
 	find $PROJECT_DIR/working/${UNZIP_DIR} -type f -printf '%P\n' | sort | grep -v ".git/" > $PROJECT_DIR/working/${UNZIP_DIR}/all_files.txt
 
 	# Move to dumps
