@@ -90,7 +90,7 @@ core () {
 }
 
 for var in "$@"; do
-	URL="$var"
+	URL=$( realpath "$var" )
 	core
 	duration=$SECONDS
 	echo -e "${bold}${cyan}Extract time: $(($duration / 60)) minutes and $(($duration % 60)) seconds.${nocol}"
