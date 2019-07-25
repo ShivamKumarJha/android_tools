@@ -39,7 +39,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "alarm" | sort 
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "libantradio|qti.ant@" | sort -u >> $PROJECT_DIR/working/proprietary/ANT
 
 # Audio
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "tfa98xx|libsrsprocessing|libaudio|libacdb|libdirac|etc/dirac" | grep -v "lib/rfsa/adsp" | grep -v "lib/modules/" | sort -u >> $PROJECT_DIR/working/proprietary/Audio
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "tfa98xx|libsrsprocessing|libaudio|libacdb|libdirac|etc/dirac|etc/sony_effect/" | grep -v "lib/rfsa/adsp" | grep -v "lib/modules/" | sort -u >> $PROJECT_DIR/working/proprietary/Audio
 
 # Audio-ACDB
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/acdbdata/|vendor/etc/acdbdata_bl/|vendor/etc/acdbdata_id/" | sort -u >> $PROJECT_DIR/working/proprietary/Audio-ACDB
@@ -55,7 +55,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/libactuator|vendor/l
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/libarcsoft|vendor/lib64/libarcsoft" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-arcsoft
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/bin/" | grep -iE "camera" | grep -v "android.hardware.camera.provider@" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-bin
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/libchromatix|vendor/lib64/libchromatix" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-chromatix
-cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/camera|vendor/etc/qvr/|vendor/camera3rd/|vendor/camera_sound" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-configs
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/camera|vendor/etc/qvr/|vendor/camera3rd/|vendor/camera_sound|vendor/etc/FLASH_ON/|vendor/etc/IMX" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-configs
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/firmware/cpp_firmware|vendor/firmware/CAMERA" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-firmware
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libDepthBokeh|libSonyDual|libtriplecam|libremosaic|lib/camera/|lib64/camera/|libcamx|libcamera|mibokeh|lib_camera|libgcam|libdualcam|libmakeup|libtriplecam|SuperSensor|SonyIMX|libmialgo|libsnpe" | grep -v "vendor/lib/rfsa/adsp/" | sort -u >> $PROJECT_DIR/working/proprietary/Camera
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "motor" | grep -v "odex" | grep -v "vdex" | grep -v "motorola" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-motor
@@ -66,7 +66,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/libmmcamera|vendor/l
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "cdsprpc|libcdsp|libsdsprpc" | sort -u >> $PROJECT_DIR/working/proprietary/CDSP
 
 # Charger
-cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/bin/hvdcp_opti" | sort -u >> $PROJECT_DIR/working/proprietary/Charger
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/bin/hvdcp_opti|vendor/charge/chargemon/" | sort -u >> $PROJECT_DIR/working/proprietary/Charger
 
 # Consumerir
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "consumerir" | grep -v "android.hardware.consumerir.xml" | sort -u >> $PROJECT_DIR/working/proprietary/Consumerir
@@ -201,6 +201,9 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "sensorscalibra
 
 # Sensor-configs
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/sensors/" | grep -v "vendor/etc/sensors/hals.conf" | sort -u >> $PROJECT_DIR/working/proprietary/Sensor-configs
+
+# Sony
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "vendor.semc|vendor.somc|sony" | sort -u >> $PROJECT_DIR/working/proprietary/Sony
 
 # Soter
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "soter" | sort -u >> $PROJECT_DIR/working/proprietary/Soter
