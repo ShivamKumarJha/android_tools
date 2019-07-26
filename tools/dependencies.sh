@@ -33,6 +33,7 @@ else
 fi
 if [ -d "$PROJECT_DIR/tools/Firmware_extractor" ]; then
 	git -C $PROJECT_DIR/tools/Firmware_extractor pull --recurse-submodules
+	git -C $PROJECT_DIR/tools/Firmware_extractor pull https://github.com/AndroidDumps/Firmware_extractor master
 else
-	git clone --recurse-submodules https://github.com/AndroidDumps/Firmware_extractor $PROJECT_DIR/tools/Firmware_extractor
+	git clone --recurse-submodules https://github.com/ShivamKumarJha/Firmware_extractor $PROJECT_DIR/tools/Firmware_extractor
 fi
