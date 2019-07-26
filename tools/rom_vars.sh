@@ -19,6 +19,7 @@ if [ -z "$1" ] ; then
 fi
 
 for var in "$@"; do
+	unset BRAND_TEMP BRAND DEVICE DESCRIPTION FINGERPRINT MODEL SECURITY_PATCH VERSION
 	# Dir or file handling
 	if [ -d "$var" ]; then
 		if [ -e "$var"/system/system/build.prop ]; then
