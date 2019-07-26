@@ -72,7 +72,7 @@ core () {
 	# board-info.txt
 	find $PROJECT_DIR/working/${UNZIP_DIR}/modem -type f -exec strings {} \; | grep "QC_IMAGE_VERSION_STRING=MPSS." | sed "s|QC_IMAGE_VERSION_STRING=MPSS.||g" | cut -c 4- | sed -e 's/^/require version-baseband=/' >> $PROJECT_DIR/working/${UNZIP_DIR}/board-info.txt
 	find $PROJECT_DIR/working/${UNZIP_DIR}/modem -type f -exec strings {} \; | grep "Time_Stamp\": \"" | tr -d ' ' | cut -c 15- | sed 's/.$//' | sed -e 's/^/require version-modem=/' >> $PROJECT_DIR/working/${UNZIP_DIR}/board-info.txt
-	find $PROJECT_DIR/working/${UNZIP_DIR}/tz* -type f -exec strings {} \; | grep "QC_IMAGE_VERSION_STRING" | sed "s|QC_IMAGE_VERSION_STRING|require version-trustzone|g" >> $PROJECT_DIR/working/${UNZIP_DIR}/board-info.txt
+	find $PROJECT_DIR/working/${UNZIP_DIR}/ -maxdepth 1 -name "tz*" -type f -exec strings {} \; | grep "QC_IMAGE_VERSION_STRING" | sed "s|QC_IMAGE_VERSION_STRING|require version-trustzone|g" >> $PROJECT_DIR/working/${UNZIP_DIR}/board-info.txt
 	if [ -e $PROJECT_DIR/working/${UNZIP_DIR}/vendor/build.prop ]; then
 		strings $PROJECT_DIR/working/${UNZIP_DIR}/vendor/build.prop | grep "ro.vendor.build.date.utc" | sed "s|ro.vendor.build.date.utc|require version-vendor|g" >> $PROJECT_DIR/working/${UNZIP_DIR}/board-info.txt
 	fi
