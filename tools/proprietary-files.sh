@@ -129,6 +129,9 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "iop@|iopd" | s
 # IPA-Firmware
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/firmware/ipa_fws" | sort -u >> $PROJECT_DIR/working/proprietary/IPA-Firmware
 
+# Kernel-Modules
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/modules/" | sort -u >> $PROJECT_DIR/working/proprietary/Kernel-Modules
+
 # Keymaster
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "keymaster" | sort -u >> $PROJECT_DIR/working/proprietary/Keymaster
 
@@ -237,6 +240,9 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "vivo" | sort -
 
 # Voice
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "voiceprint@|vendor/etc/qvop/|libqvop" | sort -u >> $PROJECT_DIR/working/proprietary/Voice
+
+# VR
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "lib/hw/vr|lib64/hw/vr" | sort -u >> $PROJECT_DIR/working/proprietary/VR
 
 # WFD
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "wifidisplayhal|wfdservice|libwfd|wfdconfig" | sort -u >> $PROJECT_DIR/working/proprietary/WFD
