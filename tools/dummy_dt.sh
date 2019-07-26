@@ -147,7 +147,7 @@ get_configs () {
 	for config_file in $configs; do
 		if [ -z "$ROM_PATH" ]; then
 			echo -e "${bold}${cyan}Downloading $config_file${nocol}"
-			if echo "$config_file" | grep -iE "Bluetooth.apk|CarrierConfig.apk|framework-res.apk|modem.b16|tz.mbn"; then
+			if echo "$config_file" | grep -iE "Bluetooth.apk|CarrierConfig.apk|framework-res.apk"; then
 				axel -a -n64 "$device_line/$config_file" > /dev/null 2>&1 || curl -O -J -u username:$GIT_TOKEN "$device_line/$config_file" > /dev/null 2>&1
 			else
 				wget "$device_line/$config_file" > /dev/null 2>&1 || curl -O -J -u username:$GIT_TOKEN "$device_line/$config_file" > /dev/null 2>&1
@@ -237,17 +237,6 @@ common_dt () {
 	if grep -q "board-info.txt" $PROJECT_DIR/dummy_dt/working/all_files.txt; then
 		cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep -iE "board-info.txt" > $PROJECT_DIR/dummy_dt/working/configs.txt
 		get_configs
-	else
-		cd $PROJECT_DIR/dummy_dt/working/
-		cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep -iE "modem.b16|tz.mbn" > $PROJECT_DIR/dummy_dt/working/configs.txt
-		get_configs
-		if [ -e modem.b16 ]; then
-			strings modem.b16 | grep "QC_IMAGE_VERSION_STRING=MPSS." | sed "s|QC_IMAGE_VERSION_STRING=MPSS.||g" | cut -c 4- | sed -e 's/^/require version-baseband=/' >> "$DT_DIR"/board-info.txt
-		fi
-		if [ -e tz.mbn ]; then
-			strings tz.mbn | grep "QC_IMAGE_VERSION_STRING" | sed "s|QC_IMAGE_VERSION_STRING|require version-trustzone|g" >> "$DT_DIR"/board-info.txt
-		fi
-		strings vendor_build.prop | grep "ro.vendor.build.date.utc" | sed "s|ro.vendor.build.date.utc|require version-vendor|g" >> "$DT_DIR"/board-info.txt
 	fi
 	# device.mk
 	bash $PROJECT_DIR/tools/dt_mk.sh "$DT_DIR"
