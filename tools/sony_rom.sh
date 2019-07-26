@@ -49,13 +49,13 @@ for var in "$@"; do
 	rm -rf $PROJECT_DIR/working/*.sin
 	[[ -d $PROJECT_DIR/dumps/$UNZIP_DIR/ ]] && rm -rf $PROJECT_DIR/dumps/$UNZIP_DIR/
 	# mounting
-	ext4_list=`find $PROJECT_DIR/working -type f \( -name "*ext4*" -o -name "modem.img" \) -printf '%P\n' | sort`
+	ext4_list=`find $PROJECT_DIR/working -type f \( -name "*ext4*" -o -name "modem.img" -o -name "bluetooth.img" \) -printf '%P\n' | sort`
 	for file in $ext4_list; do
 		DIR_NAME=$(echo $file | cut -d . -f1)
 		echo -e "${bold}${cyan}Mounting & copying ${DIR_NAME}${nocol}"
 		mkdir -p $PROJECT_DIR/working/$DIR_NAME $PROJECT_DIR/dumps/$UNZIP_DIR/$DIR_NAME
 		# mount & permissions
-		if [ "$file" == "modem.img" ]; then
+		if [ "$file" == "modem.img" ] || [ "$file" == "bluetooth.img" ]; then
 			echo $user_password | sudo -S mount -t vfat -o loop $PROJECT_DIR/working/$file $PROJECT_DIR/working/$DIR_NAME > /dev/null 2>&1
 		else
 			echo $user_password | sudo -S mount -t ext4 -o loop $PROJECT_DIR/working/$file $PROJECT_DIR/working/$DIR_NAME > /dev/null 2>&1
