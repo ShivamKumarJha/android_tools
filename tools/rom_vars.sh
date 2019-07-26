@@ -50,6 +50,8 @@ for var in "$@"; do
 		DEVICE=$( cat "$CAT_FILE" | grep "ro.product.system.name=" | sed "s|ro.product.system.name=||g" | head -n 1 )
 	elif grep -q "# from vendor/oneplus/config/" "$CAT_FILE"; then
 		DEVICE=$( cat "$CAT_FILE" | grep "# from vendor/oneplus/config/" | sed "s|# from vendor/oneplus/config/||g" | sed "s|/system.prop||g" | head -n 1 )
+	elif grep -q "ro.build.fota.version" "$CAT_FILE"; then
+		DEVICE=$( cat "$CAT_FILE" | grep "ro.build.fota.version=" | sed "s|.*=||g" | head -n 1 | cut -d - -f1 )
 	else
 		DEVICE=$( cat "$CAT_FILE" | grep "ro.product" | grep "device=" | sed "s|.*=||g" | sed "s|ASUS_||g" | head -n 1 )
 	fi
@@ -57,7 +59,7 @@ for var in "$@"; do
 		DEVICE=$( cat "$CAT_FILE" | grep "ro.build" | grep "product=" | sed "s|.*=||g" | sed "s|ASUS_||g" | head -n 1 )
 	fi
 	if [ -z "$DEVICE" ]; then
-		read -p "Enter device name manually: " DEVICE
+		DEVICE=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | head -n 1 | cut -d : -f1 | rev | cut -d / -f1 | rev )
 	fi
 	DESCRIPTION=$( cat "$CAT_FILE" | grep "ro." | grep "build.description=" | sed "s|.*=||g" | head -n 1 )
 	if grep -q "build.fingerprint=" "$CAT_FILE"; then
