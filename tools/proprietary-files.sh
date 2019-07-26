@@ -206,7 +206,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "sensorscalibra
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/sensors/" | grep -v "vendor/etc/sensors/hals.conf" | sort -u >> $PROJECT_DIR/working/proprietary/Sensor-configs
 
 # Sony
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "vendor.semc|vendor.somc|sony" | sort -u >> $PROJECT_DIR/working/proprietary/Sony
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "vendor.semc|vendor.somc" | sort -u >> $PROJECT_DIR/working/proprietary/Sony
 
 # Soter
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "soter" | sort -u >> $PROJECT_DIR/working/proprietary/Soter

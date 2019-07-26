@@ -1,8 +1,10 @@
 https://raw.githubusercontent.com/AndroidDumps/asus_asus_i01wd_dump/WW_Phone-user-9-PPR2.181005.003-16.1220.1906.167-0-release-keys
 https://raw.githubusercontent.com/AndroidDumps/asus_asus_x00qd_dump/WW_Phone-user-9-PPR1.180610.009-16.0615.1905.100-0-release-keys
 https://raw.githubusercontent.com/AndroidDumps/asus_asus_x01bd_dump/sdm660_64-user-9-PKQ1-1244-release-keys
+https://raw.githubusercontent.com/AndroidDumps/asus_asus_z01qd_1_dump/WW_Phone-user-8.1.0-OPM1.171019.026-15.1616.1809.48-0-release-keys
 https://raw.githubusercontent.com/AndroidDumps/motorola_ahannah_dump/user-8.0.0-OPP27.91-179-8-5-release-keys
 https://raw.githubusercontent.com/AndroidDumps/motorola_aljeter_dump/user-9-PPPS29.55-25-4-da341-release-keys
+https://raw.githubusercontent.com/AndroidDumps/motorola_beckham_dump/user-9-PPW29.183-29-1-f24db-release-keys
 https://raw.githubusercontent.com/AndroidDumps/motorola_channel_dump/user-9-PPYS29.105-57-4-d6c0f-release-keys
 https://raw.githubusercontent.com/AndroidDumps/motorola_deen_sprout_dump/user-9-PPKS29.68-16-33-5-e8ba0-release-keys
 https://raw.githubusercontent.com/AndroidDumps/motorola_evert_dump/user-9-PPWS29.116-11-6-9c4de2-release-keys
@@ -31,6 +33,7 @@ https://raw.githubusercontent.com/AndroidDumps/xiaomi_lavender_dump/lavender-use
 https://raw.githubusercontent.com/AndroidDumps/xiaomi_nitrogen_dump/nitrogen-user-9-PKQ1.181007.001-9.6.27-release-keys
 https://raw.githubusercontent.com/AndroidDumps/xiaomi_onc_dump/onc-user-9-PKQ1.181021.001-V10.3.3.0.PFLCNXM-release-keys
 https://raw.githubusercontent.com/AndroidDumps/xiaomi_pine_dump/pine-user-9-PKQ1.190319.001-V10.2.8.0.PCMCNXM-release-keys
+https://raw.githubusercontent.com/AndroidDumps/xiaomi_pyxis_dump/pyxis-user-9-PKQ1.181121.001-9.7.25-release-keys
 https://raw.githubusercontent.com/AndroidDumps/xiaomi_raphael_dump/raphael-user-9-PKQ1.181121.001-V10.3.12.0.PFKCNXM-release-keys
 https://raw.githubusercontent.com/AndroidDumps/xiaomi_wayne_dump/wayne-user-9-PKQ1.180904.001-V10.3.4.0.PDCCNXM-release-keys
 https://raw.githubusercontent.com/AndroidDumps/xiaomi_whyred_dump/whyred-user-9-PKQ1.180904.001-9.7.11-release-keys
