@@ -17,7 +17,7 @@ else
 fi
 
 # Install some packages
-echo "$user_password" | sudo -S apt-get install -y android-tools-fsutils brotli git device-tree-compiler python3-pip
+echo "$user_password" | sudo -S apt-get install -y aria2 android-tools-fsutils brotli git device-tree-compiler python3-pip
 pip3 install pycryptodome
 
 # Clone repo's
