@@ -64,7 +64,7 @@ if [ -e "$DT_DIR"/configs/sec_config ]; then
 	bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/" ":\$(TARGET_COPY_OUT_VENDOR)/etc/" "# IRSC"
 fi
 # permissions
-cat "$PROJECT_DIR"/dummy_dt/working/all_files.txt | grep "vendor" | grep -iE "permissions/android.hardware|permissions/android.software|permissions/handheld_core_hardware" | sed "s|vendor/etc/permissions/||g" > "$PROJECT_DIR"/working/perms.txt
+cat "$PROJECT_DIR"/dummy_dt/working/all_files.txt | grep "vendor" | grep -iE "permissions/android.hardware|permissions/android.software|permissions/handheld_core_hardware" | grep -v "android.hardware.light.xml" | sed "s|vendor/etc/permissions/||g" > "$PROJECT_DIR"/working/perms.txt
 all_perms=`cat "$PROJECT_DIR"/working/perms.txt | sort`
 for perm_line in $all_perms;
 do
