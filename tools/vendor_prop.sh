@@ -53,7 +53,8 @@ if [ ! -z "$2" ] || [ -e $PROJECT_DIR/working/vendor_working.prop ]; then
 fi
 
 # Lineage vendor security patch support
-if [ $(grep "ro.build.version.release=" $PROJECT_DIR/working/system_working.prop | sed "s|ro.build.version.release=||g" | head -c 2) -lt 9 ]; then
+source $PROJECT_DIR/tools/rom_vars.sh $PROJECT_DIR/working/system_working.prop > /dev/null 2>&1
+if [ "$VERSION" -lt 9 ]; then
 	grep "ro.build.version.security_patch=" $PROJECT_DIR/working/system_working.prop | sed "s|ro.build.version.security_patch|ro.lineage.build.vendor_security_patch|g" >> $PROJECT_DIR/working/staging.mk
 fi
 
