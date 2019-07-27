@@ -48,8 +48,6 @@ for var in "$@"; do
 		DEVICE=$( cat "$CAT_FILE" | grep "ro.vivo.product.release.name=" | sed "s|ro.vivo.product.release.name=||g" | head -n 1 )
 	elif grep -q "ro.product.system.name" "$CAT_FILE"; then
 		DEVICE=$( cat "$CAT_FILE" | grep "ro.product.system.name=" | sed "s|ro.product.system.name=||g" | head -n 1 )
-	elif grep -q "# from vendor/oneplus/config/" "$CAT_FILE"; then
-		DEVICE=$( cat "$CAT_FILE" | grep "# from vendor/oneplus/config/" | sed "s|# from vendor/oneplus/config/||g" | sed "s|/system.prop||g" | head -n 1 )
 	elif grep -q "ro.build.fota.version" "$CAT_FILE"; then
 		DEVICE=$( cat "$CAT_FILE" | grep "ro.build.fota.version=" | sed "s|.*=||g" | head -n 1 | cut -d - -f1 )
 	else
