@@ -176,7 +176,7 @@ common_dt () {
 	# GPS
 	mkdir -p "$DT_DIR"/configs/gps
 	cd "$DT_DIR"/configs/gps
-	cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep "vendor/etc" | grep -iE "apdr.conf|flp|gps|izat|lowi|sap|xtwifi" | grep ".*\.conf" > $PROJECT_DIR/dummy_dt/working/configs.txt
+	cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep "vendor/etc" | grep -iE "apdr|flp|gps|izat|lowi|sap|xtwifi" | grep ".*\.conf" > $PROJECT_DIR/dummy_dt/working/configs.txt
 	get_configs
 	# IDC
 	mkdir -p "$DT_DIR"/configs/idc
@@ -276,12 +276,6 @@ common_dt () {
 	printf "# Inherit from those products. Most specific first." >> "$DT_DIR"/lineage_"$DEVICE".mk
 	printf "\n\$(call inherit-product, \$(SRC_TARGET_DIR)/product/core_64_bit.mk)" >> "$DT_DIR"/lineage_"$DEVICE".mk
 	printf "\n\$(call inherit-product, \$(SRC_TARGET_DIR)/product/full_base_telephony.mk)" >> "$DT_DIR"/lineage_"$DEVICE".mk
-	if [ $(grep "ro.build.version.release=" $PROJECT_DIR/dummy_dt/working/system_build.prop | sed "s|ro.build.version.release=||g" | head -c 1) -eq 8 ]; then
-		printf "\n\$(call inherit-product, \$(SRC_TARGET_DIR)/product/product_launched_with_o_mr1.mk)" >> "$DT_DIR"/lineage_"$DEVICE".mk
-	fi
-	if [ $(grep "ro.build.version.release=" $PROJECT_DIR/dummy_dt/working/system_build.prop | sed "s|ro.build.version.release=||g" | head -c 1) -eq 9 ]; then
-		printf "\n\$(call inherit-product, \$(SRC_TARGET_DIR)/product/product_launched_with_p.mk)" >> "$DT_DIR"/lineage_"$DEVICE".mk
-	fi
 	printf "\n\n# Inherit some common Lineage stuff" >> "$DT_DIR"/lineage_"$DEVICE".mk
 	printf "\n\$(call inherit-product, vendor/lineage/config/common_full_phone.mk)" >> "$DT_DIR"/lineage_"$DEVICE".mk
 	printf "\n\n# Inherit from "$DEVICE" device" >> "$DT_DIR"/lineage_"$DEVICE".mk
@@ -394,7 +388,7 @@ if [ ! -d "$PROJECT_DIR"/dummy_dt/working ]; then
 fi
 
 # from roms.txt
-if [ -z "$ROM_PATH" ] || [ ! -d "$ROM_PATH" ]; then
+if [ -z "$ROM_PATH" ]; then
 	devices=`cat $PROJECT_DIR/tools/lists/roms.txt | sort`
 	for device_line in $devices; do
 		# setup
