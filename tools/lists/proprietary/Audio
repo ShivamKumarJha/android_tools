@@ -3,11 +3,7 @@ framework/audiosphere.jar
 vendor/bin/audioflacapp
 vendor/etc/audio.scd
 vendor/etc/diracvdd.bin
-vendor/etc/drc/drc_cfg_5.1.txt
-vendor/etc/drc/drc_cfg_AZ.txt
 vendor/etc/speaker.ftcfg
-vendor/etc/surround_sound_3mic/surround_sound_rec_5.1.cfg
-vendor/etc/surround_sound_3mic/surround_sound_rec_AZ.cfg
 vendor/firmware/dbmd4_va_fw.bin
 vendor/firmware/tas2563_uCDSP.bin
 vendor/firmware/tfa98xx.cnt

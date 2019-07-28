@@ -33,16 +33,20 @@ cp -a $PROJECT_DIR/tools/lists/proprietary/ $PROJECT_DIR/working/
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/rfsa/adsp/|vendor/dsp/" | grep -v "scve" | sort -u >> $PROJECT_DIR/working/proprietary/ADSP-Modules
 
 # Alarm
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "framework/vendor.qti.hardware.alarm" | sort -u >> $PROJECT_DIR/working/proprietary/Alarm
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "alarm" | sort -u >> $PROJECT_DIR/working/proprietary/Alarm
 
 # ANT
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "libantradio|qti.ant@" | sort -u >> $PROJECT_DIR/working/proprietary/ANT
 
 # Audio
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "tfa98xx|libsrsprocessing|libaudio|libacdb|libdirac|etc/dirac|etc/sony_effect/" | grep -v "lib/rfsa/adsp" | grep -v "lib/modules/" | sort -u >> $PROJECT_DIR/working/proprietary/Audio
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "tfa98xx|libsrsprocessing|libaudio|libacdb|libdirac|etc/dirac|etc/sony_effect/|etc/drc/|etc/surround_sound_3mic/" | grep -v "lib/rfsa/adsp" | grep -v "lib/modules/" | sort -u >> $PROJECT_DIR/working/proprietary/Audio
 
 # Audio-ACDB
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/acdbdata/|vendor/etc/acdbdata_bl/|vendor/etc/acdbdata_id/" | sort -u >> $PROJECT_DIR/working/proprietary/Audio-ACDB
+
+# Audio-Hardware
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "hw/audio.primary" | sort -u >> $PROJECT_DIR/working/proprietary/Audio-Hardware
 
 # Bluetooth
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libbthost_if|btnvtool|hci_qcomm_init|wcnss_filter|bluetooth|libbt" | grep -v "vendor/etc/permissions" | grep -v "libbthost_if" | grep -v "overlay/" | sort -u >> $PROJECT_DIR/working/proprietary/Bluetooth
@@ -58,6 +62,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/libchromatix|vendor/
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/camera|vendor/etc/qvr/|vendor/camera3rd/|vendor/camera_sound|vendor/etc/FLASH_ON/|vendor/etc/IMX|vendor/camera/" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-configs
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/firmware/cpp_firmware|vendor/firmware/CAMERA" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-firmware
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libDepthBokeh|libSonyDual|libtriplecam|libremosaic|lib/camera/|lib64/camera/|libcamx|libcamera|mibokeh|lib_camera|libgcam|libdualcam|libmakeup|libtriplecam|SuperSensor|SonyIMX|libmialgo|libsnpe" | grep -v "vendor/lib/rfsa/adsp/" | sort -u >> $PROJECT_DIR/working/proprietary/Camera
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "hw/camera|libMegvii|libVD|libcapi|libextawb|libnti_|vendor.qti.hardware.camera.device" | grep -v "vendor/lib/rfsa/adsp/" | sort -u >> $PROJECT_DIR/working/proprietary/Camera
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "motor" | grep -v "odex" | grep -v "vdex" | grep -v "motorola" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-motor
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/libois|vendor/lib64/libois" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-ois
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/libmmcamera|vendor/lib64/libmmcamera" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-sensors
@@ -72,6 +77,8 @@ cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/bin/hvdcp_opti|vendor/ch
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "consumerir" | grep -v "android.hardware.consumerir.xml" | sort -u >> $PROJECT_DIR/working/proprietary/Consumerir
 
 # CNE
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "etc/permissions/cneapiclient.xml|etc/permissions/com.quicinc.cne.xml|priv-app/CNEService/CNEService.apk" | sort -u >> $PROJECT_DIR/working/proprietary/CNE
+cat $PROJECT_DIR/working/rom_all.txt | grep "framework/" | grep -iE "cneapiclient|com.quicinc.cne|vendor.qti.hardware.data" | grep ".*\.jar" | grep -v "latency" | sort -u >> $PROJECT_DIR/working/proprietary/CNE
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "cne.server|vendor/etc/cne/|quicinc.cne.|cneapiclient|vendor.qti.hardware.data|libcne" | grep -v "latency" | sort -u >> $PROJECT_DIR/working/proprietary/CNE
 
 # CVP
@@ -80,8 +87,11 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libcvp|cvp@" |
 # Display
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "etc/dsi_|video_dsi_panel" | grep "xml" | sort -u >> $PROJECT_DIR/working/proprietary/Display
 
-# Display calibration
+# Display-calibration
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/qdcm_calib" | sort -u >> $PROJECT_DIR/working/proprietary/Display-calibration
+
+# Display-Hardware
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "vendor.qti.hardware.display.allocator|android.hardware.graphics.mapper|vendor.display.config@|hw/gralloc|hw/hwcomposer|hw/memtrack" | sort -u >> $PROJECT_DIR/working/proprietary/Display-Hardware
 
 # Dolby
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "dolby" | sort -u >> $PROJECT_DIR/working/proprietary/Dolby
@@ -99,6 +109,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "etc/dts/|libdt
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "esepowermanager" | sort -u >> $PROJECT_DIR/working/proprietary/ESE-Powermanager
 
 # Factory
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "framework/vendor.qti.data.factory" | sort -u >> $PROJECT_DIR/working/proprietary/Factory
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "data.factory|hardware.factory" | sort -u >> $PROJECT_DIR/working/proprietary/Factory
 
 # Fido
@@ -111,6 +122,9 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "fpctzappfinger
 # Firmware
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/firmware/|etc/firmware/" | grep -v "cpp_firmware" | grep -v "libpn5" | grep -v "ipa_fws" | sort -u >> $PROJECT_DIR/working/proprietary/Firmware
 
+# FM
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "ftm_fm_lib|vendor.qti.hardware.fm" | sort -u >> $PROJECT_DIR/working/proprietary/FM
+
 # Gatekeeper
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "gatekeeper" | sort -u >> $PROJECT_DIR/working/proprietary/Gatekeeper
 
@@ -121,7 +135,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "google" | grep
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libizat_|liblowi_|libloc_|liblocation|qti.gnss|gnss@" | sort -u >> $PROJECT_DIR/working/proprietary/GPS
 
 # Graphics
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libc2d30" | sort -u >> $PROJECT_DIR/working/proprietary/Graphics
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libc2d30|hw/vulkan|lib/egl/|lib64/egl/" | sort -u >> $PROJECT_DIR/working/proprietary/Graphics
 
 # IOP
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "iop@|iopd" | sort -u >> $PROJECT_DIR/working/proprietary/IOP
@@ -142,7 +156,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "keystore|libsp
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "data.latency|qti.latency" | grep -v "odex" | grep -v "vdex" | sort -u >> $PROJECT_DIR/working/proprietary/Latency
 
 # Listen
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "liblisten" | sort -u >> $PROJECT_DIR/working/proprietary/Listen
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "liblisten|hw/sound_trigger.primary" | sort -u >> $PROJECT_DIR/working/proprietary/Listen
 
 # Machine-Learning
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "mlshal" | sort -u >> $PROJECT_DIR/working/proprietary/Machine-Learning
@@ -172,6 +186,9 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "oppo" | sort -
 # Qdutils_disp
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "qdutils_disp" | sort -u >> $PROJECT_DIR/working/proprietary/Qdutils
 
+# QMI
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libqmi" | sort -u >> $PROJECT_DIR/working/proprietary/QMI
+
 # Qteeconnector
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "qteeconnector" | sort -u >> $PROJECT_DIR/working/proprietary/Qteeconnector
 
@@ -197,7 +214,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "scve" | sort -
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "seccam" | sort -u >> $PROJECT_DIR/working/proprietary/Seccam
 
 # Sensors
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libsensor|lib64/sensors|lib/sensors|libAsusRGBSensorHAL|lib/hw/sensors|lib64/hw/sensors|libssc" | sort -u >> $PROJECT_DIR/working/proprietary/Sensors
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libsensor|lib64/sensors|lib/sensors|libAsusRGBSensorHAL|lib/hw/sensors|lib64/hw/sensors|libssc|hw/activity_recognition|hw/sensors|lib/sensors|lib64/sensors" | sort -u >> $PROJECT_DIR/working/proprietary/Sensors
 
 # Sensor-calibrate
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "sensorscalibrate" | sort -u >> $PROJECT_DIR/working/proprietary/Sensor-calibrate
@@ -209,13 +226,14 @@ cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/sensors/" | grep -v 
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "vendor.semc|vendor.somc" | sort -u >> $PROJECT_DIR/working/proprietary/Sony
 
 # Soter
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "app/SoterService/SoterService.apk|framework/vendor.qti.hardware.soter|lib64/vendor.qti.hardware.soter" | sort -u >> $PROJECT_DIR/working/proprietary/Soter
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "soter" | sort -u >> $PROJECT_DIR/working/proprietary/Soter
 
 # SSR
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "bin/ssr_|subsystem" | sort -u >> $PROJECT_DIR/working/proprietary/SSR
 
 # Thermal
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "etc/thermal|bin/thermal|libthermal" | sort -u >> $PROJECT_DIR/working/proprietary/Thermal
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "etc/thermal|bin/thermal|libthermal|bin/mi_thermald" | sort -u >> $PROJECT_DIR/working/proprietary/Thermal
 
 # Thermal-Hardware
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "lib/hw/thermal|lib64/hw/thermal" | sort -u >> $PROJECT_DIR/working/proprietary/Thermal-Hardware
@@ -245,7 +263,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "voiceprint@|ve
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "lib/hw/vr|lib64/hw/vr" | sort -u >> $PROJECT_DIR/working/proprietary/VR
 
 # WFD
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "wifidisplayhal|wfdservice|libwfd|wfdconfig" | sort -u >> $PROJECT_DIR/working/proprietary/WFD
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "wifidisplayhal|wfdservice|libwfd|wfdconfig|libhdcp" | sort -u >> $PROJECT_DIR/working/proprietary/WFD
 
 # Xiaomi
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor.xiaomi.hardware.misys" | grep -v "odex" | grep -v "vdex" | sort -u >> $PROJECT_DIR/working/proprietary/Xiaomi
