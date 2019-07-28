@@ -205,6 +205,10 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "vendor.display
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "radio/|vendor.qti.hardware.radio" | grep -v "vendor.qti.hardware.radio.ims" | sort -u >> $PROJECT_DIR/working/proprietary/Radio
 
 # Radio-IMS
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "app/imssettings/imssettings.apk|etc/permissions/com.qualcomm.qti.imscmservice" | sort -u >> $PROJECT_DIR/working/proprietary/Radio-IMS
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "framework/com.qualcomm.qti.imscmservice|framework/com.qualcomm.qti.uceservice|framework/vendor.qti.ims|framework/qti-vzw-ims-internal" | sort -u >> $PROJECT_DIR/working/proprietary/Radio-IMS
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "lib/|lib64" | grep -iE "com.qualcomm.qti.imscmservice@|com.qualcomm.qti.uceservice@|lib-ims|libimscamera_jni|libimsmedia_jni|vendor.qti.ims|lib-dplmedia.so|lib-rtp|lib-siputility" | grep -v "priv-app/" | sort -u >> $PROJECT_DIR/working/proprietary/Radio-IMS
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "priv-app/ims/ims.apk|priv-app/imssettings/imssettings.apk|vendor/bin/ims_rtp_daemon|vendor/bin/imsdatadaemon|vendor/bin/imsqmidaemon|vendor/bin/imsrcsd|vendor/bin/ims_rtp_daemon" | sort -u >> $PROJECT_DIR/working/proprietary/Radio-IMS
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "imsrtpservice|imscmservice|uceservice|vendor.qti.ims.|lib-ims|radio.ims@|vendor.qti.hardware.radio.ims" | sort -u >> $PROJECT_DIR/working/proprietary/Radio-IMS
 
 # SCVE
@@ -300,7 +304,7 @@ file_lines=`cat $PROJECT_DIR/tools/lists/remove.txt`
 for line in $file_lines; do
 	sed -i "s|$line.*||g" $PROJECT_DIR/working/staging.txt
 done
-sed -i "s|.*\.sh||g" $PROJECT_DIR/working/staging.txt
+sed -i "s|vendor/bin/.*\.sh||g" $PROJECT_DIR/working/staging.txt
 sed -i '/^$/d' $PROJECT_DIR/working/staging.txt
 
 # Add missing blobs as misc
