@@ -29,6 +29,9 @@ fi
 # Copy lists to $PROJECT_DIR/working
 cp -a $PROJECT_DIR/tools/lists/proprietary/ $PROJECT_DIR/working/
 
+# ADSP
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/|vendor/lib64/|bin/adsprpcd" | grep -iE "libadsp|ibfastcv|adsprpc|mdsprpc|sdsprpc" | grep -v "scve" | grep -v "lib/rfsa/adsp" | sort -u >> $PROJECT_DIR/working/proprietary/ADSP
+
 # ADSP modules
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/rfsa/adsp/|vendor/dsp/" | grep -v "scve" | sort -u >> $PROJECT_DIR/working/proprietary/ADSP-Modules
 
@@ -60,6 +63,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/libarcsoft|vendor/li
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/bin/" | grep -iE "camera" | grep -v "android.hardware.camera.provider@" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-bin
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/libchromatix|vendor/lib64/libchromatix" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-chromatix
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/camera|vendor/etc/qvr/|vendor/camera3rd/|vendor/camera_sound|vendor/etc/FLASH_ON/|vendor/etc/IMX|vendor/camera/" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-configs
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/" | grep "ISO" | grep ".*\.ncf" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-configs
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/firmware/cpp_firmware|vendor/firmware/CAMERA" | sort -u >> $PROJECT_DIR/working/proprietary/Camera-firmware
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libDepthBokeh|libSonyDual|libtriplecam|libremosaic|lib/camera/|lib64/camera/|libcamx|libcamera|mibokeh|lib_camera|libgcam|libdualcam|libmakeup|libtriplecam|SuperSensor|SonyIMX|libmialgo|libsnpe" | grep -v "vendor/lib/rfsa/adsp/" | sort -u >> $PROJECT_DIR/working/proprietary/Camera
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "hw/camera|libMegvii|libVD|libcapi|libextawb|libnti_|vendor.qti.hardware.camera.device" | grep -v "vendor/lib/rfsa/adsp/" | sort -u >> $PROJECT_DIR/working/proprietary/Camera
@@ -227,7 +231,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "sensorscalibra
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/sensors/" | grep -v "vendor/etc/sensors/hals.conf" | sort -u >> $PROJECT_DIR/working/proprietary/Sensor-configs
 
 # Sony
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "vendor.semc|vendor.somc" | sort -u >> $PROJECT_DIR/working/proprietary/Sony
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "vendor.semc|vendor.somc|init.sony" | sort -u >> $PROJECT_DIR/working/proprietary/Sony
 
 # Soter
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "app/SoterService/SoterService.apk|framework/vendor.qti.hardware.soter|lib64/vendor.qti.hardware.soter" | sort -u >> $PROJECT_DIR/working/proprietary/Soter
@@ -280,17 +284,17 @@ find $PROJECT_DIR/working/proprietary -size  0 -print0 | xargs -0 rm --
 blobs_list=`find $PROJECT_DIR/working/proprietary -type f -printf '%P\n' | sort`
 for list in $blobs_list ; do
 	file_lines=`cat $PROJECT_DIR/working/proprietary/$list | sort -u`
-	printf "\n# $list\n" >> $PROJECT_DIR/working/proprietary-files.txt
+	printf "\n# $list\n" >> $PROJECT_DIR/working/proprietary-files-staging.txt
 	for line in $file_lines ; do
 		if cat $PROJECT_DIR/working/rom_all.txt | grep "$line"; then
 			if echo "$line" | grep -iE "vendor.qti.hardware.fm@1.0.so" | grep -v "vendor/"; then
-				echo "-$line" >> $PROJECT_DIR/working/proprietary-files.txt
+				echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
 			elif echo "$line" | grep -iE "priv-app/imssettings/imssettings.apk"; then
-				echo "-$line" >> $PROJECT_DIR/working/proprietary-files.txt
+				echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
 			elif echo "$line" | grep -iE "app/|lib64/com.quicinc.cne|libaudio_log_utils.so|libgpustats.so|libsdm-disp-vndapis.so|libthermalclient.so|WfdCommon.jar|libantradio.so"; then
-				echo "-$line" >> $PROJECT_DIR/working/proprietary-files.txt
+				echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
 			else
-				echo "$line" >> $PROJECT_DIR/working/proprietary-files.txt
+				echo "$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
 			fi
 		fi
 	done
@@ -308,27 +312,26 @@ sed -i "s|vendor/bin/.*\.sh||g" $PROJECT_DIR/working/staging.txt
 sed -i '/^$/d' $PROJECT_DIR/working/staging.txt
 
 # Add missing blobs as misc
-printf "\n# Misc\n" >> $PROJECT_DIR/working/proprietary-files.txt
+printf "\n# Misc\n" >> $PROJECT_DIR/working/proprietary-files-staging.txt
 file_lines=`cat $PROJECT_DIR/working/staging.txt`
 for line in $file_lines; do
 	# Missing
-	if ! grep -q "$line" $PROJECT_DIR/working/proprietary-files.txt; then
+	if ! grep -q "$line" $PROJECT_DIR/working/proprietary-files-staging.txt; then
 		if ! grep -q "$line" $PROJECT_DIR/tools/lists/ignore.txt; then
 			if echo "$line" | grep -iE "apk|jar"; then
-				echo "-$line" >> $PROJECT_DIR/working/proprietary-files.txt
+				echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
 			else
-				echo "$line" >> $PROJECT_DIR/working/proprietary-files.txt
+				echo "$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
 			fi
 		fi
 	fi
 done
 
 # remove system/
-sed -i "s|system/||g" $PROJECT_DIR/working/proprietary-files.txt
+sed -i "s|system/||g" $PROJECT_DIR/working/proprietary-files-staging.txt
 
 # remove duplicates
-awk '!NF || !seen[$0]++' $PROJECT_DIR/working/proprietary-files.txt > $PROJECT_DIR/working/proprietary-files-new.txt
-cat $PROJECT_DIR/working/proprietary-files-new.txt > $PROJECT_DIR/working/proprietary-files.txt
+awk '!NF || !seen[$0]++' $PROJECT_DIR/working/proprietary-files-staging.txt > $PROJECT_DIR/working/proprietary-files.txt
 
 # cleanup temp files
 find $PROJECT_DIR/working/* ! -name 'proprietary-files.txt' -type d,f -exec rm -rf {} +
