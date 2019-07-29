@@ -16,8 +16,7 @@ Usage:
 
 3. **dummy_dt.sh**: A script which prepares a dummy device tree from ROM dump. Can handle dump stored both locally OR in online git repository (as long as all_files.txt exists in its root). See its GitHub [repo](https://github.com/ShivamKumarJha/Dummy_DT/).  
 Usage:  
-From online git repo's stored in `tools/lists/roms.txt`: `./tools/dummy_dt.sh`  
-From local dumps: `./tools/dummy_dt.sh <full path to ROM dump>`  
+Usage: `./tools/dummy_dt.sh <path to ROM dump OR raw link of dump repo>`  
 *Optional*:  
 To push Dummy_DT repository, `export GIT_TOKEN=<TOKEN>` before running script.  
 For Telegram notification, `export TG_API=<KEY>` before running script.

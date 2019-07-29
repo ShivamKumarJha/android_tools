@@ -8,7 +8,6 @@
 
 # Store project path
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
-ROM_PATH="$1"
 
 # Common stuff
 source $PROJECT_DIR/tools/common_script.sh "y"
@@ -387,25 +386,7 @@ if [ ! -d "$PROJECT_DIR"/dummy_dt/working ]; then
 	mkdir -p "$PROJECT_DIR"/dummy_dt/working
 fi
 
-# from roms.txt
-if [ -z "$ROM_PATH" ]; then
-	devices=`cat $PROJECT_DIR/tools/lists/roms.txt | sort`
-	for device_line in $devices; do
-		# setup
-		common_setup
-		wget -O $PROJECT_DIR/dummy_dt/working/all_files.txt "$device_line"/all_files.txt > /dev/null 2>&1
-		if ! grep -q "system/system/" $PROJECT_DIR/dummy_dt/working/all_files.txt; then
-			wget -O $PROJECT_DIR/dummy_dt/working/system_build.prop "$device_line"/system/build.prop > /dev/null 2>&1
-		else
-			wget -O $PROJECT_DIR/dummy_dt/working/system_build.prop "$device_line"/system/system/build.prop > /dev/null 2>&1
-		fi
-		wget -O $PROJECT_DIR/dummy_dt/working/vendor_build.prop "$device_line"/vendor/build.prop > /dev/null 2>&1
-
-		# operation
-		common_core
-	done
-else
-# local dumps
+if [ -d "$1" ]; then #local dumps
 	for var in "$@"; do
 		# setup
 		ROM_PATH=$( realpath "$var" )
@@ -418,7 +399,20 @@ else
 		find "$ROM_PATH" -type f -printf '%P\n' | sort > $PROJECT_DIR/dummy_dt/working/all_files.txt
 		find "$ROM_PATH/$SYSTEM_PATH" -maxdepth 1 -name "build*prop" -exec cat {} >> $PROJECT_DIR/dummy_dt/working/system_build.prop \;
 		find "$ROM_PATH/vendor/" -maxdepth 1 -name "build*prop" -exec cat {} >> $PROJECT_DIR/dummy_dt/working/vendor_build.prop \;
-
+		# operation
+		common_core
+	done
+elif echo "$1" | grep "http"; then #URL dumps
+	for device_line in "$@"; do
+		# setup
+		common_setup
+		wget -O $PROJECT_DIR/dummy_dt/working/all_files.txt "$device_line"/all_files.txt > /dev/null 2>&1
+		if ! grep -q "system/system/" $PROJECT_DIR/dummy_dt/working/all_files.txt; then
+			wget -O $PROJECT_DIR/dummy_dt/working/system_build.prop "$device_line"/system/build.prop > /dev/null 2>&1
+		else
+			wget -O $PROJECT_DIR/dummy_dt/working/system_build.prop "$device_line"/system/system/build.prop > /dev/null 2>&1
+		fi
+		wget -O $PROJECT_DIR/dummy_dt/working/vendor_build.prop "$device_line"/vendor/build.prop > /dev/null 2>&1
 		# operation
 		common_core
 	done
