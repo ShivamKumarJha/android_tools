@@ -37,6 +37,7 @@ for line in $file_lines ; do
 		echo "$line" >> $PROJECT_DIR/working/Missing.txt
 	else
 		# Common
+		echo -e "${bold}${cyan}Comparing $line${nocol}"
 		cmp --silent $1/$line $2/$line && echo "$line" >> $PROJECT_DIR/working/Common.txt
 		# Modified
 		cmp --silent $1/$line $2/$line || echo "$line" >> $PROJECT_DIR/working/Modified.txt
