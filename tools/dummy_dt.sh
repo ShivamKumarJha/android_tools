@@ -148,11 +148,7 @@ get_configs () {
 	for config_file in $configs; do
 		if [ -z "$ROM_PATH" ]; then
 			echo -e "${bold}${cyan}Downloading $config_file${nocol}"
-			if echo "$config_file" | grep -iE "Bluetooth.apk|CarrierConfig.apk|framework-res.apk"; then
-				aria2c -x10 "$device_line/$config_file" > /dev/null 2>&1 || curl -O -J -u username:$GIT_TOKEN "$device_line/$config_file" > /dev/null 2>&1
-			else
-				wget "$device_line/$config_file" > /dev/null 2>&1 || curl -O -J -u username:$GIT_TOKEN "$device_line/$config_file" > /dev/null 2>&1
-			fi
+			aria2c -x10 "$device_line/$config_file" > /dev/null 2>&1 || curl -O -J -u username:$GIT_TOKEN "$device_line/$config_file" > /dev/null 2>&1
 		else
 			cp -a "$ROM_PATH/$config_file" .
 		fi
