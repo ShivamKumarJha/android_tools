@@ -1,3 +1,11 @@
+etc/permissions/com.qti.location.sdk.xml
+etc/permissions/com.qualcomm.location.xml
+etc/permissions/izat.xt.srv.xml
+etc/permissions/privapp-permissions-com.qualcomm.location.xml
+framework/com.qti.location.sdk.jar
+framework/izat.xt.srv.jar
+lib64/liblocationservice_jni.so
+lib64/libxt_native.so
 vendor/bin/DR_AP_Service
 vendor/bin/garden_app
 vendor/bin/loc_launcher

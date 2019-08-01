@@ -6,6 +6,11 @@ etc/permissions/dpmapi.xml
 framework/com.qti.dpmframework.jar
 framework/dpmapi.jar
 framework/tcmclient.jar
+lib/com.qualcomm.qti.dpm.api@1.0.so
+lib/libdpmctmgr.so
+lib/libdpmfdmgr.so
+lib/libdpmframework.so
+lib/libdpmtcm.so
 lib64/com.qualcomm.qti.dpm.api@1.0.so
 lib64/libdiag_system.so
 lib64/libdpmctmgr.so
@@ -15,4 +20,5 @@ lib64/libdpmtcm.so
 priv-app/dpmserviceapp/dpmserviceapp.apk
 vendor/bin/dpmQmiMgr
 vendor/lib/libdpmqmihal.so
+vendor/lib64/com.qualcomm.qti.dpm.api@1.0.so
 vendor/lib64/libdpmqmihal.so

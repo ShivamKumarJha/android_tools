@@ -21,6 +21,7 @@ vendor/lib/libOmxApeDecSw.so
 vendor/lib/libOmxDsdDec.so
 vendor/lib/libOmxEvrcDec.so
 vendor/lib/libOmxG711Dec.so
+vendor/lib/libOmxMux_proprietary.so
 vendor/lib/libOmxQcelp13Dec.so
 vendor/lib/libOmxVideoDSMode.so
 vendor/lib/libOmxVpp.so
@@ -39,6 +40,9 @@ vendor/lib/libmmsw_platform.so
 vendor/lib/libmulawdec.so
 vendor/lib/libstagefright_foundation.so
 vendor/lib/libstagefright_omx.so
+vendor/lib/libstagefright_soft_ac4dec.so
+vendor/lib/libstagefright_soft_ddpdec.so
+vendor/lib/libstagefright_soft_mpeg2dec.so
 vendor/lib/libstagefright_soft_qtiflacdec.so
 vendor/lib/libvqzip.so
 vendor/lib/vndk/libstagefright_foundation.so

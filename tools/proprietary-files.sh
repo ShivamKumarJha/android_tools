@@ -36,8 +36,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/|vendor/lib64/|bin/a
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/rfsa/adsp/|vendor/dsp/" | grep -v "scve" | sort -u >> $PROJECT_DIR/working/proprietary/ADSP-Modules
 
 # Alarm
-cat $PROJECT_DIR/working/rom_all.txt | grep -iE "framework/vendor.qti.hardware.alarm" | sort -u >> $PROJECT_DIR/working/proprietary/Alarm
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "alarm" | sort -u >> $PROJECT_DIR/working/proprietary/Alarm
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "framework/vendor.qti.hardware.|vendor/" | grep -iE "alarm" | sort -u >> $PROJECT_DIR/working/proprietary/Alarm
 
 # ANT
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "libantradio|qti.ant@" | sort -u >> $PROJECT_DIR/working/proprietary/ANT
@@ -82,7 +81,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "consumerir" | 
 
 # CNE
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "etc/permissions/cneapiclient.xml|etc/permissions/com.quicinc.cne.xml|priv-app/CNEService/CNEService.apk" | sort -u >> $PROJECT_DIR/working/proprietary/CNE
-cat $PROJECT_DIR/working/rom_all.txt | grep "framework/" | grep -iE "cneapiclient|com.quicinc.cne|vendor.qti.hardware.data" | grep ".*\.jar" | grep -v "latency" | sort -u >> $PROJECT_DIR/working/proprietary/CNE
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "framework/|lib/|lib64/" | grep -iE "cneapiclient|com.quicinc.cne|vendor.qti.hardware.data" | grep -iE ".*\.jar|.*\.so" | grep -v "latency" | sort -u >> $PROJECT_DIR/working/proprietary/CNE
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "cne.server|vendor/etc/cne/|quicinc.cne.|cneapiclient|vendor.qti.hardware.data|libcne" | grep -v "latency" | sort -u >> $PROJECT_DIR/working/proprietary/CNE
 
 # CVP
@@ -104,13 +103,13 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "dolby" | sort 
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "dpm.api@" | sort -u >> $PROJECT_DIR/working/proprietary/DPM
 
 # DRM-Widevine
-cat $PROJECT_DIR/working/rom_all.txt | grep -iE "firmware/widevine" | sort -u >> $PROJECT_DIR/working/proprietary/DRM-Widevine
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "firmware/cppf|firmware/widevine|mediadrm/|qcdrm/" | sort -u >> $PROJECT_DIR/working/proprietary/DRM-Widevine
 
 # DTS
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "etc/dts/|libdts|libomx-dts" | sort -u >> $PROJECT_DIR/working/proprietary/DTS
 
 # ESE-Powermanager
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "esepowermanager" | sort -u >> $PROJECT_DIR/working/proprietary/ESE-Powermanager
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "lib/|lib64/|vendor/" | grep -iE "esepowermanager" | sort -u >> $PROJECT_DIR/working/proprietary/ESE-Powermanager
 
 # Factory
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "framework/vendor.qti.data.factory" | sort -u >> $PROJECT_DIR/working/proprietary/Factory
@@ -136,10 +135,17 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "gatekeeper" | 
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "google" | grep -v "etc/media_codecs_google" | sort -u >> $PROJECT_DIR/working/proprietary/Google
 
 # GPS
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "lib/vendor.qti.gnss@|lib64/vendor.qti.gnss@" | sort -u >> $PROJECT_DIR/working/proprietary/GPS
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libizat_|liblowi_|libloc_|liblocation|qti.gnss|gnss@" | sort -u >> $PROJECT_DIR/working/proprietary/GPS
 
 # Graphics
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libc2d30|hw/vulkan|lib/egl/|lib64/egl/" | sort -u >> $PROJECT_DIR/working/proprietary/Graphics
+
+# HotwordEnrollment
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "app/" | grep -iE "HotwordEnrollment" | grep ".apk" | sort -u >> $PROJECT_DIR/working/proprietary/HotwordEnrollment
+
+# IFAA
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "IFAA" | sort -u >> $PROJECT_DIR/working/proprietary/IFAA
 
 # IOP
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "iop@|iopd" | sort -u >> $PROJECT_DIR/working/proprietary/IOP
@@ -187,6 +193,15 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "oneplus" | sor
 # Oppo
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "oppo" | sort -u >> $PROJECT_DIR/working/proprietary/Oppo
 
+# Pasrmanager
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "pasrmanager" | sort -u >> $PROJECT_DIR/working/proprietary/Pasrmanager
+
+# Perf
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "perf@|etc/perf/|libqti-perf|libqti-util" | sort -u >> $PROJECT_DIR/working/proprietary/Perf
+
+# Postprocessing
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "lib/|lib64/|vendor/" | grep -iE "vendor.display.color|vendor.display.postproc" | sort -u >> $PROJECT_DIR/working/proprietary/Postprocessing
+
 # Qdutils_disp
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "qdutils_disp" | sort -u >> $PROJECT_DIR/working/proprietary/Qdutils
 
@@ -196,27 +211,18 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libqmi" | sort
 # Qteeconnector
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "qteeconnector" | sort -u >> $PROJECT_DIR/working/proprietary/Qteeconnector
 
-# Pasrmanager
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "pasrmanager" | sort -u >> $PROJECT_DIR/working/proprietary/Pasrmanager
-
-# Perf
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "perf@|etc/perf/|libqti-perf|libqti-util" | sort -u >> $PROJECT_DIR/working/proprietary/Perf
-
-# Postprocessing
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "vendor.display.color|vendor.display.postproc" | sort -u >> $PROJECT_DIR/working/proprietary/Postprocessing
-
 # Radio
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "radio/|vendor.qti.hardware.radio" | grep -v "vendor.qti.hardware.radio.ims" | sort -u >> $PROJECT_DIR/working/proprietary/Radio
 
 # Radio-IMS
-cat $PROJECT_DIR/working/rom_all.txt | grep -iE "app/imssettings/imssettings.apk|etc/permissions/com.qualcomm.qti.imscmservice" | sort -u >> $PROJECT_DIR/working/proprietary/Radio-IMS
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "app/imssettings/imssettings.apk|etc/permissions/com.qualcomm.qti.imscmservice|app/uceShimService/uceShimService.apk" | sort -u >> $PROJECT_DIR/working/proprietary/Radio-IMS
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "framework/com.qualcomm.qti.imscmservice|framework/com.qualcomm.qti.uceservice|framework/vendor.qti.ims|framework/qti-vzw-ims-internal" | sort -u >> $PROJECT_DIR/working/proprietary/Radio-IMS
-cat $PROJECT_DIR/working/rom_all.txt | grep -iE "lib/|lib64" | grep -iE "com.qualcomm.qti.imscmservice@|com.qualcomm.qti.uceservice@|lib-ims|libimscamera_jni|libimsmedia_jni|vendor.qti.ims|lib-dplmedia.so|lib-rtp|lib-siputility" | grep -v "priv-app/" | sort -u >> $PROJECT_DIR/working/proprietary/Radio-IMS
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "lib/|lib64" | grep -iE "libdiag_system.so|librcc.so|com.qualcomm.qti.imscmservice@|com.qualcomm.qti.uceservice@|lib-ims|libimscamera_jni|libimsmedia_jni|vendor.qti.ims|lib-dplmedia.so|lib-rtp|lib-siputility" | grep -v "priv-app/" | sort -u >> $PROJECT_DIR/working/proprietary/Radio-IMS
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "priv-app/ims/ims.apk|priv-app/imssettings/imssettings.apk|vendor/bin/ims_rtp_daemon|vendor/bin/imsdatadaemon|vendor/bin/imsqmidaemon|vendor/bin/imsrcsd|vendor/bin/ims_rtp_daemon" | sort -u >> $PROJECT_DIR/working/proprietary/Radio-IMS
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "imsrtpservice|imscmservice|uceservice|vendor.qti.ims.|lib-ims|radio.ims@|vendor.qti.hardware.radio.ims" | sort -u >> $PROJECT_DIR/working/proprietary/Radio-IMS
 
 # SCVE
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "scve" | sort -u >> $PROJECT_DIR/working/proprietary/SCVE
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "lib/|lib64/|vendor/" | grep -iE "scve" | sort -u >> $PROJECT_DIR/working/proprietary/SCVE
 
 # Seccam
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "seccam" | sort -u >> $PROJECT_DIR/working/proprietary/Seccam
@@ -291,7 +297,7 @@ for list in $blobs_list ; do
 				echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
 			elif echo "$line" | grep -iE "priv-app/imssettings/imssettings.apk"; then
 				echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
-			elif echo "$line" | grep -iE "app/|lib64/com.quicinc.cne|libaudio_log_utils.so|libgpustats.so|libsdm-disp-vndapis.so|libthermalclient.so|WfdCommon.jar|libantradio.so"; then
+			elif echo "$line" | grep -iE "app/|lib64/com.quicinc.cne|libaudio_log_utils.so|libgpustats.so|libsdm-disp-vndapis.so|libthermalclient.so|WfdCommon.jar|libantradio.so|libsdm-disp-apis.so"; then
 				echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
 			else
 				echo "$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt

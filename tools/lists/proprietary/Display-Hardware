@@ -1,3 +1,5 @@
+lib/libsdm-disp-apis.so
+lib64/libsdm-disp-apis.so
 vendor/lib/libdisplaydebug.so
 vendor/lib/libdisplayqos.so
 vendor/lib/libdpps.so

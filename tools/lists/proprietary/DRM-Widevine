@@ -1,14 +1,4 @@
 vendor/bin/hw/android.hardware.drm@1.1-service.widevine
 vendor/etc/init/android.hardware.drm@1.1-service.widevine.rc
 vendor/lib/libwvhidl.so
-vendor/lib/mediadrm/libprmediadrmdecrypt.so
-vendor/lib/mediadrm/libprmediadrmplugin.so
-vendor/lib/mediadrm/libwvdrmengine.so
-vendor/lib/qcdrm/playready/lib/libprdrmdecrypt_customer.so
-vendor/lib/qcdrm/playready/lib/libtzplayready_customer.so
-vendor/lib/qcdrm/playready/lib/mediadrm/libprmediadrmdecrypt_customer.so
-vendor/lib/qcdrm/playready/lib/mediadrm/libprmediadrmplugin_customer.so
 vendor/lib64/libwvhidl.so
-vendor/lib64/mediadrm/libprmediadrmdecrypt.so
-vendor/lib64/mediadrm/libprmediadrmplugin.so
-vendor/lib64/mediadrm/libwvdrmengine.so

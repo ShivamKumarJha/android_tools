@@ -10,6 +10,7 @@ lib/libOmxMux.so
 lib/libmmparser_lite.so
 lib/libmmrtpdecoder.so
 lib/libmmrtpencoder.so
+lib/libwfdaac.so
 lib/libwfdavenhancements.so
 lib/libwfdclient.so
 lib/libwfdcodecv4l2.so
