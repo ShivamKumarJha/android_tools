@@ -71,7 +71,6 @@ fi
 
 # Cleanup unrequired prop's
 sed -i "s|dalvik.vm.heapsize=36m||g" $PROJECT_DIR/working/staging.mk
-sed -i "s|media.settings.xml=.*||g" $PROJECT_DIR/working/staging.mk
 sed -i "s|persist.sys.mcd_config_file.*||g" $PROJECT_DIR/working/staging.mk
 sed -i "s|persist.miui.density.*||g" $PROJECT_DIR/working/staging.mk
 sed -i "s|ro.miui.notch.*||g" $PROJECT_DIR/working/staging.mk
@@ -80,9 +79,7 @@ sed -i "s|ro.build.software.version=.*||g" $PROJECT_DIR/working/staging.mk
 sed -i "s|ro.build.version.incremental=.*||g" $PROJECT_DIR/working/staging.mk
 sed -i "s|ro.vendor.build.fingerprint.*||g" $PROJECT_DIR/working/staging.mk
 sed -i "s|persist.rild.nitz_.*||g" $PROJECT_DIR/working/staging.mk
-sed -i "s|persist.vendor.overlay.izat.optin=rro||g" $PROJECT_DIR/working/staging.mk
 sed -i "s|ro.hwui.*||g" $PROJECT_DIR/working/staging.mk
-sed -i "s|qemu.hw.mainkeys=0||g" $PROJECT_DIR/working/staging.mk
 sed -i "s|ro.config.alarm_alert=.*||g" $PROJECT_DIR/working/staging.mk
 sed -i "s|ro.config.calendaralert_sound=.*||g" $PROJECT_DIR/working/staging.mk
 sed -i "s|ro.config.newmail_sound=.*||g" $PROJECT_DIR/working/staging.mk
@@ -94,12 +91,6 @@ sed -i "s|ro.external.version.code=.*||g" $PROJECT_DIR/working/staging.mk
 sed -i "s|ro.huaqin.version.release=.*||g" $PROJECT_DIR/working/staging.mk
 sed -i "s|ro.setupwizard.*||g" $PROJECT_DIR/working/staging.mk
 sed -i "s|setupwizard.*||g" $PROJECT_DIR/working/staging.mk
-sed -i "s|asus.app-prebuilt.*||g" $PROJECT_DIR/working/staging.mk
-sed -i "s|persist.asus.*||g" $PROJECT_DIR/working/staging.mk
-sed -i "s|ro.asus.*||g" $PROJECT_DIR/working/staging.mk
-sed -i "s|persist.sys.disable_rescue=.*||g" $PROJECT_DIR/working/staging.mk
-sed -i "s|persist.sys.enable_rescue=.*||g" $PROJECT_DIR/working/staging.mk
-sed -i "s|persist.sys.onehandctrl.enable=.*||g" $PROJECT_DIR/working/staging.mk
 sed -i "s|ro.product.first_api_level=.*||g" $PROJECT_DIR/working/staging.mk
 sed '/^$/d' $PROJECT_DIR/working/staging.mk | sort -u > $PROJECT_DIR/working/temp.mk
 
