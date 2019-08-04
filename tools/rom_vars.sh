@@ -48,17 +48,12 @@ for var in "$@"; do
 		DEVICE=$( cat "$CAT_FILE" | grep "ro.vivo.product.release.name=" | sed "s|ro.vivo.product.release.name=||g" | head -n 1 )
 	elif grep -q "ro.product.system.name" "$CAT_FILE"; then
 		DEVICE=$( cat "$CAT_FILE" | grep "ro.product.system.name=" | sed "s|ro.product.system.name=||g" | head -n 1 )
-	elif grep -q "ro.build.fota.version" "$CAT_FILE"; then
-		DEVICE=$( cat "$CAT_FILE" | grep "ro.build.fota.version=" | sed "s|.*=||g" | head -n 1 | cut -d - -f1 )
 	else
 		DEVICE=$( cat "$CAT_FILE" | grep "ro.product" | grep "device=" | sed "s|.*=||g" | sed "s|ASUS_||g" | head -n 1 )
 	fi
-	if [ -z "$DEVICE" ]; then
-		DEVICE=$( cat "$CAT_FILE" | grep "ro.build" | grep "product=" | sed "s|.*=||g" | sed "s|ASUS_||g" | head -n 1 )
-	fi
-	if [ -z "$DEVICE" ]; then
-		DEVICE=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | head -n 1 | cut -d : -f1 | rev | cut -d / -f1 | rev )
-	fi
+	[[ -z "$DEVICE" ]] && DEVICE=$( cat "$CAT_FILE" | grep "ro.build" | grep "product=" | sed "s|.*=||g" | sed "s|ASUS_||g" | head -n 1 )
+	[[ -z "$DEVICE" ]] && DEVICE=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | head -n 1 | cut -d : -f1 | rev | cut -d / -f1 | rev )
+	[[ -z "$DEVICE" ]] && DEVICE=$( cat "$CAT_FILE" | grep "ro.build.fota.version=" | sed "s|.*=||g" | head -n 1 | cut -d - -f1 )
 	DESCRIPTION=$( cat "$CAT_FILE" | grep "ro." | grep "build.description=" | sed "s|.*=||g" | head -n 1 )
 	if grep -q "build.fingerprint=" "$CAT_FILE"; then
 		FINGERPRINT=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | head -n 1 )
@@ -79,9 +74,7 @@ for var in "$@"; do
 	else
 		MODEL=$( cat "$CAT_FILE" | grep "ro.product" | grep "model=" | sed "s|.*=||g" | head -n 1 )
 	fi
-	if [ -z "$MODEL" ]; then
-		MODEL=$DEVICE
-	fi
+	[[ -z "$MODEL" ]] && MODEL=$DEVICE
 	SECURITY_PATCH=$( cat "$CAT_FILE" | grep "build.version.security_patch=" | sed "s|.*=||g" | head -n 1 )
 	VERSION=$( cat "$CAT_FILE" | grep "build.version.release=" | sed "s|.*=||g" | head -c 2 | head -n 1 )
 	re='^[0-9]+$'
