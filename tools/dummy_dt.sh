@@ -399,6 +399,7 @@ if [ -d "$1" ]; then #local dumps
 		find "$ROM_PATH/vendor/" -maxdepth 1 -name "build*prop" -exec cat {} >> $PROJECT_DIR/dummy_dt/working/vendor_build.prop \;
 		# operation
 		common_core
+		cd "$PROJECT_DIR"
 	done
 elif echo "$1" | grep "http"; then #URL dumps
 	for device_line in "$@"; do

@@ -2,9 +2,9 @@
 # Android tools
 Collection of my scripts.  
   
-Usage:  
-`chmod +x tools/*`  
-`./tools/<script.sh>`
+**Setup**:  
+`chmod +x tools/dependencies.sh`  
+`./tools/dependencies.sh`
   
 1. **common_blobs.sh**: A script to list common and device specific blob's between two ROM's.  
 Usage:  
