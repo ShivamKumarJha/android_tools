@@ -258,9 +258,12 @@ common_dt () {
 		printf "\n# HIDL" >> "$DT_DIR"/BoardConfig.mk
 		printf "\nDEVICE_MANIFEST_FILE := \$(DEVICE_PATH)/manifest.xml" >> "$DT_DIR"/BoardConfig.mk
 	fi
-	if [ -e "$DT_DIR"/android.hardware.cas@1.1-service.xml ]; then
-		printf "\nDEVICE_MANIFEST_FILE += \$(DEVICE_PATH)/android.hardware.cas@1.1-service.xml" >> "$DT_DIR"/BoardConfig.mk
-	fi
+	file_lines=$( cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep "vendor/etc/vintf/manifest/" | sed "s|vendor/etc/vintf/manifest/||g" )
+	for line in $file_lines; do
+		if [ -e $DT_DIR/$line ]; then
+			printf "\nDEVICE_MANIFEST_FILE += \$(DEVICE_PATH)/$line" >> "$DT_DIR"/BoardConfig.mk
+		fi
+	done
 	if [ -e "$DT_DIR"/compatibility_matrix.xml ]; then
 		printf "\nDEVICE_MATRIX_FILE := \$(DEVICE_PATH)/compatibility_matrix.xml" >> "$DT_DIR"/BoardConfig.mk
 	fi
