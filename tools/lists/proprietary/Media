@@ -3,8 +3,16 @@ lib/libFileMux.so
 lib/libOmxMux.so
 lib/libmmosal.so
 lib/libmmparser_lite.so
+lib/libmmrtpdecoder.so
+lib/libmmrtpencoder.so
 lib/vendor.qti.hardware.vpp@1.1.so
+lib64/extractors/libmmparser.so
+lib64/libFileMux.so
+lib64/libOmxMux.so
 lib64/libmmosal.so
+lib64/libmmparser_lite.so
+lib64/libmmrtpdecoder.so
+lib64/libmmrtpencoder.so
 lib64/vendor.qti.hardware.vpp@1.1.so
 vendor/lib/libAlacSwDec.so
 vendor/lib/libApeSwDec.so

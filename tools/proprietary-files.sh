@@ -48,6 +48,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "tfa98xx|libsrs
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/acdbdata/|vendor/etc/acdbdata_bl/|vendor/etc/acdbdata_id/" | sort -u >> $PROJECT_DIR/working/proprietary/Audio-ACDB
 
 # Audio-Hardware
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/|vendor/lib64/" | grep -iE "libaudio_log_utils.so|libtinycompress_vendor.so|libqcompostprocbundle.so|libqcomvisualizer.so|libqcomvoiceprocessing.so|libvolumelistener.so" | sort -u >> $PROJECT_DIR/working/proprietary/Audio-Hardware
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "hw/audio.primary" | sort -u >> $PROJECT_DIR/working/proprietary/Audio-Hardware
 
 # Bluetooth
@@ -83,6 +84,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "consumerir" | 
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "etc/permissions/cneapiclient.xml|etc/permissions/com.quicinc.cne.xml|priv-app/CNEService/CNEService.apk" | sort -u >> $PROJECT_DIR/working/proprietary/CNE
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "framework/|lib/|lib64/" | grep -iE "cneapiclient|com.quicinc.cne|vendor.qti.hardware.data" | grep -iE ".*\.jar|.*\.so" | grep -v "latency" | sort -u >> $PROJECT_DIR/working/proprietary/CNE
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "cne.server|vendor/etc/cne/|quicinc.cne.|cneapiclient|vendor.qti.hardware.data|libcne" | grep -v "latency" | sort -u >> $PROJECT_DIR/working/proprietary/CNE
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "bin/cnd|libwms.so|libwqe.so|libxml.so" | sort -u >> $PROJECT_DIR/working/proprietary/CNE
 
 # CVP
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libcvp|cvp@" | grep -v "lib/rfsa/adsp" | sort -u >> $PROJECT_DIR/working/proprietary/CVP
@@ -100,7 +102,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "vendor.qti.har
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "dolby" | sort -u >> $PROJECT_DIR/working/proprietary/Dolby
 
 # DPM
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "dpm.api@" | sort -u >> $PROJECT_DIR/working/proprietary/DPM
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "dpm.api@|libdpm|bin/dpmd|etc/dpm/dpm.conf|etc/init/dpmd.rc|com.qti.dpmframework|dpmapi|framework/tcmclient.jar|priv-app/dpmserviceapp/dpmserviceapp.apk|vendor/bin/dpmQmiMgr" | sort -u >> $PROJECT_DIR/working/proprietary/DPM
 
 # DRM-Widevine
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "firmware/cppf|firmware/widevine|mediadrm/|qcdrm/" | sort -u >> $PROJECT_DIR/working/proprietary/DRM-Widevine
@@ -126,7 +128,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "fpctzappfinger
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/firmware/|etc/firmware/" | grep -v "cpp_firmware" | grep -v "libpn5" | grep -v "ipa_fws" | sort -u >> $PROJECT_DIR/working/proprietary/Firmware
 
 # FM
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "ftm_fm_lib|vendor.qti.hardware.fm" | sort -u >> $PROJECT_DIR/working/proprietary/FM
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "ftm_fm_lib|vendor.qti.hardware.fm|fm_helium.so|libfm-hci.so|fm_qsoc_patches" | sort -u >> $PROJECT_DIR/working/proprietary/FM
 
 # Gatekeeper
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "gatekeeper" | sort -u >> $PROJECT_DIR/working/proprietary/Gatekeeper
@@ -277,10 +279,12 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "voiceprint@|ve
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "lib/hw/vr|lib64/hw/vr" | sort -u >> $PROJECT_DIR/working/proprietary/VR
 
 # WFD
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "bin/wfdservice|etc/init/wfdservice.rc|etc/wfdconfig|framework/WfdCommon.jar|priv-app/WfdService/WfdService.apk" | sort -u >> $PROJECT_DIR/working/proprietary/WFD
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "lib/|lib64/" | grep -iE "wifidisplayhal|libwfd" | grep -v "libwfds.so" | sort -u >> $PROJECT_DIR/working/proprietary/WFD
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "wifidisplayhal|wfdservice|libwfd|wfdconfig|libhdcp" | sort -u >> $PROJECT_DIR/working/proprietary/WFD
 
 # Xiaomi
-cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor.xiaomi.hardware.misys" | grep -v "odex" | grep -v "vdex" | sort -u >> $PROJECT_DIR/working/proprietary/Xiaomi
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor.xiaomi.hardware." | grep -v "odex" | grep -v "vdex" | sort -u >> $PROJECT_DIR/working/proprietary/Xiaomi
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "xiaomi|mlipay|mtd|tidad|libmt|libtida|libmivendor" | grep -v "camera" | grep -v "vendor/etc/nuance/" | sort -u >> $PROJECT_DIR/working/proprietary/Xiaomi
 
 # Delete empty lists

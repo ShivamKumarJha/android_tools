@@ -1,7 +1,0 @@
-lib/fm_helium.so
-lib/libfm-hci.so
-lib/vendor.qti.hardware.fm@1.0.so
-lib64/fm_helium.so
-lib64/libfm-hci.so
-lib64/vendor.qti.hardware.fm@1.0.so
-vendor/bin/fm_qsoc_patches
