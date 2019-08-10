@@ -82,6 +82,7 @@ vendor/etc/selinux/
 vendor/etc/sound_trigger_
 vendor/etc/vintf/
 vendor/etc/wifi/
+vendor/hwprop/
 vendor/lib/android.hardware.automotive.vehicle@
 vendor/lib/android.hardware.wifi.hostapd@
 vendor/lib/android.hardware.wifi.supplicant@
