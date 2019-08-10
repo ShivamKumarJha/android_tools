@@ -105,5 +105,6 @@ for var in "$@"; do
 	# cleanup & display
 	rm -rf $PROJECT_DIR/working/*
 	duration=$SECONDS
+	echo -e "${bold}${cyan}Dump location: $PROJECT_DIR/dumps/$UNZIP_DIR/${nocol}"
 	echo -e "${bold}${cyan}Extract time: $(($duration / 60)) minutes and $(($duration % 60)) seconds.${nocol}"
 done
