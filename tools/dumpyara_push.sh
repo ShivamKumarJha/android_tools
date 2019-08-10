@@ -19,8 +19,8 @@ if [ -z "$1" ] ; then
 fi
 
 # Exit if missing token's
-if [ -z "$GIT_TOKEN" ] || [ -z "$TG_API" ] ; then
-	echo -e "${bold}${cyan}Missing GitHub token. Exiting.${nocol}"
+if [ -z "$DUMPYARA_TOKEN" ] || [ -z "$TG_API" ] ; then
+	echo -e "${bold}${cyan}Missing GitHub or Telegram token. Exiting.${nocol}"
 	exit
 fi
 
