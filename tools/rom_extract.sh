@@ -34,7 +34,7 @@ core () {
 	FILE=${URL##*/}
 	EXTENSION=${URL##*.}
 	UNZIP_DIR=${FILE/.$EXTENSION/}
-	PARTITIONS="system vendor cust odm oem factory product modem xrom"
+	PARTITIONS="system vendor cust odm oem factory product modem xrom systemex"
 	[[ -d $PROJECT_DIR/dumps/$UNZIP_DIR/ ]] && rm -rf $PROJECT_DIR/dumps/$UNZIP_DIR/
 
 	# Firmware extractor
