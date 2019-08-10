@@ -26,6 +26,13 @@ else
 	cp -a $1 $PROJECT_DIR/working/rom_all.txt
 fi
 
+# remove system/
+if grep -q "system/system/" $PROJECT_DIR/working/rom_all.txt; then
+	sed -i "s|^system/system/||1" $PROJECT_DIR/working/rom_all.txt
+elif grep -q "system/" $PROJECT_DIR/working/rom_all.txt; then
+	sed -i "s|^system/||1" $PROJECT_DIR/working/rom_all.txt
+fi
+
 # Copy lists to $PROJECT_DIR/working
 cp -a $PROJECT_DIR/tools/lists/proprietary/ $PROJECT_DIR/working/
 
@@ -330,7 +337,7 @@ done
 sed -i "s|vendor/bin/.*\.sh||g" $PROJECT_DIR/working/staging.txt
 sed -i '/^$/d' $PROJECT_DIR/working/staging.txt
 
-# Add missing blobs as misc
+# Add missing /vendor blobs as misc
 printf "\n# Misc\n" >> $PROJECT_DIR/working/proprietary-files-staging.txt
 file_lines=`cat $PROJECT_DIR/working/staging.txt`
 for line in $file_lines; do
@@ -345,9 +352,6 @@ for line in $file_lines; do
 		fi
 	fi
 done
-
-# remove system/
-sed -i "s|system/||g" $PROJECT_DIR/working/proprietary-files-staging.txt
 
 # remove duplicates
 awk '!NF || !seen[$0]++' $PROJECT_DIR/working/proprietary-files-staging.txt > $PROJECT_DIR/working/proprietary-files.txt
