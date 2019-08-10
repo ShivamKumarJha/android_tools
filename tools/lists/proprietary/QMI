@@ -1,5 +1,3 @@
-etc/permissions/qti_libpermissions.xml
-etc/permissions/qti_permissions.xml
 vendor/bin/irsc_util
 vendor/bin/pd-mapper
 vendor/lib/libdiag.so

@@ -1,5 +1,3 @@
-etc/permissions/audiosphere.xml
-framework/audiosphere.jar
 vendor/bin/audioflacapp
 vendor/etc/audio.scd
 vendor/etc/diracvdd.bin

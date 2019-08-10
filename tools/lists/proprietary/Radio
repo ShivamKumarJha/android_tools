@@ -1,17 +1,3 @@
-app/QtiTelephonyService/QtiTelephonyService.apk
-app/datastatusnotification/datastatusnotification.apk
-app/embms/embms.apk
-etc/permissions/embms.xml
-etc/permissions/privapp-permissions-qti.xml
-etc/permissions/qcrilhook.xml
-etc/permissions/telephonyservice.xml
-etc/sysconfig/qti_whitelist.xml
-framework/QtiTelephonyServicelibrary.jar
-framework/embmslibrary.jar
-framework/qcnvitems.jar
-framework/qcrilhook.jar
-framework/qti-telephony-common.jar
-priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk
 vendor/bin/ATFWD-daemon
 vendor/bin/hw/qcrild
 vendor/bin/netmgrd

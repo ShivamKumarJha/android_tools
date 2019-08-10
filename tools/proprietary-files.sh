@@ -42,6 +42,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep -iE "framework/vendor.qti.hardware.|
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "libantradio|qti.ant@" | sort -u >> $PROJECT_DIR/working/proprietary/ANT
 
 # Audio
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "etc/permissions/audiosphere.xml|framework/audiosphere.jar" | sort -u >> $PROJECT_DIR/working/proprietary/Audio
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "tfa98xx|libsrsprocessing|libaudio|libacdb|libdirac|etc/dirac|etc/sony_effect/|etc/drc/|etc/surround_sound_3mic/" | grep -v "lib/rfsa/adsp" | grep -v "lib/modules/" | sort -u >> $PROJECT_DIR/working/proprietary/Audio
 
 # Audio-ACDB
@@ -96,7 +97,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "etc/dsi_|video
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/qdcm_calib" | sort -u >> $PROJECT_DIR/working/proprietary/Display-calibration
 
 # Display-Hardware
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "vendor.qti.hardware.display.allocator|android.hardware.graphics.mapper|vendor.display.config@|hw/gralloc|hw/hwcomposer|hw/memtrack" | sort -u >> $PROJECT_DIR/working/proprietary/Display-Hardware
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "vendor.qti.hardware.display.allocator|android.hardware.graphics.mapper|vendor.display.config@|hw/gralloc|hw/hwcomposer|hw/memtrack|libsdm-disp-apis.so" | sort -u >> $PROJECT_DIR/working/proprietary/Display-Hardware
 
 # Dolby
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "dolby" | sort -u >> $PROJECT_DIR/working/proprietary/Dolby
@@ -105,7 +106,8 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "dolby" | sort 
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "dpm.api@|libdpm|bin/dpmd|etc/dpm/dpm.conf|etc/init/dpmd.rc|com.qti.dpmframework|dpmapi|framework/tcmclient.jar|priv-app/dpmserviceapp/dpmserviceapp.apk|vendor/bin/dpmQmiMgr" | sort -u >> $PROJECT_DIR/working/proprietary/DPM
 
 # DRM-Widevine
-cat $PROJECT_DIR/working/rom_all.txt | grep -iE "firmware/cppf|firmware/widevine|mediadrm/|qcdrm/" | sort -u >> $PROJECT_DIR/working/proprietary/DRM-Widevine
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep "android.hardware.drm" | grep "widevine" | sort -u >> $PROJECT_DIR/working/proprietary/DRM-Widevine
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "firmware/cppf|firmware/widevine|mediadrm/|qcdrm/|lib/libwvhidl.so|lib64/libwvhidl.so" | sort -u >> $PROJECT_DIR/working/proprietary/DRM-Widevine
 
 # DTS
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "etc/dts/|libdts|libomx-dts" | sort -u >> $PROJECT_DIR/working/proprietary/DTS
@@ -137,7 +139,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "gatekeeper" | 
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "google" | grep -v "etc/media_codecs_google" | sort -u >> $PROJECT_DIR/working/proprietary/Google
 
 # GPS
-cat $PROJECT_DIR/working/rom_all.txt | grep -iE "lib/vendor.qti.gnss@|lib64/vendor.qti.gnss@" | sort -u >> $PROJECT_DIR/working/proprietary/GPS
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "etc/permissions/com.qti.location.sdk.xml|etc/permissions/com.qualcomm.location.xml|etc/permissions/izat.xt.srv.xml|etc/permissions/privapp-permissions-com.qualcomm.location.xml|framework/com.qti.location.sdk.jar|framework/izat.xt.srv.jar|lib64/liblocationservice_jni.so|lib64/libxt_native.so|lib/vendor.qti.gnss@|lib64/vendor.qti.gnss@" | sort -u >> $PROJECT_DIR/working/proprietary/GPS
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libizat_|liblowi_|libloc_|liblocation|qti.gnss|gnss@" | sort -u >> $PROJECT_DIR/working/proprietary/GPS
 
 # Graphics
@@ -174,6 +176,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "liblisten|hw/s
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "mlshal" | sort -u >> $PROJECT_DIR/working/proprietary/Machine-Learning
 
 # Media
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "lib/|lib64/" | grep -iE "extractors/libmmparser.so|libFileMux.so|libOmxMux.so|libmmosal.so|ibmmparser_lite.so|libmmrtpdecoder.so|libmmrtpencoder.so|vendor.qti.hardware.vpp@" | sort -u >> $PROJECT_DIR/working/proprietary/Media
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "vendor.qti.hardware.vpp|libvpp" | sort -u >> $PROJECT_DIR/working/proprietary/Media
 
 # Meizu
@@ -201,6 +204,9 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "pasrmanager" |
 # Perf
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "perf@|etc/perf/|libqti-perf|libqti-util" | sort -u >> $PROJECT_DIR/working/proprietary/Perf
 
+# Peripheral
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "bin/pm-proxy|bin/pm-service|libperipheral" | sort -u >> $PROJECT_DIR/working/proprietary/Peripheral
+
 # Postprocessing
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "lib/|lib64/|vendor/" | grep -iE "vendor.display.color|vendor.display.postproc" | sort -u >> $PROJECT_DIR/working/proprietary/Postprocessing
 
@@ -208,12 +214,15 @@ cat $PROJECT_DIR/working/rom_all.txt | grep -iE "lib/|lib64/|vendor/" | grep -iE
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "qdutils_disp" | sort -u >> $PROJECT_DIR/working/proprietary/Qdutils
 
 # QMI
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "etc/permissions/qti_" | sort -u >> $PROJECT_DIR/working/proprietary/QMI
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libqmi" | sort -u >> $PROJECT_DIR/working/proprietary/QMI
 
 # Qteeconnector
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "qteeconnector" | sort -u >> $PROJECT_DIR/working/proprietary/Qteeconnector
 
 # Radio
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "app/QtiTelephonyService/QtiTelephonyService.apk|app/datastatusnotification/datastatusnotification.apk|app/embms/embms.apk|etc/permissions/embms.xml|etc/permissions/privapp-permissions-qti.xml|etc/permissions/qcrilhook.xml|etc/permissions/telephonyservice.xml|etc/sysconfig/qti_whitelist.xml|priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk" | sort -u >> $PROJECT_DIR/working/proprietary/Radio
+cat $PROJECT_DIR/working/rom_all.txt | grep "framework/" | grep -iE "QtiTelephonyServicelibrary|embmslibrary|qcnvitems|qcrilhook|qti-telephony-common" | grep ".jar" | sort -u >> $PROJECT_DIR/working/proprietary/Radio
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "radio/|vendor.qti.hardware.radio" | grep -v "vendor.qti.hardware.radio.ims" | sort -u >> $PROJECT_DIR/working/proprietary/Radio
 
 # Radio-IMS
