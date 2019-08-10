@@ -29,7 +29,7 @@ vendor/bin/hw/android.hardware.wifi@
 vendor/bin/hw/vendor.nxp.hardware.nfc@
 vendor/bin/hw/vendor.qti.hardware.display.allocator@
 vendor/bin/hw/vendor.qti.media.c2@
-vendor/bin/qmi-framework-tests/qmi_test_mt_client_init_instance
+vendor/bin/qmi-framework-tests/
 vendor/etc/audio/audio_policy_configuration
 vendor/etc/audio_
 vendor/etc/default_volume_tables
