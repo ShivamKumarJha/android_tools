@@ -15,10 +15,8 @@ cyan='\033[0;36m'
 nocol='\033[0m'
 red='\033[0;31m'
 
-# Create $PROJECT_DIR/working directory if it does not exist
-if [ ! -d $PROJECT_DIR/working ]; then
-	mkdir -p $PROJECT_DIR/working
-fi
+# Create some folders
+mkdir -p "$PROJECT_DIR/dumps/" "$PROJECT_DIR/working"
 
 # clean up
 if [ "$1" == "y" ]; then
