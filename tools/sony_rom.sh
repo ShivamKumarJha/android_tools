@@ -45,7 +45,7 @@ for var in "$@"; do
 	unzip $URL -d $PROJECT_DIR/working
 	# Extract sin
 	[[ -e $PROJECT_DIR/working/userdata.sin ]] && rm -rf $PROJECT_DIR/working/userdata.sin
-	mono $PROJECT_DIR/tools/prebuilt/UnSIN.exe -dr $PROJECT_DIR/working
+	$PROJECT_DIR/tools/prebuilt/unsin -dr $PROJECT_DIR/working
 	find $PROJECT_DIR/working/ -name "*.sin" -type f -exec rm -rf {} \;
 	[[ -d $PROJECT_DIR/dumps/$UNZIP_DIR/ ]] && rm -rf $PROJECT_DIR/dumps/$UNZIP_DIR/
 	# mounting
