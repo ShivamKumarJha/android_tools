@@ -17,7 +17,7 @@ else
 fi
 
 # Install some packages
-echo "$user_password" | sudo -S apt-get install -y apktool unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract file-roller device-tree-compiler liblzma-dev python-pip brotli liblz4-tool aria2 android-tools-fsutils brotli python3-pip
+echo "$user_password" | sudo -S apt-get install -y unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract file-roller device-tree-compiler liblzma-dev python-pip brotli liblz4-tool aria2 android-tools-fsutils brotli python3-pip
 pip3 install pycryptodome backports.lzma protobuf pycrypto
 
 # Clone repo's
@@ -38,4 +38,4 @@ else
 	git clone --recurse-submodules https://github.com/ShivamKumarJha/Firmware_extractor $PROJECT_DIR/tools/Firmware_extractor
 fi
 
-chmod +x $PROJECT_DIR/tools/*
+chmod +x $PROJECT_DIR/tools/* $PROJECT_DIR/tools/prebuilt/*

@@ -307,7 +307,7 @@ common_overlay () {
 	ovlist=`find "$PROJECT_DIR"/working/overlays -maxdepth 1 -type f -printf '%P\n' | sort`
 	for list in $ovlist; do
 		echo -e "${bold}${cyan}Extracting $list${nocol}"
-		apktool -f d "$list" > /dev/null 2>&1
+		$PROJECT_DIR/tools/prebuilt/apktool -f d "$list" > /dev/null 2>&1
 	done
 	mkdir -p "$DT_DIR"/overlay/frameworks/base/core/res/res/xml/ "$DT_DIR"/overlay/packages/apps/CarrierConfig/res/xml "$DT_DIR"/overlay/frameworks/base/core/res/res/values/ "$DT_DIR"/overlay/packages/apps/Bluetooth/res/values
 	cp -a "$PROJECT_DIR"/working/overlays/framework-res/res/xml/power_profile.xml "$DT_DIR"/overlay/frameworks/base/core/res/res/xml/power_profile.xml > /dev/null 2>&1
