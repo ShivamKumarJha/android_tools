@@ -300,16 +300,15 @@ common_dt () {
 }
 
 common_overlay () {
-	mkdir -p "$PROJECT_DIR"/working/overlays
+	mkdir -p "$PROJECT_DIR"/working/overlays "$DT_DIR"/overlay/frameworks/base/core/res/res/xml/ "$DT_DIR"/overlay/packages/apps/CarrierConfig/res/xml "$DT_DIR"/overlay/frameworks/base/core/res/res/values/ "$DT_DIR"/overlay/packages/apps/Bluetooth/res/values "$DT_DIR"/overlay/frameworks/base/packages/SystemUI/res/values/
 	cd "$PROJECT_DIR"/working/overlays
-	cat "$PROJECT_DIR"/dummy_dt/working/all_files.txt | grep -iE "framework/framework-res.apk|app/CarrierConfig/CarrierConfig.apk|app/Bluetooth/Bluetooth.apk" > "$PROJECT_DIR"/dummy_dt/working/configs.txt
+	cat "$PROJECT_DIR"/dummy_dt/working/all_files.txt | grep -iE "priv-app/SystemUI/SystemUI.apk|framework/framework-res.apk|app/CarrierConfig/CarrierConfig.apk|app/Bluetooth/Bluetooth.apk" > "$PROJECT_DIR"/dummy_dt/working/configs.txt
 	get_configs
 	ovlist=`find "$PROJECT_DIR"/working/overlays -maxdepth 1 -type f -printf '%P\n' | sort`
 	for list in $ovlist; do
 		echo -e "${bold}${cyan}Extracting $list${nocol}"
 		$PROJECT_DIR/tools/prebuilt/apktool -f d "$list" > /dev/null 2>&1
 	done
-	mkdir -p "$DT_DIR"/overlay/frameworks/base/core/res/res/xml/ "$DT_DIR"/overlay/packages/apps/CarrierConfig/res/xml "$DT_DIR"/overlay/frameworks/base/core/res/res/values/ "$DT_DIR"/overlay/packages/apps/Bluetooth/res/values
 	cp -a "$PROJECT_DIR"/working/overlays/framework-res/res/xml/power_profile.xml "$DT_DIR"/overlay/frameworks/base/core/res/res/xml/power_profile.xml > /dev/null 2>&1
 	cp -a "$PROJECT_DIR"/working/overlays/Bluetooth/res/values/bools.xml "$DT_DIR"/overlay/packages/apps/Bluetooth/res/values/bools.xml > /dev/null 2>&1
 	cp -a "$PROJECT_DIR"/working/overlays/CarrierConfig/res/xml/* "$DT_DIR"/overlay/packages/apps/CarrierConfig/res/xml/ > /dev/null 2>&1
@@ -372,12 +371,20 @@ common_overlay () {
 			fi
 		fi
 	done
-
 	# Make xml proper
 	mv "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml "$DT_DIR"/overlay/frameworks/base/core/res/res/values/staging.xml
 	cat "$PROJECT_DIR"/tools/lists/overlays/comments/HEADER "$DT_DIR"/overlay/frameworks/base/core/res/res/values/staging.xml > "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
 	printf "\n</resources>" >> "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
 	rm -rf "$DT_DIR"/overlay/frameworks/base/core/res/res/values/staging.xml
+	# round padding
+	if [[ -d "$PROJECT_DIR/working/overlays/SystemUI/" ]]; then
+		echo "<resources>" >> "$DT_DIR"/overlay/frameworks/base/packages/SystemUI/res/values/dimens.xml
+		cat "$PROJECT_DIR/working/overlays/SystemUI/res/values/dimens.xml" | grep "rounded_corner_content_padding" >> "$DT_DIR"/overlay/frameworks/base/packages/SystemUI/res/values/dimens.xml
+		echo "</resources>" >> "$DT_DIR"/overlay/frameworks/base/packages/SystemUI/res/values/dimens.xml
+		echo "<resources>" >> "$DT_DIR"/overlay/frameworks/base/packages/SystemUI/res/values/config.xml
+		cat "$PROJECT_DIR/working/overlays/SystemUI/res/values/bools.xml" | grep "doze_proximity_check_before_pulse" >> "$DT_DIR"/overlay/frameworks/base/packages/SystemUI/res/values/config.xml
+		echo "</resources>" >> "$DT_DIR"/overlay/frameworks/base/packages/SystemUI/res/values/config.xml
+	fi
 }
 
 # Init git if not already
