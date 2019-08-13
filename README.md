@@ -18,7 +18,6 @@ Usage:
 Usage:  
 Usage: `./tools/dummy_dt.sh <path to ROM dump OR raw link of dump repo>`  
 *Optional*:  
-To push Dummy_DT repository, `export GIT_TOKEN=<TOKEN>` before running script.  
 For Telegram notification, `export TG_API=<KEY>` before running script.
 
 4. **manifest_parser.sh**: A script to parse manifest xml(s) so it clones only relevant repo's with full depth.  

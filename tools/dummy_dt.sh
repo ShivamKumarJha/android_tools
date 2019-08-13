@@ -121,7 +121,7 @@ git_op () {
 		if [ -z "$GIT_TOKEN" ]; then
 			echo -e "${bold}${cyan}GitHub token not found! Skipping GitHub push.${nocol}"
 		else
-			git push https://"$GIT_TOKEN"@github.com/ShivamKumarJha/Dummy_DT.git master > /dev/null 2>&1
+			git push git@github.com:ShivamKumarJha/Dummy_DT.git master > /dev/null 2>&1
 		fi
 		COMMIT_HEAD=$(git log --format=format:%H | head -n 1)
 		COMMIT_LINK=$(echo "https://github.com/ShivamKumarJha/Dummy_DT/commit/$COMMIT_HEAD")
@@ -390,7 +390,8 @@ common_overlay () {
 # Init git if not already
 if [ ! -d "$PROJECT_DIR"/dummy_dt/ ] && [ ! -z "$GIT_TOKEN" ]; then
 	echo -e "${bold}${cyan}Cloning Dummy_DT${nocol}"
-	git clone -q https://"$GIT_TOKEN"@github.com/ShivamKumarJha/Dummy_DT.git "$PROJECT_DIR"/dummy_dt
+	git clone -q git@github.com:ShivamKumarJha/Dummy_DT.git "$PROJECT_DIR"/dummy_dt
+	git -C "$PROJECT_DIR"/dummy_dt config core.fileMode false
 fi
 
 # Create working directory if it does not exist
