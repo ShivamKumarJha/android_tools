@@ -165,7 +165,7 @@ common_dt () {
 	# Audio
 	mkdir -p "$DT_DIR"/configs/audio
 	cd "$DT_DIR"/configs/audio
-	cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep "vendor/etc/" | grep -iE "audio_|graphite_|listen_|mixer_|sound_" | grep -v "audio_param" > $PROJECT_DIR/dummy_dt/working/configs.txt
+	cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep "vendor/etc/" | grep -iE "audio_|graphite_|listen_|mixer_|sound_" | grep -v "audio_param\|boot_sound/" > $PROJECT_DIR/dummy_dt/working/configs.txt
 	if grep -q "vendor/etc/audio/audio_policy_configuration.xml" $PROJECT_DIR/dummy_dt/working/configs.txt; then
 		sed -i "s|vendor/etc/audio_policy_configuration.xml||g" $PROJECT_DIR/dummy_dt/working/configs.txt
 		sed -i '/^$/d' $PROJECT_DIR/dummy_dt/working/configs.txt
