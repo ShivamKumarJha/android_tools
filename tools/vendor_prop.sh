@@ -14,30 +14,30 @@ source $PROJECT_DIR/tools/common_script.sh "y"
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
-	echo -e "${bold}${red}Supply sytem &/ vendor build.prop as arguements!${nocol}"
-	exit
+    echo -e "${bold}${red}Supply sytem &/ vendor build.prop as arguements!${nocol}"
+    exit
 fi
 
 # Get files via either cp or wget
 if echo "$1" | grep "https" ; then
-	wget -O $PROJECT_DIR/working/system_working.prop $1
+    wget -O $PROJECT_DIR/working/system_working.prop $1
 elif [ -d "$1" ]; then
-	if [ -e "$1"/system/system/build.prop ]; then
-		SYSTEM_PATH="system/system"
-	elif [ -e "$1"/system/build.prop ]; then
-		SYSTEM_PATH="system"
-	fi
-	find "$1/$SYSTEM_PATH" -maxdepth 1 -name "build*prop" -exec cat {} >> $PROJECT_DIR/working/system_working.prop \;
-	find "$1/vendor" -maxdepth 1 -name "build*prop" -exec cat {} >> $PROJECT_DIR/working/vendor_working.prop \;
+    if [ -e "$1"/system/system/build.prop ]; then
+        SYSTEM_PATH="system/system"
+    elif [ -e "$1"/system/build.prop ]; then
+        SYSTEM_PATH="system"
+    fi
+    find "$1/$SYSTEM_PATH" -maxdepth 1 -name "build*prop" -exec cat {} >> $PROJECT_DIR/working/system_working.prop \;
+    find "$1/vendor" -maxdepth 1 -name "build*prop" -exec cat {} >> $PROJECT_DIR/working/vendor_working.prop \;
 else
-	cp -a $1 $PROJECT_DIR/working/system_working.prop
+    cp -a $1 $PROJECT_DIR/working/system_working.prop
 fi
 if [ ! -z "$2" ] ; then
-	if echo "$2" | grep "https" ; then
-		wget -O $PROJECT_DIR/working/vendor_working.prop $2
-	else
-		cp -a $2 $PROJECT_DIR/working/vendor_working.prop
-	fi
+    if echo "$2" | grep "https" ; then
+        wget -O $PROJECT_DIR/working/vendor_working.prop $2
+    else
+        cp -a $2 $PROJECT_DIR/working/vendor_working.prop
+    fi
 fi
 
 # system.prop
@@ -47,26 +47,26 @@ sed -n "${TSTART},${TEND}p" $PROJECT_DIR/working/system_working.prop | sort | se
 
 # vendor.prop
 if [ ! -z "$2" ] || [ -e $PROJECT_DIR/working/vendor_working.prop ]; then
-	TSTART=$(grep -nr "ADDITIONAL VENDOR BUILD PROPERTIES" $PROJECT_DIR/working/vendor_working.prop | sed "s|:.*||g")
-	TEND=$(wc -l $PROJECT_DIR/working/vendor_working.prop | sed "s| .*||g")
-	sed -n "${TSTART},${TEND}p" $PROJECT_DIR/working/vendor_working.prop | sort | sed "s|#.*||g" | sed '/^[[:space:]]*$/d' > $PROJECT_DIR/working/vendor_new.prop
+    TSTART=$(grep -nr "ADDITIONAL VENDOR BUILD PROPERTIES" $PROJECT_DIR/working/vendor_working.prop | sed "s|:.*||g")
+    TEND=$(wc -l $PROJECT_DIR/working/vendor_working.prop | sed "s| .*||g")
+    sed -n "${TSTART},${TEND}p" $PROJECT_DIR/working/vendor_working.prop | sort | sed "s|#.*||g" | sed '/^[[:space:]]*$/d' > $PROJECT_DIR/working/vendor_new.prop
 fi
 
 # Lineage vendor security patch support
 source $PROJECT_DIR/tools/rom_vars.sh $PROJECT_DIR/working/system_working.prop > /dev/null 2>&1
 if [ "$VERSION" -lt 9 ]; then
-	grep "ro.build.version.security_patch=" $PROJECT_DIR/working/system_working.prop | sed "s|ro.build.version.security_patch|ro.lineage.build.vendor_security_patch|g" >> $PROJECT_DIR/working/staging.mk
+    grep "ro.build.version.security_patch=" $PROJECT_DIR/working/system_working.prop | sed "s|ro.build.version.security_patch|ro.lineage.build.vendor_security_patch|g" >> $PROJECT_DIR/working/staging.mk
 fi
 
 # Combine newly generated system.prop & vendor.prop
 if [ ! -z "$2" ] || [ -e $PROJECT_DIR/working/vendor_working.prop ]; then
-	echo "$(cat $PROJECT_DIR/working/system_new.prop $PROJECT_DIR/working/vendor_new.prop | sort -u )" >> $PROJECT_DIR/working/staging.mk
+    echo "$(cat $PROJECT_DIR/working/system_new.prop $PROJECT_DIR/working/vendor_new.prop | sort -u )" >> $PROJECT_DIR/working/staging.mk
 else
-	echo "$(cat $PROJECT_DIR/working/system_new.prop | sort -u )" >> $PROJECT_DIR/working/staging.mk
+    echo "$(cat $PROJECT_DIR/working/system_new.prop | sort -u )" >> $PROJECT_DIR/working/staging.mk
 fi
 
 if ! grep -q "ro.sf.lcd_density=" $PROJECT_DIR/working/staging.mk; then
-	echo "ro.sf.lcd_density=440" >> $PROJECT_DIR/working/staging.mk
+    echo "ro.sf.lcd_density=440" >> $PROJECT_DIR/working/staging.mk
 fi
 
 # Cleanup unrequired prop's
@@ -167,9 +167,9 @@ cat $PROJECT_DIR/working/temp.mk | grep -iE "zram" | sort -u > $PROJECT_DIR/work
 cat $PROJECT_DIR/working/lists/* > $PROJECT_DIR/working/tempall.mk
 file_lines=`cat $PROJECT_DIR/working/temp.mk`
 for line in $file_lines; do
-	if ! grep -q "$line" $PROJECT_DIR/working/tempall.mk; then
-		echo "$line" >> $PROJECT_DIR/working/lists/Misc
-	fi
+    if ! grep -q "$line" $PROJECT_DIR/working/tempall.mk; then
+        echo "$line" >> $PROJECT_DIR/working/lists/Misc
+    fi
 done
 
 # Delete empty lists
@@ -181,27 +181,27 @@ WILL_CHECK=n
 # Add props from lists
 props_list=`find $PROJECT_DIR/working/lists -type f -printf '%P\n' | sort`
 for list in $props_list; do
-	if [ "$WILL_CHECK" == "y" ]; then
-		echo "# $list" >> $PROJECT_DIR/working/temp_prop.mk
-		echo "PRODUCT_PROPERTY_OVERRIDES += \\" >> $PROJECT_DIR/working/temp_prop.mk
-	fi
-	awk 'NF{print $0 " \\"}' $PROJECT_DIR/working/lists/$list >> $PROJECT_DIR/working/temp_prop.mk
+    if [ "$WILL_CHECK" == "y" ]; then
+        echo "# $list" >> $PROJECT_DIR/working/temp_prop.mk
+        echo "PRODUCT_PROPERTY_OVERRIDES += \\" >> $PROJECT_DIR/working/temp_prop.mk
+    fi
+    awk 'NF{print $0 " \\"}' $PROJECT_DIR/working/lists/$list >> $PROJECT_DIR/working/temp_prop.mk
 done
 
 # Remove duplicate props & text formatting
 awk '/^PRODUCT_PROPERTY_OVERRIDES/ || !seen[$0]++' $PROJECT_DIR/working/temp_prop.mk > $PROJECT_DIR/working/vendor_prop.mk
 sed -i -e 's/^/    /' $PROJECT_DIR/working/vendor_prop.mk
 if [ "$WILL_CHECK" == "y" ]; then
-	sed -i "s|    #|#|g" $PROJECT_DIR/working/vendor_prop.mk
-	sed -i "s|    PRODUCT_PROPERTY_OVERRIDES|PRODUCT_PROPERTY_OVERRIDES|g" $PROJECT_DIR/working/vendor_prop.mk
+    sed -i "s|    #|#|g" $PROJECT_DIR/working/vendor_prop.mk
+    sed -i "s|    PRODUCT_PROPERTY_OVERRIDES|PRODUCT_PROPERTY_OVERRIDES|g" $PROJECT_DIR/working/vendor_prop.mk
 else
-	sed -i '1 i\PRODUCT_PROPERTY_OVERRIDES += \\' $PROJECT_DIR/working/vendor_prop.mk
+    sed -i '1 i\PRODUCT_PROPERTY_OVERRIDES += \\' $PROJECT_DIR/working/vendor_prop.mk
 fi
 
 # cleanup temp files
 find $PROJECT_DIR/working/* ! -name 'vendor_prop.mk' -type d,f -exec rm -rf {} +
 if [ -z "$2" ] && [ ! -d "$1" ]; then
-	mv $PROJECT_DIR/working/vendor_prop.mk $PROJECT_DIR/working/system_prop.mk
+    mv $PROJECT_DIR/working/vendor_prop.mk $PROJECT_DIR/working/system_prop.mk
 fi
 
 echo -e "${bold}${cyan}$(ls -d $PROJECT_DIR/working/*.mk) prepared!${nocol}"

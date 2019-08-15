@@ -14,15 +14,15 @@ source $PROJECT_DIR/tools/common_script.sh
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
-	echo -e "${bold}${red}Supply FWB config.xml as arguement!${nocol}"
-	exit
+    echo -e "${bold}${red}Supply FWB config.xml as arguement!${nocol}"
+    exit
 fi
 
 # Get files via either cp or wget
 if echo "$1" | grep "https" ; then
-	wget -O $PROJECT_DIR/working/config.xml $1
+    wget -O $PROJECT_DIR/working/config.xml $1
 else
-	cp -a $1 $PROJECT_DIR/working/config.xml
+    cp -a $1 $PROJECT_DIR/working/config.xml
 fi
 
 # update overlay lists

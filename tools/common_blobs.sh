@@ -14,8 +14,8 @@ source $PROJECT_DIR/tools/common_script.sh
 
 # Exit if invalid arguements
 if [ ! -d "$1" ] || [ ! -d "$2" ]; then
-	echo -e "${bold}${red}Supply source & target ROM path's as arguements!${nocol}"
-	exit
+    echo -e "${bold}${red}Supply source & target ROM path's as arguements!${nocol}"
+    exit
 fi
 
 # Create temp dir's

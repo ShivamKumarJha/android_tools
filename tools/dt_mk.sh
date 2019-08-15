@@ -13,8 +13,8 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 source $PROJECT_DIR/tools/common_script.sh
 
 if [ -z "$1" ]; then
-	echo -e "${bold}${red}Error! Send DT path${nocol}"
-	exit
+    echo -e "${bold}${red}Error! Send DT path${nocol}"
+    exit
 fi
 
 DT_DIR="$1"
@@ -26,8 +26,8 @@ bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/audio/" ":\$(TARGET_C
 find ""$DT_DIR"/configs/gps/" -type f -printf '%P\n' | sort > "$PROJECT_DIR"/working/mklist.txt
 bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/gps/" ":\$(TARGET_COPY_OUT_VENDOR)/etc/" "# GPS"
 if [ -d "$DT_DIR"/configs/idc/ ]; then
-	find "configs/idc/" -type f -printf '%P\n' | sort > "$PROJECT_DIR"/working/mklist.txt
-	bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/idc/" ":\$(TARGET_COPY_OUT_VENDOR)/usr/idc/" "# IDC"
+    find "configs/idc/" -type f -printf '%P\n' | sort > "$PROJECT_DIR"/working/mklist.txt
+    bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/idc/" ":\$(TARGET_COPY_OUT_VENDOR)/usr/idc/" "# IDC"
 fi
 find ""$DT_DIR"/configs/keylayout/" -type f -printf '%P\n' | sort > "$PROJECT_DIR"/working/mklist.txt
 bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/keylayout/" ":\$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/" "# Keylayout"
@@ -40,35 +40,35 @@ bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/sensors/" ":\$(TARGET
 find ""$DT_DIR"/configs/wifi/" -type f -printf '%P\n' | sort > "$PROJECT_DIR"/working/mklist.txt
 bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/wifi/" ":\$(TARGET_COPY_OUT_VENDOR)/etc/wifi/" "# WiFi"
 if [ -e "$DT_DIR"/configs/excluded-input-devices.xml ]; then
-	echo "excluded-input-devices.xml" > "$PROJECT_DIR"/working/mklist.txt
-	bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/" ":system/etc/" "# Exclude TOF sensor from InputManager"
+    echo "excluded-input-devices.xml" > "$PROJECT_DIR"/working/mklist.txt
+    bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/" ":system/etc/" "# Exclude TOF sensor from InputManager"
 fi
 if [ -e "$DT_DIR"/configs/msm_irqbalance.conf ]; then
-	find ""$DT_DIR"/configs/" -name "msm_irqbalance*" -type f -printf '%P\n' | sort > "$PROJECT_DIR"/working/mklist.txt
-	bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/" ":\$(TARGET_COPY_OUT_VENDOR)/etc/" "# IRQ"
+    find ""$DT_DIR"/configs/" -name "msm_irqbalance*" -type f -printf '%P\n' | sort > "$PROJECT_DIR"/working/mklist.txt
+    bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/" ":\$(TARGET_COPY_OUT_VENDOR)/etc/" "# IRQ"
 fi
 if [ -e "$DT_DIR"/configs/privapp-permissions-qti.xml ]; then
-	find ""$DT_DIR"/configs/" -name "privapp-permissions-qti.xml" -type f -printf '%P\n' | sort > "$PROJECT_DIR"/working/mklist.txt
-	bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/" ":\$(TARGET_COPY_OUT_VENDOR)/etc/permissions/" "# QTI"
+    find ""$DT_DIR"/configs/" -name "privapp-permissions-qti.xml" -type f -printf '%P\n' | sort > "$PROJECT_DIR"/working/mklist.txt
+    bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/" ":\$(TARGET_COPY_OUT_VENDOR)/etc/permissions/" "# QTI"
 fi
 if [ -e "$DT_DIR"/configs/public.libraries.txt ]; then
-	find ""$DT_DIR"/configs/" -name "public.libraries*" -type f -printf '%P\n' | sort > "$PROJECT_DIR"/working/mklist.txt
-	bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/" ":\$(TARGET_COPY_OUT_VENDOR)/etc/" "# Public Libraries"
+    find ""$DT_DIR"/configs/" -name "public.libraries*" -type f -printf '%P\n' | sort > "$PROJECT_DIR"/working/mklist.txt
+    bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/" ":\$(TARGET_COPY_OUT_VENDOR)/etc/" "# Public Libraries"
 fi
 if [ -e "$DT_DIR"/configs/qti_whitelist.xml ]; then
-	find ""$DT_DIR"/configs/" -name "qti_whitelist.xml" -type f -printf '%P\n' | sort > "$PROJECT_DIR"/working/mklist.txt
-	bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/" ":system/etc/sysconfig/" "# Low power Whitelist"
+    find ""$DT_DIR"/configs/" -name "qti_whitelist.xml" -type f -printf '%P\n' | sort > "$PROJECT_DIR"/working/mklist.txt
+    bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/" ":system/etc/sysconfig/" "# Low power Whitelist"
 fi
 if [ -e "$DT_DIR"/configs/sec_config ]; then
-	find ""$DT_DIR"/configs/" -name "sec_config" -type f -printf '%P\n' | sort > "$PROJECT_DIR"/working/mklist.txt
-	bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/" ":\$(TARGET_COPY_OUT_VENDOR)/etc/" "# IRSC"
+    find ""$DT_DIR"/configs/" -name "sec_config" -type f -printf '%P\n' | sort > "$PROJECT_DIR"/working/mklist.txt
+    bash $PROJECT_DIR/tools/writemk.sh "\$(LOCAL_PATH)/configs/" ":\$(TARGET_COPY_OUT_VENDOR)/etc/" "# IRSC"
 fi
 # permissions
 cat "$PROJECT_DIR"/dummy_dt/working/all_files.txt | grep "vendor" | grep -iE "permissions/android.hardware|permissions/android.software|permissions/handheld_core_hardware" | grep -v "android.hardware.light.xml" | sed "s|vendor/etc/permissions/||g" > "$PROJECT_DIR"/working/perms.txt
 all_perms=`cat "$PROJECT_DIR"/working/perms.txt | sort`
 for perm_line in $all_perms;
 do
-	echo "    frameworks/native/data/etc/"$perm_line":\$(TARGET_COPY_OUT_VENDOR)/etc/permissions/"$perm_line" \\" >> "$PROJECT_DIR"/working/mklists/Permissions
+    echo "    frameworks/native/data/etc/"$perm_line":\$(TARGET_COPY_OUT_VENDOR)/etc/permissions/"$perm_line" \\" >> "$PROJECT_DIR"/working/mklists/Permissions
 done
 sed -i '1 i\PRODUCT_COPY_FILES += \\' "$PROJECT_DIR"/working/mklists/Permissions
 sed -i '1 i\# Permissions' "$PROJECT_DIR"/working/mklists/Permissions
@@ -84,5 +84,5 @@ printf "\n    \$(LOCAL_PATH)/overlay\n\n" >> "$PROJECT_DIR"/working/mklists/Over
 mk_lists=`find "$PROJECT_DIR"/working/mklists/ -type f -printf '%P\n' | sort`
 for list in $mk_lists ;
 do
-	cat "$PROJECT_DIR"/working/mklists/"$list" >> "$DT_DIR"/device.mk
+    cat "$PROJECT_DIR"/working/mklists/"$list" >> "$DT_DIR"/device.mk
 done

@@ -14,28 +14,28 @@ source $PROJECT_DIR/tools/common_script.sh "y"
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
-	echo -e "${bold}${red}Supply xml's as arguements!${nocol}"
-	exit
+    echo -e "${bold}${red}Supply xml's as arguements!${nocol}"
+    exit
 fi
 
 # o/p
 for var in "$@"; do
-	while IFS= read -r line
-	do
-		if echo "$line" | grep "<project"; then
-			if ! echo "$line" | grep "clone-depth"; then
-				if echo "$line" | grep -iE "LineageOS|remote=\"aex"; then
-					echo "$line" >> "$PROJECT_DIR"/working/new_manifest.xml
-				else
-					echo "$line" | sed "s|<project|<project clone-depth=\"1\"|g" >> "$PROJECT_DIR"/working/new_manifest.xml
-				fi
-			else
-				echo "$line" >> "$PROJECT_DIR"/working/new_manifest.xml
-			fi
-		else
-			echo "$line" >> "$PROJECT_DIR"/working/new_manifest.xml
-		fi
-	done < "$var"
-	cat "$PROJECT_DIR"/working/new_manifest.xml > "$var"
-	rm -rf "$PROJECT_DIR"/working/new_manifest.xml
+    while IFS= read -r line
+    do
+        if echo "$line" | grep "<project"; then
+            if ! echo "$line" | grep "clone-depth"; then
+                if echo "$line" | grep -iE "LineageOS|remote=\"aex"; then
+                    echo "$line" >> "$PROJECT_DIR"/working/new_manifest.xml
+                else
+                    echo "$line" | sed "s|<project|<project clone-depth=\"1\"|g" >> "$PROJECT_DIR"/working/new_manifest.xml
+                fi
+            else
+                echo "$line" >> "$PROJECT_DIR"/working/new_manifest.xml
+            fi
+        else
+            echo "$line" >> "$PROJECT_DIR"/working/new_manifest.xml
+        fi
+    done < "$var"
+    cat "$PROJECT_DIR"/working/new_manifest.xml > "$var"
+    rm -rf "$PROJECT_DIR"/working/new_manifest.xml
 done

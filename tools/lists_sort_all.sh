@@ -11,5 +11,5 @@ LISTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/lists/" >/dev/null && pwd )"
 
 tools_lists=`find $LISTS_DIR/ -type f -printf '%P\n' | sort | grep -v "overlays/comments/"`
 for list in $tools_lists; do
-	sort -u -o "$LISTS_DIR/$list" "$LISTS_DIR/$list"
+    sort -u -o "$LISTS_DIR/$list" "$LISTS_DIR/$list"
 done

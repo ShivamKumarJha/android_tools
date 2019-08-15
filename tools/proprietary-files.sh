@@ -13,24 +13,24 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 source $PROJECT_DIR/tools/common_script.sh "y"
 
 if [ -z "$1" ]; then
-	echo -e "${bold}${red}Supply ROM file list as arguement!${nocol}"
-	exit 1
+    echo -e "${bold}${red}Supply ROM file list as arguement!${nocol}"
+    exit 1
 fi
 
 # copy $1
 if echo "$1" | grep "https" ; then
-	wget -O $PROJECT_DIR/working/rom_all.txt $1
+    wget -O $PROJECT_DIR/working/rom_all.txt $1
 elif [ -d "$1" ]; then
-	find "$1" -type f -printf '%P\n' | sort > $PROJECT_DIR/working/rom_all.txt
+    find "$1" -type f -printf '%P\n' | sort > $PROJECT_DIR/working/rom_all.txt
 else
-	cp -a $1 $PROJECT_DIR/working/rom_all.txt
+    cp -a $1 $PROJECT_DIR/working/rom_all.txt
 fi
 
 # remove system/
 if grep -q "system/system/" $PROJECT_DIR/working/rom_all.txt; then
-	sed -i "s|^system/system/||1" $PROJECT_DIR/working/rom_all.txt
+    sed -i "s|^system/system/||1" $PROJECT_DIR/working/rom_all.txt
 elif grep -q "system/" $PROJECT_DIR/working/rom_all.txt; then
-	sed -i "s|^system/||1" $PROJECT_DIR/working/rom_all.txt
+    sed -i "s|^system/||1" $PROJECT_DIR/working/rom_all.txt
 fi
 
 # Copy lists to $PROJECT_DIR/working
@@ -316,21 +316,21 @@ find $PROJECT_DIR/working/proprietary -size  0 -print0 | xargs -0 rm --
 # Add blobs from lists
 blobs_list=`find $PROJECT_DIR/working/proprietary -type f -printf '%P\n' | sort`
 for list in $blobs_list ; do
-	file_lines=`cat $PROJECT_DIR/working/proprietary/$list | sort -u`
-	printf "\n# $list\n" >> $PROJECT_DIR/working/proprietary-files-staging.txt
-	for line in $file_lines ; do
-		if cat $PROJECT_DIR/working/rom_all.txt | grep "$line"; then
-			if echo "$line" | grep -iE "vendor.qti.hardware.fm@1.0.so" | grep -v "vendor/"; then
-				echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
-			elif echo "$line" | grep -iE "priv-app/imssettings/imssettings.apk"; then
-				echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
-			elif echo "$line" | grep -iE "app/|lib64/com.quicinc.cne|libaudio_log_utils.so|libgpustats.so|libsdm-disp-vndapis.so|libthermalclient.so|WfdCommon.jar|libantradio.so|libsdm-disp-apis.so"; then
-				echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
-			else
-				echo "$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
-			fi
-		fi
-	done
+    file_lines=`cat $PROJECT_DIR/working/proprietary/$list | sort -u`
+    printf "\n# $list\n" >> $PROJECT_DIR/working/proprietary-files-staging.txt
+    for line in $file_lines ; do
+        if cat $PROJECT_DIR/working/rom_all.txt | grep "$line"; then
+            if echo "$line" | grep -iE "vendor.qti.hardware.fm@1.0.so" | grep -v "vendor/"; then
+                echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
+            elif echo "$line" | grep -iE "priv-app/imssettings/imssettings.apk"; then
+                echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
+            elif echo "$line" | grep -iE "app/|lib64/com.quicinc.cne|libaudio_log_utils.so|libgpustats.so|libsdm-disp-vndapis.so|libthermalclient.so|WfdCommon.jar|libantradio.so|libsdm-disp-apis.so"; then
+                echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
+            else
+                echo "$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
+            fi
+        fi
+    done
 done
 
 # List all vendor blobs
@@ -339,7 +339,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | sort -u > $PROJECT_DIR/w
 # Clean up misc
 file_lines=`cat $PROJECT_DIR/tools/lists/remove.txt`
 for line in $file_lines; do
-	sed -i "s|$line.*||g" $PROJECT_DIR/working/staging.txt
+    sed -i "s|$line.*||g" $PROJECT_DIR/working/staging.txt
 done
 sed -i "s|vendor/bin/.*\.sh||g" $PROJECT_DIR/working/staging.txt
 sed -i '/^$/d' $PROJECT_DIR/working/staging.txt
@@ -348,16 +348,16 @@ sed -i '/^$/d' $PROJECT_DIR/working/staging.txt
 printf "\n# Misc\n" >> $PROJECT_DIR/working/proprietary-files-staging.txt
 file_lines=`cat $PROJECT_DIR/working/staging.txt`
 for line in $file_lines; do
-	# Missing
-	if ! grep -q "$line" $PROJECT_DIR/working/proprietary-files-staging.txt; then
-		if ! grep -q "$line" $PROJECT_DIR/tools/lists/ignore.txt; then
-			if echo "$line" | grep -iE "apk|jar"; then
-				echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
-			else
-				echo "$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
-			fi
-		fi
-	fi
+    # Missing
+    if ! grep -q "$line" $PROJECT_DIR/working/proprietary-files-staging.txt; then
+        if ! grep -q "$line" $PROJECT_DIR/tools/lists/ignore.txt; then
+            if echo "$line" | grep -iE "apk|jar"; then
+                echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
+            else
+                echo "$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
+            fi
+        fi
+    fi
 done
 
 # remove duplicates

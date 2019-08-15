@@ -20,5 +20,5 @@ mkdir -p "$PROJECT_DIR/dumps/" "$PROJECT_DIR/working"
 
 # clean up
 if [ "$1" == "y" ]; then
-	rm -rf $PROJECT_DIR/working/*
+    rm -rf $PROJECT_DIR/working/*
 fi

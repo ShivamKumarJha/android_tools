@@ -14,8 +14,8 @@ source $PROJECT_DIR/tools/common_script.sh "y"
 
 # Make sure to get path
 if [ -z "$1" ]; then
-	echo -e "${bold}${red}Supply ROM path!${nocol}"
-	exit 1
+    echo -e "${bold}${red}Supply ROM path!${nocol}"
+    exit 1
 fi
 
 # Get files
@@ -29,28 +29,28 @@ printf "\ninclude \$(CLEAR_VARS)\n" >> $PROJECT_DIR/working/rootdir/Android.mk
 # bins
 rootdir_bins=`find $PROJECT_DIR/working/rootdir/bin/ -type f -printf '%P\n' | sort`
 for file_bins in $rootdir_bins; do
-	printf "\ninclude \$(CLEAR_VARS)" >> $PROJECT_DIR/working/rootdir/Android.mk
-	printf "\nLOCAL_MODULE       := $file_bins" >> $PROJECT_DIR/working/rootdir/Android.mk
-	printf "\nLOCAL_MODULE_TAGS  := optional eng" >> $PROJECT_DIR/working/rootdir/Android.mk
-	printf "\nLOCAL_MODULE_CLASS := ETC" >> $PROJECT_DIR/working/rootdir/Android.mk
-	printf "\nLOCAL_SRC_FILES    := bin/$file_bins" >> $PROJECT_DIR/working/rootdir/Android.mk
-	printf "\nLOCAL_MODULE_PATH  := \$(TARGET_OUT_VENDOR_EXECUTABLES)" >> $PROJECT_DIR/working/rootdir/Android.mk
-	printf "\ninclude \$(BUILD_PREBUILT)\n" >> $PROJECT_DIR/working/rootdir/Android.mk
-	# rootdir.mk
-	printf "$file_bins\n" >> $PROJECT_DIR/working/rootdir_temp.mk
+    printf "\ninclude \$(CLEAR_VARS)" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\nLOCAL_MODULE       := $file_bins" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\nLOCAL_MODULE_TAGS  := optional eng" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\nLOCAL_MODULE_CLASS := ETC" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\nLOCAL_SRC_FILES    := bin/$file_bins" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\nLOCAL_MODULE_PATH  := \$(TARGET_OUT_VENDOR_EXECUTABLES)" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\ninclude \$(BUILD_PREBUILT)\n" >> $PROJECT_DIR/working/rootdir/Android.mk
+    # rootdir.mk
+    printf "$file_bins\n" >> $PROJECT_DIR/working/rootdir_temp.mk
 done
 # etc
 rootdir_etc=`find $PROJECT_DIR/working/rootdir/etc/ -type f -printf '%P\n' | sort`
 for file_etc in $rootdir_etc; do
-	printf "\ninclude \$(CLEAR_VARS)" >> $PROJECT_DIR/working/rootdir/Android.mk
-	printf "\nLOCAL_MODULE       := $file_etc" >> $PROJECT_DIR/working/rootdir/Android.mk
-	printf "\nLOCAL_MODULE_TAGS  := optional eng" >> $PROJECT_DIR/working/rootdir/Android.mk
-	printf "\nLOCAL_MODULE_CLASS := ETC" >> $PROJECT_DIR/working/rootdir/Android.mk
-	printf "\nLOCAL_SRC_FILES    := etc/$file_etc" >> $PROJECT_DIR/working/rootdir/Android.mk
-	printf "\nLOCAL_MODULE_PATH  := \$(TARGET_OUT_VENDOR_ETC)/init/hw" >> $PROJECT_DIR/working/rootdir/Android.mk
-	printf "\ninclude \$(BUILD_PREBUILT)\n" >> $PROJECT_DIR/working/rootdir/Android.mk
-	# rootdir.mk
-	printf "$file_etc\n" >> $PROJECT_DIR/working/rootdir_temp.mk
+    printf "\ninclude \$(CLEAR_VARS)" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\nLOCAL_MODULE       := $file_etc" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\nLOCAL_MODULE_TAGS  := optional eng" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\nLOCAL_MODULE_CLASS := ETC" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\nLOCAL_SRC_FILES    := etc/$file_etc" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\nLOCAL_MODULE_PATH  := \$(TARGET_OUT_VENDOR_ETC)/init/hw" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\ninclude \$(BUILD_PREBUILT)\n" >> $PROJECT_DIR/working/rootdir/Android.mk
+    # rootdir.mk
+    printf "$file_etc\n" >> $PROJECT_DIR/working/rootdir_temp.mk
 done
 
 # Get fstab & ueventd & add them to Android.mk
