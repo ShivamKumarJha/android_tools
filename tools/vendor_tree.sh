@@ -40,7 +40,7 @@ for var in "$@"; do
 
 	# Extract vendor blobs
 	./tools/extract_blobs/extract-files.sh "$var"
-	
+
 	# Push to GitHub
 	cd "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"
 	if [ ! -d .git ]; then
