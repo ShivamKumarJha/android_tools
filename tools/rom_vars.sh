@@ -61,7 +61,7 @@ for var in "$@"; do
         FINGERPRINT=$( cat "$CAT_FILE" | grep "ro." | grep "build.thumbprint=" | sed "s|.*=||g" | head -n 1 )
     fi
     if [ -z "$FINGERPRINT" ] && [ ! -z "$DESCRIPTION" ]; then
-        FINGERPRINT=$DESCRIPTION
+        FINGERPRINT=$( echo $DESCRIPTION | tr ' ' '-' )
     fi
     if grep -q "ro.oppo.market.name" "$CAT_FILE"; then
         MODEL=$( cat "$CAT_FILE" | grep "ro.oppo.market.name=" | sed "s|ro.oppo.market.name=||g" | head -n 1 )
