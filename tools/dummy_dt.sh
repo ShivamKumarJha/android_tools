@@ -56,7 +56,7 @@ common_setup () {
     rm -rf $PROJECT_DIR/dummy_dt/working/*
     git -C $PROJECT_DIR/dummy_dt/ clean -fd > /dev/null 2>&1
     git -C $PROJECT_DIR/dummy_dt/ fetch origin > /dev/null 2>&1
-    git -C $PROJECT_DIR/dummy_dt/  reset --hard origin/master > /dev/null 2>&1
+    git -C $PROJECT_DIR/dummy_dt/ reset --hard origin/master > /dev/null 2>&1
     echo -e "${bold}${cyan}Fetching all_files.txt & build.prop ${nocol}"
 }
 

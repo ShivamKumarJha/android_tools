@@ -42,13 +42,9 @@ Usage:
 `./tools/rootdir.sh <full path to ROM dump>`
 
 9. **system_vendor_prop.sh**: A script to prepare properties Makefile from a ROM dump.  
-Usage:  
-For non treble ROM's: `./tools/system_vendor_prop.sh <full path to ROM dump>/system/build.prop`  
-For treble ROM's: `./tools/system_vendor_prop.sh <full path to ROM dump>/system/build.prop <full path to ROM dump>/system/vendor/build.prop`  
+Usage: `./tools/system_vendor_prop.sh <full path to ROM dump>`  
 Output: `system.prop` & `vendor_prop.mk` files.  
 
 10. **vendor_prop.sh**: A script to prepare and filter properties Makefile from a ROM dump.  
-Usage:  
-For non treble ROM's: `./tools/vendor_prop.sh <full path to ROM dump>/system/build.prop`  
-For treble ROM's: `./tools/vendor_prop.sh <full path to ROM dump>/system/build.prop <full path to ROM dump>/system/vendor/build.prop`  
+Usage: `./tools/vendor_prop.sh <full path to ROM dump>`  
 Output: `vendor_prop.mk` file.  
