@@ -22,3 +22,5 @@ mkdir -p "$PROJECT_DIR/dumps/" "$PROJECT_DIR/working"
 if [ "$1" == "y" ]; then
     rm -rf $PROJECT_DIR/working/*
 fi
+
+export LC_ALL=C make
