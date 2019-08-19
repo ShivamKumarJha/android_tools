@@ -316,7 +316,7 @@ find $PROJECT_DIR/working/proprietary -size  0 -print0 | xargs -0 rm --
 # Add blobs from lists
 blobs_list=`find $PROJECT_DIR/working/proprietary -type f -printf '%P\n' | sort`
 for list in $blobs_list ; do
-    file_lines=`cat $PROJECT_DIR/working/proprietary/$list | sort -u`
+    file_lines=`cat $PROJECT_DIR/working/proprietary/$list | sort -uf`
     printf "\n# $list\n" >> $PROJECT_DIR/working/proprietary-files-staging.txt
     for line in $file_lines ; do
         if cat $PROJECT_DIR/working/rom_all.txt | grep "$line"; then
@@ -346,7 +346,7 @@ sed -i '/^$/d' $PROJECT_DIR/working/staging.txt
 
 # Add missing /vendor blobs as misc
 printf "\n# Misc\n" >> $PROJECT_DIR/working/proprietary-files-staging.txt
-file_lines=`cat $PROJECT_DIR/working/staging.txt`
+file_lines=`cat $PROJECT_DIR/working/staging.txt | sort -f`
 for line in $file_lines; do
     # Missing
     if ! grep -q "$line" $PROJECT_DIR/working/proprietary-files-staging.txt; then
