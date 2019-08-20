@@ -244,7 +244,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep -iE "priv-app/ims/ims.apk|priv-app/i
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "imsrtpservice|imscmservice|uceservice|vendor.qti.ims.|lib-ims|radio.ims@|vendor.qti.hardware.radio.ims" | sort -u >> $PROJECT_DIR/working/proprietary/Radio-IMS
 
 # Samsung
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "samsung|SoundAlive" | grep -v "vendor/etc/qdcm_calib" | sort -u >> $PROJECT_DIR/working/proprietary/Samsung
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "samsung|SoundAlive" | grep -v "vendor/etc/qdcm_calib" | grep -v "vendor/etc/dsi" | grep -v "vendor/firmware/" | sort -u >> $PROJECT_DIR/working/proprietary/Samsung
 
 # SCVE
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "lib/|lib64/|vendor/" | grep -iE "scve" | sort -u >> $PROJECT_DIR/working/proprietary/SCVE
