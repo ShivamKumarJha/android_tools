@@ -19,7 +19,7 @@ if [ -z "$1" ] ; then
 fi
 
 for var in "$@"; do
-    unset BRAND_TEMP BRAND DEVICE DESCRIPTION FINGERPRINT MODEL SECURITY_PATCH VERSION
+    unset BRAND_TEMP BRAND DEVICE DESCRIPTION FINGERPRINT MODEL SECURITY_PATCH VERSION FLAVOR ID INCREMENTAL TAGS
     # Dir or file handling
     if [ -d "$var" ]; then
         if [ -e "$var"/system/system/build.prop ]; then
@@ -45,9 +45,9 @@ for var in "$@"; do
     fi
     BRAND=${BRAND_TEMP,,}
     if grep -q "ro.vivo.product.release.name" "$CAT_FILE"; then
-        DEVICE=$( cat "$CAT_FILE" | grep "ro.vivo.product.release.name=" | sed "s|ro.vivo.product.release.name=||g" | head -n 1 )
+        DEVICE=$( cat "$CAT_FILE" | grep "ro.vivo.product.release.name=" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "ro.product.system.name" "$CAT_FILE"; then
-        DEVICE=$( cat "$CAT_FILE" | grep "ro.product.system.name=" | sed "s|ro.product.system.name=||g" | head -n 1 )
+        DEVICE=$( cat "$CAT_FILE" | grep "ro.product.system.name=" | sed "s|.*=||g" | head -n 1 )
     else
         DEVICE=$( cat "$CAT_FILE" | grep "ro.product" | grep "device=" | sed "s|.*=||g" | sed "s|ASUS_||g" | head -n 1 )
     fi
@@ -64,11 +64,11 @@ for var in "$@"; do
         FINGERPRINT=$( echo $DESCRIPTION | tr ' ' '-' )
     fi
     if echo "$FINGERPRINT" | grep -iE "nokia"; then
-		BRAND="nokia"
-		DEVICE=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | head -n 1 | cut -d : -f1 | rev | cut -d / -f2 | rev | sed "s|_.*||g" )
+        BRAND="nokia"
+        DEVICE=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | head -n 1 | cut -d : -f1 | rev | cut -d / -f2 | rev | sed "s|_.*||g" )
     fi
     if grep -q "ro.oppo.market.name" "$CAT_FILE"; then
-        MODEL=$( cat "$CAT_FILE" | grep "ro.oppo.market.name=" | sed "s|ro.oppo.market.name=||g" | head -n 1 )
+        MODEL=$( cat "$CAT_FILE" | grep "ro.oppo.market.name=" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "ro.display.series" "$CAT_FILE"; then
         MODEL=$( cat "$CAT_FILE" | grep "ro.display.series=" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "ro.product.display" "$CAT_FILE"; then
@@ -85,7 +85,11 @@ for var in "$@"; do
     if ! [[ $VERSION =~ $re ]] ; then
         VERSION=$( cat "$CAT_FILE" | grep "build.version.release=" | sed "s|.*=||g" | head -c 1 | head -n 1 )
     fi
+    FLAVOR=$( cat "$CAT_FILE" | grep "ro.build" | grep "flavor=" | sed "s|.*=||g" | head -n 1 )
+    ID=$( cat "$CAT_FILE" | grep "ro.build" | grep "id=" | sed "s|.*=||g" | head -n 1 )
+    INCREMENTAL=$( cat "$CAT_FILE" | grep "ro.build" | grep "incremental=" | sed "s|.*=||g" | head -n 1 )
+    TAGS=$( cat "$CAT_FILE" | grep "ro.build" | grep "tags=" | sed "s|.*=||g" | head -n 1 )
 
     # Display var's
-    printf "${bold}${cyan}BRAND: ${BRAND}\nDEVICE: ${DEVICE}\nDESCRIPTION: ${DESCRIPTION}\nFINGERPRINT: ${FINGERPRINT}\nMODEL: ${MODEL}\nSECURITY PATCH: ${SECURITY_PATCH}\nVERSION: ${VERSION}\n${nocol}"
+    printf "${bold}${cyan}BRAND: ${BRAND}\nDEVICE: ${DEVICE}\nDESCRIPTION: ${DESCRIPTION}\nFINGERPRINT: ${FINGERPRINT}\nMODEL: ${MODEL}\nSECURITY PATCH: ${SECURITY_PATCH}\nVERSION: ${VERSION}\nFLAVOR: ${FLAVOR}\nID: ${ID}\nINCREMENTAL: ${INCREMENTAL}\nTAGS: ${TAGS}\n${nocol}"
 done
