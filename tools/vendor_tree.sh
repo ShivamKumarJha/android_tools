@@ -34,12 +34,12 @@ for var in "$@"; do
 
     # Create vendor tree repo
     source $PROJECT_DIR/tools/rom_vars.sh "$var" > /dev/null 2>&1
-    VT_REPO=$(echo vendor_$BRAND\_$DEVICE | sort -u | head -n 1 )
-    VT_REPO_DESC=$(echo "Vendor-tree-for-$MODEL" | tr ' ' '-' | sort -u | head -n 1 )
-    curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name":"'${VT_REPO}'","description":"'${VT_REPO_DESC}'","private": true,"has_issues": true,"has_projects": false,"has_wiki": true}' > /dev/null 2>&1
+    VT_REPO=$(echo vendor_$BRAND\_$DEVICE)
+    VT_REPO_DESC=$(echo "Vendor tree for $MODEL")
+    curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name": "'"$VT_REPO"'","description": "'"$VT_REPO_DESC"'","private": true,"has_issues": true,"has_projects": false,"has_wiki": true}' > /dev/null 2>&1
 
     # Extract vendor blobs
-    ./tools/extract_blobs/extract-files.sh "$var"
+    bash "$PROJECT_DIR/tools/extract_blobs/extract-files.sh" "$var"
 
     # Push to GitHub
     cd "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"
