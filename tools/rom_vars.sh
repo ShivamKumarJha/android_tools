@@ -63,6 +63,10 @@ for var in "$@"; do
     if [ -z "$FINGERPRINT" ] && [ ! -z "$DESCRIPTION" ]; then
         FINGERPRINT=$( echo $DESCRIPTION | tr ' ' '-' )
     fi
+    if echo "$FINGERPRINT" | grep -iE "nokia"; then
+		BRAND="nokia"
+		DEVICE=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | head -n 1 | cut -d : -f1 | rev | cut -d / -f2 | rev | sed "s|_.*||g" )
+    fi
     if grep -q "ro.oppo.market.name" "$CAT_FILE"; then
         MODEL=$( cat "$CAT_FILE" | grep "ro.oppo.market.name=" | sed "s|ro.oppo.market.name=||g" | head -n 1 )
     elif grep -q "ro.display.series" "$CAT_FILE"; then
