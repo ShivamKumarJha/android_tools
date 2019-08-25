@@ -54,9 +54,6 @@ proprietary () {
 common_setup () {
     clear
     rm -rf $PROJECT_DIR/dummy_dt/working/*
-    git -C $PROJECT_DIR/dummy_dt/ clean -fd > /dev/null 2>&1
-    git -C $PROJECT_DIR/dummy_dt/ fetch origin > /dev/null 2>&1
-    git -C $PROJECT_DIR/dummy_dt/ reset --hard origin/master > /dev/null 2>&1
     echo -e "${bold}${cyan}Fetching all_files.txt & build.prop ${nocol}"
 }
 
@@ -117,14 +114,9 @@ git_op () {
         echo -e "${bold}${cyan}Performing git operations${nocol}"
         git add --all > /dev/null 2>&1
         git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
-        if [ -z "$GIT_TOKEN" ]; then
-            echo -e "${bold}${cyan}GitHub token not found! Skipping GitHub push.${nocol}"
-        else
-            git push git@github.com:ShivamKumarJha/Dummy_DT.git master > /dev/null 2>&1
-        fi
+        git push git@github.com:ShivamKumarJha/Dummy_DT.git master > /dev/null 2>&1
         COMMIT_HEAD=$(git log --format=format:%H | head -n 1)
         COMMIT_LINK=$(echo "https://github.com/ShivamKumarJha/Dummy_DT/commit/$COMMIT_HEAD")
-        
         # Telegram
         echo -e "${bold}${cyan}Sending telegram notification${nocol}"
         printf "<b>Brand: $BRAND</b>" > $PROJECT_DIR/dummy_dt/working/tg.html
@@ -151,7 +143,7 @@ get_configs () {
     for config_file in $configs; do
         if [ -z "$ROM_PATH" ]; then
             echo -e "${bold}${cyan}Downloading $config_file${nocol}"
-            aria2c -x16 "$device_line/$config_file" > /dev/null 2>&1 || curl -O -J -u username:$GIT_TOKEN "$device_line/$config_file" > /dev/null 2>&1
+            aria2c -x16 "$device_line/$config_file" > /dev/null 2>&1
         else
             cp -a "$ROM_PATH/$config_file" .
         fi
@@ -313,8 +305,7 @@ common_overlay () {
     cp -a "$PROJECT_DIR"/working/overlays/CarrierConfig/res/xml/* "$DT_DIR"/overlay/packages/apps/CarrierConfig/res/xml/ > /dev/null 2>&1
     # Extract overlay configs
     ovlist=`find "$PROJECT_DIR"/tools/lists/overlays/ -maxdepth 1 -type f -printf '%P\n' | sort`
-    for list in $ovlist ;
-    do
+    for list in $ovlist; do
         overlay_configs=`cat "$PROJECT_DIR"/tools/lists/overlays/"$list" | sort`
         for overlay_line in $overlay_configs; do
             if grep -q "\""$overlay_line"\">" "$PROJECT_DIR"/working/overlays/framework-res/res/values/"$list".xml; then
@@ -328,8 +319,7 @@ common_overlay () {
     done
     # integer arrays
     overlay_configs=`cat $PROJECT_DIR/tools/lists/overlays/arrays/integer-array | sort`
-    for target in $overlay_configs;
-    do
+    for target in $overlay_configs; do
         TSTART=$(grep -n "\"$target\">" "$PROJECT_DIR"/working/overlays/framework-res/res/values/arrays.xml | sed "s|:.*||g")
         if [ ! -z "$TSTART" ]; then
             configs=`grep -n "</integer-array>" "$PROJECT_DIR"/working/overlays/framework-res/res/values/arrays.xml | sed "s|:.*||g"`
@@ -350,8 +340,7 @@ common_overlay () {
     done
     # string arrays
     overlay_configs=`cat $PROJECT_DIR/tools/lists/overlays/arrays/string-array | sort`
-    for target in $overlay_configs;
-    do
+    for target in $overlay_configs; do
         TSTART=$(grep -n "\"$target\">" "$PROJECT_DIR"/working/overlays/framework-res/res/values/arrays.xml | sed "s|:.*||g")
         if [ ! -z "$TSTART" ]; then
             configs=`grep -n "</string-array>" "$PROJECT_DIR"/working/overlays/framework-res/res/values/arrays.xml | sed "s|:.*||g"`
@@ -386,17 +375,20 @@ common_overlay () {
     fi
 }
 
-# Init git if not already
-if [ ! -d "$PROJECT_DIR"/dummy_dt/ ] && [ ! -z "$GIT_TOKEN" ]; then
+# clone repo OR reset to origin/master
+if [ ! -d "$PROJECT_DIR"/dummy_dt/ ]; then
     echo -e "${bold}${cyan}Cloning Dummy_DT${nocol}"
     git clone -q git@github.com:ShivamKumarJha/Dummy_DT.git "$PROJECT_DIR"/dummy_dt
     git -C "$PROJECT_DIR"/dummy_dt config core.fileMode false
+else
+    echo -e "${bold}${cyan}Resetting dummy_dt repo to origin/master${nocol}"
+    git -C $PROJECT_DIR/dummy_dt/ clean -fd > /dev/null 2>&1
+    git -C $PROJECT_DIR/dummy_dt/ fetch origin > /dev/null 2>&1
+    git -C $PROJECT_DIR/dummy_dt/ reset --hard origin/master > /dev/null 2>&1
 fi
 
 # Create working directory if it does not exist
-if [ ! -d "$PROJECT_DIR"/dummy_dt/working ]; then
-    mkdir -p "$PROJECT_DIR"/dummy_dt/working
-fi
+mkdir -p "$PROJECT_DIR"/dummy_dt/working
 
 if [ -d "$1" ]; then #local dumps
     for var in "$@"; do
