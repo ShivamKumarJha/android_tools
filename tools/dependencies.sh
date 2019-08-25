@@ -17,7 +17,7 @@ else
 fi
 
 # Install some packages
-echo "$user_password" | sudo -S apt-get install -y unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract file-roller device-tree-compiler liblzma-dev python-pip brotli liblz4-tool aria2 android-tools-fsutils brotli python3-pip
+echo "$user_password" | sudo -S apt-get install -y android-tools-fsutils aria2 arj brotli cabextract device-tree-compiler file-roller git liblz4-tool liblzma-dev mpack p7zip-full p7zip-rar python-pip python3-pip rar sharutils unace unrar unzip uudeview zip
 pip3 install pycryptodome backports.lzma protobuf pycrypto
 
 # Clone repo's
