@@ -110,7 +110,7 @@ call_methods () {
 
 git_op () {
     cd $PROJECT_DIR/dummy_dt/
-    if [[ ! -z $(git status -s) ]]; then
+    if [[ -d "$PROJECT_DIR/dummy_dt/.git" ]] && [[ ! -z $(git status -s) ]]; then
         echo -e "${bold}${cyan}Performing git operations${nocol}"
         git add --all > /dev/null 2>&1
         git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
