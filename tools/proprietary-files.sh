@@ -53,7 +53,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep -iE "etc/permissions/audiosphere.xml
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "tfa98xx|libsrsprocessing|libaudio|libacdb|libdirac|etc/dirac|etc/sony_effect/|etc/drc/|etc/surround_sound_3mic/" | grep -v "lib/rfsa/adsp" | grep -v "lib/modules/" | sort -u >> $PROJECT_DIR/working/proprietary/Audio
 
 # Audio-ACDB
-cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/acdbdata/|vendor/etc/acdbdata_bl/|vendor/etc/acdbdata_id/" | sort -u >> $PROJECT_DIR/working/proprietary/Audio-ACDB
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/acdb|vendor/etc/audconf" | sort -u >> $PROJECT_DIR/working/proprietary/Audio-ACDB
 
 # Audio-Hardware
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/|vendor/lib64/" | grep -iE "libaudio_log_utils.so|libtinycompress_vendor.so|libqcompostprocbundle.so|libqcomvisualizer.so|libqcomvoiceprocessing.so|libvolumelistener.so" | sort -u >> $PROJECT_DIR/working/proprietary/Audio-Hardware
