@@ -1,5 +1,6 @@
 dumps/
 dummy_dt/
+input/
 working/
 vendor/
 tools/extract-dtb/
