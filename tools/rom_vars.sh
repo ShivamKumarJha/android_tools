@@ -91,5 +91,6 @@ for var in "$@"; do
     TAGS=$( cat "$CAT_FILE" | grep "ro.build" | grep "tags=" | sed "s|.*=||g" | head -n 1 )
 
     # Display var's
-    printf "${bold}${cyan}BRAND: ${BRAND}\nDEVICE: ${DEVICE}\nDESCRIPTION: ${DESCRIPTION}\nFINGERPRINT: ${FINGERPRINT}\nMODEL: ${MODEL}\nSECURITY PATCH: ${SECURITY_PATCH}\nVERSION: ${VERSION}\nFLAVOR: ${FLAVOR}\nID: ${ID}\nINCREMENTAL: ${INCREMENTAL}\nTAGS: ${TAGS}\n${nocol}"
+    declare -a arr=("BRAND" "DEVICE" "DESCRIPTION" "FINGERPRINT" "MODEL" "SECURITY_PATCH" "VERSION" "FLAVOR" "ID" "INCREMENTAL" "TAGS")
+    for i in "${arr[@]}"; do printf "${bold}${cyan}$i: ${!i}\n${nocol}"; done
 done
