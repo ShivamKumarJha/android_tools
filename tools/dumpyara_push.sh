@@ -19,8 +19,8 @@ if [ -z "$1" ] ; then
 fi
 
 # Exit if missing token's
-if [ -z "$DUMPYARA_TOKEN" ] || [ -z "$TG_API" ] ; then
-    echo -e "${bold}${cyan}Missing GitHub or Telegram token. Exiting.${nocol}"
+if [ -z "$DUMPYARA_TOKEN" ]; then
+    echo -e "${bold}${cyan}Missing GitHub token. Exiting.${nocol}"
     exit
 fi
 
@@ -34,7 +34,6 @@ for var in "$@"; do
     cd "$ROM_PATH"
     GIT_OAUTH_TOKEN="$DUMPYARA_TOKEN"
     ORG=AndroidDumps
-    TG_TOKEN="$TG_API"
     cd $ROM_PATH/
     ls system/build*.prop 2>/dev/null || ls system/system/build*.prop 2>/dev/null || { echo "No system build*.prop found, pushing cancelled!" && exit ;}
     flavor=$(grep -oP "(?<=^ro.build.flavor=).*" -hs {system,system/system,vendor}/build*.prop)
@@ -100,7 +99,7 @@ for var in "$@"; do
     git push https://$GIT_OAUTH_TOKEN@github.com/$ORG/${repo,,}.git $branch ;)
 
     # Telegram channel
-    if [ ! -z "$TG_TOKEN" ]; then
+    if [ ! -z "$TG_API" ]; then
         CHAT_ID="@android_dumps"
         commit_head=$(git log --format=format:%H | head -n 1)
         commit_link=$(echo "https://github.com/$ORG/$repo/commit/$commit_head")
@@ -113,7 +112,7 @@ for var in "$@"; do
         printf "\n<a href=\"$commit_link\">Commit</a>" >> $PROJECT_DIR/working/tg.html
         printf "\n<a href=\"https://github.com/$ORG/$repo/tree/$branch/\">$codename</a>" >> $PROJECT_DIR/working/tg.html
         TEXT=$(cat $PROJECT_DIR/working/tg.html)
-        curl -s "https://api.telegram.org/bot${TG_TOKEN}/sendmessage" --data "text=${TEXT}&chat_id=${CHAT_ID}&parse_mode=HTML&disable_web_page_preview=True" > /dev/null
+        curl -s "https://api.telegram.org/bot${TG_API}/sendmessage" --data "text=${TEXT}&chat_id=${CHAT_ID}&parse_mode=HTML&disable_web_page_preview=True" > /dev/null
         rm -rf $PROJECT_DIR/working/tg.html
     fi
     cd "$PROJECT_DIR"
