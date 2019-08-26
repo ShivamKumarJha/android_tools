@@ -27,7 +27,9 @@ fi
 source $PROJECT_DIR/tools/common_script.sh
 
 # Password
-read -p "Enter user password: " user_password
+if [ "$EUID" -ne 0 ]; then
+    read -p "Enter user password: " user_password
+fi
 
 core () {
     # Variables
