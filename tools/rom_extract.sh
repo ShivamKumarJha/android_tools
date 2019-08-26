@@ -103,4 +103,8 @@ for var in "$@"; do
     duration=$SECONDS
     echo -e "${bold}${cyan}Dump location: $PROJECT_DIR/dumps/$UNZIP_DIR/${nocol}"
     echo -e "${bold}${cyan}Extract time: $(($duration / 60)) minutes and $(($duration % 60)) seconds.${nocol}"
+    [[ "$create_dummydt" == "y" ]] && bash "$PROJECT_DIR/tools/dummy_dt.sh" "$PROJECT_DIR/dumps/${UNZIP_DIR}/"
+    [[ "$push_dump" == "y" ]] && bash "$PROJECT_DIR/tools/dump_push.sh" "$PROJECT_DIR/dumps/${UNZIP_DIR}/"
+    [[ "$dumpyara_push" == "y" ]] && bash "$PROJECT_DIR/tools/dumpyara_push.sh" "$PROJECT_DIR/dumps/${UNZIP_DIR}/"
+    [[ "$push_vendor" == "y" ]] && bash "$PROJECT_DIR/tools/vendor_tree.sh" "$PROJECT_DIR/dumps/${UNZIP_DIR}/"
 done
