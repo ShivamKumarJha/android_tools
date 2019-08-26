@@ -35,9 +35,8 @@ for var in "$@"; do
     source $PROJECT_DIR/tools/rom_vars.sh "$var" > /dev/null 2>&1
     VT_REPO=$(echo vendor_$BRAND\_$DEVICE)
     VT_REPO_DESC=$(echo "Vendor tree for $MODEL")
-    curl -s -X POST -H "Authorization: token ${GIT_TOKEN}" -d '{"name": "'"$VT_REPO"'","description": "'"$VT_REPO_DESC"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/AndroidBlobs/repos" > /dev/null 2>&1
     # Extract vendor blobs
-    rm -rf "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"/
+    rm -rf "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"/ "$PROJECT_DIR"/working/*
     bash "$PROJECT_DIR/tools/extract_blobs/extract-files.sh" "$var"
     # Push to GitHub
     cd "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"
@@ -50,5 +49,6 @@ for var in "$@"; do
     git add --all > /dev/null 2>&1
     echo -e "${bold}${cyan}Commiting $COMMIT_MSG${nocol}"
     git -c "user.name=AndroidBlobs" -c "user.email=AndroidBlobs@github.com" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
+    curl -s -X POST -H "Authorization: token ${GIT_TOKEN}" -d '{"name": "'"$VT_REPO"'","description": "'"$VT_REPO_DESC"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/AndroidBlobs/repos" > /dev/null 2>&1
     git push https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$VT_REPO".git $BRANCH
 done
