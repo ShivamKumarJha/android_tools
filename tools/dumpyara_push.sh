@@ -76,33 +76,27 @@ for var in "$@"; do
     printf "\nflavor: $flavor\nrelease: $release\nid: $id\nincremental: $incremental\ntags: $tags\nfingerprint: $fingerprint\nbrand: $brand\ncodename: $codename\ndescription: $description\nbranch: $branch\nrepo: $repo\n"
 
     git init
-    if [ -z "$(git config --get user.email)" ]; then
-        git config user.email AndroidDumps@github.com
-    fi
-    if [ -z "$(git config --get user.name)" ]; then
-        git config user.name AndroidDumps
-    fi
     git checkout -b $branch
     find -size +97M -printf '%P\n' -o -name *sensetime* -printf '%P\n' -o -name *.lic -printf '%P\n' > .gitignore
     git add --all
 
     curl -s -X POST -H "Authorization: token ${GIT_OAUTH_TOKEN}" -d '{ "name": "'"$repo"'" }' "https://api.github.com/orgs/${ORG}/repos" #create new repo
     git remote add origin https://github.com/$ORG/${repo,,}.git
-    git commit -asm "Add ${description}"
+    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit  -asm "Add ${description}"
     git push https://$GIT_OAUTH_TOKEN@github.com/$ORG/${repo,,}.git $branch ||
 
     (git update-ref -d HEAD ; git reset system/ vendor/ ;
     git checkout -b $branch ;
-    git commit -asm "Add extras for ${description}" ;
+    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit  -asm "Add extras for ${description}" ;
     git push https://$GIT_OAUTH_TOKEN@github.com/$ORG/${repo,,}.git $branch ;
     git add vendor/ ;
-    git commit -asm "Add vendor for ${description}" ;
+    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit  -asm "Add vendor for ${description}" ;
     git push https://$GIT_OAUTH_TOKEN@github.com/$ORG/${repo,,}.git $branch ;
     git add system/system/app/ system/system/priv-app/ || git add system/app/ system/priv-app/ ;
-    git commit -asm "Add apps for ${description}" ;
+    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit  -asm "Add apps for ${description}" ;
     git push https://$GIT_OAUTH_TOKEN@github.com/$ORG/${repo,,}.git $branch ;
     git add system/ ;
-    git commit -asm "Add system for ${description}" ;
+    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit  -asm "Add system for ${description}" ;
     git push https://$GIT_OAUTH_TOKEN@github.com/$ORG/${repo,,}.git $branch ;)
 
     # Telegram channel
