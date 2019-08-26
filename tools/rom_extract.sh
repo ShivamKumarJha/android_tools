@@ -27,7 +27,7 @@ fi
 source $PROJECT_DIR/tools/common_script.sh
 
 # Password
-if [ "$EUID" -ne 0 ]; then
+if [ "$EUID" -ne 0 ] && [ -z "$user_password" ]; then
     read -p "Enter user password: " user_password
 fi
 
