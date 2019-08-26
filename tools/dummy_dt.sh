@@ -399,6 +399,7 @@ if [ -d "$1" ]; then #local dumps
         elif [ -e "$ROM_PATH"/system/build.prop ]; then
             SYSTEM_PATH="system"
         fi
+        [[ -d "$ROM_PATH/system/vendor/" ]] && mv $ROM_PATH/system/vendor/ $ROM_PATH/vendor/
         common_setup
         find "$ROM_PATH" -type f -printf '%P\n' | sort > $PROJECT_DIR/dummy_dt/working/all_files.txt
         find "$ROM_PATH/$SYSTEM_PATH" -maxdepth 1 -name "build*prop" -exec cat {} >> $PROJECT_DIR/dummy_dt/working/system_build.prop \;
