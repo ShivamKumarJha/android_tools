@@ -15,7 +15,7 @@ source $PROJECT_DIR/tools/common_script.sh
 # Exit if no arguements
 if [ -z "$1" ] ; then
     echo -e "${bold}${red}Supply rom directory or system/build.prop as arguement!${nocol}"
-    exit
+    exit 1
 fi
 
 for var in "$@"; do

@@ -15,7 +15,7 @@ source $PROJECT_DIR/tools/common_script.sh "y"
 # Exit if no arguements
 if [ -z "$1" ] ; then
     echo -e "${bold}${red}Supply sytem &/ vendor build.prop as arguements!${nocol}"
-    exit
+    exit 1
 fi
 
 # Get files via either cp or wget

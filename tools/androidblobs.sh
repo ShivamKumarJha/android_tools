@@ -15,13 +15,13 @@ source $PROJECT_DIR/tools/common_script.sh
 # Exit if missing token
 if [ -z "$GIT_TOKEN" ]; then
     echo -e "${bold}${red}Missing GitHub token. Exiting.${nocol}"
-    exit
+    exit 1
 fi
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
     echo -e "${bold}${red}Supply ROM source as arguement!${nocol}"
-    exit
+    exit 1
 fi
 
 # o/p

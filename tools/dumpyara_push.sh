@@ -15,13 +15,13 @@ source $PROJECT_DIR/tools/common_script.sh
 # Exit if no arguements
 if [ -z "$1" ] ; then
     echo -e "${bold}${red}Supply dir's as arguements!${nocol}"
-    exit
+    exit 1
 fi
 
 # Exit if missing token's
 if [ -z "$DUMPYARA_TOKEN" ]; then
     echo -e "${bold}${cyan}Missing GitHub token. Exiting.${nocol}"
-    exit
+    exit 1
 fi
 
 # o/p
@@ -29,13 +29,13 @@ for var in "$@"; do
     ROM_PATH=$( realpath "$var" )
     if [ ! -d "$ROM_PATH" ] ; then
         echo -e "${bold}${red}$ROM_PATH is not a valid directory!${nocol}"
-        exit
+        exit 1
     fi
     cd "$ROM_PATH"
     GIT_OAUTH_TOKEN="$DUMPYARA_TOKEN"
     ORG=AndroidDumps
     cd $ROM_PATH/
-    ls system/build*.prop 2>/dev/null || ls system/system/build*.prop 2>/dev/null || { echo "No system build*.prop found, pushing cancelled!" && exit ;}
+    ls system/build*.prop 2>/dev/null || ls system/system/build*.prop 2>/dev/null || { echo "No system build*.prop found, pushing cancelled!" && exit 1 ;}
     flavor=$(grep -oP "(?<=^ro.build.flavor=).*" -hs {system,system/system,vendor}/build*.prop)
     [[ -z "${flavor}" ]] && flavor=$(grep -oP "(?<=^ro.vendor.build.flavor=).*" -hs vendor/build*.prop)
     [[ -z "${flavor}" ]] && flavor=$(grep -oP "(?<=^ro.system.build.flavor=).*" -hs {system,system/system}/build*.prop)

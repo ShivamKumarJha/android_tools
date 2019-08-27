@@ -14,13 +14,13 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 # Dependencies check
 if [ ! -d "$PROJECT_DIR/tools/Firmware_extractor" ] || [ ! -d "$PROJECT_DIR/tools/extract-dtb" ] || [ ! -d "$PROJECT_DIR/tools/mkbootimg_tools" ]; then
     echo -e "${bold}${red}Missing dependencies!Run: bash tools/dependencies.sh${nocol}"
-    exit
+    exit 1
 fi
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
     echo -e "${bold}${red}Supply OTA file(s) as arguement!${nocol}"
-    exit
+    exit 1
 fi
 
 # Common stuff

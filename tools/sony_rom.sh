@@ -17,19 +17,19 @@ source $PROJECT_DIR/tools/common_script.sh "y"
 # Exit if mono not installed
 if [ -z "$(which mono)" ]; then
     echo -e "${bold}${red}mono not installed!${nocol}"
-    exit
+    exit 1
 fi
 
 # Dependencies check
 if [ ! -d "$PROJECT_DIR/tools/extract-dtb" ] || [ ! -d "$PROJECT_DIR/tools/mkbootimg_tools" ]; then
     echo -e "${bold}${red}Missing dependencies!Run: bash tools/dependencies.sh${nocol}"
-    exit
+    exit 1
 fi
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
     echo -e "${bold}${red}Supply OTA file(s) as arguement!${nocol}"
-    exit
+    exit 1
 fi
 
 # Password

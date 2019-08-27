@@ -15,13 +15,13 @@ source $PROJECT_DIR/tools/common_script.sh
 # Exit if missing token, user or email
 if [ -z "$GIT_TOKEN" ] && [ -z "$GITHUB_EMAIL" ] && [ -z "$GITHUB_USER" ]; then
     echo -e "${bold}${red}Missing GitHub token or user or email. Exiting.${nocol}"
-    exit
+    exit 1
 fi
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
     echo -e "${bold}${red}Supply ROM source as arguement!${nocol}"
-    exit
+    exit 1
 fi
 
 # o/p

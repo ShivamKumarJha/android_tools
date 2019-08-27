@@ -14,7 +14,7 @@ source $PROJECT_DIR/tools/common_script.sh
 
 if [ -z "$1" ]; then
     echo -e "${bold}${red}Error! Send DT path${nocol}"
-    exit
+    exit 1
 fi
 
 DT_DIR="$1"

@@ -25,7 +25,7 @@ if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ ! -e "$WORK_DIR"/mklist.txt ];
     echo -e "${bold}${red}2nd is destination path string${nocol}"
     echo -e "${bold}${red}3rd is comment header${nocol}"
     echo -e "${bold}${red}Also mklist.txt must exist in working/ with list of file names!${nocol}"
-    exit
+    exit 1
 fi
 
 all_configs=`cat "$WORK_DIR"/mklist.txt | sort`
