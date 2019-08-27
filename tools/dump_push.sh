@@ -18,9 +18,9 @@ if [ -z "$1" ] ; then
     exit
 fi
 
-# Exit if missing token's
-if [ -z "$GIT_TOKEN" ]; then
-    echo -e "${bold}${cyan}Missing GitHub token. Exiting.${nocol}"
+# Exit if missing token, user or email
+if [ -z "$GIT_TOKEN" ] && [ -z "$GITHUB_EMAIL" ] && [ -z "$GITHUB_USER" ]; then
+    echo -e "${bold}${red}Missing GitHub token or user or email. Exiting.${nocol}"
     exit
 fi
 
@@ -35,13 +35,13 @@ for var in "$@"; do
     REPO_DESC=$(echo "$MODEL-dump" | tr ' ' '-' | sort -u | head -n 1 )
     BRANCH=$(echo $DESCRIPTION | tr ' ' '-' | sort -u | head -n 1 )
     # Create repository in GitHub
-    echo -e "${bold}${cyan}Creating https://github.com/ShivamKumarJha/$REPO${nocol}"
+    echo -e "${bold}${cyan}Creating https://github.com/$GITHUB_USER/$REPO${nocol}"
     curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name":"'${REPO}'","description":"'${REPO_DESC}'","private": true,"has_issues": false,"has_projects": false,"has_wiki": false}' > /dev/null 2>&1
     # Add files & push
     if [ ! -d .git ]; then
         echo -e "${bold}${cyan}Initializing git.${nocol}"
         git init . > /dev/null 2>&1
-        git remote add origin git@github.com:ShivamKumarJha/"$REPO".git > /dev/null 2>&1
+        git remote add origin git@github.com:$GITHUB_USER/"$REPO".git > /dev/null 2>&1
     fi
     if [[ ! -z $(git status -s) ]]; then
         echo -e "${bold}${cyan}Creating branch $BRANCH${nocol}"
@@ -51,8 +51,8 @@ for var in "$@"; do
         echo -e "${bold}${cyan}Adding files ...${nocol}"
         git add --all > /dev/null 2>&1
         echo -e "${bold}${cyan}Commiting $COMMIT_MSG${nocol}"
-        git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
-        git push https://"$GIT_TOKEN"@github.com/ShivamKumarJha/"$REPO".git $BRANCH
+        git -c "user.name=$GITHUB_USER" -c "user.email=$GITHUB_EMAIL" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
+        git push https://"$GIT_TOKEN"@github.com/$GITHUB_USER/"$REPO".git $BRANCH
     fi
     cd "$PROJECT_DIR"
 done

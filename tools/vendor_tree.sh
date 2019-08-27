@@ -12,9 +12,9 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 # Text format
 source $PROJECT_DIR/tools/common_script.sh
 
-# Exit if missing token
-if [ -z "$GIT_TOKEN" ]; then
-    echo -e "${bold}${red}Missing GitHub token. Exiting.${nocol}"
+# Exit if missing token, user or email
+if [ -z "$GIT_TOKEN" ] && [ -z "$GITHUB_EMAIL" ] && [ -z "$GITHUB_USER" ]; then
+    echo -e "${bold}${red}Missing GitHub token or user or email. Exiting.${nocol}"
     exit
 fi
 
@@ -46,14 +46,14 @@ for var in "$@"; do
     if [ ! -d .git ]; then
         echo -e "${bold}${cyan}Initializing git.${nocol}"
         git init . > /dev/null 2>&1
-        echo -e "${bold}${cyan}Adding origin: git@github.com:ShivamKumarJha/"$VT_REPO".git ${nocol}"
-        git remote add origin git@github.com:ShivamKumarJha/"$VT_REPO".git > /dev/null 2>&1
+        echo -e "${bold}${cyan}Adding origin: git@github.com:$GITHUB_USER/"$VT_REPO".git ${nocol}"
+        git remote add origin git@github.com:$GITHUB_USER/"$VT_REPO".git > /dev/null 2>&1
     fi
     BRANCH=$(echo $DESCRIPTION | tr ' ' '-' | sort -u | head -n 1 )
     COMMIT_MSG=$(echo "$DEVICE: $FINGERPRINT" | sort -u | head -n 1 )
     git checkout -b $BRANCH > /dev/null 2>&1
     git add --all > /dev/null 2>&1
     echo -e "${bold}${cyan}Commiting $COMMIT_MSG${nocol}"
-    git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
-    git push https://"$GIT_TOKEN"@github.com/ShivamKumarJha/"$VT_REPO".git $BRANCH
+    git -c "user.name=$GITHUB_USER" -c "user.email=$GITHUB_EMAIL" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
+    git push https://"$GIT_TOKEN"@github.com/$GITHUB_USER/"$VT_REPO".git $BRANCH
 done

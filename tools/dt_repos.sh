@@ -18,9 +18,9 @@ if [ -z "$1" ] ; then
     exit
 fi
 
-# Exit if missing token
-if [ -z "$GIT_TOKEN" ]; then
-    echo -e "${bold}${cyan}Missing GitHub token. Exiting.${nocol}"
+# Exit if missing token, user or email
+if [ -z "$GIT_TOKEN" ] && [ -z "$GITHUB_EMAIL" ] && [ -z "$GITHUB_USER" ]; then
+    echo -e "${bold}${red}Missing GitHub token or user or email. Exiting.${nocol}"
     exit
 fi
 
@@ -34,7 +34,7 @@ for var in "$@"; do
     KT_REPO_DESC=$(echo "Kernel tree for $MODEL")
     VT_REPO_DESC=$(echo "Vendor tree for $MODEL")
     # Create repository in GitHub
-    printf "${bold}${cyan}Creating\nhttps://github.com/ShivamKumarJha/$DT_REPO\nhttps://github.com/ShivamKumarJha/$KT_REPO\nhttps://github.com/ShivamKumarJha/$VT_REPO\n${nocol}"
+    printf "${bold}${cyan}Creating\nhttps://github.com/$GITHUB_USER/$DT_REPO\nhttps://github.com/$GITHUB_USER/$KT_REPO\nhttps://github.com/$GITHUB_USER/$VT_REPO\n${nocol}"
     curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name": "'"$DT_REPO"'","description": "'"$DT_REPO_DESC"'","private": true,"has_issues": true,"has_projects": false,"has_wiki": true}' > /dev/null 2>&1
     curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name": "'"$KT_REPO"'","description": "'"$KT_REPO_DESC"'","private": true,"has_issues": true,"has_projects": false,"has_wiki": true}' > /dev/null 2>&1
     curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name": "'"$VT_REPO"'","description": "'"$VT_REPO_DESC"'","private": true,"has_issues": true,"has_projects": false,"has_wiki": true}' > /dev/null 2>&1
