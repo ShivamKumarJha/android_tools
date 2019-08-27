@@ -1,6 +1,6 @@
 
 # Android tools
-Collection of my scripts.  
+Collection of scripts to help with Android ROM stuff.  
   
 **Setup**:  
 `chmod +x tools/dependencies.sh`  
@@ -14,37 +14,55 @@ Usage:
 Usage:  
 `./tools/common_props.sh <path to source rom> <path to target rom>`
 
-3. **dummy_dt.sh**: A script which prepares a dummy device tree from ROM dump. Can handle dump stored both locally OR in online git repository (as long as all_files.txt exists in its root). See its GitHub [repo](https://github.com/ShivamKumarJha/Dummy_DT/).  
+3. **dt_repos.sh**: A script to create Device, kernel & vendor tree of a device in GitHub with model as repo descripton.  
+Usage:  
+`export GITHUB_EMAIL=<KEY>`  
+`export GIT_TOKEN=<KEY>`  
+`export GITHUB_USER=<KEY>`  
+`./tools/dt_repos.sh <path to rom>`
+
+4. **dummy_dt.sh**: A script which prepares a dummy device tree from ROM dump. Can handle dump stored both locally OR in online git repository (as long as all_files.txt exists in its root). See its GitHub [repo](https://github.com/ShivamKumarJha/Dummy_DT/).  
 Usage:  
 Usage: `./tools/dummy_dt.sh <path to ROM dump OR raw link of dump repo>`  
 *Optional*:  
 For Telegram notification, `export TG_API=<KEY>` before running script.
 
-4. **manifest_parser.sh**: A script to parse manifest xml(s) so it clones only relevant repo's with full depth.  
+5. **dump_push.sh**: A script to push local dump to GitHib.  
 Usage:  
-`./tools/manifest_parser.sh <path to xml(s)>`
+`export GITHUB_EMAIL=<KEY>`  
+`export GIT_TOKEN=<KEY>`  
+`export GITHUB_USER=<KEY>`  
+`./tools/dump_push.sh <path to xml(s)>`
 
-5. **proprietary-files.sh**: A script to prepare proprietary blobs list from ROM.  
+6. **proprietary-files.sh**: A script to prepare proprietary blobs list from ROM.  
 Usage:  
 For online git repo: `./tools/proprietary-files.sh <raw file link of all_files.txt>`  
 For local dump: `./tools/proprietary-files.sh <full path to ROM dump>`
 
-6. **rom_compare.sh**: A script to compare source & target ROM. It lists `Added, common, missing & modified` blobs.  
+7. **rom_compare.sh**: A script to compare source & target ROM. It lists `Added, common, missing & modified` blobs.  
 Usage:  
 `./tools/rom_compare.sh <full path to source ROM dump> <full path to target ROM dump>`
 
-7. **rom_extract.sh**: A script to extract OTA files.  
+8. **rom_extract.sh**: A script to extract OTA files.  
 Usage:  
 `./tools/rom_extract.sh <path to OTA file(s)>`
 
-8. **rootdir.sh**: A script to prepare rootdir from a ROM dump along with Makefile.  
+9. **rootdir.sh**: A script to prepare rootdir from a ROM dump along with Makefile.  
 Usage:  
 `./tools/rootdir.sh <full path to ROM dump>`
 
-9. **system_vendor_prop.sh**: A script to prepare properties Makefile from a ROM dump.  
+10. **sony_rom.sh**: A script to extract Sony ftf ROM.  
+Usage:  
+`./tools/sony_rom.sh <full path to ROM dump>`
+
+11. **system_vendor_prop.sh**: A script to prepare properties Makefile from a ROM dump.  
 Usage: `./tools/system_vendor_prop.sh <full path to ROM dump>`  
 Output: `system.prop` & `vendor_prop.mk` files.  
 
-10. **vendor_prop.sh**: A script to prepare and filter properties Makefile from a ROM dump.  
+12. **vendor_prop.sh**: A script to prepare and filter properties Makefile from a ROM dump.  
 Usage: `./tools/vendor_prop.sh <full path to ROM dump>`  
 Output: `vendor_prop.mk` file.  
+
+13. **vendor_tree.sh**: A script to prepare vendor tree from a ROM dump after generating proprietary-files.txt.  
+To extract from a specific proprietary-files.txt, place it before in `working/proprietary-files.txt`.  
+Usage: `./tools/vendor_tree.sh <full path to ROM dump>`  
