@@ -33,7 +33,9 @@ if [ -z "$1" ] ; then
 fi
 
 # Password
-read -p "Enter user password: " user_password
+if [ "$EUID" -ne 0 ] && [ -z "$user_password" ]; then
+    read -p "Enter user password: " user_password
+fi
 
 for var in "$@"; do
     # Variables

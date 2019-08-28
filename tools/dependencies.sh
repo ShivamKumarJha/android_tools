@@ -10,10 +10,8 @@
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
 # Password
-if [ -z "$1" ]; then
+if [ "$EUID" -ne 0 ] && [ -z "$user_password" ]; then
     read -p "Enter user password: " user_password
-else
-    user_password=$1
 fi
 
 # Install some packages
