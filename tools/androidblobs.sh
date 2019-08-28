@@ -26,6 +26,7 @@ fi
 
 # o/p
 for var in "$@"; do
+    unset VT_REPO VT_REPO_DESC BRANCH COMMIT_MSG
     # Check if directory
     if [ ! -d "$var" ] ; then
         echo -e "${bold}${red}Supply ROM path as arguement!${nocol}"
