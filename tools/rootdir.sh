@@ -53,20 +53,23 @@ for file_etc in $rootdir_etc; do
     printf "$file_etc\n" >> $PROJECT_DIR/working/rootdir_temp.mk
 done
 
-# Get fstab & ueventd & add them to Android.mk
-cp -a "$1"/vendor/etc/fstab.qcom $PROJECT_DIR/working/rootdir/etc/fstab.qcom
-cp -a "$1"/vendor/ueventd.rc $PROJECT_DIR/working/rootdir/etc/ueventd.qcom.rc
-# rootdir.mk
-printf "fstab.qcom\nueventd.qcom.rc\n" >> $PROJECT_DIR/working/rootdir_temp.mk
 # fstab Android.mk
-printf "\ninclude \$(CLEAR_VARS)" >> $PROJECT_DIR/working/rootdir/Android.mk
-printf "\nLOCAL_MODULE       := fstab.qcom" >> $PROJECT_DIR/working/rootdir/Android.mk
-printf "\nLOCAL_MODULE_TAGS  := optional eng" >> $PROJECT_DIR/working/rootdir/Android.mk
-printf "\nLOCAL_MODULE_CLASS := ETC" >> $PROJECT_DIR/working/rootdir/Android.mk
-printf "\nLOCAL_SRC_FILES    := etc/fstab.qcom" >> $PROJECT_DIR/working/rootdir/Android.mk
-printf "\nLOCAL_MODULE_PATH  := \$(TARGET_OUT_VENDOR_ETC)" >> $PROJECT_DIR/working/rootdir/Android.mk
-printf "\ninclude \$(BUILD_PREBUILT)\n" >> $PROJECT_DIR/working/rootdir/Android.mk
+cp -a "$1"/vendor/etc/fstab* $PROJECT_DIR/working/rootdir/etc/
+rootdir_etc=`find $PROJECT_DIR/working/rootdir/etc/ -maxdepth 1 -type f -name "*fstab*" -printf '%P\n' | sort`
+for file_fstab in $rootdir_etc; do
+    printf "$file_fstab\n" >> $PROJECT_DIR/working/rootdir_temp.mk
+    printf "\ninclude \$(CLEAR_VARS)" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\nLOCAL_MODULE       := $file_fstab" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\nLOCAL_MODULE_TAGS  := optional eng" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\nLOCAL_MODULE_CLASS := ETC" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\nLOCAL_SRC_FILES    := etc/$file_fstab" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\nLOCAL_MODULE_PATH  := \$(TARGET_OUT_VENDOR_ETC)" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\ninclude \$(BUILD_PREBUILT)\n" >> $PROJECT_DIR/working/rootdir/Android.mk
+done
+
 # ueventd Android.mk
+cp -a "$1"/vendor/ueventd.rc $PROJECT_DIR/working/rootdir/etc/ueventd.qcom.rc
+printf "ueventd.qcom.rc\n" >> $PROJECT_DIR/working/rootdir_temp.mk
 printf "\ninclude \$(CLEAR_VARS)" >> $PROJECT_DIR/working/rootdir/Android.mk
 printf "\nLOCAL_MODULE       := ueventd.qcom.rc" >> $PROJECT_DIR/working/rootdir/Android.mk
 printf "\nLOCAL_MODULE_STEM  := ueventd.rc" >> $PROJECT_DIR/working/rootdir/Android.mk

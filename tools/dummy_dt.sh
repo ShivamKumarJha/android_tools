@@ -213,7 +213,7 @@ common_dt () {
     cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep -iE "vendor/etc/init/hw/" > $PROJECT_DIR/dummy_dt/working/configs.txt
     get_configs
     cd "$DT_DIR"/rootdir-temp/vendor/etc/
-    cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep -iE "vendor/etc/fstab.qcom" > $PROJECT_DIR/dummy_dt/working/configs.txt
+    cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep -iE "vendor/etc/fstab" > $PROJECT_DIR/dummy_dt/working/configs.txt
     get_configs
     cd "$DT_DIR"/rootdir-temp/vendor/
     cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep -iE "vendor/ueventd.rc" > $PROJECT_DIR/dummy_dt/working/configs.txt
