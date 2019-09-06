@@ -14,7 +14,7 @@ source $PROJECT_DIR/tools/common_script.sh "y"
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
-    echo -e "${bold}${red}Supply sytem &/ vendor build.prop as arguements!${nocol}"
+    echo -e "Supply sytem &/ vendor build.prop as arguements!"
     exit 1
 fi
 
@@ -204,4 +204,4 @@ if [ -z "$2" ] && [ ! -d "$1" ]; then
     mv $PROJECT_DIR/working/vendor_prop.mk $PROJECT_DIR/working/system_prop.mk
 fi
 
-echo -e "${bold}${cyan}$(ls -d $PROJECT_DIR/working/*.mk) prepared!${nocol}"
+echo -e "$(ls -d $PROJECT_DIR/working/*.mk) prepared!"

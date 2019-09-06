@@ -14,7 +14,7 @@ source $PROJECT_DIR/tools/common_script.sh
 
 # Exit if invalid arguements
 if [ ! -d "$1" ] || [ ! -d "$2" ]; then
-    echo -e "${bold}${red}Supply source & target ROM path's as arguements!${nocol}"
+    echo -e "Supply source & target ROM path's as arguements!"
     exit 1
 fi
 
@@ -22,7 +22,7 @@ fi
 mkdir -p $TMPDIR/dt_common/common $TMPDIR/dt_common/source $TMPDIR/dt_common/target
 
 # Find common & device-specific blob's
-echo -e "${bold}${cyan}Comparing source and target ROM's. Wait ...!${nocol}"
+echo -e "Comparing source and target ROM's. Wait ...!"
 bash $PROJECT_DIR/tools/rom_compare.sh "$1" "$2"
 cat $PROJECT_DIR/working/Common.txt > $TMPDIR/dt_common/common/blobs_list.txt
 cat $PROJECT_DIR/working/Added.txt > $TMPDIR/dt_common/target/blobs_list.txt
@@ -31,7 +31,7 @@ cat $PROJECT_DIR/working/Modified.txt >> $TMPDIR/dt_common/source/blobs_list.txt
 cat $PROJECT_DIR/working/Modified.txt >> $TMPDIR/dt_common/target/blobs_list.txt
 
 # Prepare proprietary-files.txt
-echo -e "${bold}${cyan}Creating proprietary files. Wait ...!${nocol}"
+echo -e "Creating proprietary files. Wait ...!"
 bash $PROJECT_DIR/tools/proprietary-files.sh $TMPDIR/dt_common/common/blobs_list.txt > /dev/null 2>&1
 cat $PROJECT_DIR/working/proprietary-files.txt > $TMPDIR/dt_common/common-proprietary-files.txt
 bash $PROJECT_DIR/tools/proprietary-files.sh $TMPDIR/dt_common/source/blobs_list.txt > /dev/null 2>&1
@@ -43,4 +43,4 @@ cat $PROJECT_DIR/working/proprietary-files.txt > $TMPDIR/dt_common/target-propri
 rm -rf $PROJECT_DIR/working/*
 cp -a $TMPDIR/dt_common/*-proprietary-files.txt $PROJECT_DIR/working/
 rm -rf $TMPDIR/dt_common/
-echo -e "${bold}${cyan}Files prepared. Check $PROJECT_DIR/working/${nocol}"
+echo -e "Files prepared. Check $PROJECT_DIR/working/"

@@ -13,7 +13,7 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 source $PROJECT_DIR/tools/common_script.sh "y"
 
 if [ -z "$1" ]; then
-    echo -e "${bold}${red}Supply ROM file list as arguement!${nocol}"
+    echo -e "Supply ROM file list as arguement!"
     exit 1
 fi
 
@@ -368,4 +368,4 @@ awk '!NF || !seen[$0]++' $PROJECT_DIR/working/proprietary-files-staging.txt > $P
 # cleanup temp files
 find $PROJECT_DIR/working/* ! -name 'proprietary-files.txt' -type d,f -exec rm -rf {} +
 
-echo -e "${bold}${cyan}$(ls -d $PROJECT_DIR/working/proprietary-files.txt) prepared!${nocol}"
+echo -e "$(ls -d $PROJECT_DIR/working/proprietary-files.txt) prepared!"

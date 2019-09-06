@@ -39,7 +39,7 @@ proprietary_rootdir () {
 }
 
 proprietary () {
-    echo -e "${bold}${cyan}Preparing proprietary-files.txt${nocol}"
+    echo -e "Preparing proprietary-files.txt"
     bash $PROJECT_DIR/tools/proprietary-files.sh "$PROJECT_DIR"/dummy_dt/working/all_files.txt > /dev/null 2>&1
     cp -a $PROJECT_DIR/working/proprietary-files.txt "$DT_DIR"/proprietary-files.txt
 
@@ -47,14 +47,14 @@ proprietary () {
     proprietary_rootdir > /dev/null 2>&1
 
     # proprietary-files-system.txt
-    echo -e "${bold}${cyan}Preparing proprietary-files-system.txt${nocol}"
+    echo -e "Preparing proprietary-files-system.txt"
     cat "$DT_DIR"/proprietary-files.txt | grep -v "vendor/" | sort -u | sed "s|#.*||g" | sed '/^$/d' > "$DT_DIR"/proprietary-files-system.txt
 }
 
 common_setup () {
     clear
     rm -rf $PROJECT_DIR/dummy_dt/working/*
-    echo -e "${bold}${cyan}Fetching all_files.txt & build.prop ${nocol}"
+    echo -e "Fetching all_files.txt & build.prop "
 }
 
 common_core () {
@@ -64,11 +64,11 @@ common_core () {
 
     # skip or proceed
     if [ -z "$BRAND" ] || [ -z "$DEVICE" ] || [ -z "$FINGERPRINT" ] || [ -z "$VERSION" ] || [ ! -e $PROJECT_DIR/dummy_dt/working/system_build.prop ] || [ ! -e $PROJECT_DIR/dummy_dt/working/vendor_build.prop ] ; then
-        echo -e "${bold}${red}Error! Skipping this device.${nocol}"
+        echo -e "Error! Skipping this device."
     elif [[ "$VERSION" -lt 8 ]]; then
-        echo -e "${bold}${red}Error! Pre-Oreo ROM's not supported!${nocol}"
+        echo -e "Error! Pre-Oreo ROM's not supported!"
     elif [[ $( cat $PROJECT_DIR/dummy_dt/working/{system_build.prop,vendor_build.prop} | grep "ro.board.platform" | sed "s|.*=||g" | cut -c1-2 ) == "mt" ]]; then
-        echo -e "${bold}${red}Error! MediaTek board not supported!${nocol}"
+        echo -e "Error! MediaTek board not supported!"
     else
         call_methods
     fi
@@ -85,12 +85,12 @@ call_methods () {
     fi
 
     # vendor_prop.mk
-    echo -e "${bold}${cyan}Preparing vendor_prop.mk${nocol}"
+    echo -e "Preparing vendor_prop.mk"
     bash $PROJECT_DIR/tools/vendor_prop.sh $PROJECT_DIR/dummy_dt/working/system_build.prop $PROJECT_DIR/dummy_dt/working/vendor_build.prop > /dev/null 2>&1
     cp -a $PROJECT_DIR/working/vendor_prop.mk "$DT_DIR"/vendor_prop.mk
 
     # system_prop.mk
-    echo -e "${bold}${cyan}Preparing system_prop.mk${nocol}"
+    echo -e "Preparing system_prop.mk"
     bash $PROJECT_DIR/tools/vendor_prop.sh $PROJECT_DIR/dummy_dt/working/system_build.prop > /dev/null 2>&1
     cp -a $PROJECT_DIR/working/system_prop.mk "$DT_DIR"/system_prop.mk
 
@@ -111,14 +111,14 @@ call_methods () {
 git_op () {
     cd $PROJECT_DIR/dummy_dt/
     if [[ -d "$PROJECT_DIR/dummy_dt/.git" ]] && [[ ! -z $(git status -s) ]]; then
-        echo -e "${bold}${cyan}Performing git operations${nocol}"
+        echo -e "Performing git operations"
         git add --all > /dev/null 2>&1
         git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
         git push git@github.com:ShivamKumarJha/Dummy_DT.git master > /dev/null 2>&1
         COMMIT_HEAD=$(git log --format=format:%H | head -n 1)
         COMMIT_LINK=$(echo "https://github.com/ShivamKumarJha/Dummy_DT/commit/$COMMIT_HEAD")
         # Telegram
-        echo -e "${bold}${cyan}Sending telegram notification${nocol}"
+        echo -e "Sending telegram notification"
         printf "<b>Brand: $BRAND</b>" > $PROJECT_DIR/dummy_dt/working/tg.html
         printf "\n<b>Device: $DEVICE</b>" >> $PROJECT_DIR/dummy_dt/working/tg.html
         printf "\n<b>Model: $MODEL</b>" >> $PROJECT_DIR/dummy_dt/working/tg.html
@@ -129,7 +129,7 @@ git_op () {
         printf "\n<a href=\"https://github.com/ShivamKumarJha/Dummy_DT/commits/master/$BRAND/$DEVICE/\">History</a>" >> $PROJECT_DIR/dummy_dt/working/tg.html
         printf "\n<a href=\"https://github.com/ShivamKumarJha/Dummy_DT/tree/master/$BRAND/$DEVICE/\">$DEVICE</a>" >> $PROJECT_DIR/dummy_dt/working/tg.html
         if [ -z "$TG_API" ]; then
-            echo -e "${bold}${cyan}Telegram API key not found! Skipping Telegram notification.${nocol}"
+            echo -e "Telegram API key not found! Skipping Telegram notification."
         else
             CHAT_ID="@dummy_dt"
             HTML_FILE=$(cat $PROJECT_DIR/dummy_dt/working/tg.html)
@@ -142,7 +142,7 @@ get_configs () {
     configs=`cat $PROJECT_DIR/dummy_dt/working/configs.txt | sort`
     for config_file in $configs; do
         if [ -z "$ROM_PATH" ]; then
-            echo -e "${bold}${cyan}Downloading $config_file${nocol}"
+            echo -e "Downloading $config_file"
             aria2c -x16 "$device_line/$config_file" > /dev/null 2>&1
         else
             cp -a "$ROM_PATH/$config_file" .
@@ -151,7 +151,7 @@ get_configs () {
 }
 
 common_dt () {
-    echo -e "${bold}${cyan}Preparing Device tree configs${nocol}"
+    echo -e "Preparing Device tree configs"
     cd "$DT_DIR"/
     # Audio
     mkdir -p "$DT_DIR"/configs/audio
@@ -297,7 +297,7 @@ common_overlay () {
     get_configs
     ovlist=`find "$PROJECT_DIR"/working/overlays -maxdepth 1 -type f -printf '%P\n' | sort`
     for list in $ovlist; do
-        echo -e "${bold}${cyan}Extracting $list${nocol}"
+        echo -e "Extracting $list"
         $PROJECT_DIR/tools/prebuilt/apktool -f d "$list" > /dev/null 2>&1
     done
     cp -a "$PROJECT_DIR"/working/overlays/framework-res/res/xml/power_profile.xml "$DT_DIR"/overlay/frameworks/base/core/res/res/xml/power_profile.xml > /dev/null 2>&1
@@ -377,11 +377,11 @@ common_overlay () {
 
 # clone repo OR reset to origin/master
 if [ ! -d "$PROJECT_DIR"/dummy_dt/ ]; then
-    echo -e "${bold}${cyan}Cloning Dummy_DT${nocol}"
+    echo -e "Cloning Dummy_DT"
     git clone -q git@github.com:ShivamKumarJha/Dummy_DT.git "$PROJECT_DIR"/dummy_dt
     git -C "$PROJECT_DIR"/dummy_dt config core.fileMode false
 else
-    echo -e "${bold}${cyan}Resetting dummy_dt repo to origin/master${nocol}"
+    echo -e "Resetting dummy_dt repo to origin/master"
     git -C $PROJECT_DIR/dummy_dt/ clean -fd > /dev/null 2>&1
     git -C $PROJECT_DIR/dummy_dt/ fetch origin > /dev/null 2>&1
     git -C $PROJECT_DIR/dummy_dt/ reset --hard origin/master > /dev/null 2>&1
@@ -426,4 +426,4 @@ elif echo "$1" | grep "http"; then #URL dumps
     done
 fi
 
-echo -e "${bold}${cyan}Finished!${nocol}"
+echo -e "Finished!"

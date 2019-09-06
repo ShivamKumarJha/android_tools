@@ -16,19 +16,19 @@ source $PROJECT_DIR/tools/common_script.sh "y"
 
 # Exit if mono not installed
 if [ -z "$(which mono)" ]; then
-    echo -e "${bold}${red}mono not installed!${nocol}"
+    echo -e "mono not installed!"
     exit 1
 fi
 
 # Dependencies check
 if [ ! -d "$PROJECT_DIR/tools/extract-dtb" ] || [ ! -d "$PROJECT_DIR/tools/mkbootimg_tools" ]; then
-    echo -e "${bold}${red}Missing dependencies!Run: bash tools/dependencies.sh${nocol}"
+    echo -e "Missing dependencies!Run: bash tools/dependencies.sh"
     exit 1
 fi
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
-    echo -e "${bold}${red}Supply OTA file(s) as arguement!${nocol}"
+    echo -e "Supply OTA file(s) as arguement!"
     exit 1
 fi
 
@@ -54,7 +54,7 @@ for var in "$@"; do
     ext4_list=`find $PROJECT_DIR/working -type f \( -name "*ext4*" -o -name "modem.img" -o -name "bluetooth.img" \) -printf '%P\n' | sort`
     for file in $ext4_list; do
         DIR_NAME=$(echo $file | cut -d . -f1)
-        echo -e "${bold}${cyan}Mounting & copying ${DIR_NAME}${nocol}"
+        echo -e "Mounting & copying ${DIR_NAME}"
         mkdir -p $PROJECT_DIR/working/$DIR_NAME $PROJECT_DIR/dumps/$UNZIP_DIR/$DIR_NAME
         # mount & permissions
         if [ "$file" == "modem.img" ] || [ "$file" == "bluetooth.img" ]; then
@@ -107,6 +107,6 @@ for var in "$@"; do
     # cleanup & display
     rm -rf $PROJECT_DIR/working/*
     duration=$SECONDS
-    echo -e "${bold}${cyan}Dump location: $PROJECT_DIR/dumps/$UNZIP_DIR/${nocol}"
-    echo -e "${bold}${cyan}Extract time: $(($duration / 60)) minutes and $(($duration % 60)) seconds.${nocol}"
+    echo -e "Dump location: $PROJECT_DIR/dumps/$UNZIP_DIR/"
+    echo -e "Extract time: $(($duration / 60)) minutes and $(($duration % 60)) seconds."
 done

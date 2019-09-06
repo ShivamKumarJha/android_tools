@@ -14,13 +14,13 @@ source $PROJECT_DIR/tools/common_script.sh
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
-    echo -e "${bold}${red}Supply dir's or raw build.prop link as arguements!${nocol}"
+    echo -e "Supply dir's or raw build.prop link as arguements!"
     exit 1
 fi
 
 # Exit if missing token, user or email
 if [ -z "$GIT_TOKEN" ] && [ -z "$GITHUB_EMAIL" ] && [ -z "$GITHUB_USER" ]; then
-    echo -e "${bold}${red}Missing GitHub token or user or email. Exiting.${nocol}"
+    echo -e "Missing GitHub token or user or email. Exiting."
     exit 1
 fi
 
@@ -34,7 +34,7 @@ for var in "$@"; do
     KT_REPO_DESC=$(echo "Kernel tree for $MODEL")
     VT_REPO_DESC=$(echo "Vendor tree for $MODEL")
     # Create repository in GitHub
-    printf "${bold}${cyan}Creating\nhttps://github.com/$GITHUB_USER/$DT_REPO\nhttps://github.com/$GITHUB_USER/$KT_REPO\nhttps://github.com/$GITHUB_USER/$VT_REPO\n${nocol}"
+    printf "Creating\nhttps://github.com/$GITHUB_USER/$DT_REPO\nhttps://github.com/$GITHUB_USER/$KT_REPO\nhttps://github.com/$GITHUB_USER/$VT_REPO\n"
     curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name": "'"$DT_REPO"'","description": "'"$DT_REPO_DESC"'","private": true,"has_issues": true,"has_projects": false,"has_wiki": true}' > /dev/null 2>&1
     curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name": "'"$KT_REPO"'","description": "'"$KT_REPO_DESC"'","private": true,"has_issues": true,"has_projects": false,"has_wiki": true}' > /dev/null 2>&1
     curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name": "'"$VT_REPO"'","description": "'"$VT_REPO_DESC"'","private": true,"has_issues": true,"has_projects": false,"has_wiki": true}' > /dev/null 2>&1

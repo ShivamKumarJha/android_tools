@@ -14,7 +14,7 @@ source $PROJECT_DIR/tools/common_script.sh "y"
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
-    echo -e "${bold}${red}Supply xml's as arguements!${nocol}"
+    echo -e "Supply xml's as arguements!"
     exit 1
 fi
 

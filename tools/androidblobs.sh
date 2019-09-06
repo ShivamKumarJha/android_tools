@@ -14,13 +14,13 @@ source $PROJECT_DIR/tools/common_script.sh
 
 # Exit if missing token
 if [ -z "$GIT_TOKEN" ]; then
-    echo -e "${bold}${red}Missing GitHub token. Exiting.${nocol}"
+    echo -e "Missing GitHub token. Exiting."
     exit 1
 fi
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
-    echo -e "${bold}${red}Supply ROM source as arguement!${nocol}"
+    echo -e "Supply ROM source as arguement!"
     exit 1
 fi
 
@@ -29,7 +29,7 @@ for var in "$@"; do
     unset VT_REPO VT_REPO_DESC BRANCH COMMIT_MSG
     # Check if directory
     if [ ! -d "$var" ] ; then
-        echo -e "${bold}${red}Supply ROM path as arguement!${nocol}"
+        echo -e "Supply ROM path as arguement!"
         break
     fi
     # Create vendor tree repo
@@ -45,10 +45,10 @@ for var in "$@"; do
     find -size +97M -printf '%P\n' -o -name *sensetime* -printf '%P\n' -o -name *.lic -printf '%P\n' > .gitignore
     BRANCH=$(echo $DESCRIPTION | tr ' ' '-' | sort -u | head -n 1 )
     COMMIT_MSG=$(echo "$DEVICE: $FINGERPRINT" | sort -u | head -n 1 )
-    echo -e "${bold}${cyan}Branch $COMMIT_MSG. Adding files...${nocol}"
+    echo -e "Branch $COMMIT_MSG. Adding files..."
     git checkout -b $BRANCH > /dev/null 2>&1
     git add --all > /dev/null 2>&1
-    echo -e "${bold}${cyan}Commiting $COMMIT_MSG${nocol}"
+    echo -e "Commiting $COMMIT_MSG"
     git -c "user.name=AndroidBlobs" -c "user.email=AndroidBlobs@github.com" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
     curl -s -X POST -H "Authorization: token ${GIT_TOKEN}" -d '{"name": "'"$VT_REPO"'","description": "'"$VT_REPO_DESC"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/AndroidBlobs/repos" > /dev/null 2>&1
     git push https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$VT_REPO".git --all --force

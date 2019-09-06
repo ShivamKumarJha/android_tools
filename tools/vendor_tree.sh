@@ -14,13 +14,13 @@ source $PROJECT_DIR/tools/common_script.sh
 
 # Exit if missing token, user or email
 if [ -z "$GIT_TOKEN" ] && [ -z "$GITHUB_EMAIL" ] && [ -z "$GITHUB_USER" ]; then
-    echo -e "${bold}${red}Missing GitHub token or user or email. Exiting.${nocol}"
+    echo -e "Missing GitHub token or user or email. Exiting."
     exit 1
 fi
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
-    echo -e "${bold}${red}Supply ROM source as arguement!${nocol}"
+    echo -e "Supply ROM source as arguement!"
     exit 1
 fi
 
@@ -28,7 +28,7 @@ fi
 for var in "$@"; do
     # Check if directory
     if [ ! -d "$var" ] ; then
-        echo -e "${bold}${red}Supply ROM path as arguement!${nocol}"
+        echo -e "Supply ROM path as arguement!"
         break
     fi
 
@@ -44,16 +44,16 @@ for var in "$@"; do
     # Push to GitHub
     cd "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"
     if [ ! -d .git ]; then
-        echo -e "${bold}${cyan}Initializing git.${nocol}"
+        echo -e "Initializing git."
         git init . > /dev/null 2>&1
-        echo -e "${bold}${cyan}Adding origin: git@github.com:$GITHUB_USER/"$VT_REPO".git ${nocol}"
+        echo -e "Adding origin: git@github.com:$GITHUB_USER/"$VT_REPO".git "
         git remote add origin git@github.com:$GITHUB_USER/"$VT_REPO".git > /dev/null 2>&1
     fi
     BRANCH=$(echo $DESCRIPTION | tr ' ' '-' | sort -u | head -n 1 )
     COMMIT_MSG=$(echo "$DEVICE: $FINGERPRINT" | sort -u | head -n 1 )
     git checkout -b $BRANCH > /dev/null 2>&1
     git add --all > /dev/null 2>&1
-    echo -e "${bold}${cyan}Commiting $COMMIT_MSG${nocol}"
+    echo -e "Commiting $COMMIT_MSG"
     git -c "user.name=$GITHUB_USER" -c "user.email=$GITHUB_EMAIL" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
     git push https://"$GIT_TOKEN"@github.com/$GITHUB_USER/"$VT_REPO".git $BRANCH
 done

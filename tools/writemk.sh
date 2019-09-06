@@ -19,12 +19,12 @@ if [ ! -d "$WORK_DIR"/mklists/ ]; then
 fi
 
 if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ ! -e "$WORK_DIR"/mklist.txt ]; then
-    echo -e "${bold}${red}Error!${nocol}"
-    echo -e "${bold}${red}Script must take 3 arguements${nocol}"
-    echo -e "${bold}${red}1st is local path string${nocol}"
-    echo -e "${bold}${red}2nd is destination path string${nocol}"
-    echo -e "${bold}${red}3rd is comment header${nocol}"
-    echo -e "${bold}${red}Also mklist.txt must exist in working/ with list of file names!${nocol}"
+    echo -e "Error!"
+    echo -e "Script must take 3 arguements"
+    echo -e "1st is local path string"
+    echo -e "2nd is destination path string"
+    echo -e "3rd is comment header"
+    echo -e "Also mklist.txt must exist in working/ with list of file names!"
     exit 1
 fi
 

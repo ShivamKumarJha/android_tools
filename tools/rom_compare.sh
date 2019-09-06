@@ -14,13 +14,13 @@ source $PROJECT_DIR/tools/common_script.sh "y"
 
 # Make sure to get paths
 if [ -z "$1" ] || [ -z "$2" ] ; then
-    echo -e "${bold}${red}Supply source & target ROM paths!${nocol}"
+    echo -e "Supply source & target ROM paths!"
     exit 1
 fi
 
 # Check if paths are correct
 if [ ! -d "$1" ] || [ ! -d "$2" ] ; then
-    echo -e "${bold}${red}Error! Path is not a directory!${nocol}"
+    echo -e "Error! Path is not a directory!"
     exit 1
 fi
 
@@ -37,7 +37,7 @@ for line in $file_lines ; do
         echo "$line" >> $PROJECT_DIR/working/Missing.txt
     else
         # Common
-        echo -e "${bold}${cyan}Comparing $line${nocol}"
+        echo -e "Comparing $line"
         cmp --silent $1/$line $2/$line && echo "$line" >> $PROJECT_DIR/working/Common.txt
         # Modified
         cmp --silent $1/$line $2/$line || echo "$line" >> $PROJECT_DIR/working/Modified.txt
@@ -53,6 +53,6 @@ done
 
 for i in "Added" "Common" "Missing" "Modified"; do
     if [ -e $PROJECT_DIR/working/$i.txt ]; then
-        echo -e "${bold}${cyan}$i files stored: $(ls -d $PROJECT_DIR/working/$i.txt)${nocol}"
+        echo -e "$i files stored: $(ls -d $PROJECT_DIR/working/$i.txt)"
     fi
 done

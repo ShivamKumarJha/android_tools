@@ -14,7 +14,7 @@ source $PROJECT_DIR/tools/common_script.sh "y"
 
 # Make sure to get path
 if [ -z "$1" ]; then
-    echo -e "${bold}${red}Supply ROM path!${nocol}"
+    echo -e "Supply ROM path!"
     exit 1
 fi
 

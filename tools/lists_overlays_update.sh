@@ -14,7 +14,7 @@ source $PROJECT_DIR/tools/common_script.sh
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
-    echo -e "${bold}${red}Supply FWB config.xml as arguement!${nocol}"
+    echo -e "Supply FWB config.xml as arguement!"
     exit 1
 fi
 

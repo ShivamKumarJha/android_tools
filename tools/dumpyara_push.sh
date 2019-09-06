@@ -14,13 +14,13 @@ source $PROJECT_DIR/tools/common_script.sh
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
-    echo -e "${bold}${red}Supply dir's as arguements!${nocol}"
+    echo -e "Supply dir's as arguements!"
     exit 1
 fi
 
 # Exit if missing token's
 if [ -z "$DUMPYARA_TOKEN" ]; then
-    echo -e "${bold}${cyan}Missing GitHub token. Exiting.${nocol}"
+    echo -e "Missing GitHub token. Exiting."
     exit 1
 fi
 
@@ -28,7 +28,7 @@ fi
 for var in "$@"; do
     ROM_PATH=$( realpath "$var" )
     if [ ! -d "$ROM_PATH" ] ; then
-        echo -e "${bold}${red}$ROM_PATH is not a valid directory!${nocol}"
+        echo -e "$ROM_PATH is not a valid directory!"
         exit 1
     fi
     cd "$ROM_PATH"

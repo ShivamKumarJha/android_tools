@@ -14,7 +14,7 @@ source $PROJECT_DIR/tools/common_script.sh
 
 # Exit if invalid arguements
 if [ -z "$1" ] || [ -z "$2" ]; then
-    echo -e "${bold}${red}Supply source & target ROM path's as arguements!${nocol}"
+    echo -e "Supply source & target ROM path's as arguements!"
     exit 1
 fi
 
@@ -41,4 +41,4 @@ sed -i '/^$/d' $PROJECT_DIR/working/common-vendor_prop.mk $PROJECT_DIR/working/s
 
 # Final results
 rm -rf $TMPDIR/dt_common/
-echo -e "${bold}${cyan}Files prepared. Check $PROJECT_DIR/working/${nocol}"
+echo -e "Files prepared. Check $PROJECT_DIR/working/"

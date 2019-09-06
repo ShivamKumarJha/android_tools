@@ -14,7 +14,7 @@ source $PROJECT_DIR/tools/common_script.sh
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
-    echo -e "${bold}${red}Supply rom directory or system/build.prop as arguement!${nocol}"
+    echo -e "Supply rom directory or system/build.prop as arguement!"
     exit 1
 fi
 
@@ -94,5 +94,5 @@ for var in "$@"; do
 
     # Display var's
     declare -a arr=("BRAND" "DEVICE" "DESCRIPTION" "FINGERPRINT" "MODEL" "SECURITY_PATCH" "VERSION" "FLAVOR" "ID" "INCREMENTAL" "TAGS")
-    for i in "${arr[@]}"; do printf "${bold}${cyan}$i: ${!i}\n${nocol}"; done
+    for i in "${arr[@]}"; do printf "$i: ${!i}\n"; done
 done

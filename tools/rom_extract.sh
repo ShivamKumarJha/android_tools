@@ -13,13 +13,13 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
 # Dependencies check
 if [ ! -d "$PROJECT_DIR/tools/Firmware_extractor" ] || [ ! -d "$PROJECT_DIR/tools/extract-dtb" ] || [ ! -d "$PROJECT_DIR/tools/mkbootimg_tools" ]; then
-    echo -e "${bold}${red}Missing dependencies!Run: bash tools/dependencies.sh${nocol}"
+    echo -e "Missing dependencies!Run: bash tools/dependencies.sh"
     exit 1
 fi
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
-    echo -e "${bold}${red}Supply OTA file(s) as arguement!${nocol}"
+    echo -e "Supply OTA file(s) as arguement!"
     exit 1
 fi
 
@@ -48,7 +48,7 @@ core () {
         bash $PROJECT_DIR/tools/mkbootimg_tools/mkboot $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img $PROJECT_DIR/dumps/${UNZIP_DIR}/boot/ > /dev/null 2>&1
         mv $PROJECT_DIR/dumps/${UNZIP_DIR}/boot/kernel $PROJECT_DIR/dumps/${UNZIP_DIR}/boot/Image.gz-dtb
         # Extract dtb
-        echo -e "${bold}${cyan}Extracting dtb${nocol}"
+        echo -e "Extracting dtb"
         python3 $PROJECT_DIR/tools/extract-dtb/extract-dtb.py $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img -o $PROJECT_DIR/dumps/${UNZIP_DIR}/bootimg > /dev/null 2>&1
         # Extract dts
         mkdir $PROJECT_DIR/dumps/${UNZIP_DIR}/bootdts
@@ -61,14 +61,14 @@ core () {
     # dtbo
     if [[ -f $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo.img ]]; then
         python3 $PROJECT_DIR/tools/extract-dtb/extract-dtb.py $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo.img -o $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo > /dev/null 2>&1
-        echo -e "${bold}${cyan}dtbo extracted${nocol}"
+        echo -e "dtbo extracted"
     fi
 
     # mounting
     for file in $PARTITIONS; do
         if [ -e "$PROJECT_DIR/dumps/${UNZIP_DIR}/$file.img" ]; then
             DIR_NAME=$(echo $file | cut -d . -f1)
-            echo -e "${bold}${cyan}Mounting & copying ${DIR_NAME}${nocol}"
+            echo -e "Mounting & copying ${DIR_NAME}"
             mkdir -p $PROJECT_DIR/dumps/${UNZIP_DIR}/$DIR_NAME $PROJECT_DIR/dumps/$UNZIP_DIR/tempmount
             # mount & permissions
             if [ "$file" == "modem" ]; then
@@ -103,8 +103,8 @@ for var in "$@"; do
     URL=$( realpath "$var" )
     core
     duration=$SECONDS
-    echo -e "${bold}${cyan}Dump location: $PROJECT_DIR/dumps/$UNZIP_DIR/${nocol}"
-    echo -e "${bold}${cyan}Extract time: $(($duration / 60)) minutes and $(($duration % 60)) seconds.${nocol}"
+    echo -e "Dump location: $PROJECT_DIR/dumps/$UNZIP_DIR/"
+    echo -e "Extract time: $(($duration / 60)) minutes and $(($duration % 60)) seconds."
     [[ "$androidblobs" == "y" ]] && bash "$PROJECT_DIR/tools/dummy_dt.sh" "$PROJECT_DIR/dumps/${UNZIP_DIR}/"
     [[ "$create_dummydt" == "y" ]] && bash "$PROJECT_DIR/tools/dummy_dt.sh" "$PROJECT_DIR/dumps/${UNZIP_DIR}/"
     [[ "$push_dump" == "y" ]] && bash "$PROJECT_DIR/tools/dump_push.sh" "$PROJECT_DIR/dumps/${UNZIP_DIR}/"
