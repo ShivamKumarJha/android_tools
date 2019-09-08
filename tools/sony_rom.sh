@@ -14,16 +14,9 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 # Common stuff
 source $PROJECT_DIR/tools/common_script.sh "y"
 
-# Exit if mono not installed
-if [ -z "$(which mono)" ]; then
-    echo -e "mono not installed!"
-    exit 1
-fi
-
 # Dependencies check
 if [ ! -d "$PROJECT_DIR/tools/extract-dtb" ] || [ ! -d "$PROJECT_DIR/tools/mkbootimg_tools" ]; then
-    echo -e "Missing dependencies!Run: bash tools/dependencies.sh"
-    exit 1
+    bash $PROJECT_DIR/tools/dependencies.sh
 fi
 
 # Exit if no arguements

@@ -13,8 +13,7 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
 # Dependencies check
 if [ ! -d "$PROJECT_DIR/tools/Firmware_extractor" ] || [ ! -d "$PROJECT_DIR/tools/extract-dtb" ] || [ ! -d "$PROJECT_DIR/tools/mkbootimg_tools" ]; then
-    echo -e "Missing dependencies!Run: bash tools/dependencies.sh"
-    exit 1
+    bash $PROJECT_DIR/tools/dependencies.sh
 fi
 
 # Exit if no arguements

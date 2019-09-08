@@ -3,8 +3,8 @@
 Collection of scripts to help with Android ROM stuff.  
   
 **Setup**:  
-`chmod +x tools/dependencies.sh`  
-`./tools/dependencies.sh`
+`chmod +x setup.sh`  
+`sudo ./setup.sh`
   
 1. **common_blobs.sh**: A script to list common and device specific blob's between two ROM's.  
 Usage:  
@@ -63,6 +63,10 @@ Output: `system.prop` & `vendor_prop.mk` files.
 Usage: `./tools/vendor_prop.sh <full path to ROM dump>`  
 Output: `vendor_prop.mk` file.  
 
-13. **vendor_tree.sh**: A script to prepare vendor tree from a ROM dump after generating proprietary-files.txt.  
+13. **vendor_tree.sh**: A script to prepare vendor tree from a ROM dump after generating proprietary-files.txt and push it to GitHub.  
 To extract from a specific proprietary-files.txt, place it before in `working/proprietary-files.txt`.  
-Usage: `./tools/vendor_tree.sh <full path to ROM dump>`  
+Usage:  
+`export GITHUB_EMAIL=<KEY>`  
+`export GIT_TOKEN=<KEY>`  
+`export GITHUB_USER=<KEY>`  
+`./tools/vendor_tree.sh <full path to ROM dump>`  
