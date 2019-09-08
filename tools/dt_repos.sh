@@ -19,7 +19,7 @@ if [ -z "$1" ] ; then
 fi
 
 # Exit if missing token, user or email
-if [ -z "$GIT_TOKEN" ] && [ -z "$GITHUB_EMAIL" ] && [ -z "$GITHUB_USER" ]; then
+if [ -z "$GIT_TOKEN" ] && [ -z "$GITHUB_USER" ]; then
     echo -e "Missing GitHub token or user or email. Exiting."
     exit 1
 fi

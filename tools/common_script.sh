@@ -17,4 +17,8 @@ if [ "$1" == "y" ]; then
     rm -rf $PROJECT_DIR/working/*
 fi
 
+# set common var's
+GITHUB_EMAIL="$(git config --get user.email)"
+GITHUB_USER="$(git config --get user.name)"
+
 export LC_ALL=C make

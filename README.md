@@ -16,9 +16,7 @@ Usage:
 
 3. **dt_repos.sh**: A script to create Device, kernel & vendor tree of a device in GitHub with model as repo descripton.  
 Usage:  
-`export GITHUB_EMAIL=<KEY>`  
 `export GIT_TOKEN=<KEY>`  
-`export GITHUB_USER=<KEY>`  
 `./tools/dt_repos.sh <path to rom>`
 
 4. **dummy_dt.sh**: A script which prepares a dummy device tree from ROM dump. Can handle dump stored both locally OR in online git repository (as long as all_files.txt exists in its root). See its GitHub [repo](https://github.com/ShivamKumarJha/Dummy_DT/).  
@@ -29,9 +27,7 @@ For Telegram notification, `export TG_API=<KEY>` before running script.
 
 5. **dump_push.sh**: A script to push local dump to GitHib.  
 Usage:  
-`export GITHUB_EMAIL=<KEY>`  
 `export GIT_TOKEN=<KEY>`  
-`export GITHUB_USER=<KEY>`  
 `./tools/dump_push.sh <path to xml(s)>`
 
 6. **proprietary-files.sh**: A script to prepare proprietary blobs list from ROM.  
@@ -66,7 +62,5 @@ Output: `vendor_prop.mk` file.
 13. **vendor_tree.sh**: A script to prepare vendor tree from a ROM dump after generating proprietary-files.txt and push it to GitHub.  
 To extract from a specific proprietary-files.txt, place it before in `working/proprietary-files.txt`.  
 Usage:  
-`export GITHUB_EMAIL=<KEY>`  
 `export GIT_TOKEN=<KEY>`  
-`export GITHUB_USER=<KEY>`  
 `./tools/vendor_tree.sh <full path to ROM dump>`  
