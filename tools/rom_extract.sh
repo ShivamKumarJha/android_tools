@@ -104,9 +104,4 @@ for var in "$@"; do
     duration=$SECONDS
     echo -e "Dump location: $PROJECT_DIR/dumps/$UNZIP_DIR/"
     echo -e "Extract time: $(($duration / 60)) minutes and $(($duration % 60)) seconds."
-    [[ "$androidblobs" == "y" ]] && bash "$PROJECT_DIR/tools/dummy_dt.sh" "$PROJECT_DIR/dumps/${UNZIP_DIR}/"
-    [[ "$create_dummydt" == "y" ]] && bash "$PROJECT_DIR/tools/dummy_dt.sh" "$PROJECT_DIR/dumps/${UNZIP_DIR}/"
-    [[ "$push_dump" == "y" ]] && bash "$PROJECT_DIR/tools/dump_push.sh" "$PROJECT_DIR/dumps/${UNZIP_DIR}/"
-    [[ "$dumpyara_push" == "y" ]] && bash "$PROJECT_DIR/tools/dumpyara_push.sh" "$PROJECT_DIR/dumps/${UNZIP_DIR}/"
-    [[ "$push_vendor" == "y" ]] && bash "$PROJECT_DIR/tools/vendor_tree.sh" "$PROJECT_DIR/dumps/${UNZIP_DIR}/"
 done
