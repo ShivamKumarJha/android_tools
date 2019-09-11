@@ -56,7 +56,17 @@ for var in "$@"; do
     [[ -z "$DEVICE" ]] && DEVICE=$( cat "$CAT_FILE" | grep "ro.build" | grep "product=" | sed "s|.*=||g" | sed "s|ASUS_||g" | head -n 1 )
     [[ -z "$DEVICE" ]] && DEVICE=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | head -n 1 | cut -d : -f1 | rev | cut -d / -f1 | rev )
     [[ -z "$DEVICE" ]] && DEVICE=$( cat "$CAT_FILE" | grep "ro.build.fota.version=" | sed "s|.*=||g" | head -n 1 | cut -d - -f1 )
+    VERSION=$( cat "$CAT_FILE" | grep "build.version.release=" | sed "s|.*=||g" | head -c 2 | head -n 1 )
+    re='^[0-9]+$'
+    if ! [[ $VERSION =~ $re ]] ; then
+        VERSION=$( cat "$CAT_FILE" | grep "build.version.release=" | sed "s|.*=||g" | head -c 1 | head -n 1 )
+    fi
+    FLAVOR=$( cat "$CAT_FILE" | grep "ro.build" | grep "flavor=" | sed "s|.*=||g" | head -n 1 )
+    ID=$( cat "$CAT_FILE" | grep "ro.build" | grep "id=" | sed "s|.*=||g" | head -n 1 )
+    INCREMENTAL=$( cat "$CAT_FILE" | grep "ro.build" | grep "incremental=" | sed "s|.*=||g" | head -n 1 )
+    TAGS=$( cat "$CAT_FILE" | grep "ro.build" | grep "tags=" | sed "s|.*=||g" | head -n 1 )
     DESCRIPTION=$( cat "$CAT_FILE" | grep "ro." | grep "build.description=" | sed "s|.*=||g" | head -n 1 )
+    [[ -z "$DESCRIPTION" ]] && DESCRIPTION="$FLAVOR $VERSION $ID $INCREMENTAL $TAGS"
     if grep -q "build.fingerprint=" "$CAT_FILE"; then
         FINGERPRINT=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "build.thumbprint=" "$CAT_FILE"; then
@@ -82,15 +92,6 @@ for var in "$@"; do
     fi
     [[ -z "$MODEL" ]] && MODEL=$DEVICE
     SECURITY_PATCH=$( cat "$CAT_FILE" | grep "build.version.security_patch=" | sed "s|.*=||g" | head -n 1 )
-    VERSION=$( cat "$CAT_FILE" | grep "build.version.release=" | sed "s|.*=||g" | head -c 2 | head -n 1 )
-    re='^[0-9]+$'
-    if ! [[ $VERSION =~ $re ]] ; then
-        VERSION=$( cat "$CAT_FILE" | grep "build.version.release=" | sed "s|.*=||g" | head -c 1 | head -n 1 )
-    fi
-    FLAVOR=$( cat "$CAT_FILE" | grep "ro.build" | grep "flavor=" | sed "s|.*=||g" | head -n 1 )
-    ID=$( cat "$CAT_FILE" | grep "ro.build" | grep "id=" | sed "s|.*=||g" | head -n 1 )
-    INCREMENTAL=$( cat "$CAT_FILE" | grep "ro.build" | grep "incremental=" | sed "s|.*=||g" | head -n 1 )
-    TAGS=$( cat "$CAT_FILE" | grep "ro.build" | grep "tags=" | sed "s|.*=||g" | head -n 1 )
 
     # Display var's
     declare -a arr=("BRAND" "DEVICE" "DESCRIPTION" "FINGERPRINT" "MODEL" "SECURITY_PATCH" "VERSION" "FLAVOR" "ID" "INCREMENTAL" "TAGS")
