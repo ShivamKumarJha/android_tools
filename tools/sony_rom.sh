@@ -15,7 +15,7 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 source $PROJECT_DIR/tools/common_script.sh "y"
 
 # Dependencies check
-if [ ! -d "$PROJECT_DIR/tools/extract-dtb" ] || [ ! -d "$PROJECT_DIR/tools/mkbootimg_tools" ]; then
+if [ ! -d "$PROJECT_DIR/tools/Firmware_extractor" ] || [ ! -d "$PROJECT_DIR/tools/extract-dtb" ] || [ ! -d "$PROJECT_DIR/tools/mkbootimg_tools" ]; then
     bash $PROJECT_DIR/tools/dependencies.sh
 fi
 
@@ -40,7 +40,7 @@ for var in "$@"; do
     unzip $URL -d $PROJECT_DIR/working
     # Extract sin
     [[ -e $PROJECT_DIR/working/userdata.sin ]] && rm -rf $PROJECT_DIR/working/userdata.sin
-    $PROJECT_DIR/tools/prebuilt/unsin -dr $PROJECT_DIR/working
+    $PROJECT_DIR/tools/Firmware_extractor/tools/Linux/bin/unsin -dr $PROJECT_DIR/working
     find $PROJECT_DIR/working/ -name "*.sin" -type f -exec rm -rf {} \;
     [[ -d $PROJECT_DIR/dumps/$UNZIP_DIR/ ]] && rm -rf $PROJECT_DIR/dumps/$UNZIP_DIR/
     # mounting
