@@ -81,21 +81,21 @@ for var in "$@"; do
 
     curl -s -X POST -H "Authorization: token ${GIT_OAUTH_TOKEN}" -d '{ "name": "'"$repo"'" }' "https://api.github.com/orgs/${ORG}/repos" #create new repo
     git remote add origin https://github.com/$ORG/${repo,,}.git
-    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit  -asm "Add ${description}"
+    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add ${description}"
     git push https://$GIT_OAUTH_TOKEN@github.com/$ORG/${repo,,}.git $branch ||
 
     (git update-ref -d HEAD ; git reset system/ vendor/ ;
     git checkout -b $branch ;
-    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit  -asm "Add extras for ${description}" ;
+    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add extras for ${description}" ;
     git push https://$GIT_OAUTH_TOKEN@github.com/$ORG/${repo,,}.git $branch ;
     git add vendor/ ;
-    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit  -asm "Add vendor for ${description}" ;
+    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add vendor for ${description}" ;
     git push https://$GIT_OAUTH_TOKEN@github.com/$ORG/${repo,,}.git $branch ;
     git add system/system/app/ system/system/priv-app/ || git add system/app/ system/priv-app/ ;
-    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit  -asm "Add apps for ${description}" ;
+    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add apps for ${description}" ;
     git push https://$GIT_OAUTH_TOKEN@github.com/$ORG/${repo,,}.git $branch ;
     git add system/ ;
-    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit  -asm "Add system for ${description}" ;
+    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add system for ${description}" ;
     git push https://$GIT_OAUTH_TOKEN@github.com/$ORG/${repo,,}.git $branch ;)
 
     # Telegram channel

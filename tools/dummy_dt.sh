@@ -158,7 +158,7 @@ common_dt () {
     cd "$DT_DIR"/configs/audio
     cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep "vendor/etc/" | grep -iE "audio_|graphite_|listen_|mixer_|sound_" | grep -v "audio_param\|boot_sound/" > $PROJECT_DIR/dummy_dt/working/configs.txt
     if grep -q "vendor/etc/audio/audio_policy_configuration.xml" $PROJECT_DIR/dummy_dt/working/configs.txt; then
-        sed -i "s|vendor/etc/audio_policy_configuration.xml||g" $PROJECT_DIR/dummy_dt/working/configs.txt
+        sed -i "s|.*/etc/audio_policy_configuration.xml||g" $PROJECT_DIR/dummy_dt/working/configs.txt
         sed -i '/^$/d' $PROJECT_DIR/dummy_dt/working/configs.txt
     fi
     get_configs
@@ -283,9 +283,7 @@ common_dt () {
     printf "\nPRODUCT_GMS_CLIENTID_BASE := android-"$BRAND"" >> "$DT_DIR"/lineage_"$DEVICE".mk
     printf "\nTARGET_VENDOR := "$BRAND"" >> "$DT_DIR"/lineage_"$DEVICE".mk
     printf "\nTARGET_VENDOR_PRODUCT_NAME := "$DEVICE"\n" >> "$DT_DIR"/lineage_"$DEVICE".mk
-    if [ ! -z "$DESCRIPTION" ]; then
-        echo "PRODUCT_BUILD_PROP_OVERRIDES += PRIVATE_BUILD_DESC=\""$DESCRIPTION"\"" >> "$DT_DIR"/lineage_"$DEVICE".mk
-    fi
+    echo "PRODUCT_BUILD_PROP_OVERRIDES += PRIVATE_BUILD_DESC=\""$DESCRIPTION"\"" >> "$DT_DIR"/lineage_"$DEVICE".mk
     printf "\n# Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop\n" >> "$DT_DIR"/lineage_"$DEVICE".mk
     echo "BUILD_FINGERPRINT := "$FINGERPRINT"" >> "$DT_DIR"/lineage_"$DEVICE".mk
 }
