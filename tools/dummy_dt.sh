@@ -289,7 +289,7 @@ common_dt () {
 }
 
 common_overlay () {
-    mkdir -p "$PROJECT_DIR"/working/overlays "$DT_DIR"/overlay/frameworks/base/core/res/res/xml/ "$DT_DIR"/overlay/packages/apps/CarrierConfig/res/xml "$DT_DIR"/overlay/frameworks/base/core/res/res/values/ "$DT_DIR"/overlay/packages/apps/Bluetooth/res/values "$DT_DIR"/overlay/frameworks/base/packages/SystemUI/res/values/
+    mkdir -p "$PROJECT_DIR"/working/overlays "$DT_DIR"/overlay/frameworks/base/core/res/res/xml/ "$DT_DIR"/overlay/packages/apps/CarrierConfig/res/xml "$DT_DIR"/overlay/frameworks/base/core/res/res/values/ "$DT_DIR"/overlay/packages/apps/Bluetooth/res/values "$DT_DIR"/overlay-lineage/lineage-sdk/lineage/res/res/values
     cd "$PROJECT_DIR"/working/overlays
     cat "$PROJECT_DIR"/dummy_dt/working/all_files.txt | grep -iE "priv-app/SystemUI/SystemUI.apk|framework/framework-res.apk|app/CarrierConfig/CarrierConfig.apk|app/Bluetooth/Bluetooth.apk" > "$PROJECT_DIR"/dummy_dt/working/configs.txt
     get_configs
@@ -362,14 +362,16 @@ common_overlay () {
     cat "$PROJECT_DIR"/tools/lists/overlays/comments/HEADER "$DT_DIR"/overlay/frameworks/base/core/res/res/values/staging.xml > "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
     printf "\n</resources>" >> "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
     rm -rf "$DT_DIR"/overlay/frameworks/base/core/res/res/values/staging.xml
-    # round padding
-    if [[ -d "$PROJECT_DIR/working/overlays/SystemUI/" ]]; then
-        echo "<resources>" >> "$DT_DIR"/overlay/frameworks/base/packages/SystemUI/res/values/dimens.xml
-        cat "$PROJECT_DIR/working/overlays/SystemUI/res/values/dimens.xml" | grep "rounded_corner_content_padding" >> "$DT_DIR"/overlay/frameworks/base/packages/SystemUI/res/values/dimens.xml
-        echo "</resources>" >> "$DT_DIR"/overlay/frameworks/base/packages/SystemUI/res/values/dimens.xml
-        echo "<resources>" >> "$DT_DIR"/overlay/frameworks/base/packages/SystemUI/res/values/config.xml
-        cat "$PROJECT_DIR/working/overlays/SystemUI/res/values/bools.xml" | grep "doze_proximity_check_before_pulse" >> "$DT_DIR"/overlay/frameworks/base/packages/SystemUI/res/values/config.xml
-        echo "</resources>" >> "$DT_DIR"/overlay/frameworks/base/packages/SystemUI/res/values/config.xml
+    # config_vendorPlatformSignatures
+    cat "$PROJECT_DIR"/dummy_dt/working/all_files.txt | grep -iE "system/etc/selinux/plat_mac_permissions.xml" > "$PROJECT_DIR"/dummy_dt/working/configs.txt
+    get_configs
+    if [[ -e ""$PROJECT_DIR"/working/overlays/plat_mac_permissions.xml" ]]; then
+        vensig="$(cat "$PROJECT_DIR"/working/overlays/plat_mac_permissions.xml | grep "<policy><signer signature=\"" | sed "s|.*<policy><signer signature=\"||g" | sed "s|\"><seinfo value=\"platform.*||g")"
+        printf "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>" > "$DT_DIR"/overlay-lineage/lineage-sdk/lineage/res/res/values/config.xml
+        printf "\n    <!-- The list of vendor package signatures that should also be considered" >> "$DT_DIR"/overlay-lineage/lineage-sdk/lineage/res/res/values/config.xml
+        printf "\n    platform signatures, specifically for use on devices with a vendor partition. -->" >> "$DT_DIR"/overlay-lineage/lineage-sdk/lineage/res/res/values/config.xml
+        printf "\n    <string-array name=\"config_vendorPlatformSignatures\">" >> "$DT_DIR"/overlay-lineage/lineage-sdk/lineage/res/res/values/config.xml
+        printf "\n        <item>$vensig</item>\n    </string-array>\n</resources>" >> "$DT_DIR"/overlay-lineage/lineage-sdk/lineage/res/res/values/config.xml
     fi
 }
 
