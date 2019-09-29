@@ -249,7 +249,7 @@ function truncate_file() {
 #
 # write_product_copy_files:
 #
-# $1: make treble compatible makefile - optional, default to false
+# $1: make treble compatible makefile - optional and deprecated, default to true
 #
 # Creates the PRODUCT_COPY_FILES section in the product makefile for all
 # items in the list which do not start with a dash (-).
@@ -274,25 +274,24 @@ function write_product_copy_files() {
         fi
 
         TARGET=$(target_file "$FILE")
-        if [ "$TREBLE_COMPAT" == "true" ] || [ "$TREBLE_COMPAT" == "1" ]; then
-            if prefix_match_file "vendor/" $TARGET ; then
-                local OUTTARGET=$(truncate_file $TARGET)
-                printf '    %s/proprietary/%s:$(TARGET_COPY_OUT_VENDOR)/%s%s\n' \
-                    "$OUTDIR" "$TARGET" "$OUTTARGET" "$LINEEND" >> "$PRODUCTMK"
-            elif prefix_match_file "product/" $TARGET ; then
-                local OUTTARGET=$(truncate_file $TARGET)
-                printf '    %s/proprietary/%s:$(TARGET_COPY_OUT_PRODUCT)/%s%s\n' \
-                    "$OUTDIR" "$TARGET" "$OUTTARGET" "$LINEEND" >> "$PRODUCTMK"
-            elif prefix_match_file "odm/" $TARGET ; then
-                local OUTTARGET=$(truncate_file $TARGET)
-                printf '    %s/proprietary/%s:$(TARGET_COPY_OUT_ODM)/%s%s\n' \
-                    "$OUTDIR" "$TARGET" "$OUTTARGET" "$LINEEND" >> "$PRODUCTMK"
-            else
-                printf '    %s/proprietary/%s:system/%s%s\n' \
-                    "$OUTDIR" "$TARGET" "$TARGET" "$LINEEND" >> "$PRODUCTMK"
-            fi
+        if prefix_match_file "vendor/" $TARGET ; then
+            local OUTTARGET=$(truncate_file $TARGET)
+            printf '    %s/proprietary/%s:$(TARGET_COPY_OUT_VENDOR)/%s%s\n' \
+                "$OUTDIR" "$TARGET" "$OUTTARGET" "$LINEEND" >> "$PRODUCTMK"
+        elif prefix_match_file "product/" $TARGET ; then
+            local OUTTARGET=$(truncate_file $TARGET)
+            printf '    %s/proprietary/%s:$(TARGET_COPY_OUT_PRODUCT)/%s%s\n' \
+                "$OUTDIR" "$TARGET" "$OUTTARGET" "$LINEEND" >> "$PRODUCTMK"
+        elif prefix_match_file "odm/" $TARGET ; then
+            local OUTTARGET=$(truncate_file $TARGET)
+            printf '    %s/proprietary/%s:$(TARGET_COPY_OUT_ODM)/%s%s\n' \
+                "$OUTDIR" "$TARGET" "$OUTTARGET" "$LINEEND" >> "$PRODUCTMK"
+        elif prefix_match_file "system/" $TARGET ; then
+            local OUTTARGET=$(truncate_file $TARGET)
+            printf '    %s/proprietary/%s:$(TARGET_COPY_OUT_SYSTEM)/%s%s\n' \
+                "$OUTDIR" "$TARGET" "$OUTTARGET" "$LINEEND" >> "$PRODUCTMK"
         else
-            printf '    %s/proprietary/%s:system/%s%s\n' \
+            printf '    %s/proprietary/%s:$(TARGET_COPY_OUT_SYSTEM)/%s%s\n' \
                 "$OUTDIR" "$TARGET" "$TARGET" "$LINEEND" >> "$PRODUCTMK"
         fi
     done
@@ -303,7 +302,7 @@ function write_product_copy_files() {
 # write_packages:
 #
 # $1: The LOCAL_MODULE_CLASS for the given module list
-# $2: /odm, /product, or /vendor partition
+# $2: /system, /odm, /product, or /vendor partition
 # $3: type-specific extra flags
 # $4: Name of the array holding the target list
 #
@@ -341,7 +340,9 @@ function write_packages() {
         PACKAGE_LIST+=("$PKGNAME")
 
         SRC="proprietary"
-        if [ "$PARTITION" = "vendor" ]; then
+        if [ "$PARTITION" = "system" ]; then
+            SRC+="/system"
+        elif [ "$PARTITION" = "vendor" ]; then
             SRC+="/vendor"
         elif [ "$PARTITION" = "product" ]; then
             SRC+="/product"
@@ -470,6 +471,22 @@ function write_product_packages() {
         write_packages "SHARED_LIBRARIES" "" "64" "LIB64" >> "$ANDROIDMK"
     fi
 
+    local T_S_LIB32=( $(prefix_match "system/lib/") )
+    local T_S_LIB64=( $(prefix_match "system/lib64/") )
+    local S_MULTILIBS=( $(comm -12 <(printf '%s\n' "${T_S_LIB32[@]}") <(printf '%s\n' "${T_S_LIB64[@]}")) )
+    local S_LIB32=( $(comm -23 <(printf '%s\n'  "${T_S_LIB32[@]}") <(printf '%s\n' "${S_MULTILIBS[@]}")) )
+    local S_LIB64=( $(comm -23 <(printf '%s\n' "${T_S_LIB64[@]}") <(printf '%s\n' "${S_MULTILIBS[@]}")) )
+
+    if [ "${#S_MULTILIBS[@]}" -gt "0" ]; then
+        write_packages "SHARED_LIBRARIES" "system" "both" "S_MULTILIBS" >> "$ANDROIDMK"
+    fi
+    if [ "${#S_LIB32[@]}" -gt "0" ]; then
+        write_packages "SHARED_LIBRARIES" "system" "32" "S_LIB32" >> "$ANDROIDMK"
+    fi
+    if [ "${#S_LIB64[@]}" -gt "0" ]; then
+        write_packages "SHARED_LIBRARIES" "system" "64" "S_LIB64" >> "$ANDROIDMK"
+    fi
+
     local T_V_LIB32=( $(prefix_match "vendor/lib/") )
     local T_V_LIB64=( $(prefix_match "vendor/lib64/") )
     local V_MULTILIBS=( $(comm -12 <(printf '%s\n' "${T_V_LIB32[@]}") <(printf '%s\n' "${T_V_LIB64[@]}")) )
@@ -527,6 +544,14 @@ function write_product_packages() {
     if [ "${#PRIV_APPS[@]}" -gt "0" ]; then
         write_packages "APPS" "" "priv-app" "PRIV_APPS" >> "$ANDROIDMK"
     fi
+    local S_APPS=( $(prefix_match "system/app/") )
+    if [ "${#S_APPS[@]}" -gt "0" ]; then
+        write_packages "APPS" "system" "" "S_APPS" >> "$ANDROIDMK"
+    fi
+    local S_PRIV_APPS=( $(prefix_match "system/priv-app/") )
+    if [ "${#S_PRIV_APPS[@]}" -gt "0" ]; then
+        write_packages "APPS" "system" "priv-app" "S_PRIV_APPS" >> "$ANDROIDMK"
+    fi
     local V_APPS=( $(prefix_match "vendor/app/") )
     if [ "${#V_APPS[@]}" -gt "0" ]; then
         write_packages "APPS" "vendor" "" "V_APPS" >> "$ANDROIDMK"
@@ -557,6 +582,10 @@ function write_product_packages() {
     if [ "${#FRAMEWORK[@]}" -gt "0" ]; then
         write_packages "JAVA_LIBRARIES" "" "" "FRAMEWORK" >> "$ANDROIDMK"
     fi
+    local S_FRAMEWORK=( $(prefix_match "system/framework/") )
+    if [ "${#S_FRAMEWORK[@]}" -gt "0" ]; then
+        write_packages "JAVA_LIBRARIES" "system" "" "S_FRAMEWORK" >> "$ANDROIDMK"
+    fi
     local V_FRAMEWORK=( $(prefix_match "vendor/framework/") )
     if [ "${#V_FRAMEWORK[@]}" -gt "0" ]; then
         write_packages "JAVA_LIBRARIES" "vendor" "" "V_FRAMEWORK" >> "$ANDROIDMK"
@@ -575,6 +604,10 @@ function write_product_packages() {
     if [ "${#ETC[@]}" -gt "0" ]; then
         write_packages "ETC" "" "" "ETC" >> "$ANDROIDMK"
     fi
+    local S_ETC=( $(prefix_match "system/etc/") )
+    if [ "${#ETC[@]}" -gt "0" ]; then
+        write_packages "ETC" "system" "" "S_ETC" >> "$ANDROIDMK"
+    fi
     local V_ETC=( $(prefix_match "vendor/etc/") )
     if [ "${#V_ETC[@]}" -gt "0" ]; then
         write_packages "ETC" "vendor" "" "V_ETC" >> "$ANDROIDMK"
@@ -592,6 +625,10 @@ function write_product_packages() {
     local BIN=( $(prefix_match "bin/") )
     if [ "${#BIN[@]}" -gt "0"  ]; then
         write_packages "EXECUTABLES" "" "" "BIN" >> "$ANDROIDMK"
+    fi
+    local S_BIN=( $(prefix_match "system/bin/") )
+    if [ "${#BIN[@]}" -gt "0"  ]; then
+        write_packages "EXECUTABLES" "system" "" "S_BIN" >> "$ANDROIDMK"
     fi
     local V_BIN=( $(prefix_match "vendor/bin/") )
     if [ "${#V_BIN[@]}" -gt "0" ]; then
