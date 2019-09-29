@@ -84,15 +84,10 @@ call_methods () {
         COMMIT_MSG=$(echo "Update: $DEVICE: $FINGERPRINT")
     fi
 
-    # vendor_prop.mk
+    # system.prop & vendor_prop.mk
     echo -e "Preparing vendor_prop.mk"
-    bash $PROJECT_DIR/tools/vendor_prop.sh $PROJECT_DIR/dummy_dt/working/system_build.prop $PROJECT_DIR/dummy_dt/working/vendor_build.prop > /dev/null 2>&1
-    cp -a $PROJECT_DIR/working/vendor_prop.mk "$DT_DIR"/vendor_prop.mk
-
-    # system_prop.mk
-    echo -e "Preparing system_prop.mk"
-    bash $PROJECT_DIR/tools/vendor_prop.sh $PROJECT_DIR/dummy_dt/working/system_build.prop > /dev/null 2>&1
-    cp -a $PROJECT_DIR/working/system_prop.mk "$DT_DIR"/system_prop.mk
+    bash $PROJECT_DIR/tools/system_vendor_prop.sh $PROJECT_DIR/dummy_dt/working/system_build.prop $PROJECT_DIR/dummy_dt/working/vendor_build.prop > /dev/null 2>&1
+    cp -a $PROJECT_DIR/working/* "$DT_DIR"/
 
     # Device configs
     common_dt
