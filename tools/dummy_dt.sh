@@ -213,7 +213,7 @@ common_dt () {
     cd "$DT_DIR"/rootdir-temp/vendor/
     cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep -iE "vendor/ueventd.rc" > $PROJECT_DIR/dummy_dt/working/configs.txt
     get_configs
-    bash $PROJECT_DIR/helpers/rootdir.sh "$DT_DIR"/rootdir-temp/ > /dev/null 2>&1
+    bash $PROJECT_DIR/tools/rootdir.sh "$DT_DIR"/rootdir-temp/ > /dev/null 2>&1
     cp -a $PROJECT_DIR/working/* "$DT_DIR"/
     rm -rf "$DT_DIR"/rootdir-temp/
     # root
