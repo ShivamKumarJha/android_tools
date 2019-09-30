@@ -26,7 +26,7 @@ if [ ! -e $PROJECT_DIR/working/proprietary-files.txt ]; then
 fi
 
 # Set values
-source $PROJECT_DIR/tools/rom_vars.sh "$1"
+source $PROJECT_DIR/helpers/rom_vars.sh "$1"
 DEVICE="$DEVICE"
 VENDOR="$BRAND"
 
