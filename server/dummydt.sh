@@ -26,7 +26,8 @@ for var in "$@"; do
     UNZIP_DIR=${FILE/.$EXTENSION/}
     echo "Extracting ROM"
     bash "$android_tools/tools/rom_extract.sh" "$android_tools/input/$FILE*"
-    export androidblobs=y
     bash "$android_tools/tools/dummy_dt.sh" "$android_tools/dumps/$UNZIP_DIR"
+    echo "Pushing to AndroidBlobs GitHub"
+    bash "$android_tools/helpers/androidblobs.sh" "$android_tools/dumps/$UNZIP_DIR" > /dev/null 2>&1
     echo "Done"
 done
