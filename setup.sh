@@ -21,5 +21,3 @@ elif [[ -e "/usr/bin/pacman" ]]; then
     pacman -Syu --noconfirm android-tools aria2 arj brotli cabextract cmake dtc file-roller gcc git lz4 xz tinyxml2 mpack jdk8-openjdk p7zip python2-pip python-pip rar unrar sharutils unace zip unzip uudeview zip
 fi
 pip install backports.lzma protobuf pycrypto
-
-chmod +x $PROJECT_DIR/tools/* $PROJECT_DIR/tools/prebuilt/*

@@ -36,7 +36,7 @@ elif grep -q "system/" $PROJECT_DIR/working/rom_all.txt; then
 fi
 
 # Copy lists to $PROJECT_DIR/working
-cp -a $PROJECT_DIR/tools/lists/proprietary/ $PROJECT_DIR/working/
+cp -a $PROJECT_DIR/helpers/lists/proprietary/ $PROJECT_DIR/working/
 
 # ADSP
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/|vendor/lib64/|bin/adsprpcd" | grep -iE "libadsp|ibfastcv|adsprpc|mdsprpc|sdsprpc" | grep -v "scve" | grep -v "lib/rfsa/adsp" | sort -u >> $PROJECT_DIR/working/proprietary/ADSP
@@ -339,7 +339,7 @@ done
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | sort -u > $PROJECT_DIR/working/staging.txt
 
 # Clean up misc
-file_lines=`cat $PROJECT_DIR/tools/lists/remove.txt`
+file_lines=`cat $PROJECT_DIR/helpers/lists/remove.txt`
 for line in $file_lines; do
     sed -i "s|$line.*||g" $PROJECT_DIR/working/staging.txt
 done
@@ -352,7 +352,7 @@ file_lines=`cat $PROJECT_DIR/working/staging.txt | sort -f`
 for line in $file_lines; do
     # Missing
     if ! grep -q "$line" $PROJECT_DIR/working/proprietary-files-staging.txt; then
-        if ! grep -q "$line" $PROJECT_DIR/tools/lists/ignore.txt; then
+        if ! grep -q "$line" $PROJECT_DIR/helpers/lists/ignore.txt; then
             if echo "$line" | grep -iE "apk|jar"; then
                 echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
             else

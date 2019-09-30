@@ -39,7 +39,7 @@ for var in "$@"; do
     curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name": "'"$VT_REPO"'","description": "'"$VT_REPO_DESC"'","private": true,"has_issues": true,"has_projects": false,"has_wiki": true}' > /dev/null 2>&1
 
     # Extract vendor blobs
-    bash "$PROJECT_DIR/tools/extract_blobs/extract-files.sh" "$var"
+    bash "$PROJECT_DIR/helpers/extract_blobs/extract-files.sh" "$var"
 
     # Push to GitHub
     cd "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"

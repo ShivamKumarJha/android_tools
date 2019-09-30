@@ -158,7 +158,7 @@ common_dt () {
     fi
     get_configs
     if [ -e "$DT_DIR"/configs/audio/audio_effects.conf ] && [ ! -e "$DT_DIR"/configs/audio/audio_effects.xml ]; then
-        "$PROJECT_DIR"/tools/prebuilt/aeffects-conf2xml "$DT_DIR"/configs/audio/audio_effects.conf "$DT_DIR"/configs/audio/audio_effects.xml
+        "$PROJECT_DIR"/helpers/prebuilt/aeffects-conf2xml "$DT_DIR"/configs/audio/audio_effects.conf "$DT_DIR"/configs/audio/audio_effects.xml
     fi
     # GPS
     mkdir -p "$DT_DIR"/configs/gps
@@ -291,27 +291,27 @@ common_overlay () {
     ovlist=`find "$PROJECT_DIR"/working/overlays -maxdepth 1 -type f -printf '%P\n' | sort`
     for list in $ovlist; do
         echo -e "Extracting $list"
-        $PROJECT_DIR/tools/prebuilt/apktool -f d "$list" > /dev/null 2>&1
+        $PROJECT_DIR/helpers/prebuilt/apktool -f d "$list" > /dev/null 2>&1
     done
     cp -a "$PROJECT_DIR"/working/overlays/framework-res/res/xml/power_profile.xml "$DT_DIR"/overlay/frameworks/base/core/res/res/xml/power_profile.xml > /dev/null 2>&1
     cp -a "$PROJECT_DIR"/working/overlays/Bluetooth/res/values/bools.xml "$DT_DIR"/overlay/packages/apps/Bluetooth/res/values/bools.xml > /dev/null 2>&1
     cp -a "$PROJECT_DIR"/working/overlays/CarrierConfig/res/xml/* "$DT_DIR"/overlay/packages/apps/CarrierConfig/res/xml/ > /dev/null 2>&1
     # Extract overlay configs
-    ovlist=`find "$PROJECT_DIR"/tools/lists/overlays/ -maxdepth 1 -type f -printf '%P\n' | sort`
+    ovlist=`find "$PROJECT_DIR"/helpers/lists/overlays/ -maxdepth 1 -type f -printf '%P\n' | sort`
     for list in $ovlist; do
-        overlay_configs=`cat "$PROJECT_DIR"/tools/lists/overlays/"$list" | sort`
+        overlay_configs=`cat "$PROJECT_DIR"/helpers/lists/overlays/"$list" | sort`
         for overlay_line in $overlay_configs; do
             if grep -q "\""$overlay_line"\">" "$PROJECT_DIR"/working/overlays/framework-res/res/values/"$list".xml; then
-                if [ -e "$PROJECT_DIR"/tools/lists/overlays/comments/"$overlay_line" ]; then
+                if [ -e "$PROJECT_DIR"/helpers/lists/overlays/comments/"$overlay_line" ]; then
                     printf "\n" >> "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
-                    cat "$PROJECT_DIR"/tools/lists/overlays/comments/"$overlay_line" >> "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
+                    cat "$PROJECT_DIR"/helpers/lists/overlays/comments/"$overlay_line" >> "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
                 fi
                 echo "    " $(cat "$PROJECT_DIR"/working/overlays/framework-res/res/values/"$list".xml | grep "\""$overlay_line"\">") >> "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
             fi
         done
     done
     # integer arrays
-    overlay_configs=`cat $PROJECT_DIR/tools/lists/overlays/arrays/integer-array | sort`
+    overlay_configs=`cat $PROJECT_DIR/helpers/lists/overlays/arrays/integer-array | sort`
     for target in $overlay_configs; do
         TSTART=$(grep -n "\"$target\">" "$PROJECT_DIR"/working/overlays/framework-res/res/values/arrays.xml | sed "s|:.*||g")
         if [ ! -z "$TSTART" ]; then
@@ -323,16 +323,16 @@ common_overlay () {
                 fi
             done
             if grep -q "\"$target\">" "$PROJECT_DIR"/working/overlays/framework-res/res/values/arrays.xml; then
-                if [ -e "$PROJECT_DIR"/tools/lists/overlays/comments/"$target" ]; then
+                if [ -e "$PROJECT_DIR"/helpers/lists/overlays/comments/"$target" ]; then
                     printf "\n" >> "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
-                    cat "$PROJECT_DIR"/tools/lists/overlays/comments/"$target" >> "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
+                    cat "$PROJECT_DIR"/helpers/lists/overlays/comments/"$target" >> "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
                 fi
                 sed -n "${TSTART},${TEND}p" "$PROJECT_DIR"/working/overlays/framework-res/res/values/arrays.xml >> "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
             fi
         fi
     done
     # string arrays
-    overlay_configs=`cat $PROJECT_DIR/tools/lists/overlays/arrays/string-array | sort`
+    overlay_configs=`cat $PROJECT_DIR/helpers/lists/overlays/arrays/string-array | sort`
     for target in $overlay_configs; do
         TSTART=$(grep -n "\"$target\">" "$PROJECT_DIR"/working/overlays/framework-res/res/values/arrays.xml | sed "s|:.*||g")
         if [ ! -z "$TSTART" ]; then
@@ -344,9 +344,9 @@ common_overlay () {
                 fi
             done
             if grep -q "\"$target\">" "$PROJECT_DIR"/working/overlays/framework-res/res/values/arrays.xml; then
-                if [ -e "$PROJECT_DIR"/tools/lists/overlays/comments/"$target" ]; then
+                if [ -e "$PROJECT_DIR"/helpers/lists/overlays/comments/"$target" ]; then
                     printf "\n" >> "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
-                    cat "$PROJECT_DIR"/tools/lists/overlays/comments/"$target" >> "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
+                    cat "$PROJECT_DIR"/helpers/lists/overlays/comments/"$target" >> "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
                 fi
                 sed -n "${TSTART},${TEND}p" "$PROJECT_DIR"/working/overlays/framework-res/res/values/arrays.xml >> "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
             fi
@@ -354,7 +354,7 @@ common_overlay () {
     done
     # Make xml proper
     mv "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml "$DT_DIR"/overlay/frameworks/base/core/res/res/values/staging.xml
-    cat "$PROJECT_DIR"/tools/lists/overlays/comments/HEADER "$DT_DIR"/overlay/frameworks/base/core/res/res/values/staging.xml > "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
+    cat "$PROJECT_DIR"/helpers/lists/overlays/comments/HEADER "$DT_DIR"/overlay/frameworks/base/core/res/res/values/staging.xml > "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
     printf "\n</resources>" >> "$DT_DIR"/overlay/frameworks/base/core/res/res/values/config.xml
     rm -rf "$DT_DIR"/overlay/frameworks/base/core/res/res/values/staging.xml
     # config_vendorPlatformSignatures

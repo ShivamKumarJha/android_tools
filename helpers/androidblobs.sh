@@ -38,7 +38,7 @@ for var in "$@"; do
     VT_REPO_DESC=$(echo "Vendor tree for $MODEL")
     # Extract vendor blobs
     rm -rf "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"/ "$PROJECT_DIR"/working/*
-    bash "$PROJECT_DIR/tools/extract_blobs/extract-files.sh" "$var"
+    bash "$PROJECT_DIR/helpers/extract_blobs/extract-files.sh" "$var"
     # Push to GitHub
     cd "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"
     [[ ! -d .git ]] && git init . > /dev/null 2>&1
