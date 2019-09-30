@@ -10,7 +10,7 @@
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
 # Common stuff
-source $PROJECT_DIR/tools/common_script.sh "y"
+source $PROJECT_DIR/helpers/common_script.sh "y"
 
 proprietary_rootdir () {
     TSTART=$(grep -nr "# Misc" "$DT_DIR"/proprietary-files.txt | sed "s|:.*||g")
@@ -59,7 +59,7 @@ common_setup () {
 
 common_core () {
     # Variables
-    source $PROJECT_DIR/tools/rom_vars.sh "$PROJECT_DIR/dummy_dt/working/system_build.prop"
+    source $PROJECT_DIR/helpers/rom_vars.sh "$PROJECT_DIR/dummy_dt/working/system_build.prop"
     DT_DIR="$PROJECT_DIR"/dummy_dt/"$BRAND"/"$DEVICE"
 
     # skip or proceed
@@ -213,7 +213,7 @@ common_dt () {
     cd "$DT_DIR"/rootdir-temp/vendor/
     cat $PROJECT_DIR/dummy_dt/working/all_files.txt | grep -iE "vendor/ueventd.rc" > $PROJECT_DIR/dummy_dt/working/configs.txt
     get_configs
-    bash $PROJECT_DIR/tools/rootdir.sh "$DT_DIR"/rootdir-temp/ > /dev/null 2>&1
+    bash $PROJECT_DIR/helpers/rootdir.sh "$DT_DIR"/rootdir-temp/ > /dev/null 2>&1
     cp -a $PROJECT_DIR/working/* "$DT_DIR"/
     rm -rf "$DT_DIR"/rootdir-temp/
     # root
@@ -226,7 +226,7 @@ common_dt () {
         get_configs
     fi
     # device.mk
-    bash $PROJECT_DIR/tools/dt_mk.sh "$DT_DIR"
+    bash $PROJECT_DIR/helpers/dt_mk.sh "$DT_DIR"
     # Inherit vendor
     printf "# Inherit vendor" >> "$DT_DIR"/device.mk
     printf "\n\$(call inherit-product, vendor/"$BRAND"/"$DEVICE"/"$DEVICE"-vendor.mk)" >> "$DT_DIR"/device.mk

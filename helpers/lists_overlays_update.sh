@@ -10,7 +10,7 @@
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
 # Common stuff
-source $PROJECT_DIR/tools/common_script.sh
+source $PROJECT_DIR/helpers/common_script.sh
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
@@ -36,4 +36,4 @@ cat $PROJECT_DIR/working/config.xml | grep "<string-array name=" | sed "s|<strin
 cat $PROJECT_DIR/working/config.xml | grep "<string-array " | sed "s|<string-array||g" | sed "s|\">.*||g" | sed "s|name=\"||g" | sed "s|\s||g" | sed "s|translatable=\"false\"||g" >> $PROJECT_DIR/tools/lists/overlays/arrays/string-array
 
 # sort lists
-bash $PROJECT_DIR/tools/lists_sort_all.sh
+bash $PROJECT_DIR/helpers/lists_sort_all.sh

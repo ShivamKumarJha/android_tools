@@ -10,7 +10,7 @@
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
 # Text format
-source $PROJECT_DIR/tools/common_script.sh
+source $PROJECT_DIR/helpers/common_script.sh
 
 # Exit if missing token
 if [ -z "$GIT_TOKEN" ]; then
@@ -33,7 +33,7 @@ for var in "$@"; do
         break
     fi
     # Create vendor tree repo
-    source $PROJECT_DIR/tools/rom_vars.sh "$var" > /dev/null 2>&1
+    source $PROJECT_DIR/helpers/rom_vars.sh "$var" > /dev/null 2>&1
     VT_REPO=$(echo vendor_$BRAND\_$DEVICE)
     VT_REPO_DESC=$(echo "Vendor tree for $MODEL")
     # Extract vendor blobs

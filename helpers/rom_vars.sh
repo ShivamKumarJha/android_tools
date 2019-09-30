@@ -10,7 +10,7 @@
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
 # Text format
-source $PROJECT_DIR/tools/common_script.sh
+source $PROJECT_DIR/helpers/common_script.sh
 
 # Exit if no arguements
 if [ -z "$1" ] ; then

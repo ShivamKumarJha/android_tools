@@ -10,7 +10,7 @@
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
 # Common stuff
-source $PROJECT_DIR/tools/common_script.sh "y"
+source $PROJECT_DIR/helpers/common_script.sh "y"
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
@@ -48,7 +48,7 @@ TEND=$((TEND-1))
 sed -n "${TSTART},${TEND}p" $PROJECT_DIR/working/system_working.prop > $PROJECT_DIR/working/system.prop
 
 # Lineage vendor security patch support
-source $PROJECT_DIR/tools/rom_vars.sh $PROJECT_DIR/working/system_working.prop > /dev/null 2>&1
+source $PROJECT_DIR/helpers/rom_vars.sh $PROJECT_DIR/working/system_working.prop > /dev/null 2>&1
 if [ "$VERSION" -lt 9 ]; then
     grep "ro.build.version.security_patch=" $PROJECT_DIR/working/system_working.prop | sed "s|ro.build.version.security_patch|ro.lineage.build.vendor_security_patch|g" >> $PROJECT_DIR/working/staging.mk
 fi

@@ -10,7 +10,7 @@
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
 # Common stuff
-source $PROJECT_DIR/tools/common_script.sh "y"
+source $PROJECT_DIR/helpers/common_script.sh "y"
 
 if [ -z "$1" ]; then
     echo -e "Supply ROM file list as arguement!"

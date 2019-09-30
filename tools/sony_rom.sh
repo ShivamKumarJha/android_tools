@@ -12,11 +12,11 @@ SECONDS=0
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
 # Common stuff
-source $PROJECT_DIR/tools/common_script.sh "y"
+source $PROJECT_DIR/helpers/common_script.sh "y"
 
 # Dependencies check
 if [ ! -d "$PROJECT_DIR/tools/Firmware_extractor" ] || [ ! -d "$PROJECT_DIR/tools/extract-dtb" ] || [ ! -d "$PROJECT_DIR/tools/mkbootimg_tools" ]; then
-    bash $PROJECT_DIR/tools/dependencies.sh
+    bash $PROJECT_DIR/helpers/dependencies.sh
 fi
 
 # Exit if no arguements

@@ -10,7 +10,7 @@
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
 # Text format
-source $PROJECT_DIR/tools/common_script.sh
+source $PROJECT_DIR/helpers/common_script.sh
 
 # Exit if missing token, user or email
 if [ -z "$GIT_TOKEN" ] && [ -z "$GITHUB_EMAIL" ] && [ -z "$GITHUB_USER" ]; then
@@ -33,7 +33,7 @@ for var in "$@"; do
     fi
 
     # Create vendor tree repo
-    source $PROJECT_DIR/tools/rom_vars.sh "$var" > /dev/null 2>&1
+    source $PROJECT_DIR/helpers/rom_vars.sh "$var" > /dev/null 2>&1
     VT_REPO=$(echo vendor_$BRAND\_$DEVICE)
     VT_REPO_DESC=$(echo "Vendor tree for $MODEL")
     curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name": "'"$VT_REPO"'","description": "'"$VT_REPO_DESC"'","private": true,"has_issues": true,"has_projects": false,"has_wiki": true}' > /dev/null 2>&1

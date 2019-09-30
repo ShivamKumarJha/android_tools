@@ -10,7 +10,7 @@
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
 # Common stuff
-source $PROJECT_DIR/tools/common_script.sh
+source $PROJECT_DIR/helpers/common_script.sh
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
@@ -26,7 +26,7 @@ fi
 
 # o/p
 for var in "$@"; do
-    source $PROJECT_DIR/tools/rom_vars.sh "$var" > /dev/null 2>&1
+    source $PROJECT_DIR/helpers/rom_vars.sh "$var" > /dev/null 2>&1
     DT_REPO=$(echo device_$BRAND\_$DEVICE)
     KT_REPO=$(echo kernel_$BRAND\_$DEVICE)
     VT_REPO=$(echo vendor_$BRAND\_$DEVICE)
