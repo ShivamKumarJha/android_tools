@@ -39,8 +39,24 @@ for var in "$@"; do
     # Extract vendor blobs
     rm -rf "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"/ "$PROJECT_DIR"/working/*
     bash "$PROJECT_DIR/helpers/extract_blobs/extract-files.sh" "$var"
-    # Push to GitHub
     cd "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"
+    # Store list & sha1sum
+    file_list=`cat $PROJECT_DIR/working/proprietary-files.txt`
+    for file in $file_list; do
+        [[ "$(echo $file | cut -c 1)" == "#" ]] && continue
+        if [[ ${file:0:1} == "-" ]]; then
+            FULL_NAME=$(echo $file | sed "s|-||1" )
+        else
+            FULL_NAME=$(echo $file)
+        fi
+        if [[ -e "proprietary/$FULL_NAME" ]]; then
+            FSHA="$(sha1sum proprietary/$FULL_NAME | sed "s| .*||g")"
+            echo "$file|$FSHA" >> "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"/proprietary-files.txt
+        else
+            printf "\n# $file\n" >> "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"/proprietary-files.txt
+        fi
+    done
+    # Push to GitHub
     [[ ! -d .git ]] && git init . > /dev/null 2>&1
     find -size +97M -printf '%P\n' -o -name *sensetime* -printf '%P\n' -o -name *.lic -printf '%P\n' > .gitignore
     BRANCH=$(echo $DESCRIPTION | tr ' ' '-' | sort -u | head -n 1 )
