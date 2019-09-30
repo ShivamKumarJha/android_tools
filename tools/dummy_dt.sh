@@ -403,6 +403,7 @@ if [ -d "$1" ]; then #local dumps
         find "$ROM_PATH/$VENDOR_PATH" -maxdepth 1 -name "build*prop" -exec cat {} >> $PROJECT_DIR/dummy_dt/working/vendor_build.prop \;
         # operation
         common_core
+        [[ "$androidblobs" == "y" ]] && bash "$PROJECT_DIR/helpers/androidblobs.sh" "$ROM_PATH"
         cd "$PROJECT_DIR"
     done
 elif echo "$1" | grep "http"; then #URL dumps
