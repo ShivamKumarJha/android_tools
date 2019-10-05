@@ -30,36 +30,40 @@ Usage:
 `export GIT_TOKEN=<KEY>`  
 `./tools/dump_push.sh <path to xml(s)>`
 
-6. **proprietary-files.sh**: A script to prepare proprietary blobs list from ROM.  
+6. **dumpyara_blobs_downloader.sh**: A script to download selected blobs from [AndroidDumps](https://github.com/AndroidDumps) repo, https://del.dog/denadegebi.  
+Usage:  
+`./tools/dumpyara_blobs_downloader.sh <raw dump repo URL> <path to proprietary-files.txt>`
+
+7. **proprietary-files.sh**: A script to prepare proprietary blobs list from ROM.  
 Usage:  
 For online git repo: `./tools/proprietary-files.sh <raw file link of all_files.txt>`  
 For local dump: `./tools/proprietary-files.sh <path to ROM dump OR path to all_files.txt>`
 
-7. **rom_compare.sh**: A script to compare source & target ROM. It lists `Added, common, missing & modified` blobs.  
+8. **rom_compare.sh**: A script to compare source & target ROM. It lists `Added, common, missing & modified` blobs.  
 Usage:  
 `./tools/rom_compare.sh <path to source ROM dump> <path to target ROM dump>`
 
-8. **rom_extract.sh**: A script to extract OTA files.  
+9. **rom_extract.sh**: A script to extract OTA files.  
 Usage:  
 `./tools/rom_extract.sh <path to OTA file(s)>`
 
-9. **rootdir.sh**: A script to prepare rootdir from a ROM dump along with Makefile.  
+10. **rootdir.sh**: A script to prepare rootdir from a ROM dump along with Makefile.  
 Usage:  
 `./tools/rootdir.sh <path to ROM dump>`
 
-10. **sony_rom.sh**: A script to extract Sony ftf ROM.  
+11. **sony_rom.sh**: A script to extract Sony ftf ROM.  
 Usage:  
 `./tools/sony_rom.sh <path to ROM dump>`
 
-11. **system_vendor_prop.sh**: A script to prepare properties Makefile from a ROM dump.  
+12. **system_vendor_prop.sh**: A script to prepare properties Makefile from a ROM dump.  
 Usage: `./tools/system_vendor_prop.sh <path to ROM dump>`  
 Output: `system.prop` & `vendor_prop.mk` files.  
 
-12. **vendor_prop.sh**: A script to prepare and filter properties Makefile from a ROM dump.  
+13. **vendor_prop.sh**: A script to prepare and filter properties Makefile from a ROM dump.  
 Usage: `./tools/vendor_prop.sh <path to ROM dump>`  
 Output: `vendor_prop.mk` file.  
 
-13. **vendor_tree.sh**: A script to prepare vendor tree from a ROM dump after generating proprietary-files.txt and push it to GitHub.  
+14. **vendor_tree.sh**: A script to prepare vendor tree from a ROM dump after generating proprietary-files.txt and push it to GitHub.  
 To extract from a specific proprietary-files.txt, place it before in `working/proprietary-files.txt`.  
 Usage:  
 `export GIT_TOKEN=<KEY>`  
