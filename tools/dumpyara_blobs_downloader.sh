@@ -16,14 +16,15 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 WORK_DIR="$PROJECT_DIR/working"
 mkdir -p "$WORK_DIR" && cd "$WORK_DIR"
 rm -rf "$WORK_DIR"/*
+cp -a "$2" "$WORK_DIR/list.txt"
 
 # remove blob pin, comments & empty lines from blobs list
-sed -i "s/^#.*//g" "$2"
-sed -i "s/|.*//g" "$2"
-sed -i '/^$/d' "$2"
+sed -i "s/^#.*//g" "$WORK_DIR/list.txt"
+sed -i "s/|.*//g" "$WORK_DIR/list.txt"
+sed -i '/^$/d' "$WORK_DIR/list.txt"
 
 # download blobs in list
-file_list=`cat "$2" | sort -u`
+file_list=`cat "$WORK_DIR/list.txt" | sort -u`
 for file in $file_list; do
     if [[ "$(echo $file | cut -c 1)" == "-" ]]; then
         FULL_NAME=$(echo $file | sed "s|-||1" )
@@ -34,7 +35,7 @@ for file in $file_list; do
     DIRS_NAME=$(echo $FULL_NAME | sed "s|$FILE_NAME||g" )
     [[ "$DIRS_NAME" != "" ]] && mkdir -p "$WORK_DIR/$DIRS_NAME" && cd "$WORK_DIR/$DIRS_NAME"
     [[ "$DIRS_NAME" == "" ]] && cd "$WORK_DIR"
-    printf "\nPATH: $WORK_DIR/$FULL_NAME"
+    echo "PATH: $WORK_DIR/$FULL_NAME"
     aria2c -x16 "$1/$FULL_NAME" > /dev/null || aria2c -x16 "$1/system/$FULL_NAME" > /dev/null || aria2c -x16 "$1/system/system/$FULL_NAME" > /dev/null
 done
 
