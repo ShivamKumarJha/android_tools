@@ -40,17 +40,16 @@ for var in "$@"; do
     source $PROJECT_DIR/helpers/rom_vars.sh "$ROM_PATH" > /dev/null 2>&1
     BRANCH=$(echo $DESCRIPTION | tr ' ' '-')
     repo=$(echo $BRAND\_$DEVICE\_dump | tr '[:upper:]' '[:lower:]')
+    repo_desc=$(echo "$MODEL dump")
 
     git init
     git checkout -b $BRANCH
     find -size +97M -printf '%P\n' -o -name *sensetime* -printf '%P\n' -o -name *.lic -printf '%P\n' > .gitignore
     git add --all
-
-    curl -s -X POST -H "Authorization: token ${GIT_OAUTH_TOKEN}" -d '{ "name": "'"$repo"'" }' "https://api.github.com/orgs/${ORG}/repos" #create new repo
     git remote add origin https://github.com/$ORG/${repo,,}.git
     git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add ${DESCRIPTION}"
+    curl -s -X POST -H "Authorization: token ${GIT_OAUTH_TOKEN}" -d '{"name": "'"$repo"'","description": "'"$repo_desc"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/${ORG}/repos" #create new repo
     git push https://$GIT_OAUTH_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH ||
-
     (git update-ref -d HEAD ; git reset system/ vendor/ ;
     git checkout -b $BRANCH ;
     git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add extras for ${DESCRIPTION}" ;
