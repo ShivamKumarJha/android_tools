@@ -47,18 +47,6 @@ TEND=$(grep -nr "# ADDITIONAL_BUILD_PROPERTIES" $PROJECT_DIR/working/system_work
 TEND=$((TEND-1))
 sed -n "${TSTART},${TEND}p" $PROJECT_DIR/working/system_working.prop > $PROJECT_DIR/working/system.prop
 
-# Lineage vendor security patch support
-source $PROJECT_DIR/helpers/rom_vars.sh $PROJECT_DIR/working/system_working.prop > /dev/null 2>&1
-if [ "$VERSION" -lt 9 ]; then
-    grep "ro.build.version.security_patch=" $PROJECT_DIR/working/system_working.prop | sed "s|ro.build.version.security_patch|ro.lineage.build.vendor_security_patch|g" >> $PROJECT_DIR/working/staging.mk
-fi
-
-# Default LCD density
-if ! grep -q "ro.sf.lcd_density=" $PROJECT_DIR/working/system.prop; then
-    printf "\n# LCD density\n" >> $PROJECT_DIR/working/system.prop
-    echo "ro.sf.lcd_density=440" >> $PROJECT_DIR/working/system.prop
-fi
-
 # vendor.prop
 if [ ! -z "$2" ] || [ -d "$1" ]; then
     TSTART=$(grep -nr "ADDITIONAL VENDOR BUILD PROPERTIES" $PROJECT_DIR/working/vendor_working.prop | sed "s|:.*||g")
@@ -71,3 +59,5 @@ fi
 
 # cleanup
 rm -rf $PROJECT_DIR/working/system_working.prop $PROJECT_DIR/working/vendor_new.prop $PROJECT_DIR/working/vendor_working.prop
+
+echo -e "$(ls -d $PROJECT_DIR/working/*) prepared!"
