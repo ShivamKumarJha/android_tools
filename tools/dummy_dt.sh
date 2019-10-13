@@ -109,7 +109,7 @@ git_op () {
         echo -e "Performing git operations"
         git add --all > /dev/null 2>&1
         git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
-        git push git@github.com:ShivamKumarJha/Dummy_DT.git master > /dev/null 2>&1
+        git push https://"$GIT_TOKEN"@github.com/ShivamKumarJha/Dummy_DT.git master > /dev/null 2>&1
         COMMIT_HEAD=$(git log --format=format:%H | head -n 1)
         COMMIT_LINK=$(echo "https://github.com/ShivamKumarJha/Dummy_DT/commit/$COMMIT_HEAD")
         # Telegram
@@ -370,10 +370,12 @@ common_overlay () {
     fi
 }
 
+[[ -z "$GIT_TOKEN" ]] && echo "Missing Github token!" && exit 1
+
 # clone repo OR reset to origin/master
 if [ ! -d "$PROJECT_DIR"/dummy_dt/ ]; then
     echo -e "Cloning Dummy_DT"
-    git clone -q git@github.com:ShivamKumarJha/Dummy_DT.git "$PROJECT_DIR"/dummy_dt
+    git clone -q https://github.com/ShivamKumarJha/Dummy_DT.git "$PROJECT_DIR"/dummy_dt
     git -C "$PROJECT_DIR"/dummy_dt config core.fileMode false
 else
     echo -e "Resetting dummy_dt repo to origin/master"
