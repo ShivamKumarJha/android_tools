@@ -24,16 +24,7 @@ if [ -z "$1" ] ; then
     exit 1
 fi
 
-# o/p
-for var in "$@"; do
-    unset VT_REPO VT_REPO_DESC BRANCH COMMIT_MSG
-    # Check if directory
-    if [ ! -d "$var" ] ; then
-        echo -e "Supply ROM path as arguement!"
-        break
-    fi
-    # Create vendor tree repo
-    source $PROJECT_DIR/helpers/rom_vars.sh "$var" > /dev/null 2>&1
+blobs_extract_push () {
     VT_REPO=$(echo vendor_$BRAND\_$DEVICE)
     VT_REPO_DESC=$(echo "Vendor tree for $MODEL")
     # Extract vendor blobs
@@ -68,4 +59,22 @@ for var in "$@"; do
     git -c "user.name=AndroidBlobs" -c "user.email=AndroidBlobs@github.com" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
     curl -s -X POST -H "Authorization: token ${GIT_TOKEN}" -d '{"name": "'"$VT_REPO"'","description": "'"$VT_REPO_DESC"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/AndroidBlobs/repos" > /dev/null 2>&1
     git push https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$VT_REPO".git --all --force
+}
+
+# o/p
+for var in "$@"; do
+    unset VT_REPO VT_REPO_DESC BRANCH COMMIT_MSG
+    # Check if directory
+    if [ ! -d "$var" ] ; then
+        echo -e "Supply ROM path as arguement!"
+        break
+    fi
+    # Create vendor tree repo
+    source $PROJECT_DIR/helpers/rom_vars.sh "$var" > /dev/null 2>&1
+    if [ -z "$BRAND" ] || [ -z "$DEVICE" ]; then
+        echo -e "Error! Empty variable."
+        break
+    else
+        blobs_extract_push
+    fi
 done
