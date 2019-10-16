@@ -30,8 +30,9 @@ if [ "$EUID" -ne 0 ] && [ -z "$user_password" ]; then
     read -p "Enter user password: " user_password
 fi
 
-core () {
+for var in "$@"; do
     # Variables
+    URL=$( realpath "$var" )
     FILE=${URL##*/}
     EXTENSION=${URL##*.}
     UNZIP_DIR=${FILE/.$EXTENSION/}
@@ -56,8 +57,6 @@ core () {
             dtc -I dtb -O dts -o $(echo "$PROJECT_DIR/dumps/${UNZIP_DIR}/bootdts/$dtb_file" | sed -r 's|.dtb|.dts|g') $PROJECT_DIR/dumps/${UNZIP_DIR}/bootimg/$dtb_file > /dev/null 2>&1
         done
     fi
-
-    # dtbo
     if [[ -f $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo.img ]]; then
         python3 $PROJECT_DIR/tools/extract-dtb/extract-dtb.py $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo.img -o $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo > /dev/null 2>&1
         echo -e "dtbo extracted"
@@ -99,11 +98,7 @@ core () {
     fi
     sort -u -o $PROJECT_DIR/dumps/${UNZIP_DIR}/board-info.txt $PROJECT_DIR/dumps/${UNZIP_DIR}/board-info.txt
     find $PROJECT_DIR/dumps/${UNZIP_DIR} -type f -printf '%P\n' | sort | grep -v ".git/" > $PROJECT_DIR/dumps/${UNZIP_DIR}/all_files.txt
-}
 
-for var in "$@"; do
-    URL=$( realpath "$var" )
-    core
     duration=$SECONDS
     echo -e "Dump location: $PROJECT_DIR/dumps/$UNZIP_DIR/"
     echo -e "Extract time: $(($duration / 60)) minutes and $(($duration % 60)) seconds."
