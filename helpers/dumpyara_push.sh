@@ -40,6 +40,7 @@ for var in "$@"; do
     BRANCH=$(echo $DESCRIPTION | tr ' ' '-')
     repo=$(echo $BRAND\_$DEVICE\_dump | tr '[:upper:]' '[:lower:]')
     repo_desc=$(echo "$MODEL dump")
+    wget "https://raw.githubusercontent.com/$ORG/$repo/$BRANCH/all_files.txt" 2>/dev/null && echo "Firmware already dumped!" && exit 1
 
     git init
     git checkout -b $BRANCH
