@@ -39,8 +39,12 @@ for var in "$@"; do
     PARTITIONS="system vendor cust odm oem factory product modem xrom systemex"
     [[ -d $PROJECT_DIR/dumps/$UNZIP_DIR/ ]] && rm -rf $PROJECT_DIR/dumps/$UNZIP_DIR/
 
-    # Firmware extractor
-    bash $PROJECT_DIR/tools/Firmware_extractor/extractor.sh ${URL} $PROJECT_DIR/dumps/${UNZIP_DIR}
+    if [ -d "$var" ] ; then
+        cp -a "$var" $PROJECT_DIR/dumps/${UNZIP_DIR}
+    else
+        # Firmware extractor
+        bash $PROJECT_DIR/tools/Firmware_extractor/extractor.sh ${URL} $PROJECT_DIR/dumps/${UNZIP_DIR}
+    fi
 
     # boot.img operations
     if [ -e $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img ]; then
