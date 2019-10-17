@@ -13,7 +13,8 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
 # Dependencies check
 if [ ! -d "$PROJECT_DIR/tools/Firmware_extractor" ] || [ ! -d "$PROJECT_DIR/tools/extract-dtb" ] || [ ! -d "$PROJECT_DIR/tools/mkbootimg_tools" ]; then
-    bash $PROJECT_DIR/helpers/dependencies.sh
+    echo -e "Cloning dependencies..."
+    bash $PROJECT_DIR/helpers/dependencies.sh > /dev/null 2>&1
 fi
 
 # Exit if no arguements
