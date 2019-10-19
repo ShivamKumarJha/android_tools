@@ -51,9 +51,9 @@ for var in "$@"; do
     git reset system/ vendor/
     git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add extras for ${DESCRIPTION}"
     git push https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH
-    git add vendor/
-    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add vendor for ${DESCRIPTION}"
-    git push https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH
+    [[ -d vendor/ ]] && git add vendor/
+    [[ -d vendor/ ]] && git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add vendor for ${DESCRIPTION}"
+    [[ -d vendor/ ]] && git push https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH
     git add system/system/app/ system/system/priv-app/ || git add system/app/ system/priv-app/
     git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add apps for ${DESCRIPTION}"
     git push https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH
