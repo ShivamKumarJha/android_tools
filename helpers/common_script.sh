@@ -20,5 +20,5 @@ fi
 # set common var's
 GITHUB_EMAIL="$(git config --get user.email)"
 GITHUB_USER="$(git config --get user.name)"
-
+[[ -z "$VERBOSE" ]] && VERBOSE="y"
 export LC_ALL=C make

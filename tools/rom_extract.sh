@@ -11,9 +11,12 @@ SECONDS=0
 # Store project path
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
+# Common stuff
+source $PROJECT_DIR/helpers/common_script.sh
+
 # Dependencies check
 if [ ! -d "$PROJECT_DIR/tools/Firmware_extractor" ] || [ ! -d "$PROJECT_DIR/tools/extract-dtb" ] || [ ! -d "$PROJECT_DIR/tools/mkbootimg_tools" ]; then
-    echo -e "Cloning dependencies..."
+    [[ "$VERBOSE" != "n" ]] && echo -e "Cloning dependencies..."
     bash $PROJECT_DIR/helpers/dependencies.sh > /dev/null 2>&1
 fi
 
@@ -22,9 +25,6 @@ if [ -z "$1" ] ; then
     echo -e "Supply OTA file(s) as arguement!"
     exit 1
 fi
-
-# Common stuff
-source $PROJECT_DIR/helpers/common_script.sh
 
 # Password
 if [ "$EUID" -ne 0 ] && [ -z "$user_password" ]; then
@@ -44,7 +44,12 @@ for var in "$@"; do
         cp -a "$var" $PROJECT_DIR/dumps/${UNZIP_DIR}
     else
         # Firmware extractor
-        bash $PROJECT_DIR/tools/Firmware_extractor/extractor.sh ${URL} $PROJECT_DIR/dumps/${UNZIP_DIR}
+        if [[ "$VERBOSE" = "n" ]]; then
+            echo -e "Creating sparse images"
+            bash $PROJECT_DIR/tools/Firmware_extractor/extractor.sh ${URL} $PROJECT_DIR/dumps/${UNZIP_DIR} > /dev/null 2>&1
+        else
+            bash $PROJECT_DIR/tools/Firmware_extractor/extractor.sh ${URL} $PROJECT_DIR/dumps/${UNZIP_DIR}
+        fi
     fi
 
     # boot.img operations
@@ -53,7 +58,7 @@ for var in "$@"; do
         bash $PROJECT_DIR/tools/mkbootimg_tools/mkboot $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img $PROJECT_DIR/dumps/${UNZIP_DIR}/boot/ > /dev/null 2>&1
         mv $PROJECT_DIR/dumps/${UNZIP_DIR}/boot/kernel $PROJECT_DIR/dumps/${UNZIP_DIR}/boot/Image.gz-dtb
         # Extract dtb
-        echo -e "Extracting dtb"
+        [[ "$VERBOSE" != "n" ]] && echo -e "Extracting dtb"
         python3 $PROJECT_DIR/tools/extract-dtb/extract-dtb.py $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img -o $PROJECT_DIR/dumps/${UNZIP_DIR}/bootimg > /dev/null 2>&1
         # Extract dts
         mkdir $PROJECT_DIR/dumps/${UNZIP_DIR}/bootdts
@@ -64,7 +69,7 @@ for var in "$@"; do
     fi
     if [[ -f $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo.img ]]; then
         python3 $PROJECT_DIR/tools/extract-dtb/extract-dtb.py $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo.img -o $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo > /dev/null 2>&1
-        echo -e "dtbo extracted"
+        [[ "$VERBOSE" != "n" ]] && echo -e "dtbo extracted"
     fi
 
     # mounting
@@ -105,6 +110,6 @@ for var in "$@"; do
     find $PROJECT_DIR/dumps/${UNZIP_DIR} -type f -printf '%P\n' | sort | grep -v ".git/" > $PROJECT_DIR/dumps/${UNZIP_DIR}/all_files.txt
 
     duration=$SECONDS
-    echo -e "Dump location: $PROJECT_DIR/dumps/$UNZIP_DIR/"
-    echo -e "Extract time: $(($duration / 60)) minutes and $(($duration % 60)) seconds."
+    [[ "$VERBOSE" != "n" ]] && echo -e "Dump location: $PROJECT_DIR/dumps/$UNZIP_DIR/"
+    [[ "$VERBOSE" != "n" ]] && echo -e "Extract time: $(($duration / 60)) minutes and $(($duration % 60)) seconds."
 done
