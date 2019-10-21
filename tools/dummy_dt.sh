@@ -75,44 +75,37 @@ common_core () {
 }
 
 call_methods () {
-    # Set commit message
-    if [ ! -d "$DT_DIR" ]; then
-        mkdir -p "$DT_DIR"
-        COMMIT_MSG=$(echo "Add: $DEVICE: $FINGERPRINT")
-    else
-        rm -rf "$DT_DIR"/*
-        COMMIT_MSG=$(echo "Update: $DEVICE: $FINGERPRINT")
-    fi
-
+    rm -rf "$DT_DIR" && mkdir -p "$DT_DIR"
     # system.prop & vendor_prop.mk
     echo -e "Preparing vendor_prop.mk"
     bash $PROJECT_DIR/tools/system_vendor_prop.sh $PROJECT_DIR/dummy_dt/working/system_build.prop $PROJECT_DIR/dummy_dt/working/vendor_build.prop > /dev/null 2>&1
     cp -a $PROJECT_DIR/working/* "$DT_DIR"/
-
     # Device configs
     common_dt
     common_overlay
-
     # proprietary-files
     proprietary
-
     # Git commit
     git_op
-
     # clean
     rm -rf $PROJECT_DIR/dummy_dt/working/* $PROJECT_DIR/working/*
 }
 
 git_op () {
-    cd $PROJECT_DIR/dummy_dt/
-    if [[ -d "$PROJECT_DIR/dummy_dt/.git" ]] && [[ ! -z $(git status -s) ]]; then
-        echo -e "Performing git operations"
-        git add --all > /dev/null 2>&1
-        git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
-        git push https://"$GIT_TOKEN"@github.com/ShivamKumarJha/Dummy_DT.git master > /dev/null 2>&1
-        COMMIT_HEAD=$(git log --format=format:%H | head -n 1)
-        COMMIT_LINK=$(echo "https://github.com/ShivamKumarJha/Dummy_DT/commit/$COMMIT_HEAD")
-        # Telegram
+    cd "$DT_DIR"
+    BRANCH=$(echo $DESCRIPTION | tr ' ' '-' | sort -u | head -n 1 )
+    DT_REPO=$(echo device_$BRAND\_$DEVICE)
+    DT_REPO_DESC=$(echo "Dummy device tree for $MODEL")
+    echo -e "Performing git operations"
+    git init . > /dev/null 2>&1
+    git checkout -b $BRANCH > /dev/null 2>&1
+    git add --all > /dev/null 2>&1
+    git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "$DESCRIPTION" > /dev/null 2>&1
+    curl -s -X POST -H "Authorization: token ${GIT_TOKEN}" -d '{"name": "'"$DT_REPO"'","description": "'"$DT_REPO_DESC"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/AndroidBlobs/repos" > /dev/null 2>&1
+    git push https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$DT_REPO".git --all --force
+    COMMIT_HEAD=$(git log --format=format:%H | head -n 1)
+    # Telegram
+    if [ ! -z "$TG_API" ]; then
         echo -e "Sending telegram notification"
         printf "<b>Brand: $BRAND</b>" > $PROJECT_DIR/dummy_dt/working/tg.html
         printf "\n<b>Device: $DEVICE</b>" >> $PROJECT_DIR/dummy_dt/working/tg.html
@@ -120,16 +113,11 @@ git_op () {
         printf "\n<b>Version:</b> $VERSION" >> $PROJECT_DIR/dummy_dt/working/tg.html
         printf "\n<b>Fingerprint:</b> $FINGERPRINT" >> $PROJECT_DIR/dummy_dt/working/tg.html
         printf "\n<b>GitHub:</b>" >> $PROJECT_DIR/dummy_dt/working/tg.html
-        printf "\n<a href=\"$COMMIT_LINK\">Commit</a>" >> $PROJECT_DIR/dummy_dt/working/tg.html
-        printf "\n<a href=\"https://github.com/ShivamKumarJha/Dummy_DT/commits/master/$BRAND/$DEVICE/\">History</a>" >> $PROJECT_DIR/dummy_dt/working/tg.html
-        printf "\n<a href=\"https://github.com/ShivamKumarJha/Dummy_DT/tree/master/$BRAND/$DEVICE/\">$DEVICE</a>" >> $PROJECT_DIR/dummy_dt/working/tg.html
-        if [ -z "$TG_API" ]; then
-            echo -e "Telegram API key not found! Skipping Telegram notification."
-        else
-            CHAT_ID="@dummy_dt"
-            HTML_FILE=$(cat $PROJECT_DIR/dummy_dt/working/tg.html)
-            curl -s "https://api.telegram.org/bot${TG_API}/sendmessage" --data "text=${HTML_FILE}&chat_id=${CHAT_ID}&parse_mode=HTML&disable_web_page_preview=True" > /dev/null 2>&1
-        fi
+        printf "\n<a href=\"https://github.com/AndroidBlobs/$DT_REPO/commit/$COMMIT_HEAD\">Commit</a>" >> $PROJECT_DIR/dummy_dt/working/tg.html
+        printf "\n<a href=\"https://github.com/AndroidBlobs/$DT_REPO/tree/$BRANCH/\">$DEVICE</a>" >> $PROJECT_DIR/dummy_dt/working/tg.html
+        CHAT_ID="@dummy_dt"
+        HTML_FILE=$(cat $PROJECT_DIR/dummy_dt/working/tg.html)
+        curl -s "https://api.telegram.org/bot${TG_API}/sendmessage" --data "text=${HTML_FILE}&chat_id=${CHAT_ID}&parse_mode=HTML&disable_web_page_preview=True" > /dev/null 2>&1
     fi
 }
 
@@ -371,18 +359,6 @@ common_overlay () {
 }
 
 [[ -z "$GIT_TOKEN" ]] && echo "Missing Github token!" && exit 1
-
-# clone repo OR reset to origin/master
-if [ ! -d "$PROJECT_DIR"/dummy_dt/ ]; then
-    echo -e "Cloning Dummy_DT"
-    git clone -q https://github.com/ShivamKumarJha/Dummy_DT.git "$PROJECT_DIR"/dummy_dt
-    git -C "$PROJECT_DIR"/dummy_dt config core.fileMode false
-else
-    echo -e "Resetting dummy_dt repo to origin/master"
-    git -C $PROJECT_DIR/dummy_dt/ clean -fd > /dev/null 2>&1
-    git -C $PROJECT_DIR/dummy_dt/ fetch origin > /dev/null 2>&1
-    git -C $PROJECT_DIR/dummy_dt/ reset --hard origin/master > /dev/null 2>&1
-fi
 
 # Create working directory if it does not exist
 mkdir -p "$PROJECT_DIR"/dummy_dt/working

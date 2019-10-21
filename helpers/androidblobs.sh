@@ -50,8 +50,8 @@ blobs_extract_push () {
     # Push to GitHub
     [[ ! -d .git ]] && git init . > /dev/null 2>&1
     find -size +97M -printf '%P\n' -o -name *sensetime* -printf '%P\n' -o -name *.lic -printf '%P\n' > .gitignore
-    BRANCH=$(echo $DESCRIPTION | tr ' ' '-' | sort -u | head -n 1 )
-    COMMIT_MSG=$(echo "$DEVICE: $FINGERPRINT" | sort -u | head -n 1 )
+    BRANCH=$(echo $DESCRIPTION | tr ' ' '-' )
+    COMMIT_MSG=$(echo "$DEVICE: $FINGERPRINT" )
     echo -e "Branch $COMMIT_MSG. Adding files..."
     git checkout -b $BRANCH > /dev/null 2>&1
     git add --all > /dev/null 2>&1
