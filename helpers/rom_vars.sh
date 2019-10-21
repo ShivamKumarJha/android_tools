@@ -94,6 +94,6 @@ for var in "$@"; do
     SECURITY_PATCH=$( cat "$CAT_FILE" | grep "build.version.security_patch=" | sed "s|.*=||g" | head -n 1 )
 
     # Display var's
-    declare -a arr=("BRAND" "DEVICE" "DESCRIPTION" "FINGERPRINT" "MODEL" "SECURITY_PATCH" "VERSION" "FLAVOR" "ID" "INCREMENTAL" "TAGS")
-    for i in "${arr[@]}"; do printf "$i: ${!i}\n"; done
+    [[ "$VERBOSE" != "n" ]] && declare -a arr=("BRAND" "DEVICE" "DESCRIPTION" "FINGERPRINT" "MODEL" "SECURITY_PATCH" "VERSION" "FLAVOR" "ID" "INCREMENTAL" "TAGS")
+    [[ "$VERBOSE" != "n" ]] && for i in "${arr[@]}"; do printf "$i: ${!i}\n"; done
 done

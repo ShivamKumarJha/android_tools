@@ -47,14 +47,12 @@ proprietary () {
     proprietary_rootdir > /dev/null 2>&1
 
     # proprietary-files-system.txt
-    echo -e "Preparing proprietary-files-system.txt"
     cat "$DT_DIR"/proprietary-files.txt | grep -v "vendor/" | sort -u | sed "s|#.*||g" | sed '/^$/d' > "$DT_DIR"/proprietary-files-system.txt
 }
 
 common_setup () {
-    clear
     rm -rf $PROJECT_DIR/dummy_dt/working/*
-    echo -e "Fetching all_files.txt & build.prop "
+    [[ "$VERBOSE" != "n" ]] && echo -e "Fetching all_files.txt & build.prop "
 }
 
 common_core () {
@@ -106,7 +104,7 @@ git_op () {
     COMMIT_HEAD=$(git log --format=format:%H | head -n 1)
     # Telegram
     if [ ! -z "$TG_API" ]; then
-        echo -e "Sending telegram notification"
+        [[ "$VERBOSE" != "n" ]] && echo -e "Sending telegram notification"
         printf "<b>Brand: $BRAND</b>" > $PROJECT_DIR/dummy_dt/working/tg.html
         printf "\n<b>Device: $DEVICE</b>" >> $PROJECT_DIR/dummy_dt/working/tg.html
         printf "\n<b>Model: $MODEL</b>" >> $PROJECT_DIR/dummy_dt/working/tg.html
@@ -125,7 +123,7 @@ get_configs () {
     configs=`cat $PROJECT_DIR/dummy_dt/working/configs.txt | sort`
     for config_file in $configs; do
         if [ -z "$ROM_PATH" ]; then
-            echo -e "Downloading $config_file"
+            [[ "$VERBOSE" != "n" ]] && echo -e "Downloading $config_file"
             aria2c -x16 "$device_line/$config_file" > /dev/null 2>&1
         else
             cp -a "$ROM_PATH/$config_file" .
@@ -272,13 +270,14 @@ common_dt () {
 }
 
 common_overlay () {
+    echo -e "Preparing overlays"
     mkdir -p "$PROJECT_DIR"/working/overlays "$DT_DIR"/overlay/frameworks/base/core/res/res/xml/ "$DT_DIR"/overlay/packages/apps/CarrierConfig/res/xml "$DT_DIR"/overlay/frameworks/base/core/res/res/values/ "$DT_DIR"/overlay/packages/apps/Bluetooth/res/values "$DT_DIR"/overlay-lineage/lineage-sdk/lineage/res/res/values
     cd "$PROJECT_DIR"/working/overlays
     cat "$PROJECT_DIR"/dummy_dt/working/all_files.txt | grep -iE "priv-app/SystemUI/SystemUI.apk|framework/framework-res.apk|app/CarrierConfig/CarrierConfig.apk|app/Bluetooth/Bluetooth.apk" > "$PROJECT_DIR"/dummy_dt/working/configs.txt
     get_configs
     ovlist=`find "$PROJECT_DIR"/working/overlays -maxdepth 1 -type f -printf '%P\n' | sort`
     for list in $ovlist; do
-        echo -e "Extracting $list"
+        [[ "$VERBOSE" != "n" ]] && echo -e "Extracting $list"
         $PROJECT_DIR/helpers/prebuilt/apktool -f d "$list" > /dev/null 2>&1
     done
     cp -a "$PROJECT_DIR"/working/overlays/framework-res/res/xml/power_profile.xml "$DT_DIR"/overlay/frameworks/base/core/res/res/xml/power_profile.xml > /dev/null 2>&1
@@ -399,4 +398,4 @@ elif echo "$1" | grep "http"; then #URL dumps
     done
 fi
 
-echo -e "Finished!"
+[[ "$VERBOSE" != "n" ]] && echo -e "Finished!"
