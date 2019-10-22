@@ -31,22 +31,6 @@ blobs_extract_push () {
     rm -rf "$PROJECT_DIR"/working/*
     mkdir -p "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"/
     bash "$PROJECT_DIR/helpers/extract_blobs/extract-files.sh" "$ROM_PATH"
-    # Store list & sha1sum
-    file_list=`cat $PROJECT_DIR/working/proprietary-files.txt`
-    for file in $file_list; do
-        [[ "$(echo $file | cut -c 1)" == "#" ]] && continue
-        if [[ ${file:0:1} == "-" ]]; then
-            FULL_NAME=$(echo $file | sed "s|-||1" )
-        else
-            FULL_NAME=$(echo $file)
-        fi
-        if [[ -e "proprietary/$FULL_NAME" ]]; then
-            FSHA="$(sha1sum proprietary/$FULL_NAME | sed "s| .*||g")"
-            echo "$file|$FSHA" >> "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"/proprietary-files.txt
-        else
-            printf "\n# $file\n" >> "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"/proprietary-files.txt
-        fi
-    done
     # Push to GitHub
     cd "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"
     git init . > /dev/null 2>&1
