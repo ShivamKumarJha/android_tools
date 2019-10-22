@@ -28,9 +28,9 @@ blobs_extract_push () {
     VT_REPO=$(echo vendor_$BRAND\_$DEVICE)
     VT_REPO_DESC=$(echo "Vendor tree for $MODEL")
     # Extract vendor blobs
-    rm -rf "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"/ "$PROJECT_DIR"/working/*
-    bash "$PROJECT_DIR/helpers/extract_blobs/extract-files.sh" "$var"
-    cd "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"
+    rm -rf "$PROJECT_DIR"/working/*
+    mkdir -p "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"/
+    bash "$PROJECT_DIR/helpers/extract_blobs/extract-files.sh" "$ROM_PATH"
     # Store list & sha1sum
     file_list=`cat $PROJECT_DIR/working/proprietary-files.txt`
     for file in $file_list; do
@@ -48,7 +48,8 @@ blobs_extract_push () {
         fi
     done
     # Push to GitHub
-    [[ ! -d .git ]] && git init . > /dev/null 2>&1
+    cd "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"
+    git init . > /dev/null 2>&1
     find -size +97M -printf '%P\n' -o -name *sensetime* -printf '%P\n' -o -name *.lic -printf '%P\n' > .gitignore
     BRANCH=$(echo $DESCRIPTION | tr ' ' '-' )
     COMMIT_MSG=$(echo "$DEVICE: $FINGERPRINT" )
@@ -64,17 +65,19 @@ blobs_extract_push () {
 # o/p
 for var in "$@"; do
     unset VT_REPO VT_REPO_DESC BRANCH COMMIT_MSG
+    ROM_PATH=$( realpath "$var" )
     # Check if directory
-    if [ ! -d "$var" ] ; then
+    if [ ! -d "$ROM_PATH" ]; then
         echo -e "Supply ROM path as arguement!"
         break
     fi
     # Create vendor tree repo
-    source $PROJECT_DIR/helpers/rom_vars.sh "$var" > /dev/null 2>&1
+    source $PROJECT_DIR/helpers/rom_vars.sh "$ROM_PATH" > /dev/null 2>&1
     if [ -z "$BRAND" ] || [ -z "$DEVICE" ]; then
         echo -e "Error! Empty variable."
         break
     else
         blobs_extract_push
     fi
+    cd "$PROJECT_DIR"
 done
