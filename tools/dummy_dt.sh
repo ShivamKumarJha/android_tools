@@ -100,7 +100,7 @@ git_op () {
     git add --all > /dev/null 2>&1
     git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "$DESCRIPTION" > /dev/null 2>&1
     curl -s -X POST -H "Authorization: token ${GIT_TOKEN}" -d '{"name": "'"$DT_REPO"'","description": "'"$DT_REPO_DESC"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/AndroidBlobs/repos" > /dev/null 2>&1
-    git push https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$DT_REPO".git --all --force
+    git push https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$DT_REPO".git --all
     COMMIT_HEAD=$(git log --format=format:%H | head -n 1)
     # Telegram
     if [ ! -z "$TG_API" ]; then
