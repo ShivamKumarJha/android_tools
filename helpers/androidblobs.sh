@@ -28,7 +28,7 @@ blobs_extract_push () {
     VT_REPO=$(echo vendor_$BRAND\_$DEVICE)
     VT_REPO_DESC=$(echo "Vendor tree for $MODEL")
     # Extract vendor blobs
-    rm -rf "$PROJECT_DIR"/working/*
+    rm -rf "$PROJECT_DIR"/working/* "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"/*
     mkdir -p "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"/
     bash "$PROJECT_DIR/helpers/extract_blobs/extract-files.sh" "$ROM_PATH"
     # Push to GitHub
