@@ -29,26 +29,22 @@ blobs_extract_push () {
     VT_REPO_DESC=$(echo "Vendor tree for $MODEL")
     # Extract vendor blobs
     rm -rf "$PROJECT_DIR"/working/* "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"/*
-    mkdir -p "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"/
     bash "$PROJECT_DIR/helpers/extract_blobs/extract-files.sh" "$ROM_PATH"
     # Push to GitHub
     cd "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"
     git init . > /dev/null 2>&1
     find -size +97M -printf '%P\n' -o -name *sensetime* -printf '%P\n' -o -name *.lic -printf '%P\n' > .gitignore
     BRANCH=$(echo $DESCRIPTION | tr ' ' '-' )
-    COMMIT_MSG=$(echo "$DEVICE: $FINGERPRINT" )
-    echo -e "Branch $COMMIT_MSG. Adding files..."
     git checkout -b $BRANCH > /dev/null 2>&1
     git add --all > /dev/null 2>&1
-    echo -e "Commiting $COMMIT_MSG"
-    git -c "user.name=AndroidBlobs" -c "user.email=AndroidBlobs@github.com" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
+    git -c "user.name=AndroidBlobs" -c "user.email=AndroidBlobs@github.com" commit -sm "$DESCRIPTION" > /dev/null 2>&1
     curl -s -X POST -H "Authorization: token ${GIT_TOKEN}" -d '{"name": "'"$VT_REPO"'","description": "'"$VT_REPO_DESC"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/AndroidBlobs/repos" > /dev/null 2>&1
     git push https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$VT_REPO".git --all
 }
 
 # o/p
 for var in "$@"; do
-    unset VT_REPO VT_REPO_DESC BRANCH COMMIT_MSG
+    unset VT_REPO VT_REPO_DESC BRANCH
     ROM_PATH=$( realpath "$var" )
     # Check if directory
     if [ ! -d "$ROM_PATH" ]; then
@@ -61,6 +57,7 @@ for var in "$@"; do
         echo -e "Error! Empty variable."
         break
     else
+        echo -e "Dumping blobs"
         blobs_extract_push
     fi
     cd "$PROJECT_DIR"

@@ -42,12 +42,26 @@ proprietary () {
     echo -e "Preparing proprietary-files.txt"
     bash $PROJECT_DIR/tools/proprietary-files.sh "$PROJECT_DIR"/dummy_dt/working/all_files.txt > /dev/null 2>&1
     cp -a $PROJECT_DIR/working/proprietary-files.txt "$DT_DIR"/proprietary-files.txt
-
     # find bin's in # Misc which exist in rootdir/
     proprietary_rootdir > /dev/null 2>&1
-
     # proprietary-files-system.txt
     cat "$DT_DIR"/proprietary-files.txt | grep -v "vendor/" | sort -u | sed "s|#.*||g" | sed '/^$/d' > "$DT_DIR"/proprietary-files-system.txt
+    # dump vendor tree
+    if [[ ! -z "$ROM_PATH" ]]; then
+        echo -e "Dumping blobs"
+        rm -rf "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"/
+        cp -a "$DT_DIR"/proprietary-files.txt "$PROJECT_DIR"/working/proprietary-files.txt
+        cd "$PROJECT_DIR"
+        bash "$PROJECT_DIR/helpers/extract_blobs/extract-files.sh" "$ROM_PATH" > /dev/null 2>&1
+        cd "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"
+        git init . > /dev/null 2>&1
+        find -size +97M -printf '%P\n' -o -name *sensetime* -printf '%P\n' -o -name *.lic -printf '%P\n' > .gitignore
+        git checkout -b $BRANCH > /dev/null 2>&1
+        git add --all > /dev/null 2>&1
+        git -c "user.name=AndroidBlobs" -c "user.email=AndroidBlobs@github.com" commit -sm "$DESCRIPTION" > /dev/null 2>&1
+        curl -s -X POST -H "Authorization: token ${GIT_TOKEN}" -d '{"name": "'"$VT_REPO"'","description": "'"$VT_REPO_DESC"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/AndroidBlobs/repos" > /dev/null 2>&1
+        git push https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$VT_REPO".git --all --force > /dev/null 2>&1
+    fi
 }
 
 common_setup () {
@@ -58,7 +72,12 @@ common_setup () {
 common_core () {
     # Variables
     source $PROJECT_DIR/helpers/rom_vars.sh "$PROJECT_DIR/dummy_dt/working/system_build.prop" > /dev/null 2>&1
+    BRANCH=$(echo $DESCRIPTION | tr ' ' '-' | sort -u | head -n 1 )
     DT_DIR="$PROJECT_DIR"/dummy_dt/"$BRAND"/"$DEVICE"
+    DT_REPO=$(echo device_$BRAND\_$DEVICE)
+    DT_REPO_DESC=$(echo "Dummy device tree for $MODEL")
+    VT_REPO=$(echo vendor_$BRAND\_$DEVICE)
+    VT_REPO_DESC=$(echo "Vendor tree for $MODEL")
 
     # skip or proceed
     if [ -z "$BRAND" ] || [ -z "$DEVICE" ] || [ -z "$FINGERPRINT" ] || [ -z "$VERSION" ] || [ ! -e $PROJECT_DIR/dummy_dt/working/system_build.prop ] || [ ! -e $PROJECT_DIR/dummy_dt/working/vendor_build.prop ] ; then
@@ -91,9 +110,6 @@ call_methods () {
 
 git_op () {
     cd "$DT_DIR"
-    BRANCH=$(echo $DESCRIPTION | tr ' ' '-' | sort -u | head -n 1 )
-    DT_REPO=$(echo device_$BRAND\_$DEVICE)
-    DT_REPO_DESC=$(echo "Dummy device tree for $MODEL")
     echo -e "Performing git operations"
     git init . > /dev/null 2>&1
     git checkout -b $BRANCH > /dev/null 2>&1
@@ -101,7 +117,6 @@ git_op () {
     git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "$DESCRIPTION" > /dev/null 2>&1
     curl -s -X POST -H "Authorization: token ${GIT_TOKEN}" -d '{"name": "'"$DT_REPO"'","description": "'"$DT_REPO_DESC"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/AndroidBlobs/repos" > /dev/null 2>&1
     git push https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$DT_REPO".git --all
-    COMMIT_HEAD=$(git log --format=format:%H | head -n 1)
     # Telegram
     if [ ! -z "$TG_API" ]; then
         [[ "$VERBOSE" != "n" ]] && echo -e "Sending telegram notification"
@@ -111,8 +126,8 @@ git_op () {
         printf "\n<b>Version:</b> $VERSION" >> $PROJECT_DIR/dummy_dt/working/tg.html
         printf "\n<b>Fingerprint:</b> $FINGERPRINT" >> $PROJECT_DIR/dummy_dt/working/tg.html
         printf "\n<b>GitHub:</b>" >> $PROJECT_DIR/dummy_dt/working/tg.html
-        printf "\n<a href=\"https://github.com/AndroidBlobs/$DT_REPO/commit/$COMMIT_HEAD\">Commit</a>" >> $PROJECT_DIR/dummy_dt/working/tg.html
-        printf "\n<a href=\"https://github.com/AndroidBlobs/$DT_REPO/tree/$BRANCH/\">$DEVICE</a>" >> $PROJECT_DIR/dummy_dt/working/tg.html
+        printf "\n<a href=\"https://github.com/AndroidBlobs/$DT_REPO/tree/$BRANCH/\">Device tree</a>" >> $PROJECT_DIR/dummy_dt/working/tg.html
+        printf "\n<a href=\"https://github.com/AndroidBlobs/$VT_REPO/tree/$BRANCH/\">Vendor tree</a>" >> $PROJECT_DIR/dummy_dt/working/tg.html
         CHAT_ID="@dummy_dt"
         HTML_FILE=$(cat $PROJECT_DIR/dummy_dt/working/tg.html)
         curl -s "https://api.telegram.org/bot${TG_API}/sendmessage" --data "text=${HTML_FILE}&chat_id=${CHAT_ID}&parse_mode=HTML&disable_web_page_preview=True" > /dev/null 2>&1
