@@ -57,7 +57,7 @@ common_setup () {
 
 common_core () {
     # Variables
-    source $PROJECT_DIR/helpers/rom_vars.sh "$PROJECT_DIR/dummy_dt/working/system_build.prop"
+    source $PROJECT_DIR/helpers/rom_vars.sh "$PROJECT_DIR/dummy_dt/working/system_build.prop" > /dev/null 2>&1
     DT_DIR="$PROJECT_DIR"/dummy_dt/"$BRAND"/"$DEVICE"
 
     # skip or proceed
