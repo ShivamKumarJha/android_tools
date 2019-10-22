@@ -22,7 +22,8 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." >/dev/null && pwd )"
 
 # Prepare blobs list
 if [ ! -e $PROJECT_DIR/working/proprietary-files.txt ]; then
-    bash $PROJECT_DIR/tools/proprietary-files.sh "$1"
+    echo "Preparing proprietary-files.txt"
+    bash $PROJECT_DIR/tools/proprietary-files.sh "$1" > /dev/null 2>&1
 fi
 
 # Set values
