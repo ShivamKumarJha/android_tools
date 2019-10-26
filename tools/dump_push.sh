@@ -27,10 +27,15 @@ fi
 # o/p
 for var in "$@"; do
     ROM_PATH=$( realpath "$var" )
+    [[ ! -d "$ROM_PATH" ]] && echo -e "$ROM_PATH is not a valid directory!" && exit 1
     cd "$ROM_PATH"
+    [[ ! -d "system/" ]] && echo -e "No system partition found, pushing cancelled!" && exit 1
     # Set variables
     source $PROJECT_DIR/helpers/rom_vars.sh "$ROM_PATH" > /dev/null 2>&1
-    COMMIT_MSG=$(echo "$DEVICE: $FINGERPRINT" | sort -u | head -n 1 )
+    if [ -z "$BRAND" ] || [ -z "$DEVICE" ]; then
+        echo -e "Could not set variables! Exiting"
+        exit 1
+    fi
     REPO=$(echo dump_$BRAND\_$DEVICE | sort -u | head -n 1 )
     REPO_DESC=$(echo "$MODEL-dump" | tr ' ' '-' | sort -u | head -n 1 )
     BRANCH=$(echo $DESCRIPTION | tr ' ' '-' | sort -u | head -n 1 )
@@ -50,9 +55,21 @@ for var in "$@"; do
         echo -e "Ignoring following files:\n$(cat .gitignore)"
         echo -e "Adding files ..."
         git add --all > /dev/null 2>&1
-        echo -e "Commiting $COMMIT_MSG"
-        git -c "user.name=$GITHUB_USER" -c "user.email=$GITHUB_EMAIL" commit -sm "$COMMIT_MSG" > /dev/null 2>&1
-        git push https://"$GIT_TOKEN"@github.com/$GITHUB_USER/"$REPO".git $BRANCH
+        git reset system/ vendor/ > /dev/null 2>&1
+        git -c "user.name=$GITHUB_USER" -c "user.email=$GITHUB_EMAIL" commit -asm "Add extras for ${DESCRIPTION}" > /dev/null 2>&1
+        git push https://$GIT_TOKEN@github.com/$GITHUB_USER/${REPO}.git $BRANCH > /dev/null 2>&1
+        [[ -d vendor/ ]] && echo -e "Dumping vendor"
+        [[ -d vendor/ ]] && git add vendor/ > /dev/null 2>&1
+        [[ -d vendor/ ]] && git -c "user.name=$GITHUB_USER" -c "user.email=$GITHUB_EMAIL" commit -asm "Add vendor for ${DESCRIPTION}" > /dev/null 2>&1
+        [[ -d vendor/ ]] && git push https://$GIT_TOKEN@github.com/$GITHUB_USER/${REPO}.git $BRANCH > /dev/null 2>&1
+        echo -e "Dumping apps"
+        git add system/system/app/ system/system/priv-app/ > /dev/null 2>&1 || git add system/app/ system/priv-app/ > /dev/null 2>&1
+        git -c "user.name=$GITHUB_USER" -c "user.email=$GITHUB_EMAIL" commit -asm "Add apps for ${DESCRIPTION}" > /dev/null 2>&1
+        git push https://$GIT_TOKEN@github.com/$GITHUB_USER/${REPO}.git $BRANCH > /dev/null 2>&1
+        echo -e "Dumping system"
+        git add system/ > /dev/null 2>&1
+        git -c "user.name=$GITHUB_USER" -c "user.email=$GITHUB_EMAIL" commit -asm "Add system for ${DESCRIPTION}" > /dev/null 2>&1
+        git push https://$GIT_TOKEN@github.com/$GITHUB_USER/${REPO}.git $BRANCH > /dev/null 2>&1
     fi
     cd "$PROJECT_DIR"
 done
