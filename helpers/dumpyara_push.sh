@@ -27,6 +27,10 @@ for var in "$@"; do
     [[ ! -d "system/" ]] && echo -e "No system partition found, pushing cancelled!" && exit 1
     # Set variables
     source $PROJECT_DIR/helpers/rom_vars.sh "$ROM_PATH" > /dev/null 2>&1
+    if [ -z "$BRAND" ] || [ -z "$DEVICE" ]; then
+        echo -e "Could not set variables! Exiting"
+        exit 1
+    fi
     BRANCH=$(echo $DESCRIPTION | tr ' ' '-')
     repo=$(echo $BRAND\_$DEVICE\_dump | tr '[:upper:]' '[:lower:]')
     repo_desc=$(echo "$MODEL dump")
