@@ -51,6 +51,7 @@ for var in "$@"; do
             bash $PROJECT_DIR/tools/Firmware_extractor/extractor.sh ${URL} $PROJECT_DIR/dumps/${UNZIP_DIR}
         fi
     fi
+    [[ ! -e $PROJECT_DIR/dumps/${UNZIP_DIR}/system.img ]] && echo "No system.img found. Exiting" && break
 
     # boot.img operations
     if [ -e $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img ]; then
