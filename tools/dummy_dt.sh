@@ -47,7 +47,7 @@ proprietary () {
     # proprietary-files-system.txt
     cat "$DT_DIR"/proprietary-files.txt | grep -v "vendor/" | sort -u | sed "s|#.*||g" | sed '/^$/d' > "$DT_DIR"/proprietary-files-system.txt
     # dump vendor tree
-    if [[ ! -z "$ROM_PATH" ]]; then
+    if [[ ! -z "$GIT_TOKEN" ]] && [[ ! -z "$ROM_PATH" ]]; then
         echo -e "Dumping blobs"
         rm -rf "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"/
         cp -a "$DT_DIR"/proprietary-files.txt "$PROJECT_DIR"/working/proprietary-files.txt
@@ -104,7 +104,7 @@ call_methods () {
     # proprietary-files
     proprietary
     # Git commit
-    git_op
+    [[ ! -z "$GIT_TOKEN" ]] && git_op
     # clean
     rm -rf $PROJECT_DIR/dummy_dt/working/* $PROJECT_DIR/working/*
 }
@@ -373,7 +373,7 @@ common_overlay () {
     fi
 }
 
-[[ -z "$GIT_TOKEN" ]] && echo "Missing Github token!" && exit 1
+[[ -z "$1" ]] && echo "Give arguement!" && exit 1
 
 # Create working directory if it does not exist
 mkdir -p "$PROJECT_DIR"/dummy_dt/working
