@@ -47,20 +47,22 @@ proprietary () {
     # proprietary-files-system.txt
     cat "$DT_DIR"/proprietary-files.txt | grep -v "vendor/" | sort -u | sed "s|#.*||g" | sed '/^$/d' > "$DT_DIR"/proprietary-files-system.txt
     # dump vendor tree
-    if [[ ! -z "$GIT_TOKEN" ]] && [[ ! -z "$ROM_PATH" ]]; then
+    if [[ ! -z "$ROM_PATH" ]]; then
         echo -e "Dumping blobs"
         rm -rf "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"/
         cp -a "$DT_DIR"/proprietary-files.txt "$PROJECT_DIR"/working/proprietary-files.txt
         cd "$PROJECT_DIR"
         bash "$PROJECT_DIR/helpers/extract_blobs/extract-files.sh" "$ROM_PATH" > /dev/null 2>&1
         cd "$PROJECT_DIR"/vendor/"$BRAND"/"$DEVICE"
-        git init . > /dev/null 2>&1
-        find -size +97M -printf '%P\n' -o -name *sensetime* -printf '%P\n' -o -name *.lic -printf '%P\n' > .gitignore
-        git checkout -b $BRANCH > /dev/null 2>&1
-        git add --all > /dev/null 2>&1
-        git -c "user.name=AndroidBlobs" -c "user.email=AndroidBlobs@github.com" commit -sm "$DESCRIPTION" > /dev/null 2>&1
-        curl -s -X POST -H "Authorization: token ${GIT_TOKEN}" -d '{"name": "'"$VT_REPO"'","description": "'"$VT_REPO_DESC"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/AndroidBlobs/repos" > /dev/null 2>&1
-        git push https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$VT_REPO".git --all --force > /dev/null 2>&1
+        if [[ ! -z "$GIT_TOKEN" ]]; then
+            git init . > /dev/null 2>&1
+            find -size +97M -printf '%P\n' -o -name *sensetime* -printf '%P\n' -o -name *.lic -printf '%P\n' > .gitignore
+            git checkout -b $BRANCH > /dev/null 2>&1
+            git add --all > /dev/null 2>&1
+            git -c "user.name=AndroidBlobs" -c "user.email=AndroidBlobs@github.com" commit -sm "$DESCRIPTION" > /dev/null 2>&1
+            curl -s -X POST -H "Authorization: token ${GIT_TOKEN}" -d '{"name": "'"$VT_REPO"'","description": "'"$VT_REPO_DESC"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/AndroidBlobs/repos" > /dev/null 2>&1
+            git push https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$VT_REPO".git --all --force > /dev/null 2>&1
+        fi
     fi
 }
 
