@@ -86,8 +86,6 @@ common_core () {
         echo -e "Error! Skipping this device."
     elif [[ "$VERSION" -lt 8 ]]; then
         echo -e "Error! Pre-Oreo ROM's not supported!"
-    elif [[ $( cat $PROJECT_DIR/dummy_dt/working/{system_build.prop,vendor_build.prop} | grep "ro.board.platform" | sed "s|.*=||g" | cut -c1-2 ) == "mt" ]]; then
-        echo -e "Error! MediaTek board not supported!"
     else
         echo -e "Preparing Dummy DT"
         call_methods
