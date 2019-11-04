@@ -23,7 +23,6 @@ for var in "$@"; do
     ROM_PATH=$( realpath "$var" )
     [[ ! -d "$ROM_PATH" ]] && echo -e "$ROM_PATH is not a valid directory!" && exit 1
     cd "$ROM_PATH"
-    ORG=AndroidDumps
     [[ ! -d "system/" ]] && echo -e "No system partition found, pushing cancelled!" && exit 1
     # Set variables
     source $PROJECT_DIR/helpers/rom_vars.sh "$ROM_PATH" > /dev/null 2>&1
@@ -34,7 +33,8 @@ for var in "$@"; do
     BRANCH=$(echo $DESCRIPTION | tr ' ' '-')
     repo=$(echo $BRAND\_$DEVICE\_dump | tr '[:upper:]' '[:lower:]')
     repo_desc=$(echo "$MODEL dump")
-    curl --silent --fail "https://raw.githubusercontent.com/$ORG/$repo/$BRANCH/all_files.txt" 2>/dev/null && echo "Firmware already dumped!" && exit 1
+    ORG=AndroidDumps
+    wget "https://raw.githubusercontent.com/$ORG/$repo/$BRANCH/all_files.txt" 2>/dev/null && echo "Firmware already dumped!" && exit 1
 
     git init > /dev/null 2>&1
     git checkout -b $BRANCH > /dev/null 2>&1
