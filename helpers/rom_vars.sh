@@ -77,6 +77,7 @@ for var in "$@"; do
         BRAND="nokia"
         DEVICE=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | head -n 1 | cut -d : -f1 | rev | cut -d / -f2 | rev | sed "s|_.*||g" )
     fi
+    [[ -z "${BRAND}" ]] && BRAND=$(echo $FINGERPRINT | cut -d / -f1 )
     if grep -q "ro.oppo.market.name" "$CAT_FILE"; then
         MODEL=$( cat "$CAT_FILE" | grep "ro.oppo.market.name=" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "ro.display.series" "$CAT_FILE"; then
