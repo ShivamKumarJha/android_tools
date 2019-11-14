@@ -6,4 +6,5 @@ vendor/
 tools/extract-dtb/
 tools/Firmware_extractor/
 tools/mkbootimg_tools/
+tools/update_payload_extractor
 .fuse_*
