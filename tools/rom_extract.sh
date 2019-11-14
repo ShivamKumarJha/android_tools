@@ -41,6 +41,7 @@ for var in "$@"; do
     [[ -d $PROJECT_DIR/dumps/$UNZIP_DIR/ ]] && rm -rf $PROJECT_DIR/dumps/$UNZIP_DIR/
 
     if [ -d "$var" ] ; then
+        echo -e "Copying images"
         cp -a "$var" $PROJECT_DIR/dumps/${UNZIP_DIR}
     else
         # Firmware extractor

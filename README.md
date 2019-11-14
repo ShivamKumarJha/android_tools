@@ -14,56 +14,60 @@ Usage:
 Usage:  
 `./tools/common_props.sh <path to source rom dump> <path to target rom dump>`
 
-3. **dt_repos.sh**: A script to create Device, kernel & vendor tree of a device in GitHub with model as repo descripton.  
+3. **deltaota.sh**: A script to extract delta OTA.  
+Usage:   
+`./tools/deltaota.sh <path to full OTA> <path to patch OTA>`
+
+4. **dt_repos.sh**: A script to create Device, kernel & vendor tree of a device in GitHub with model as repo descripton.  
 Usage:  
 `export GIT_TOKEN=<KEY>`  
 `./tools/dt_repos.sh <path to rom>`
 
-4. **dummy_dt.sh**: A script which prepares a dummy device tree from ROM dump. Can handle dump stored both locally OR in online git repository (as long as all_files.txt exists in its root). See its GitHub [repo](https://github.com/ShivamKumarJha/Dummy_DT/).  
+5. **dummy_dt.sh**: A script which prepares a dummy device tree from ROM dump. Can handle dump stored both locally OR in online git repository (as long as all_files.txt exists in its root). See its GitHub [repo](https://github.com/ShivamKumarJha/Dummy_DT/).  
 Usage:  
 Usage: `./tools/dummy_dt.sh <path to ROM dump OR raw link of dump repo>`  
 *Optional*:  
 For Telegram notification, `export TG_API=<KEY>` before running script.
 
-5. **dump_push.sh**: A script to push local dump to GitHib.  
+6. **dump_push.sh**: A script to push local dump to GitHib.  
 Usage:  
 `export GIT_TOKEN=<KEY>`  
 `./tools/dump_push.sh <path to xml(s)>`
 
-6. **dumpyara_blobs_downloader.sh**: A script to download selected blobs from [AndroidDumps](https://github.com/AndroidDumps) repo, https://del.dog/denadegebi.  
+7. **dumpyara_blobs_downloader.sh**: A script to download selected blobs from [AndroidDumps](https://github.com/AndroidDumps) repo, https://del.dog/denadegebi.  
 Usage:  
 `./tools/dumpyara_blobs_downloader.sh <raw dump repo URL> <path to proprietary-files.txt>`
 
-7. **proprietary-files.sh**: A script to prepare proprietary blobs list from ROM.  
+8. **proprietary-files.sh**: A script to prepare proprietary blobs list from ROM.  
 Usage:  
 For online git repo: `./tools/proprietary-files.sh <raw file link of all_files.txt>`  
 For local dump: `./tools/proprietary-files.sh <path to ROM dump OR path to all_files.txt>`
 
-8. **rom_compare.sh**: A script to compare source & target ROM. It lists `Added, common, missing & modified` blobs.  
+9. **rom_compare.sh**: A script to compare source & target ROM. It lists `Added, common, missing & modified` blobs.  
 Usage:  
 `./tools/rom_compare.sh <path to source ROM dump> <path to target ROM dump>`
 
-9. **rom_extract.sh**: A script to extract OTA files.  
+10. **rom_extract.sh**: A script to extract OTA files.  
 Usage:  
 `./tools/rom_extract.sh <path to OTA file(s)>`
 
-10. **rootdir.sh**: A script to prepare rootdir from a ROM dump along with Makefile.  
+11. **rootdir.sh**: A script to prepare rootdir from a ROM dump along with Makefile.  
 Usage:  
 `./tools/rootdir.sh <path to ROM dump>`
 
-11. **sony_rom.sh**: A script to extract Sony ftf ROM.  
+12. **sony_rom.sh**: A script to extract Sony ftf ROM.  
 Usage:  
 `./tools/sony_rom.sh <path to ROM dump>`
 
-12. **system_vendor_prop.sh**: A script to prepare properties Makefile from a ROM dump.  
+13. **system_vendor_prop.sh**: A script to prepare properties Makefile from a ROM dump.  
 Usage: `./tools/system_vendor_prop.sh <path to ROM dump>`  
 Output: `system.prop` & `vendor_prop.mk` files.  
 
-13. **vendor_prop.sh**: A script to prepare and filter properties Makefile from a ROM dump.  
+14. **vendor_prop.sh**: A script to prepare and filter properties Makefile from a ROM dump.  
 Usage: `./tools/vendor_prop.sh <path to ROM dump>`  
 Output: `vendor_prop.mk` file.  
 
-14. **vendor_tree.sh**: A script to prepare vendor tree from a ROM dump after generating proprietary-files.txt and push it to GitHub.  
+15. **vendor_tree.sh**: A script to prepare vendor tree from a ROM dump after generating proprietary-files.txt and push it to GitHub.  
 To extract from a specific proprietary-files.txt, place it before in `working/proprietary-files.txt`.  
 Usage:  
 `export GIT_TOKEN=<KEY>`  
