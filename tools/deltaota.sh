@@ -33,7 +33,7 @@ if [[ "$VERBOSE" = "n" ]]; then
     echo "Extracting images of full OTA"
     bash "$PROJECT_DIR"/tools/Firmware_extractor/patcher.sh "$@" -o "$PROJECT_DIR"/working/"$UNZIP_DIR" > /dev/null 2>&1
 else
-    bash "$PROJECT_DIR"/tools/Firmware_extractor/patcher.sh "$@" -o "$PROJECT_DIR"/working/"$UNZIP_DIR"
+    bash "$PROJECT_DIR"/tools/Firmware_extractor/patcher.sh "$@" -o "$PROJECT_DIR"/working/"$UNZIP_DIR" -v
 fi
 
 bash "$PROJECT_DIR"/tools/rom_extract.sh "$PROJECT_DIR"/working/"$UNZIP_DIR"
