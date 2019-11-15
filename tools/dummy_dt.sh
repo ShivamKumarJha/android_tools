@@ -80,6 +80,7 @@ common_core () {
     DT_REPO_DESC=$(echo "Dummy device tree for $MODEL")
     VT_REPO=$(echo vendor_$BRAND\_$DEVICE)
     VT_REPO_DESC=$(echo "Vendor tree for $MODEL")
+    [[ ! -z "$GIT_TOKEN" ]] && wget "https://raw.githubusercontent.com/AndroidBlobs/$DT_REPO/$BRANCH/Android.mk" -O "$PROJECT_DIR/dummy_dt/working/check" 2>/dev/null && echo "Dummy DT already done!" && exit 1
 
     # skip or proceed
     if [ -z "$BRAND" ] || [ -z "$DEVICE" ] || [ -z "$FINGERPRINT" ] || [ -z "$VERSION" ] || [ ! -e $PROJECT_DIR/dummy_dt/working/system_build.prop ] || [ ! -e $PROJECT_DIR/dummy_dt/working/vendor_build.prop ] ; then
