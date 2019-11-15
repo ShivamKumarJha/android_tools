@@ -25,8 +25,3 @@ if [ -d "$PROJECT_DIR/tools/Firmware_extractor" ]; then
 else
     git clone --recurse-submodules https://github.com/ShivamKumarJha/Firmware_extractor $PROJECT_DIR/tools/Firmware_extractor
 fi
-if [ -d "$PROJECT_DIR/tools/update_payload_extractor" ]; then
-    git -C $PROJECT_DIR/tools/update_payload_extractor pull
-else
-    git clone https://github.com/erfanoabdi/update_payload_extractor.git $PROJECT_DIR/tools/update_payload_extractor
-fi
