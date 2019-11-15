@@ -84,9 +84,9 @@ common_core () {
 
     # skip or proceed
     if [ -z "$BRAND" ] || [ -z "$DEVICE" ] || [ -z "$FINGERPRINT" ] || [ -z "$VERSION" ] || [ ! -e $PROJECT_DIR/dummy_dt/working/system_build.prop ] || [ ! -e $PROJECT_DIR/dummy_dt/working/vendor_build.prop ] ; then
-        echo -e "Error! Skipping this device."
+        echo -e "Dummy DT: Error! Empty var!"
     elif [[ "$VERSION" -lt 8 ]]; then
-        echo -e "Error! Pre-Oreo ROM's not supported!"
+        echo -e "Dummy DT: Error! Pre-Oreo ROM's not supported!"
     else
         echo -e "Preparing Dummy DT"
         call_methods
