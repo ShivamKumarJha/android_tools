@@ -31,7 +31,7 @@ rootdir_bins=`find $PROJECT_DIR/working/rootdir/bin/ -type f -printf '%P\n' | so
 for file_bins in $rootdir_bins; do
     printf "\ninclude \$(CLEAR_VARS)" >> $PROJECT_DIR/working/rootdir/Android.mk
     printf "\nLOCAL_MODULE       := $file_bins" >> $PROJECT_DIR/working/rootdir/Android.mk
-    printf "\nLOCAL_MODULE_TAGS  := optional eng" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\nLOCAL_MODULE_TAGS  := optional" >> $PROJECT_DIR/working/rootdir/Android.mk
     printf "\nLOCAL_MODULE_CLASS := ETC" >> $PROJECT_DIR/working/rootdir/Android.mk
     printf "\nLOCAL_SRC_FILES    := bin/$file_bins" >> $PROJECT_DIR/working/rootdir/Android.mk
     printf "\nLOCAL_MODULE_PATH  := \$(TARGET_OUT_VENDOR_EXECUTABLES)" >> $PROJECT_DIR/working/rootdir/Android.mk
@@ -44,7 +44,7 @@ rootdir_etc=`find $PROJECT_DIR/working/rootdir/etc/ -type f -printf '%P\n' | sor
 for file_etc in $rootdir_etc; do
     printf "\ninclude \$(CLEAR_VARS)" >> $PROJECT_DIR/working/rootdir/Android.mk
     printf "\nLOCAL_MODULE       := $file_etc" >> $PROJECT_DIR/working/rootdir/Android.mk
-    printf "\nLOCAL_MODULE_TAGS  := optional eng" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\nLOCAL_MODULE_TAGS  := optional" >> $PROJECT_DIR/working/rootdir/Android.mk
     printf "\nLOCAL_MODULE_CLASS := ETC" >> $PROJECT_DIR/working/rootdir/Android.mk
     printf "\nLOCAL_SRC_FILES    := etc/$file_etc" >> $PROJECT_DIR/working/rootdir/Android.mk
     printf "\nLOCAL_MODULE_PATH  := \$(TARGET_OUT_VENDOR_ETC)/init/hw" >> $PROJECT_DIR/working/rootdir/Android.mk
@@ -60,7 +60,7 @@ for file_fstab in $rootdir_etc; do
     printf "$file_fstab\n" >> $PROJECT_DIR/working/rootdir_temp.mk
     printf "\ninclude \$(CLEAR_VARS)" >> $PROJECT_DIR/working/rootdir/Android.mk
     printf "\nLOCAL_MODULE       := $file_fstab" >> $PROJECT_DIR/working/rootdir/Android.mk
-    printf "\nLOCAL_MODULE_TAGS  := optional eng" >> $PROJECT_DIR/working/rootdir/Android.mk
+    printf "\nLOCAL_MODULE_TAGS  := optional" >> $PROJECT_DIR/working/rootdir/Android.mk
     printf "\nLOCAL_MODULE_CLASS := ETC" >> $PROJECT_DIR/working/rootdir/Android.mk
     printf "\nLOCAL_SRC_FILES    := etc/$file_fstab" >> $PROJECT_DIR/working/rootdir/Android.mk
     printf "\nLOCAL_MODULE_PATH  := \$(TARGET_OUT_VENDOR_ETC)" >> $PROJECT_DIR/working/rootdir/Android.mk
@@ -73,7 +73,7 @@ printf "ueventd.qcom.rc\n" >> $PROJECT_DIR/working/rootdir_temp.mk
 printf "\ninclude \$(CLEAR_VARS)" >> $PROJECT_DIR/working/rootdir/Android.mk
 printf "\nLOCAL_MODULE       := ueventd.qcom.rc" >> $PROJECT_DIR/working/rootdir/Android.mk
 printf "\nLOCAL_MODULE_STEM  := ueventd.rc" >> $PROJECT_DIR/working/rootdir/Android.mk
-printf "\nLOCAL_MODULE_TAGS  := optional eng" >> $PROJECT_DIR/working/rootdir/Android.mk
+printf "\nLOCAL_MODULE_TAGS  := optional" >> $PROJECT_DIR/working/rootdir/Android.mk
 printf "\nLOCAL_MODULE_CLASS := ETC" >> $PROJECT_DIR/working/rootdir/Android.mk
 printf "\nLOCAL_SRC_FILES    := etc/ueventd.qcom.rc" >> $PROJECT_DIR/working/rootdir/Android.mk
 printf "\nLOCAL_MODULE_PATH  := \$(TARGET_OUT_VENDOR)" >> $PROJECT_DIR/working/rootdir/Android.mk
