@@ -17,6 +17,11 @@ if [ ! -f "$1" ] || [ ! -f "$2" ]; then
     exit 1
 fi
 
+if [ ! -d "$PROJECT_DIR/tools/Firmware_extractor" ] || [ ! -d "$PROJECT_DIR/tools/extract-dtb" ] || [ ! -d "$PROJECT_DIR/tools/mkbootimg_tools" ] || [ ! -d "$PROJECT_DIR/tools/update_payload_extractor" ]; then
+    [[ "$VERBOSE" != "n" ]] && echo -e "Cloning dependencies..."
+    bash $PROJECT_DIR/helpers/dependencies.sh > /dev/null 2>&1
+fi
+
 URL_A=$( realpath "$1" )
 FILE_A=${URL_A##*/}
 EXTENSION_A=${URL_A##*.}

@@ -15,7 +15,7 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 source $PROJECT_DIR/helpers/common_script.sh
 
 # Dependencies check
-if [ ! -d "$PROJECT_DIR/tools/Firmware_extractor" ] || [ ! -d "$PROJECT_DIR/tools/extract-dtb" ] || [ ! -d "$PROJECT_DIR/tools/mkbootimg_tools" ]; then
+if [ ! -d "$PROJECT_DIR/tools/Firmware_extractor" ] || [ ! -d "$PROJECT_DIR/tools/extract-dtb" ] || [ ! -d "$PROJECT_DIR/tools/mkbootimg_tools" ] || [ ! -d "$PROJECT_DIR/tools/update_payload_extractor" ]; then
     [[ "$VERBOSE" != "n" ]] && echo -e "Cloning dependencies..."
     bash $PROJECT_DIR/helpers/dependencies.sh > /dev/null 2>&1
 fi
