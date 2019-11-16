@@ -101,7 +101,7 @@ call_methods () {
     cp -a $PROJECT_DIR/working/* "$DT_DIR"/
     # Device configs
     common_dt
-    common_overlay
+    common_overlay > /dev/null 2>&1
     # proprietary-files
     proprietary
     # Git commit
