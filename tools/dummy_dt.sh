@@ -39,7 +39,7 @@ proprietary_rootdir () {
 }
 
 proprietary () {
-    echo -e "Preparing proprietary-files.txt"
+    [[ "$VERBOSE" != "n" ]] && echo -e "Preparing proprietary-files.txt"
     bash $PROJECT_DIR/tools/proprietary-files.sh "$PROJECT_DIR"/dummy_dt/working/all_files.txt > /dev/null 2>&1
     cp -a $PROJECT_DIR/working/proprietary-files.txt "$DT_DIR"/proprietary-files.txt
     # find bin's in # Misc which exist in rootdir/
@@ -96,7 +96,7 @@ common_core () {
 call_methods () {
     rm -rf "$DT_DIR" && mkdir -p "$DT_DIR"
     # system.prop & vendor_prop.mk
-    echo -e "Preparing vendor_prop.mk"
+    [[ "$VERBOSE" != "n" ]] && echo -e "Preparing vendor_prop.mk"
     bash $PROJECT_DIR/tools/system_vendor_prop.sh $PROJECT_DIR/dummy_dt/working/system_build.prop $PROJECT_DIR/dummy_dt/working/vendor_build.prop > /dev/null 2>&1
     cp -a $PROJECT_DIR/working/* "$DT_DIR"/
     # Device configs
@@ -112,7 +112,7 @@ call_methods () {
 
 git_op () {
     cd "$DT_DIR"
-    echo -e "Performing git operations"
+    [[ "$VERBOSE" != "n" ]] && echo -e "Performing git operations"
     git init . > /dev/null 2>&1
     git checkout -b $BRANCH > /dev/null 2>&1
     git add --all > /dev/null 2>&1
@@ -149,7 +149,7 @@ get_configs () {
 }
 
 common_dt () {
-    echo -e "Preparing Device tree configs"
+    [[ "$VERBOSE" != "n" ]] && echo -e "Preparing Device tree configs"
     cd "$DT_DIR"/
     # Audio
     mkdir -p "$DT_DIR"/configs/audio
@@ -287,7 +287,7 @@ common_dt () {
 }
 
 common_overlay () {
-    echo -e "Preparing overlays"
+    [[ "$VERBOSE" != "n" ]] && echo -e "Preparing overlays"
     mkdir -p "$PROJECT_DIR"/working/overlays "$DT_DIR"/overlay/frameworks/base/core/res/res/xml/ "$DT_DIR"/overlay/packages/apps/CarrierConfig/res/xml "$DT_DIR"/overlay/frameworks/base/core/res/res/values/ "$DT_DIR"/overlay/packages/apps/Bluetooth/res/values "$DT_DIR"/overlay-lineage/lineage-sdk/lineage/res/res/values
     cd "$PROJECT_DIR"/working/overlays
     cat "$PROJECT_DIR"/dummy_dt/working/all_files.txt | grep -iE "priv-app/SystemUI/SystemUI.apk|framework/framework-res.apk|app/CarrierConfig/CarrierConfig.apk|app/Bluetooth/Bluetooth.apk" > "$PROJECT_DIR"/dummy_dt/working/configs.txt
