@@ -37,7 +37,12 @@ if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
 
 LINEAGE_ROOT="$PROJECT_DIR"
 
-HELPER="$LINEAGE_ROOT"/helpers/extract_blobs/extract_utils.sh
+if [[ "$VERSION" -lt 10 ]]; then
+    HELPER="$LINEAGE_ROOT"/helpers/extract_blobs/extract_utils_pie.sh
+else
+    HELPER="$LINEAGE_ROOT"/helpers/extract_blobs/extract_utils.sh
+fi
+
 if [ ! -f "$HELPER" ]; then
     echo "Unable to find helper script at $HELPER"
     exit 1
