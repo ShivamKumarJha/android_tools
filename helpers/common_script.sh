@@ -24,3 +24,13 @@ GITHUB_USER="$(git config --get user.name)"
 [[ -z "$DUMPYARA" ]] && DUMPYARA="n"
 [[ -z "$VERBOSE" ]] && VERBOSE="y"
 export LC_ALL=C make
+
+function dlrom() {
+    mkdir -p ${PROJECT_DIR}/input
+    cd ${PROJECT_DIR}/input
+    FILE="$(echo ${URL##*/} | sed "s| |_|g" )"
+    rm -rf $PROJECT_DIR/input/${FILE}
+    aria2c -x 16 ${URL} -d ${PROJECT_DIR}/input -o ${FILE} || { echo "Download failed!"; }
+    find ${PROJECT_DIR}/input -name "* *" -type f | rename 's/ /_/g'
+    URL=$PROJECT_DIR/input/${FILE}
+}

@@ -33,7 +33,13 @@ fi
 
 for var in "$@"; do
     # Variables
-    URL=$( realpath "$var" )
+    if echo "$var" | grep "http" ; then
+        URL="$var"
+        [[ "$VERBOSE" = "n" ]] && dlrom > /dev/null 2>&1 || dlrom
+    else
+        URL=$( realpath "$var" )
+    fi
+    [[ ! -e ${URL} ]] && echo "Error! File $URL does not exist." && break
     FILE=${URL##*/}
     EXTENSION=${URL##*.}
     UNZIP_DIR=${FILE/.$EXTENSION/}
