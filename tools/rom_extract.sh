@@ -33,7 +33,7 @@ fi
 
 for var in "$@"; do
     # Variables
-    if echo "$var" | grep "http" ; then
+    if [[ "$var" == *"http"* ]]; then
         echo "Downloading ROM"
         URL="$var"
         [[ "$VERBOSE" = "n" ]] && dlrom > /dev/null 2>&1 || dlrom
