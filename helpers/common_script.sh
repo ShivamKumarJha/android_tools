@@ -28,9 +28,22 @@ export LC_ALL=C make
 function dlrom() {
     mkdir -p ${PROJECT_DIR}/input
     cd ${PROJECT_DIR}/input
-    FILE="$(echo ${URL##*/} | sed "s| |_|g" )"
-    rm -rf $PROJECT_DIR/input/${FILE}
-    aria2c -x 16 ${URL} -d ${PROJECT_DIR}/input -o ${FILE} || { echo "Download failed!"; }
-    find ${PROJECT_DIR}/input -name "* *" -type f | rename 's/ /_/g'
-    URL=$PROJECT_DIR/input/${FILE}
+    if echo ${URL} | grep "https://drive.google.com/" && [[ ! -z "$(which gdrive)" ]]; then
+        rm -rf ${PROJECT_DIR}/input/*
+        FILE_ID="$(echo "${URL:?}" | sed -Er -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/(view|edit)/\1/' -e 's/(.*)(&|\?).*/\1/')"
+        gdrive download "$FILE_ID" || { echo "Download failed!"; }
+        find ${PROJECT_DIR}/input -name "* *" -type f | rename 's/ /_/g'
+        URL=$( ls -d $PWD/* )
+    elif echo ${URL} | grep "https://mega.nz/" && [[ -e "/usr/bin/megadl" ]]; then
+        rm -rf ${PROJECT_DIR}/input/*
+        megadl "${URL}" || { echo "Download failed!"; }
+        find ${PROJECT_DIR}/input -name "* *" -type f | rename 's/ /_/g'
+        URL=$( ls -d $PWD/* )
+    else
+        FILE="$(echo ${URL##*/} | sed "s| |_|g" )"
+        rm -rf $PROJECT_DIR/input/${FILE}
+        aria2c -x 16 ${URL} -d ${PROJECT_DIR}/input -o ${FILE} || { echo "Download failed!"; }
+        find ${PROJECT_DIR}/input -name "* *" -type f | rename 's/ /_/g'
+        URL=$PROJECT_DIR/input/${FILE}
+    fi
 }
