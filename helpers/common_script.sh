@@ -26,23 +26,24 @@ GITHUB_USER="$(git config --get user.name)"
 export LC_ALL=C make
 
 function dlrom() {
+    echo "Downloading ROM"
     mkdir -p ${PROJECT_DIR}/input
     cd ${PROJECT_DIR}/input
     if [[ "$URL" == *"https://drive.google.com/"* ]] && [[ ! -z "$(which gdrive)" ]]; then
         rm -rf ${PROJECT_DIR}/input/*
         FILE_ID="$(echo "${URL:?}" | sed -Er -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/(view|edit)/\1/' -e 's/(.*)(&|\?).*/\1/')"
-        gdrive download "$FILE_ID" || { echo "Download failed!"; }
+        gdrive download "$FILE_ID" --no-progress || { echo "Download failed!"; }
         find ${PROJECT_DIR}/input -name "* *" -type f | rename 's/ /_/g'
         URL=$( ls -d $PWD/* )
     elif [[ "$URL" == *"https://mega.nz/"* ]] && [[ -e "/usr/bin/megadl" ]]; then
         rm -rf ${PROJECT_DIR}/input/*
-        megadl "${URL}" || { echo "Download failed!"; }
+        megadl "${URL}" --no-progress || { echo "Download failed!"; }
         find ${PROJECT_DIR}/input -name "* *" -type f | rename 's/ /_/g'
         URL=$( ls -d $PWD/* )
     else
         FILE="$(echo ${URL##*/} | sed "s| |_|g" )"
         rm -rf $PROJECT_DIR/input/${FILE}
-        aria2c -x 16 ${URL} -d ${PROJECT_DIR}/input -o ${FILE} || { echo "Download failed!"; }
+        aria2c -q -s 16 -x 16 ${URL} -d ${PROJECT_DIR}/input -o ${FILE} || { echo "Download failed!"; }
         find ${PROJECT_DIR}/input -name "* *" -type f | rename 's/ /_/g'
         URL=$PROJECT_DIR/input/${FILE}
     fi

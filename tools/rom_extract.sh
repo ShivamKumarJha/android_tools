@@ -34,9 +34,8 @@ fi
 for var in "$@"; do
     # Variables
     if [[ "$var" == *"http"* ]]; then
-        echo "Downloading ROM"
         URL="$var"
-        [[ "$VERBOSE" = "n" ]] && dlrom > /dev/null 2>&1 || dlrom
+        dlrom
     else
         URL=$( realpath "$var" )
     fi
