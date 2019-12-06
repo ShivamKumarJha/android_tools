@@ -61,7 +61,7 @@ proprietary () {
             git add --all > /dev/null 2>&1
             git -c "user.name=AndroidBlobs" -c "user.email=AndroidBlobs@github.com" commit -sm "$DESCRIPTION" > /dev/null 2>&1
             curl -s -X POST -H "Authorization: token ${GIT_TOKEN}" -d '{"name": "'"$VT_REPO"'","description": "'"$VT_REPO_DESC"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/AndroidBlobs/repos" > /dev/null 2>&1
-            git push https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$VT_REPO".git --all --force > /dev/null 2>&1
+            git push -q https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$VT_REPO".git --all --force
         fi
     fi
 }
@@ -118,7 +118,7 @@ git_op () {
     git add --all > /dev/null 2>&1
     git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "$DESCRIPTION" > /dev/null 2>&1
     curl -s -X POST -H "Authorization: token ${GIT_TOKEN}" -d '{"name": "'"$DT_REPO"'","description": "'"$DT_REPO_DESC"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/AndroidBlobs/repos" > /dev/null 2>&1
-    git push https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$DT_REPO".git --all
+    git push -q https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$DT_REPO".git --all
     # Telegram
     if [ ! -z "$TG_API" ]; then
         [[ "$VERBOSE" != "n" ]] && echo -e "Sending telegram notification"

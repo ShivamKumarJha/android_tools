@@ -44,20 +44,20 @@ for var in "$@"; do
     echo -e "Dumping extras"
     git add --all > /dev/null 2>&1
     git reset system/ vendor/ > /dev/null 2>&1
-    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add extras for ${DESCRIPTION}" > /dev/null 2>&1
-    git push https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH > /dev/null 2>&1
+    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add extras for ${DESCRIPTION}" -q
+    git push -q https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH
     [[ -d vendor/ ]] && echo -e "Dumping vendor"
     [[ -d vendor/ ]] && git add vendor/ > /dev/null 2>&1
-    [[ -d vendor/ ]] && git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add vendor for ${DESCRIPTION}" > /dev/null 2>&1
-    [[ -d vendor/ ]] && git push https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH > /dev/null 2>&1
+    [[ -d vendor/ ]] && git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add vendor for ${DESCRIPTION}" -q
+    [[ -d vendor/ ]] && git push -q https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH
     echo -e "Dumping apps"
     git add system/system/app/ system/system/priv-app/ > /dev/null 2>&1 || git add system/app/ system/priv-app/ > /dev/null 2>&1
-    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add apps for ${DESCRIPTION}" > /dev/null 2>&1
-    git push https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH > /dev/null 2>&1
+    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add apps for ${DESCRIPTION}" -q
+    git push -q https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH
     echo -e "Dumping system"
     git add system/ > /dev/null 2>&1
-    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add system for ${DESCRIPTION}" > /dev/null 2>&1
-    git push https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH > /dev/null 2>&1
+    git -c "user.name=AndroidDumps" -c "user.email=AndroidDumps@github.com" commit -asm "Add system for ${DESCRIPTION}" -q
+    git push -q https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH
 
     # Telegram channel
     if [ ! -z "$TG_API" ]; then
