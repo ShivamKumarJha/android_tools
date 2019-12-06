@@ -26,7 +26,7 @@ GITHUB_USER="$(git config --get user.name)"
 export LC_ALL=C make
 
 function dlrom() {
-    echo "Downloading ROM"
+    echo "Downloading file"
     mkdir -p ${PROJECT_DIR}/input
     cd ${PROJECT_DIR}/input
     if [[ "$URL" == *"https://drive.google.com/"* ]] && [[ ! -z "$(which gdrive)" ]]; then

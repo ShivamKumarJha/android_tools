@@ -1,6 +1,7 @@
 dumps/
 dummy_dt/
 input/
+kernels/
 working/
 vendor/
 tools/extract-dtb/
