@@ -164,6 +164,7 @@ git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -
 [[ -d "sound/" ]] && git add "sound/" > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add sound modifications" > /dev/null 2>&1
 # techpack/
+[[ -d "audio-kernel/" ]] && git add "audio-kernel/" > /dev/null 2>&1
 [[ -d "techpack/" ]] && git add "techpack/" > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add techpack/audio modifications" > /dev/null 2>&1
 # Remaining OEM modifications
