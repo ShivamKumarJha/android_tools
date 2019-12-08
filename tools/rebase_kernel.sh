@@ -36,6 +36,11 @@ UNZIP_DIR=${FILE/.$EXTENSION/}
 echo "Extracting file"
 mkdir -p ${PROJECT_DIR}/kernels/${UNZIP_DIR}
 7z x ${PROJECT_DIR}/input/${FILE} -y -o${PROJECT_DIR}/kernels/${UNZIP_DIR} > /dev/null 2>&1
+NEST="$( find ${PROJECT_DIR}/kernels/${UNZIP_DIR} -type f -size +50M \( -name "*.rar*" -o -name "*.zip*" -o -name "*.tar*" \) -printf '%P\n' | head -1)"
+if [ ! -z ${NEST} ]; then
+    bash ${PROJECT_DIR}/tools/rebase_kernel.sh ${PROJECT_DIR}/kernels/${UNZIP_DIR}/${NEST} ${2} ${3}
+    exit
+fi
 KERNEL_DIR="$(dirname "$(find ${PROJECT_DIR}/kernels/${UNZIP_DIR} -type f -name "AndroidKernel.mk" | head -1)")"
 cd ${KERNEL_DIR}
 
