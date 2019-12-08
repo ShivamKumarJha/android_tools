@@ -35,7 +35,7 @@ UNZIP_DIR=${FILE/.$EXTENSION/}
 # Extract file
 echo "Extracting file"
 mkdir -p ${PROJECT_DIR}/kernels/${UNZIP_DIR}
-unzip -q ${PROJECT_DIR}/input/${FILE} -d ${PROJECT_DIR}/kernels/${UNZIP_DIR}
+7z x ${PROJECT_DIR}/input/${FILE} -y -o${PROJECT_DIR}/kernels/${UNZIP_DIR} > /dev/null 2>&1
 KERNEL_DIR="$(dirname "$(find ${PROJECT_DIR}/kernels/${UNZIP_DIR} -type f -name "AndroidKernel.mk" | head -1)")"
 cd ${KERNEL_DIR}
 
