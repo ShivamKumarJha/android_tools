@@ -67,7 +67,7 @@ rm -rf ${KERNEL_DIR}/best-caf-kernel.py
 
 # Rebase to best CAF tag & apply OEM modifications
 git checkout -q "refs/tags/${CAF_TAG}" -b "release-${CAF_TAG}"
-git diff ${CAF_TAG} release | git apply > /dev/null 2>&1
+git diff ${CAF_TAG} release | git apply --reject > /dev/null 2>&1
 # dtsi
 [[ -d "arch/arm/boot/dts" ]] && git add "arch/arm/boot/dts" > /dev/null 2>&1
 [[ -d "arch/arm64/boot/dts" ]] && git add "arch/arm64/boot/dts" > /dev/null 2>&1
