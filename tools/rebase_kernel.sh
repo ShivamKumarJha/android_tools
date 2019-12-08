@@ -183,7 +183,7 @@ if [ ! -z ${GIT_TOKEN} ] && [ ! -z ${TG_API} ]; then
     printf "<b>Repo: $2</b>" > ${PROJECT_DIR}/working/tg.html
     printf "\n<b>Base CAF tag: $CAF_TAG</b>" >> ${PROJECT_DIR}/working/tg.html
     printf "\n<b>Kernel: ${KERNEL_VERSION}.${KERNEL_PATCHLEVEL}</b>" >> ${PROJECT_DIR}/working/tg.html
-    printf "\n<a href=\"$1\">Kernel source</a>" >> ${PROJECT_DIR}/working/tg.html
+    [[ "$1" == *"http"* ]] && printf "\n<a href=\"$1\">Kernel source</a>" >> ${PROJECT_DIR}/working/tg.html
     printf "\n<a href=\"https://github.com/AndroidBlobs/$2/\">Kernel tree</a>" >> ${PROJECT_DIR}/working/tg.html
     CHAT_ID="@dummy_dt"
     HTML_FILE=$(cat ${PROJECT_DIR}/working/tg.html)
