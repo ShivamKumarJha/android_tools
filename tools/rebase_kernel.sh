@@ -56,6 +56,8 @@ echo "Creating release branch"
 git init -q
 git config core.fileMode false
 git checkout -b release -q
+[[ -d "audio-kernel/" ]] && mkdir -p techpack/ && mv audio-kernel/ techpack/audio
+[[ -d "techpack/audio" ]] && HAS_AUDIO_KERNEL="y"
 git add --all > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "OEM Release" > /dev/null 2>&1
 
@@ -70,9 +72,18 @@ CAF_TAG="$(python ${KERNEL_DIR}/best-caf-kernel.py "*$3" )"
 echo ${CAF_TAG}
 rm -rf ${KERNEL_DIR}/best-caf-kernel.py
 
-# Rebase to best CAF tag & apply OEM modifications
+# Rebase to best CAF tag
 git checkout -q "refs/tags/${CAF_TAG}" -b "release-${CAF_TAG}"
-git diff ${CAF_TAG} release | git apply --reject > /dev/null 2>&1
+
+# techpack/audio subtree
+if [[ ${HAS_AUDIO_KERNEL} == "y" ]]; then
+    echo "Adding techpack/audio subtree"
+    git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" subtree add --prefix techpack/audio git://codeaurora.org/platform/vendor/opensource/audio-kernel/ ${CAF_TAG} > /dev/null 2>&1
+fi
+
+# Apply OEM modifications
+echo "Applying OEM modifications"
+git diff "release-${CAF_TAG}" release | git apply --reject > /dev/null 2>&1
 # dtsi
 [[ -d "arch/arm/boot/dts" ]] && git add "arch/arm/boot/dts" > /dev/null 2>&1
 [[ -d "arch/arm64/boot/dts" ]] && git add "arch/arm64/boot/dts" > /dev/null 2>&1
@@ -169,9 +180,8 @@ git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -
 [[ -d "sound/" ]] && git add "sound/" > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add sound modifications" > /dev/null 2>&1
 # techpack/
-[[ -d "audio-kernel/" ]] && git add "audio-kernel/" > /dev/null 2>&1
 [[ -d "techpack/" ]] && git add "techpack/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add techpack/audio modifications" > /dev/null 2>&1
+git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add techpack modifications" > /dev/null 2>&1
 # Remaining OEM modifications
 git add --all > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add remaining OEM modifications" > /dev/null 2>&1
