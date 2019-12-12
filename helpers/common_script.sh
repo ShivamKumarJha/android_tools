@@ -42,7 +42,12 @@ function dlrom() {
         find ${PROJECT_DIR}/input -name "* *" -type f | rename 's/ /_/g'
         URL=$( ls -d $PWD/* )
     else
-        FILE="$(echo ${URL##*/} | sed "s| |_|g" )"
+        if [[ $(echo $URL | grep ".zip?") ]]; then
+            FILE="$(echo $URL | grep '.zip?' | cut -d? -f1)"
+            FILE="$(echo ${FILE##*/} | sed "s| |_|g" )"
+        else
+            FILE="$(echo ${URL##*/} | sed "s| |_|g" )"
+        fi
         rm -rf $PROJECT_DIR/input/${FILE}
         aria2c -q -s 16 -x 16 ${URL} -d ${PROJECT_DIR}/input -o ${FILE} || { echo "Download failed!"; }
         find ${PROJECT_DIR}/input -name "* *" -type f | rename 's/ /_/g'
