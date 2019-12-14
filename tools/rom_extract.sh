@@ -120,6 +120,6 @@ for var in "$@"; do
     duration=$SECONDS
     [[ "$VERBOSE" != "n" ]] && echo -e "Dump location: $PROJECT_DIR/dumps/$UNZIP_DIR/"
     [[ "$VERBOSE" != "n" ]] && echo -e "Extract time: $(($duration / 60)) minutes and $(($duration % 60)) seconds."
-    [[ "$DUMPYARA" == "y" ]] && bash "$PROJECT_DIR/helpers/dumpyara_push.sh" "$PROJECT_DIR/dumps/$UNZIP_DIR/"
+    [[ "$DUMPYARA" == "y" ]] && bash "$PROJECT_DIR/tools/dump_push.sh" "$PROJECT_DIR/dumps/$UNZIP_DIR/"
     [[ "$DUMMYDT" == "y" ]] && bash "$PROJECT_DIR/tools/dummy_dt.sh" "$PROJECT_DIR/dumps/$UNZIP_DIR/"
 done

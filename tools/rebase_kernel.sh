@@ -187,14 +187,18 @@ git add --all > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add remaining OEM modifications" > /dev/null 2>&1
 
 # Push to GitHub
-if [ ! -z "$GIT_TOKEN" ]; then
+if [[ ${ORGMEMBER} == "y" ]] && [[ ! -z ${GIT_TOKEN} ]]; then
     echo "Pushing to GitHub"
     curl -s -X POST -H "Authorization: token ${GIT_TOKEN}" -d '{"name": "'"$2"'","description": "'"CAF Rebased kernel source"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/AndroidBlobs/repos" > /dev/null 2>&1
     git push -q https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$2".git --all --force
+elif [[ ! -z ${GITHUB_USER} ]] && [[ ! -z ${GIT_TOKEN} ]]; then
+    echo "Pushing to GitHub"
+    curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name": "'"$2"'","description": "'"CAF Rebased kernel source"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' > /dev/null 2>&1
+    git push -q https://"$GIT_TOKEN"@github.com/"$GITHUB_USER"/"$2".git --all --force
 fi
 
 # Telegram
-if [ ! -z ${GIT_TOKEN} ] && [ ! -z ${TG_API} ]; then
+if [ ! -z ${GIT_TOKEN} ] && [ ! -z ${TG_API} ] && [[ ${ORGMEMBER} == "y" ]]; then
     printf "<b>Repo: $2</b>" > ${PROJECT_DIR}/working/tg.html
     printf "\n<b>Base CAF tag: $CAF_TAG</b>" >> ${PROJECT_DIR}/working/tg.html
     printf "\n<b>Kernel: ${KERNEL_VERSION}.${KERNEL_PATCHLEVEL}</b>" >> ${PROJECT_DIR}/working/tg.html
