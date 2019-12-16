@@ -45,6 +45,9 @@ function dlrom() {
         if [[ $(echo $URL | grep ".zip?") ]]; then
             FILE="$(echo $URL | grep '.zip?' | cut -d? -f1)"
             FILE="$(echo ${FILE##*/} | sed "s| |_|g" )"
+        elif [[ $(echo $URL | grep ".exe?") ]]; then
+            FILE="$(echo $URL | grep '.exe?' | cut -d? -f1)"
+            FILE="$(echo ${FILE##*/} | sed "s| |_|g" )"
         else
             FILE="$(echo ${URL##*/} | sed "s| |_|g" )"
         fi
