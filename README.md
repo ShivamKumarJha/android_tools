@@ -6,30 +6,30 @@ Collection of scripts to help with Android ROM stuff.
 `chmod +x setup.sh`  
 `sudo bash setup.sh`
   
-1. **common_blobs.sh**: A script to list common and device specific blob's between two ROM's.  
+1. **blobs_downloader.sh**: A script to download selected blobs from [AndroidBlobs](https://github.com/AndroidBlobs), [AndroidDumps](https://github.com/AndroidDumps) etc repo. [Example](https://del.dog/olohilylon.txt).  
+Usage: `./tools/blobs_downloader.sh <raw dump repo URL> <path to proprietary-files.txt>`
+
+2. **common_blobs.sh**: A script to list common and device specific blob's between two ROM's.  
 Usage: `./tools/common_blobs.sh <path to source rom dump> <path to target rom dump>`
 
-2. **common_props.sh**: A script to list common and device specific prop's between two ROM's.  
+3. **common_props.sh**: A script to list common and device specific prop's between two ROM's.  
 Usage: `./tools/common_props.sh <path to source rom dump> <path to target rom dump>`
 
-3. **deltaota.sh**: A script to extract delta OTA.  
+4. **deltaota.sh**: A script to extract delta OTA.  
 Usage: `./tools/deltaota.sh <path to full OTA> <path to incremental OTA(s)>`
 
-4. **dt_repos.sh**: A script to create empty device, kernel & vendor tree of a device in GitHub with model as repo descripton.
+5. **dt_repos.sh**: A script to create empty device, kernel & vendor tree of a device in GitHub with model as repo descripton.
 Usage:  
 `export GIT_TOKEN=<KEY>`  
 `./tools/dt_repos.sh <path to rom>`
 
-5. **dummy_dt.sh**: A script which prepares a dummy device & vendor tree from a ROM dump.  
+6. **dummy_dt.sh**: A script which prepares a dummy device & vendor tree from a ROM dump.  
 Usage: `./tools/dummy_dt.sh <path to ROM dump>`
 
-6. **dump_push.sh**: A script to push local ROM dump to GitHib.  
+7. **dump_push.sh**: A script to push local ROM dump to GitHib.  
 Usage:  
 `export GIT_TOKEN=<KEY>`  
 `./tools/dump_push.sh <path to dump>`
-
-7. **dumpyara_blobs_downloader.sh**: A script to download selected blobs from [AndroidDumps](https://github.com/AndroidDumps) repo. [Example](https://del.dog/denadegebi).  
-Usage: `./tools/dumpyara_blobs_downloader.sh <raw dump repo URL> <path to proprietary-files.txt>`
 
 8. **proprietary-files.sh**: A script to prepare proprietary blobs list from a ROM.  
 Usage:  
