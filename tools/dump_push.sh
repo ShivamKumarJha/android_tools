@@ -52,19 +52,19 @@ for var in "$@"; do
     git add --all > /dev/null 2>&1
     git reset system/ vendor/ > /dev/null 2>&1
     git -c "user.name=${ORG}" -c "user.email=${GITHUB_EMAIL}" commit -asm "Add extras for ${DESCRIPTION}" -q
-    git push -q https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH
+    git push https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH > /dev/null 2>&1
     [[ -d vendor/ ]] && echo -e "Dumping vendor"
     [[ -d vendor/ ]] && git add vendor/ > /dev/null 2>&1
     [[ -d vendor/ ]] && git -c "user.name=${ORG}" -c "user.email=${GITHUB_EMAIL}" commit -asm "Add vendor for ${DESCRIPTION}" -q
-    [[ -d vendor/ ]] && git push -q https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH
+    [[ -d vendor/ ]] && git push https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH > /dev/null 2>&1
     echo -e "Dumping apps"
     git add system/system/app/ system/system/priv-app/ > /dev/null 2>&1 || git add system/app/ system/priv-app/ > /dev/null 2>&1
     git -c "user.name=${ORG}" -c "user.email=${GITHUB_EMAIL}" commit -asm "Add apps for ${DESCRIPTION}" -q
-    git push -q https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH
+    git push https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH > /dev/null 2>&1
     echo -e "Dumping system"
     git add system/ > /dev/null 2>&1
     git -c "user.name=${ORG}" -c "user.email=${GITHUB_EMAIL}" commit -asm "Add system for ${DESCRIPTION}" -q
-    git push -q https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH
+    git push https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH > /dev/null 2>&1
 
     # Telegram channel
     if [ ! -z "$TG_API" ] && [[ "$ORGMEMBER" == "y" ]]; then

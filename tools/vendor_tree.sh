@@ -55,5 +55,5 @@ for var in "$@"; do
     git add --all > /dev/null 2>&1
     echo -e "Commiting $COMMIT_MSG"
     git -c "user.name=$GITHUB_USER" -c "user.email=$GITHUB_EMAIL" commit -sm "$COMMIT_MSG" -q
-    git push -q https://"$GIT_TOKEN"@github.com/$GITHUB_USER/"$VT_REPO".git $BRANCH
+    git push https://"$GIT_TOKEN"@github.com/$GITHUB_USER/"$VT_REPO".git $BRANCH > /dev/null 2>&1
 done

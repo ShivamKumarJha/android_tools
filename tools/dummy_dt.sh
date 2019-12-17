@@ -60,7 +60,7 @@ proprietary () {
             git checkout -b $BRANCH > /dev/null 2>&1
             git add --all > /dev/null 2>&1
             git -c "user.name=$ORG" -c "user.email=$GITHUB_EMAIL" commit -sm "$DESCRIPTION" > /dev/null 2>&1
-            git push -q https://"$GIT_TOKEN"@github.com/"$ORG"/"$VT_REPO".git --all
+            git push https://"$GIT_TOKEN"@github.com/"$ORG"/"$VT_REPO".git --all > /dev/null 2>&1
         fi
     fi
 }
@@ -126,7 +126,7 @@ git_op () {
     git checkout -b $BRANCH > /dev/null 2>&1
     git add --all > /dev/null 2>&1
     git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "$DESCRIPTION" > /dev/null 2>&1
-    git push -q https://"$GIT_TOKEN"@github.com/"$ORG"/"$DT_REPO".git --all
+    git push https://"$GIT_TOKEN"@github.com/"$ORG"/"$DT_REPO".git --all > /dev/null 2>&1
     # Telegram
     if [ ! -z "$TG_API" ] && [[ "$ORGMEMBER" == "y" ]]; then
         [[ "$VERBOSE" != "n" ]] && echo -e "Sending telegram notification"
