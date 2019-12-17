@@ -22,29 +22,8 @@ for var in "$@"; do
     unset BRAND_TEMP BRAND DEVICE DESCRIPTION FINGERPRINT MODEL SECURITY_PATCH VERSION FLAVOR ID INCREMENTAL TAGS
     # Dir or file handling
     if [ -d "$var" ]; then
-        if [ -e "$var"/odm/etc/build.prop ]; then
-            if grep -q "brand=" $var/odm/etc/build.prop; then
-                BRAND_TEMP=$( cat "$var"/odm/etc/build.prop | grep "ro.product" | grep "brand=" | sed "s|.*=||g" | head -n 1 )
-                DEVICE=$( cat "$var"/odm/etc/build.prop | grep "ro.product" | grep "device=" | sed "s|.*=||g" | head -n 1 )
-                BRAND=${BRAND_TEMP,,}
-                DEVICE=${DEVICE,,}
-            fi
-        fi
-        if [ -e "$var"/odm/build.prop ]; then
-            if grep -q "brand=" $var/odm/build.prop; then
-                BRAND_TEMP=$( cat "$var"/odm/build.prop | grep "ro.product" | grep "brand=" | sed "s|.*=||g" | head -n 1 | tr -d '[:space:]' )
-                DEVICE=$( cat "$var"/odm/build.prop | grep "ro.product" | grep "device=" | sed "s|.*=||g" | head -n 1 | tr -d '[:space:]' )
-                BRAND=${BRAND_TEMP,,}
-                DEVICE=${DEVICE,,}
-            fi
-        fi
-        if [ -e "$var"/system/system/build.prop ]; then
-            SYSTEM_PATH="system/system"
-        elif [ -e "$var"/system/build.prop ]; then
-            SYSTEM_PATH="system"
-        fi
         rm -rf $PROJECT_DIR/working/system_build.prop
-        find "$var/$SYSTEM_PATH" -maxdepth 1 -name "build*prop" -exec cat {} >> $PROJECT_DIR/working/system_build.prop \;
+        find "$var/" -maxdepth 3 -name "build*prop" -exec cat {} >> $PROJECT_DIR/working/system_build.prop \;
         CAT_FILE="$PROJECT_DIR/working/system_build.prop"
     elif echo "$var" | grep "https" ; then
         wget -O $PROJECT_DIR/working/system_build.prop $var
@@ -54,25 +33,27 @@ for var in "$@"; do
     fi
 
     # Set variables
-    if [[ -z "$DEVICE" ]]; then
-        if grep -q "brand=" "$CAT_FILE"; then
-                BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "brand=" | sed "s|.*=||g" | head -n 1 )
-        elif grep -q "manufacturer=" "$CAT_FILE"; then
-                BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "manufacturer=" | sed "s|.*=||g" | head -n 1 )
-        fi
-        BRAND=${BRAND_TEMP,,}
-        if grep -q "ro.vivo.product.release.name" "$CAT_FILE"; then
-                DEVICE=$( cat "$CAT_FILE" | grep "ro.vivo.product.release.name=" | sed "s|.*=||g" | head -n 1 )
-        elif grep -q "device=" "$CAT_FILE" && [[ "$BRAND" != "google" ]]; then
-                DEVICE=$( cat "$CAT_FILE" | grep "ro.product" | grep "device=" | sed "s|.*=||g" | sed "s|ASUS_||g" | head -n 1 )
-        elif grep -q "ro.product.system.name" "$CAT_FILE" && [[ "$BRAND" != "google" ]]; then
-                DEVICE=$( cat "$CAT_FILE" | grep "ro.product.system.name=" | sed "s|.*=||g" | sed "s|ASUS_||g" | head -n 1 )
-        fi
-        [[ -z "$DEVICE" ]] && DEVICE=$( cat "$CAT_FILE" | grep "ro.build" | grep "product=" | sed "s|.*=||g" | sed "s|ASUS_||g" | head -n 1 )
-        [[ -z "$DEVICE" ]] && DEVICE=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | head -n 1 | cut -d : -f1 | rev | cut -d / -f1 | rev )
-        [[ -z "$DEVICE" ]] && DEVICE=$( cat "$CAT_FILE" | grep "ro.target_product=" | sed "s|.*=||g" | head -n 1 | cut -d - -f1 )
-        [[ -z "$DEVICE" ]] && DEVICE=$( cat "$CAT_FILE" | grep "build.fota.version=" | sed "s|.*=||g" | sed "s|WW_||1" | head -n 1 | cut -d - -f1 )
+    if grep -q "odm.brand=" "$CAT_FILE"; then
+        BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "odm.brand=" | sed "s|.*=||g" | head -n 1 )
+    elif grep -q "brand=" "$CAT_FILE"; then
+        BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "brand=" | sed "s|.*=||g" | head -n 1 )
+    elif grep -q "manufacturer=" "$CAT_FILE"; then
+        BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "manufacturer=" | sed "s|.*=||g" | head -n 1 )
     fi
+    BRAND=${BRAND_TEMP,,}
+    if grep -q "ro.vivo.product.release.name" "$CAT_FILE"; then
+        DEVICE=$( cat "$CAT_FILE" | grep "ro.vivo.product.release.name=" | sed "s|.*=||g" | head -n 1 )
+    elif grep -q "odm.device=" "$CAT_FILE"; then
+        DEVICE=$( cat "$CAT_FILE" | grep "odm.device=" | sed "s|.*=||g" | head -n 1 )
+    elif grep -q "device=" "$CAT_FILE" && [[ "$BRAND" != "google" ]]; then
+        DEVICE=$( cat "$CAT_FILE" | grep "ro.product" | grep "device=" | sed "s|.*=||g" | sed "s|ASUS_||g" | head -n 1 )
+    elif grep -q "ro.product.system.name" "$CAT_FILE" && [[ "$BRAND" != "google" ]]; then
+        DEVICE=$( cat "$CAT_FILE" | grep "ro.product.system.name=" | sed "s|.*=||g" | sed "s|ASUS_||g" | head -n 1 )
+    fi
+    [[ -z "$DEVICE" ]] && DEVICE=$( cat "$CAT_FILE" | grep "ro.build" | grep "product=" | sed "s|.*=||g" | sed "s|ASUS_||g" | head -n 1 )
+    [[ -z "$DEVICE" ]] && DEVICE=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | head -n 1 | cut -d : -f1 | rev | cut -d / -f1 | rev )
+    [[ -z "$DEVICE" ]] && DEVICE=$( cat "$CAT_FILE" | grep "ro.target_product=" | sed "s|.*=||g" | head -n 1 | cut -d - -f1 )
+    [[ -z "$DEVICE" ]] && DEVICE=$( cat "$CAT_FILE" | grep "build.fota.version=" | sed "s|.*=||g" | sed "s|WW_||1" | head -n 1 | cut -d - -f1 )
     VERSION=$( cat "$CAT_FILE" | grep "build.version.release=" | sed "s|.*=||g" | head -c 2 | head -n 1 )
     re='^[0-9]+$'
     if ! [[ $VERSION =~ $re ]] ; then
