@@ -24,7 +24,7 @@ for var in "$@"; do
     do
         if echo "$line" | grep "<project"; then
             if ! echo "$line" | grep "clone-depth"; then
-                if echo "$line" | grep -iE "mokee|aosip|LineageOS|remote=\"aex|gzosp|crdroid"; then
+                if echo "$line" | grep -iE "potato|mokee|aosip|LineageOS|remote=\"aex|gzosp|crdroid"; then
                     echo "$line" >> "$PROJECT_DIR"/working/new_manifest.xml
                 else
                     echo "$line" | sed "s|<project|<project clone-depth=\"1\"|g" >> "$PROJECT_DIR"/working/new_manifest.xml
