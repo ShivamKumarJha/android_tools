@@ -409,6 +409,17 @@ if [ -d "$1" ]; then #local dumps
         common_core
         cd "$PROJECT_DIR"
     done
+elif echo "$1" | grep "https://github.com/"; then # https://github.com/ repo zip
+    for var in "$@"; do
+        URL="$var"
+        FILE=${URL##*/}
+        EXTENSION=${URL##*.}
+        UNZIP_DIR=${FILE/.$EXTENSION/}
+        dlrom
+        7z x -y "$PROJECT_DIR/input/$FILE" -o"$PROJECT_DIR/dumps/$UNZIP_DIR"
+        bash "$PROJECT_DIR/tools/dummy_dt.sh" "$PROJECT_DIR/dumps/$UNZIP_DIR/*"
+        exit
+    done
 elif echo "$1" | grep "http"; then #URL dumps
     for device_line in "$@"; do
         # setup
