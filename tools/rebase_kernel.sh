@@ -191,11 +191,11 @@ git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -
 if [[ ${ORGMEMBER} == "y" ]] && [[ ! -z ${GIT_TOKEN} ]]; then
     echo "Pushing to GitHub"
     curl -s -X POST -H "Authorization: token ${GIT_TOKEN}" -d '{"name": "'"$2"'","description": "'"CAF Rebased kernel source"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/AndroidBlobs/repos" > /dev/null 2>&1
-    git push https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$2".git --all --force > /dev/null 2>&1
+    git push https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$2".git "release-${CAF_TAG}" > /dev/null 2>&1
 elif [[ ! -z ${GITHUB_USER} ]] && [[ ! -z ${GIT_TOKEN} ]]; then
     echo "Pushing to GitHub"
     curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name": "'"$2"'","description": "'"CAF Rebased kernel source"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' > /dev/null 2>&1
-    git push https://"$GIT_TOKEN"@github.com/"$GITHUB_USER"/"$2".git --all --force > /dev/null 2>&1
+    git push https://"$GIT_TOKEN"@github.com/"$GITHUB_USER"/"$2".git "release-${CAF_TAG}" > /dev/null 2>&1
 fi
 
 # Telegram

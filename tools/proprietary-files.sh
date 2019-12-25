@@ -277,7 +277,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "soter" | sort 
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "bin/ssr_|subsystem" | sort -u >> $PROJECT_DIR/working/proprietary/SSR
 
 # Thermal
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "etc/thermal|bin/thermal|libthermal|bin/mi_thermald|thermal" | sort -u >> $PROJECT_DIR/working/proprietary/Thermal
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "etc/thermal|bin/thermal|libthermal|bin/mi_thermald|thermal" | grep -v "hw/thermal" | sort -u >> $PROJECT_DIR/working/proprietary/Thermal
 
 # Thermal-Hardware
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "lib/hw/thermal|lib64/hw/thermal" | sort -u >> $PROJECT_DIR/working/proprietary/Thermal-Hardware
