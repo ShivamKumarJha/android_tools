@@ -129,7 +129,7 @@ function src_file() {
 # output: "dst" if present, "src" otherwise.
 #
 function target_file() {
-    local SPEC="$1"
+    local SPEC="${1%%;*}"
     local SPLIT=(${SPEC//:/ })
     local ARGS="$(target_args ${SPEC})"
     local DST=
