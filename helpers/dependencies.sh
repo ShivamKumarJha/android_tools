@@ -18,7 +18,7 @@ fi
 if [ -d "$PROJECT_DIR/tools/mkbootimg_tools" ]; then
     git -C $PROJECT_DIR/tools/mkbootimg_tools pull
 else
-    git clone https://github.com/xiaolu/mkbootimg_tools $PROJECT_DIR/tools/mkbootimg_tools
+    git clone https://github.com/carlitros900/mkbootimg_tools $PROJECT_DIR/tools/mkbootimg_tools
 fi
 if [ -d "$PROJECT_DIR/tools/Firmware_extractor" ]; then
     git -C $PROJECT_DIR/tools/Firmware_extractor pull --recurse-submodules
