@@ -37,6 +37,7 @@ for var in "$@"; do
         ORG=AndroidDumps
         GITHUB_EMAIL="${ORG}@github.com"
         curl -s -X POST -H "Authorization: token ${GIT_TOKEN}" -d '{"name": "'"$repo"'","description": "'"$repo_desc"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/${ORG}/repos" > /dev/null 2>&1
+        curl -s -X PUT -H "Authorization: token ${GIT_TOKEN}" -H "Accept: application/vnd.github.mercy-preview+json" -d '{ "names": ["'"$BRAND"'","'"$PLATFORM"'","'"$DEVICE"'"]}' "https://api.github.com/repos/${ORG}/${repo}/topics" > /dev/null 2>&1
     elif [[ ! -z "$GITHUB_EMAIL" ]] && [[ ! -z "$GITHUB_USER" ]]; then
         ORG="$GITHUB_USER"
         curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name": "'"$repo"'","description": "'"$repo_desc"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' > /dev/null 2>&1
