@@ -8,12 +8,14 @@ vendor/etc/cacert_location.pem
 vendor/etc/xtra_root_cert.pem
 vendor/lib/libDRPlugin.so
 vendor/lib/lib_drplugin_server.so
+vendor/lib/libbatching.so
 vendor/lib/libdataitems.so
 vendor/lib/libdrplugin_client.so
 vendor/lib/libevent_observer.so
 vendor/lib/libflp.so
 vendor/lib/libgdtap.so
 vendor/lib/libgeofence.so
+vendor/lib/libgeofencing.so
 vendor/lib/liblbs_core.so
 vendor/lib/libquipc_os_api.so
 vendor/lib/libslimclient.so
@@ -22,6 +24,7 @@ vendor/lib/libxtadapter.so
 vendor/lib/libxtwifi_ulp_adaptor.so
 vendor/lib64/libDRPlugin.so
 vendor/lib64/lib_drplugin_server.so
+vendor/lib64/libbatching.so
 vendor/lib64/libdataitems.so
 vendor/lib64/libdrplugin_client.so
 vendor/lib64/libevent_observer.so
@@ -29,6 +32,7 @@ vendor/lib64/libflp.so
 vendor/lib64/libgarden_haltests_e2e.so
 vendor/lib64/libgdtap.so
 vendor/lib64/libgeofence.so
+vendor/lib64/libgeofencing.so
 vendor/lib64/liblbs_core.so
 vendor/lib64/libqdma.so
 vendor/lib64/libqdma_file_agent.so

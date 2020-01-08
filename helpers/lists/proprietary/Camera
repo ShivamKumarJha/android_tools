@@ -23,7 +23,6 @@ vendor/lib/lib_lowlight.so
 vendor/lib/lib_oneplus_watermark.so
 vendor/lib/libalLDC.so
 vendor/lib/libalhLDC.so
-vendor/lib/libbase64.so
 vendor/lib/libbbkemsensor.so
 vendor/lib/libblur_halide.so
 vendor/lib/libc++_shared.so
@@ -118,7 +117,6 @@ vendor/lib64/libSNPE.so
 vendor/lib64/libXMFD_AgeGender.so
 vendor/lib64/lib_denoiser3.so
 vendor/lib64/lib_lowlight.so
-vendor/lib64/libbase64.so
 vendor/lib64/libbbkemsensor.so
 vendor/lib64/libc++_shared.so
 vendor/lib64/libchromaflash.so

@@ -6,6 +6,7 @@ vendor/lib/libGPreqcancel_svc.so
 vendor/lib/libQSEEComAPI.so
 vendor/lib/libSecureUILib.so
 vendor/lib/libStDrvInt.so
+vendor/lib/libbase64.so
 vendor/lib/libcpion.so
 vendor/lib/libcppf.so
 vendor/lib/libcrypto_vendor.so
@@ -19,6 +20,7 @@ vendor/lib/librpmb.so
 vendor/lib/libsdedrm.so
 vendor/lib/libsecureui.so
 vendor/lib/libsecureui_svcsock.so
+vendor/lib/libsi.so
 vendor/lib/libspl.so
 vendor/lib/libssd.so
 vendor/lib/libtzdrmgenprov.so
@@ -30,6 +32,7 @@ vendor/lib64/libGPreqcancel_svc.so
 vendor/lib64/libQSEEComAPI.so
 vendor/lib64/libSecureUILib.so
 vendor/lib64/libStDrvInt.so
+vendor/lib64/libbase64.so
 vendor/lib64/libcpion.so
 vendor/lib64/libcppf.so
 vendor/lib64/libdrmfs.so
@@ -43,6 +46,7 @@ vendor/lib64/librpmb.so
 vendor/lib64/libsdedrm.so
 vendor/lib64/libsecureui.so
 vendor/lib64/libsecureui_svcsock.so
+vendor/lib64/libsi.so
 vendor/lib64/libspl.so
 vendor/lib64/libssd.so
 vendor/lib64/libtzdrmgenprov.so

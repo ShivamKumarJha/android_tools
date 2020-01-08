@@ -1,5 +1,3 @@
 vendor/bin/mm-pp-dpps
 vendor/lib/libdisp-aba.so
-vendor/lib/libmm-hdcpmgr.so
 vendor/lib64/libdisp-aba.so
-vendor/lib64/libmm-hdcpmgr.so

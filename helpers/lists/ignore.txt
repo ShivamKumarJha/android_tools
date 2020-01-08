@@ -180,6 +180,7 @@ vendor/etc/a2dp_audio_policy_configuration.xml
 vendor/etc/apdr.conf
 vendor/etc/appboosts.xml
 vendor/etc/audio/audio_policy_configuration
+vendor/etc/bluetooth_qti_audio_policy_configuration.xml
 vendor/etc/default_volume_tables
 vendor/etc/flp.conf
 vendor/etc/fs_config_dirs
@@ -280,8 +281,6 @@ vendor/lib/libsdmcore.so
 vendor/lib/libsdmutils.so
 vendor/lib/libsensorndkbridge.so
 vendor/lib/libstagefrighthw.so
-vendor/lib/libtinycompress.so
-vendor/lib/libtinycompress_vendor.so
 vendor/lib/libtinyxml.so
 vendor/lib/libwebrtc_audio_preprocessing.so
 vendor/lib/libwifi-hal-qcom.so
@@ -358,8 +357,6 @@ vendor/lib64/libsdmcore.so
 vendor/lib64/libsdmutils.so
 vendor/lib64/libsensorndkbridge.so
 vendor/lib64/libstagefrighthw.so
-vendor/lib64/libtinycompress.so
-vendor/lib64/libtinycompress_vendor.so
 vendor/lib64/libtinyxml.so
 vendor/lib64/libwebrtc_audio_preprocessing.so
 vendor/lib64/libwifi-hal-qcom.so
