@@ -26,7 +26,7 @@ Usage:
 6. **dummy_dt.sh**: A script which prepares a dummy device & vendor tree from a ROM dump.  
 Usage: `./tools/dummy_dt.sh <path to ROM dump>`
 
-7. **dump_push.sh**: A script to push local ROM dump to GitHib.  
+7. **dump_push.sh**: A script to push local ROM dump to GitHub.  
 Usage:  
 `export GIT_TOKEN=<KEY>`  
 `./tools/dump_push.sh <path to dump>`
