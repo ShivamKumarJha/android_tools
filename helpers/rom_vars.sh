@@ -70,9 +70,7 @@ for var in "$@"; do
     elif grep -q "build.thumbprint=" "$CAT_FILE"; then
         FINGERPRINT=$( cat "$CAT_FILE" | grep "ro." | grep "build.thumbprint=" | sed "s|.*=||g" | head -n 1 )
     fi
-    if [ -z "$FINGERPRINT" ]; then
-        FINGERPRINT=$( echo $DESCRIPTION | tr ' ' '-' )
-    fi
+    [[ -z "$FINGERPRINT" ]] && FINGERPRINT=$( echo $DESCRIPTION | tr ' ' '-' )
     if echo "$FINGERPRINT" | grep -iE "nokia"; then
         BRAND="nokia"
         DEVICE=$( cat "$CAT_FILE" | grep "ro." | grep "build.fingerprint=" | sed "s|.*=||g" | head -n 1 | cut -d : -f1 | rev | cut -d / -f2 | rev | sed "s|_.*||g" )

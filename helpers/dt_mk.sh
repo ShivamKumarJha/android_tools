@@ -41,7 +41,7 @@ find ""$DT_DIR"/configs/wifi/" -type f -printf '%P\n' | sort > "$PROJECT_DIR"/wo
 bash $PROJECT_DIR/helpers/writemk.sh "\$(LOCAL_PATH)/configs/wifi/" ":\$(TARGET_COPY_OUT_VENDOR)/etc/wifi/" "# WiFi"
 if [ -e "$DT_DIR"/configs/excluded-input-devices.xml ]; then
     echo "excluded-input-devices.xml" > "$PROJECT_DIR"/working/mklist.txt
-    bash $PROJECT_DIR/helpers/writemk.sh "\$(LOCAL_PATH)/configs/" ":system/etc/" "# Exclude TOF sensor from InputManager"
+    bash $PROJECT_DIR/helpers/writemk.sh "\$(LOCAL_PATH)/configs/" ":system/etc/" "# Exclude sensor from InputManager"
 fi
 if [ -e "$DT_DIR"/configs/msm_irqbalance.conf ]; then
     find ""$DT_DIR"/configs/" -name "msm_irqbalance*" -type f -printf '%P\n' | sort > "$PROJECT_DIR"/working/mklist.txt
