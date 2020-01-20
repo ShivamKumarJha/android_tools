@@ -28,12 +28,15 @@ else
     exit 1
 fi
 
-# remove system/
+# Cleanup
 if grep -q "system/system/" $PROJECT_DIR/working/rom_all.txt; then
     sed -i "s|^system/system/||1" $PROJECT_DIR/working/rom_all.txt
 elif grep -q "system/" $PROJECT_DIR/working/rom_all.txt; then
     sed -i "s|^system/||1" $PROJECT_DIR/working/rom_all.txt
 fi
+sed -i "s|vendor/bin/.*\.sh||g" $PROJECT_DIR/working/rom_all.txt
+sed -i "s|.*/oat/.*||g" $PROJECT_DIR/working/rom_all.txt
+sed -i '/^$/d' $PROJECT_DIR/working/rom_all.txt
 
 # Copy lists to $PROJECT_DIR/working
 cp -a $PROJECT_DIR/helpers/lists/proprietary/ $PROJECT_DIR/working/
@@ -167,9 +170,6 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "IFAA" | sort -
 
 # IPA-Firmware
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/firmware/ipa_fws" | sort -u >> $PROJECT_DIR/working/proprietary/IPA-Firmware
-
-# Kernel-Modules
-cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/modules/" | sort -u >> $PROJECT_DIR/working/proprietary/Kernel-Modules
 
 # Keymaster
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "keymaster" | sort -u >> $PROJECT_DIR/working/proprietary/Keymaster

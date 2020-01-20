@@ -122,6 +122,7 @@ vendor/lib/hw/nfc_nci.nqx.default.so
 vendor/lib/hw/thermal.
 vendor/lib/hw/vr.default.so
 vendor/lib/libqsap_sdk.so
+vendor/lib/modules/
 vendor/lib/vendor.display.config@
 vendor/lib/vendor.nxp.nxpese@
 vendor/lib/vendor.nxp.nxpnfc@
@@ -171,6 +172,7 @@ vendor/lib64/hw/nfc_nci.nqx.default.so
 vendor/lib64/hw/thermal.
 vendor/lib64/hw/vr.default.so
 vendor/lib64/libqsap_sdk.so
+vendor/lib64/modules/
 vendor/lib64/nfc_nci.nqx.default.hw.so
 vendor/lib64/vendor.display.config@
 vendor/lib64/vendor.nxp.hardware.nfc@
