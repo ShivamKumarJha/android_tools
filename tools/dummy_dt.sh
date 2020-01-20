@@ -90,6 +90,9 @@ call_methods () {
     common_dt
     common_overlay > /dev/null 2>&1
     proprietary
+    # oppo_product
+    [[ -e ${ROM_PATH}/oppo_product/etc/audio_policy_configuration.xml ]] && cat ${ROM_PATH}/oppo_product/etc/audio_policy_configuration.xml > "$DT_DIR"/configs/audio/audio_policy_configuration.xml
+    [[ -e ${ROM_PATH}/oppo_product/etc/power_profile/power_profile.xml ]] && cat ${ROM_PATH}/oppo_product/etc/power_profile/power_profile.xml > "$DT_DIR"/overlay/frameworks/base/core/res/res/xml/power_profile.xml
     # Git commit
     [[ ! -z "$ORG" ]] && git_op
     # clean
