@@ -22,8 +22,13 @@ for var in "$@"; do
     unset BRAND_TEMP BRAND DEVICE DESCRIPTION FINGERPRINT MODEL SECURITY_PATCH VERSION FLAVOR ID INCREMENTAL TAGS
     # Dir or file handling
     if [ -d "$var" ]; then
+        DIR=$( realpath "$var" )
         rm -rf $PROJECT_DIR/working/system_build.prop
-        find "$var/" -maxdepth 3 -name "build*prop" -exec cat {} >> $PROJECT_DIR/working/system_build.prop \;
+        find "$DIR/" -maxdepth 3 -name "build*prop" -exec cat {} >> $PROJECT_DIR/working/system_build.prop \;
+        if [[ -d "$DIR/vendor/euclid/" ]]; then
+            find "$DIR/vendor/euclid/" -name "*.img" -exec 7z x -y {} -o"$PROJECT_DIR/working/euclid" \;
+            find "$PROJECT_DIR/working/euclid" -name "*prop" -exec cat {} >> $PROJECT_DIR/working/system_build.prop \;
+        fi
         CAT_FILE="$PROJECT_DIR/working/system_build.prop"
     elif echo "$var" | grep "https" ; then
         wget -O $PROJECT_DIR/working/system_build.prop $var
