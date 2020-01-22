@@ -206,7 +206,7 @@ if [ ! -z ${GIT_TOKEN} ] && [ ! -z ${TG_API} ] && [[ ${ORGMEMBER} == "y" ]]; the
     printf "\n<b>Base CAF tag: $CAF_TAG</b>" >> ${PROJECT_DIR}/working/tg.html
     printf "\n<b>Kernel: ${KERNEL_VERSION}.${KERNEL_PATCHLEVEL}</b>" >> ${PROJECT_DIR}/working/tg.html
     [[ "$1" == *"http"* ]] && printf "\n<a href=\"$1\">Kernel source</a>" >> ${PROJECT_DIR}/working/tg.html
-    printf "\n<a href=\"https://github.com/AndroidBlobs/$2/\">Kernel tree</a>" >> ${PROJECT_DIR}/working/tg.html
+    printf "\n<a href=\"https://github.com/AndroidBlobs/$2/tree/release-${CAF_TAG}\">Kernel tree</a>" >> ${PROJECT_DIR}/working/tg.html
     CHAT_ID="@dummy_dt"
     HTML_FILE=$(cat ${PROJECT_DIR}/working/tg.html)
     curl -s "https://api.telegram.org/bot${TG_API}/sendmessage" --data "text=${HTML_FILE}&chat_id=${CHAT_ID}&parse_mode=HTML&disable_web_page_preview=True" > /dev/null 2>&1
