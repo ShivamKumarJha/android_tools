@@ -45,7 +45,7 @@ for var in "$@"; do
     elif grep -q "manufacturer=" "$CAT_FILE"; then
         BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "manufacturer=" | sed "s|.*=||g" | head -n 1 )
     fi
-    BRAND=${BRAND_TEMP,,}
+    BRAND=$(echo $BRAND_TEMP | tr '[:upper:]' '[:lower:]')
     if grep -q "ro.vivo.product.release.name" "$CAT_FILE"; then
         DEVICE=$( cat "$CAT_FILE" | grep "ro.vivo.product.release.name=" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "odm.device=" "$CAT_FILE"; then
