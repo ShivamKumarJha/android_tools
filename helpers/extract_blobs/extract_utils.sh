@@ -1196,12 +1196,12 @@ function oat2dex() {
         export SMALIJAR="$LINEAGE_ROOT"/helpers/extract_blobs/smali/smali.jar
     fi
 
-    if [ -z "$VDEXEXTRACTOR" ]; then
-        export VDEXEXTRACTOR="$LINEAGE_ROOT"/helpers/extract_blobs/"$HOST"/vdexExtractor
-    fi
-
-    if [ -z "$CDEXCONVERTER" ]; then
-        export CDEXCONVERTER="$LINEAGE_ROOT"/helpers/extract_blobs/"$HOST"/compact_dex_converter
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        export CDEXCONVERTER="$LINEAGE_ROOT"/helpers/extract_blobs/Darwin/bin/compact_dex_converter
+        export VDEXEXTRACTOR="$LINEAGE_ROOT"/helpers/extract_blobs/Darwin/bin/vdexExtractor
+    elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+        export CDEXCONVERTER="$LINEAGE_ROOT"/helpers/extract_blobs/Linux/compact_dex_converter
+        export VDEXEXTRACTOR="$LINEAGE_ROOT"/helpers/extract_blobs/Linux/vdexExtractor
     fi
 
     # Extract existing boot.oats to the temp folder
