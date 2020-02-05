@@ -122,6 +122,10 @@ git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -
 # clk
 [[ -d "drivers/clk/" ]] && git add "drivers/clk/" > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add drivers/clk modifications" > /dev/null 2>&1
+# cpu
+[[ -d "drivers/cpufreq/" ]] && git add "drivers/cpufreq/" > /dev/null 2>&1
+[[ -d "drivers/cpuidle/" ]] && git add "drivers/cpuidle/" > /dev/null 2>&1
+git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add drivers/cpu* modifications" > /dev/null 2>&1
 # DRM
 [[ -d "drivers/gpu/drm/" ]] && git add "drivers/gpu/drm/" > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add DRM modifications" > /dev/null 2>&1
@@ -137,6 +141,9 @@ git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -
 # LEDs
 [[ -d "drivers/leds/" ]] && git add "drivers/leds/" > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add LEDs modifications" > /dev/null 2>&1
+# misc
+[[ -d "drivers/misc/" ]] && git add "drivers/misc/" > /dev/null 2>&1
+git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add misc modifications" > /dev/null 2>&1
 # mmc
 [[ -d "drivers/mmc/" ]] && git add "drivers/mmc/" > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add mmc modifications" > /dev/null 2>&1
@@ -158,9 +165,15 @@ git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -
 # USB
 [[ -d "drivers/usb/" ]] && git add "drivers/usb/" > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add USB modifications" > /dev/null 2>&1
+# video
+[[ -d "drivers/video/" ]] && git add "drivers/video/" > /dev/null 2>&1
+git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add video modifications" > /dev/null 2>&1
 # Remaining drivers
 [[ -d "drivers/" ]] && git add "drivers/" > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add remaining drivers modifications" > /dev/null 2>&1
+# Firmware
+[[ -d "firmware/" ]] && git add "firmware/" > /dev/null 2>&1
+git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add Firmware modifications" > /dev/null 2>&1
 # FS
 [[ -d "fs/" ]] && git add "fs/" > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add FS modifications" > /dev/null 2>&1
@@ -185,6 +198,9 @@ git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -
 # techpack/
 [[ -d "techpack/" ]] && git add "techpack/" > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add techpack modifications" > /dev/null 2>&1
+# tools/
+[[ -d "tools/" ]] && git add "tools/" > /dev/null 2>&1
+git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add tools modifications" > /dev/null 2>&1
 # Remaining OEM modifications
 git add --all > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add remaining OEM modifications" > /dev/null 2>&1
