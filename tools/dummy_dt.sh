@@ -127,6 +127,7 @@ git_op () {
         printf "\n<b>Model: $MODEL</b>" >> $PROJECT_DIR/dummy_dt/working/tg.html
         printf "\n<b>Version:</b> $VERSION" >> $PROJECT_DIR/dummy_dt/working/tg.html
         printf "\n<b>Fingerprint:</b> $FINGERPRINT" >> $PROJECT_DIR/dummy_dt/working/tg.html
+        [[ ! -z "$PLATFORM" ]] && printf "\n<b>Platform:</b> $PLATFORM" >> $PROJECT_DIR/dummy_dt/working/tg.html
         printf "\n<b>GitHub:</b>" >> $PROJECT_DIR/dummy_dt/working/tg.html
         printf "\n<a href=\"https://github.com/$ORG/$DT_REPO/tree/$BRANCH/\">Device tree</a>" >> $PROJECT_DIR/dummy_dt/working/tg.html
         printf "\n<a href=\"https://github.com/$ORG/$VT_REPO/tree/$BRANCH/\">Vendor tree</a>" >> $PROJECT_DIR/dummy_dt/working/tg.html

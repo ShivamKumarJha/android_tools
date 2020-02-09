@@ -69,14 +69,12 @@ for var in "$@"; do
     # Telegram channel
     if [ ! -z "$TG_API" ] && [[ "$ORGMEMBER" == "y" ]]; then
         CHAT_ID="@android_dumps"
-        commit_head=$(git log --format=format:%H | head -n 1)
-        commit_link=$(echo "https://github.com/$ORG/$repo/commit/$commit_head")
         printf "<b>Brand: $BRAND</b>" > $PROJECT_DIR/working/tg.html
         printf "\n<b>Device: $DEVICE</b>" >> $PROJECT_DIR/working/tg.html
         printf "\n<b>Version:</b> $VERSION" >> $PROJECT_DIR/working/tg.html
         printf "\n<b>Fingerprint:</b> $FINGERPRINT" >> $PROJECT_DIR/working/tg.html
+        [[ ! -z "$PLATFORM" ]] && printf "\n<b>Platform:</b> $PLATFORM" >> $PROJECT_DIR/working/tg.html
         printf "\n<b>GitHub:</b>" >> $PROJECT_DIR/working/tg.html
-        printf "\n<a href=\"$commit_link\">Commit</a>" >> $PROJECT_DIR/working/tg.html
         printf "\n<a href=\"https://github.com/$ORG/$repo/tree/$BRANCH/\">$DEVICE</a>" >> $PROJECT_DIR/working/tg.html
         TEXT=$(cat $PROJECT_DIR/working/tg.html)
         curl -s "https://api.telegram.org/bot${TG_API}/sendmessage" --data "text=${TEXT}&chat_id=${CHAT_ID}&parse_mode=HTML&disable_web_page_preview=True" > /dev/null

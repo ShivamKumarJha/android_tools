@@ -19,7 +19,7 @@ if [ -z "$1" ] ; then
 fi
 
 for var in "$@"; do
-    unset BRAND_TEMP BRAND DEVICE DESCRIPTION FINGERPRINT MODEL SECURITY_PATCH VERSION FLAVOR ID INCREMENTAL TAGS
+    unset BRAND_TEMP BRAND DEVICE DESCRIPTION FINGERPRINT MODEL PLATFORM SECURITY_PATCH VERSION FLAVOR ID INCREMENTAL TAGS
     # Dir or file handling
     if [ -d "$var" ]; then
         DIR=$( realpath "$var" )
@@ -93,9 +93,10 @@ for var in "$@"; do
         MODEL=$( cat "$CAT_FILE" | grep "ro.product" | grep "model=" | sed "s|.*=||g" | head -n 1 )
     fi
     [[ -z "$MODEL" ]] && MODEL=$DEVICE
+    PLATFORM=$( cat "$CAT_FILE" | grep "ro.board.platform" | sed "s|.*=||g" | head -n 1 )
     SECURITY_PATCH=$( cat "$CAT_FILE" | grep "build.version.security_patch=" | sed "s|.*=||g" | head -n 1 )
 
     # Display var's
-    declare -a arr=("BRAND" "DEVICE" "DESCRIPTION" "FINGERPRINT" "MODEL" "SECURITY_PATCH" "VERSION" "FLAVOR" "ID" "INCREMENTAL" "TAGS")
+    declare -a arr=("BRAND" "DEVICE" "DESCRIPTION" "FINGERPRINT" "MODEL" "PLATFORM" "SECURITY_PATCH" "VERSION" "FLAVOR" "ID" "INCREMENTAL" "TAGS")
     for i in "${arr[@]}"; do printf "$i: ${!i}\n"; done
 done
