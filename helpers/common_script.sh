@@ -55,5 +55,6 @@ function dlrom() {
         aria2c -q -s 16 -x 16 ${URL} -d ${PROJECT_DIR}/input -o ${FILE} || { echo "Download failed!"; }
         find ${PROJECT_DIR}/input -name "* *" -type f | rename 's/ /_/g'
         URL=$PROJECT_DIR/input/${FILE}
+        [[ -e ${URL} ]] && du -sh ${URL}
     fi
 }
