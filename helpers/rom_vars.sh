@@ -96,6 +96,10 @@ for var in "$@"; do
     PLATFORM=$( cat "$CAT_FILE" | grep "ro.board.platform" | sed "s|.*=||g" | head -n 1 )
     SECURITY_PATCH=$( cat "$CAT_FILE" | grep "build.version.security_patch=" | sed "s|.*=||g" | head -n 1 )
 
+    TOPIC1=$(echo $BRAND | tr '[:upper:]' '[:lower:]' | tr -dc '[[:print:]]' | tr '_' '-' | cut -c 1-35)
+    TOPIC2=$(echo $PLATFORM | tr '[:upper:]' '[:lower:]' | tr -dc '[[:print:]]' | tr '_' '-' | cut -c 1-35)
+    TOPIC3=$(echo $DEVICE | tr '[:upper:]' '[:lower:]' | tr -dc '[[:print:]]' | tr '_' '-' | cut -c 1-35)
+
     # Display var's
     declare -a arr=("BRAND" "DEVICE" "DESCRIPTION" "FINGERPRINT" "MODEL" "PLATFORM" "SECURITY_PATCH" "VERSION" "FLAVOR" "ID" "INCREMENTAL" "TAGS")
     for i in "${arr[@]}"; do printf "$i: ${!i}\n"; done
