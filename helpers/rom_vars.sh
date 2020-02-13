@@ -31,8 +31,20 @@ for var in "$@"; do
         fi
         CAT_FILE="$PROJECT_DIR/working/system_build.prop"
     elif echo "$var" | grep "https" ; then
-        wget -O $PROJECT_DIR/working/system_build.prop $var
-        CAT_FILE="$PROJECT_DIR/working/system_build.prop"
+        if echo "$var" | grep "all_files.txt" ; then
+            wget -O $PROJECT_DIR/working/all_files.txt $var
+            DUMPURL=$( echo ${var} | sed "s|/all_files.txt||1" )
+            file_lines=`cat $PROJECT_DIR/working/all_files.txt | grep -iE "build" | grep -iE "prop" | sort -uf`
+            for line in $file_lines ; do
+                ((OTA_NO++))
+                wget ${DUMPURL}/${line} -O $PROJECT_DIR/working/${OTA_NO}.prop > /dev/null 2>&1
+            done
+            find $PROJECT_DIR/working/ -name "*prop" -exec cat {} >> $PROJECT_DIR/working/system_build \;
+            CAT_FILE="$PROJECT_DIR/working/system_build"
+        else
+            wget -O $PROJECT_DIR/working/system_build.prop $var
+            CAT_FILE="$PROJECT_DIR/working/system_build.prop"
+        fi
     else
         CAT_FILE="$var"
     fi
@@ -89,6 +101,10 @@ for var in "$@"; do
         MODEL=$( cat "$CAT_FILE" | grep "ro.product.display=" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "ro.semc.product.name" "$CAT_FILE"; then
         MODEL=$( cat "$CAT_FILE" | grep "ro.semc.product.name=" | sed "s|.*=||g" | head -n 1 )
+    elif grep -q "ro.product.odm.model" "$CAT_FILE"; then
+        MODEL=$( cat "$CAT_FILE" | grep "ro.product.odm.model=" | sed "s|.*=||g" | head -n 1 )
+    elif grep -q "ro.product.vendor.model" "$CAT_FILE"; then
+        MODEL=$( cat "$CAT_FILE" | grep "ro.product.vendor.model=" | sed "s|.*=||g" | head -n 1 )
     else
         MODEL=$( cat "$CAT_FILE" | grep "ro.product" | grep "model=" | sed "s|.*=||g" | head -n 1 )
     fi
@@ -103,4 +119,6 @@ for var in "$@"; do
     # Display var's
     declare -a arr=("BRAND" "DEVICE" "DESCRIPTION" "FINGERPRINT" "MODEL" "PLATFORM" "SECURITY_PATCH" "VERSION" "FLAVOR" "ID" "INCREMENTAL" "TAGS")
     for i in "${arr[@]}"; do printf "$i: ${!i}\n"; done
+    # Cleanup
+    rm -rf $PROJECT_DIR/working/system_build* $PROJECT_DIR/working/*prop $PROJECT_DIR/working/all_files.txt
 done
