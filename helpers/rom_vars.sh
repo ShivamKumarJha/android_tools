@@ -28,6 +28,7 @@ for var in "$@"; do
         if [[ -d "$DIR/vendor/euclid/" ]]; then
             find "$DIR/vendor/euclid/" -name "*.img" -exec 7z x -y {} -o"$PROJECT_DIR/working/euclid" \;
             find "$PROJECT_DIR/working/euclid" -name "*prop" -exec cat {} >> $PROJECT_DIR/working/system_build.prop \;
+            rm -rf "$PROJECT_DIR/working/euclid"
         fi
         CAT_FILE="$PROJECT_DIR/working/system_build.prop"
     elif echo "$var" | grep "https" ; then
@@ -54,12 +55,16 @@ for var in "$@"; do
         BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "odm.brand=" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "brand=" "$CAT_FILE"; then
         BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "brand=" | sed "s|.*=||g" | head -n 1 )
+    elif grep -q "ro.product.odm.manufacturer=" "$CAT_FILE"; then
+        BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product.odm.manufacturer" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "manufacturer=" "$CAT_FILE"; then
         BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "manufacturer=" | sed "s|.*=||g" | head -n 1 )
     fi
     BRAND=$(echo $BRAND_TEMP | tr '[:upper:]' '[:lower:]')
     if grep -q "ro.vivo.product.release.name" "$CAT_FILE"; then
         DEVICE=$( cat "$CAT_FILE" | grep "ro.vivo.product.release.name=" | sed "s|.*=||g" | head -n 1 )
+    elif grep -q "ro.vendor.product.oem=" "$CAT_FILE"; then
+        DEVICE=$( cat "$CAT_FILE" | grep "ro.vendor.product.oem=" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "odm.device=" "$CAT_FILE"; then
         DEVICE=$( cat "$CAT_FILE" | grep "odm.device=" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "device=" "$CAT_FILE" && [[ "$BRAND" != "google" ]]; then
