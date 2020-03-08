@@ -26,9 +26,12 @@ for var in "$@"; do
         rm -rf $PROJECT_DIR/working/system_build.prop
         find "$DIR/" -maxdepth 3 -name "build*prop" -exec cat {} >> $PROJECT_DIR/working/system_build.prop \;
         if [[ -d "$DIR/vendor/euclid/" ]]; then
-            find "$DIR/vendor/euclid/" -name "*.img" -exec 7z x -y {} -o"$PROJECT_DIR/working/euclid" \;
-            find "$PROJECT_DIR/working/euclid" -name "*prop" -exec cat {} >> $PROJECT_DIR/working/system_build.prop \;
-            rm -rf "$PROJECT_DIR/working/euclid"
+            EUCLIST=`find "$DIR/vendor/euclid/" -name "*.img" | sort`
+            for EUCITEM in $EUCLIST; do
+                7z x -y $EUCITEM -o"$PROJECT_DIR/working/euclid" > /dev/null 2>&1
+                [[ -d "$PROJECT_DIR/working/euclid" ]] && find "$PROJECT_DIR/working/euclid" -name "*prop" -exec cat {} >> $PROJECT_DIR/working/system_build.prop \;
+                rm -rf "$PROJECT_DIR/working/euclid"
+            done
         fi
         CAT_FILE="$PROJECT_DIR/working/system_build.prop"
     elif echo "$var" | grep "https" ; then
