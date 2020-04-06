@@ -1532,8 +1532,8 @@ function extract() {
         fi
 
         # Strip the file path in the vendor repo of "system", if present
-        local VENDOR_REPO_FILE="$OUTPUT_DIR/${DST_FILE#/system}"
         local BLOB_DISPLAY_NAME="${DST_FILE#/system/}"
+        local VENDOR_REPO_FILE="$OUTPUT_DIR/${BLOB_DISPLAY_NAME}"
         mkdir -p $(dirname "${VENDOR_REPO_FILE}")
 
         # Check pinned files
