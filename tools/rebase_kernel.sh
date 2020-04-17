@@ -87,120 +87,52 @@ fi
 # Apply OEM modifications
 echo "Applying OEM modifications"
 git diff "release-${CAF_TAG}" release | git apply --reject > /dev/null 2>&1
-# dtsi
-[[ -d "arch/arm/boot/dts" ]] && git add "arch/arm/boot/dts" > /dev/null 2>&1
-[[ -d "arch/arm64/boot/dts" ]] && git add "arch/arm64/boot/dts" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add dtsi modifications" > /dev/null 2>&1
-# defconfig
-[[ -d "arch/arm/configs/" ]] && git add "arch/arm/configs/" > /dev/null 2>&1
-[[ -d "arch/arm64/configs/" ]] && git add "arch/arm64/configs/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add defconfig modifications" > /dev/null 2>&1
-# Remaining arch
-[[ -d "arch/" ]] && git add "arch/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add remaining arch modifications" > /dev/null 2>&1
-# block
-[[ -d "block/" ]] && git add "block/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add block modifications" > /dev/null 2>&1
-# crypto
-[[ -d "crypto/" ]] && git add "crypto/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add crypto modifications" > /dev/null 2>&1
-# binder
-[[ -d "drivers/android/" ]] && git add "drivers/android/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add binder modifications" > /dev/null 2>&1
-# base
-[[ -d "drivers/base/" ]] && git add "drivers/base/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add drivers/base modifications" > /dev/null 2>&1
-# block
-[[ -d "drivers/block/" ]] && git add "drivers/block/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add drivers/block modifications" > /dev/null 2>&1
-# camera
-[[ -d "drivers/media/platform/msm/" ]] && git add "drivers/media/platform/msm/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add camera modifications" > /dev/null 2>&1
-# char
-[[ -d "drivers/char/" ]] && git add "drivers/char/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add drivers/char modifications" > /dev/null 2>&1
-# clk
-[[ -d "drivers/clk/" ]] && git add "drivers/clk/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add drivers/clk modifications" > /dev/null 2>&1
-# cpu
-[[ -d "drivers/cpufreq/" ]] && git add "drivers/cpufreq/" > /dev/null 2>&1
-[[ -d "drivers/cpuidle/" ]] && git add "drivers/cpuidle/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add drivers/cpu* modifications" > /dev/null 2>&1
-# DRM
-[[ -d "drivers/gpu/drm/" ]] && git add "drivers/gpu/drm/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add DRM modifications" > /dev/null 2>&1
-# GPU
-[[ -d "drivers/gpu/" ]] && git add "drivers/gpu/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add GPU modifications" > /dev/null 2>&1
-# touchscreen
-[[ -d "drivers/input/touchscreen/" ]] && git add "drivers/input/touchscreen/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add touchscreen modifications" > /dev/null 2>&1
-# input
-[[ -d "drivers/input/" ]] && git add "drivers/input/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add input modifications" > /dev/null 2>&1
-# LEDs
-[[ -d "drivers/leds/" ]] && git add "drivers/leds/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add LEDs modifications" > /dev/null 2>&1
-# misc
-[[ -d "drivers/misc/" ]] && git add "drivers/misc/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add misc modifications" > /dev/null 2>&1
-# mmc
-[[ -d "drivers/mmc/" ]] && git add "drivers/mmc/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add mmc modifications" > /dev/null 2>&1
-# NFC
-[[ -d "drivers/nfc/" ]] && git add "drivers/nfc/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add NFC modifications" > /dev/null 2>&1
-# power
-[[ -d "drivers/power/" ]] && git add "drivers/power/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add Power modifications" > /dev/null 2>&1
-# scsi
-[[ -d "drivers/scsi/" ]] && git add "drivers/scsi/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add scsi modifications" > /dev/null 2>&1
-# soc
-[[ -d "drivers/soc/" ]] && git add "drivers/soc/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add soc modifications" > /dev/null 2>&1
-# thermal
-[[ -d "drivers/thermal/" ]] && git add "drivers/thermal/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add thermal modifications" > /dev/null 2>&1
-# USB
-[[ -d "drivers/usb/" ]] && git add "drivers/usb/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add USB modifications" > /dev/null 2>&1
-# video
-[[ -d "drivers/video/" ]] && git add "drivers/video/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add video modifications" > /dev/null 2>&1
-# Remaining drivers
-[[ -d "drivers/" ]] && git add "drivers/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add remaining drivers modifications" > /dev/null 2>&1
-# Firmware
-[[ -d "firmware/" ]] && git add "firmware/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add Firmware modifications" > /dev/null 2>&1
-# FS
-[[ -d "fs/" ]] && git add "fs/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add FS modifications" > /dev/null 2>&1
-# Headers
-[[ -d "include/" ]] && git add "include/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add Headers modifications" > /dev/null 2>&1
-# kernel/
-[[ -d "kernel/" ]] && git add "kernel/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add kernel/ modifications" > /dev/null 2>&1
-# mm/
-[[ -d "mm/" ]] && git add "mm/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add mm/ modifications" > /dev/null 2>&1
-# net/
-[[ -d "net/" ]] && git add "net/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add net/ modifications" > /dev/null 2>&1
-# security/
-[[ -d "security/" ]] && git add "security/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add security modifications" > /dev/null 2>&1
-# sound/
-[[ -d "sound/" ]] && git add "sound/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add sound modifications" > /dev/null 2>&1
-# techpack/
-[[ -d "techpack/" ]] && git add "techpack/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add techpack modifications" > /dev/null 2>&1
-# tools/
-[[ -d "tools/" ]] && git add "tools/" > /dev/null 2>&1
-git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add tools modifications" > /dev/null 2>&1
+DIFFPATHS=(
+    "arch/arm/boot/dts"
+    "arch/arm64/boot/dts"
+    "arch/arm/configs/"
+    "arch/arm64/configs/"
+    "arch/"
+    "block/"
+    "crypto/"
+    "drivers/android/"
+    "drivers/base/"
+    "drivers/block/"
+    "drivers/media/platform/msm/"
+    "drivers/char/"
+    "drivers/clk/"
+    "drivers/cpufreq/"
+    "drivers/cpuidle/"
+    "drivers/gpu/drm/"
+    "drivers/gpu/"
+    "drivers/input/touchscreen/"
+    "drivers/input/"
+    "drivers/leds/"
+    "drivers/misc/"
+    "drivers/mmc/"
+    "drivers/nfc/"
+    "drivers/power/"
+    "drivers/scsi/"
+    "drivers/soc/"
+    "drivers/thermal/"
+    "drivers/usb/"
+    "drivers/video/"
+    "drivers/"
+    "firmware/"
+    "fs/"
+    "include/"
+    "kernel/"
+    "mm/"
+    "net/"
+    "security/"
+    "sound/"
+    "techpack/"
+    "tools/"
+)
+for ELEMENT in ${DIFFPATHS[@]}; do
+    [[ -d $ELEMENT ]] && git add $ELEMENT > /dev/null 2>&1
+    git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add $ELEMENT modifications" > /dev/null 2>&1
+done
 # Remaining OEM modifications
 git add --all > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add remaining OEM modifications" > /dev/null 2>&1
@@ -209,11 +141,11 @@ git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -
 if [[ ${ORGMEMBER} == "y" ]] && [[ ! -z ${GIT_TOKEN} ]]; then
     echo "Pushing to GitHub"
     curl -s -X POST -H "Authorization: token ${GIT_TOKEN}" -d '{"name": "'"$2"'","description": "'"CAF Rebased kernel source"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/AndroidBlobs/repos" > /dev/null 2>&1
-    git push https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$2".git "release-${CAF_TAG}" > /dev/null 2>&1
+    git push https://"$GIT_TOKEN"@github.com/AndroidBlobs/"$2".git "release-${CAF_TAG}" --force > /dev/null 2>&1
 elif [[ ! -z ${GITHUB_USER} ]] && [[ ! -z ${GIT_TOKEN} ]]; then
     echo "Pushing to GitHub"
     curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name": "'"$2"'","description": "'"CAF Rebased kernel source"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' > /dev/null 2>&1
-    git push https://"$GIT_TOKEN"@github.com/"$GITHUB_USER"/"$2".git "release-${CAF_TAG}" > /dev/null 2>&1
+    git push https://"$GIT_TOKEN"@github.com/"$GITHUB_USER"/"$2".git "release-${CAF_TAG}" --force > /dev/null 2>&1
 fi
 
 # Telegram
