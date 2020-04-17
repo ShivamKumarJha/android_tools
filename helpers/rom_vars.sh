@@ -54,12 +54,14 @@ for var in "$@"; do
     fi
 
     # Set variables
-    if grep -q "odm.brand=" "$CAT_FILE"; then
+    if grep -q "ro.product.odm.manufacturer=" "$CAT_FILE"; then
+        BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product.odm.manufacturer" | sed "s|.*=||g" | head -n 1 )
+    elif grep -q "ro.product.product.manufacturer=" "$CAT_FILE"; then
+        BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product.product.manufacturer" | sed "s|.*=||g" | head -n 1 )
+    elif grep -q "odm.brand=" "$CAT_FILE"; then
         BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "odm.brand=" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "brand=" "$CAT_FILE"; then
         BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "brand=" | sed "s|.*=||g" | head -n 1 )
-    elif grep -q "ro.product.odm.manufacturer=" "$CAT_FILE"; then
-        BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product.odm.manufacturer" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "manufacturer=" "$CAT_FILE"; then
         BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "manufacturer=" | sed "s|.*=||g" | head -n 1 )
     fi
@@ -68,6 +70,8 @@ for var in "$@"; do
         DEVICE=$( cat "$CAT_FILE" | grep "ro.vivo.product.release.name=" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "ro.vendor.product.oem=" "$CAT_FILE"; then
         DEVICE=$( cat "$CAT_FILE" | grep "ro.vendor.product.oem=" | sed "s|.*=||g" | head -n 1 )
+    elif grep -q "ro.product.vendor.device=" "$CAT_FILE"; then
+        DEVICE=$( cat "$CAT_FILE" | grep "ro.product.vendor.device=" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "odm.device=" "$CAT_FILE"; then
         DEVICE=$( cat "$CAT_FILE" | grep "odm.device=" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "device=" "$CAT_FILE" && [[ "$BRAND" != "google" ]]; then
