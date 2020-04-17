@@ -126,6 +126,11 @@ DIFFPATHS=(
     "net/"
     "security/"
     "sound/"
+    "techpack/audio"
+    "techpack/camera"
+    "techpack/display"
+    "techpack/stub"
+    "techpack/video"
     "techpack/"
     "tools/"
 )
