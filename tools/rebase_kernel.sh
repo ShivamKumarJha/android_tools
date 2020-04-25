@@ -60,7 +60,6 @@ git init -q
 git config core.fileMode false
 git checkout -b release -q
 [[ -d ${AUDIO_KERNEL_DIR}/audio-kernel/ ]] && mkdir -p techpack/ && mv ${AUDIO_KERNEL_DIR}/audio-kernel/ techpack/audio
-[[ -d "techpack/audio" ]] && HAS_AUDIO_KERNEL="y"
 git add --all > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "OEM Release" > /dev/null 2>&1
 
@@ -77,12 +76,6 @@ rm -rf ${KERNEL_DIR}/best-caf-kernel.py
 
 # Rebase to best CAF tag
 git checkout -q "refs/tags/${CAF_TAG}" -b "release-${CAF_TAG}"
-
-# techpack/audio subtree
-if [[ ${HAS_AUDIO_KERNEL} == "y" ]]; then
-    echo "Adding techpack/audio subtree"
-    git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" subtree add --prefix techpack/audio git://codeaurora.org/platform/vendor/opensource/audio-kernel/ ${CAF_TAG} > /dev/null 2>&1
-fi
 
 # Apply OEM modifications
 echo "Applying OEM modifications"
