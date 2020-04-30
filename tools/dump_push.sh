@@ -30,7 +30,6 @@ for var in "$@"; do
         echo -e "Could not set variables! Exiting"
         exit 1
     fi
-    BRANCH=$(echo $DESCRIPTION | tr ' ' '-')
     repo=$(echo $BRAND\_$DEVICE\_dump | tr '[:upper:]' '[:lower:]')
     repo_desc=$(echo "$MODEL dump")
     if [[ "$ORGMEMBER" == "y" ]]; then

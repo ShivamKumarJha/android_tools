@@ -50,7 +50,6 @@ proprietary () {
 common_core () {
     # Variables
     source $PROJECT_DIR/helpers/rom_vars.sh "$ROM_PATH" > /dev/null 2>&1
-    BRANCH=$(echo $DESCRIPTION | tr ' ' '-' | sort -u | head -n 1 )
     DT_DIR="$PROJECT_DIR"/dummy_dt/"$BRAND"/"$DEVICE"
     DT_REPO=$(echo device_$BRAND\_$DEVICE)
     DT_REPO_DESC=$(echo "Dummy device tree for $MODEL")
