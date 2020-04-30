@@ -124,12 +124,23 @@ for var in "$@"; do
     PLATFORM=$( cat "$CAT_FILE" | grep "ro.board.platform" | sed "s|.*=||g" | head -n 1 )
     SECURITY_PATCH=$( cat "$CAT_FILE" | grep "build.version.security_patch=" | sed "s|.*=||g" | head -n 1 )
 
+    # Date
+    if grep -q "ro.system.build.date=" "$CAT_FILE"; then
+        DATE=$( cat "$CAT_FILE" | grep "ro.system.build.date=" | sed "s|.*=||g" | head -n 1 )
+    elif grep -q "ro.vendor.build.date=" "$CAT_FILE"; then
+        DATE=$( cat "$CAT_FILE" | grep "ro.vendor.build.date=" | sed "s|.*=||g" | head -n 1 )
+    elif grep -q "ro.build.date=" "$CAT_FILE"; then
+        DATE=$( cat "$CAT_FILE" | grep "ro.build.date=" | sed "s|.*=||g" | head -n 1 )
+    elif grep -q "ro.bootimage.build.date=" "$CAT_FILE"; then
+        DATE=$( cat "$CAT_FILE" | grep "ro.bootimage.build.date=" | sed "s|.*=||g" | head -n 1 )
+    fi
+
     TOPIC1=$(echo $BRAND | tr '[:upper:]' '[:lower:]' | tr -dc '[[:print:]]' | tr '_' '-' | cut -c 1-35)
     TOPIC2=$(echo $PLATFORM | tr '[:upper:]' '[:lower:]' | tr -dc '[[:print:]]' | tr '_' '-' | cut -c 1-35)
     TOPIC3=$(echo $DEVICE | tr '[:upper:]' '[:lower:]' | tr -dc '[[:print:]]' | tr '_' '-' | cut -c 1-35)
 
     # Display var's
-    declare -a arr=("BRAND" "DEVICE" "DESCRIPTION" "FINGERPRINT" "MODEL" "PLATFORM" "SECURITY_PATCH" "VERSION" "FLAVOR" "ID" "INCREMENTAL" "TAGS")
+    declare -a arr=("BRAND" "DEVICE" "DESCRIPTION" "FINGERPRINT" "MODEL" "PLATFORM" "SECURITY_PATCH" "VERSION" "DATE" "FLAVOR" "ID" "INCREMENTAL" "TAGS")
     for i in "${arr[@]}"; do printf "$i: ${!i}\n"; done
     # Cleanup
     rm -rf $PROJECT_DIR/working/system_build* $PROJECT_DIR/working/*prop $PROJECT_DIR/working/all_files.txt
