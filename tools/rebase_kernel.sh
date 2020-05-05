@@ -69,7 +69,7 @@ echo "Fetching tags ending with $3"
 git fetch msm "refs/tags/*$3:refs/tags/*$3" > /dev/null 2>&1
 echo "Finding best CAF base"
 cp -a ${PROJECT_DIR}/helpers/best-caf-kernel.py ${KERNEL_DIR}/best-caf-kernel.py
-CAF_TAG="$(python ${KERNEL_DIR}/best-caf-kernel.py "*$3" )"
+CAF_TAG="$(python3 ${KERNEL_DIR}/best-caf-kernel.py "*$3" )"
 [[ -z "$CAF_TAG" ]] && echo -e "Error!" && exit 1
 echo ${CAF_TAG}
 rm -rf ${KERNEL_DIR}/best-caf-kernel.py
