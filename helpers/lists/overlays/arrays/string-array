@@ -1,3 +1,4 @@
+config_apexBootImagePinnerServiceFiles
 config_defaultPinnerServiceFiles
 config_gpsParameters
 config_mobile_tcp_buffers
