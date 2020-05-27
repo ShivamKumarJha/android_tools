@@ -26,6 +26,9 @@ GITHUB_USER="$(git config --get user.name)"
 [[ -z "$VERBOSE" ]] && VERBOSE="y"
 export LC_ALL=C make
 
+# extract-ikconfig
+[[ ! -e ${PROJECT_DIR}/helpers/extract-ikconfig ]] && curl https://raw.githubusercontent.com/torvalds/linux/master/scripts/extract-ikconfig > ${PROJECT_DIR}/helpers/extract-ikconfig
+
 function dlrom() {
     echo "Downloading file"
     mkdir -p ${PROJECT_DIR}/input

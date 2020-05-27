@@ -1,6 +1,7 @@
 dumps/
 dummy_dt/
 input/
+helpers/extract-ikconfig
 kernels/
 working/
 vendor/

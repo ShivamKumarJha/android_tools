@@ -62,6 +62,8 @@ for var in "$@"; do
 
     # boot.img operations
     if [ -e $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img ]; then
+        # extract-ikconfig
+        bash ${PROJECT_DIR}/helpers/extract-ikconfig $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img > $PROJECT_DIR/dumps/${UNZIP_DIR}/ikconfig
         # Extract kernel
         bash $PROJECT_DIR/tools/mkbootimg_tools/mkboot $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img $PROJECT_DIR/dumps/${UNZIP_DIR}/boot/ > /dev/null 2>&1
         mv $PROJECT_DIR/dumps/${UNZIP_DIR}/boot/kernel $PROJECT_DIR/dumps/${UNZIP_DIR}/boot/Image.gz-dtb
