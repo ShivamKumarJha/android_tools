@@ -20,6 +20,11 @@ if [ -d "$PROJECT_DIR/tools/mkbootimg_tools" ]; then
 else
     git clone https://github.com/carlitros900/mkbootimg_tools $PROJECT_DIR/tools/mkbootimg_tools
 fi
+if [ -d "$PROJECT_DIR/tools/vmlinux-to-elf" ]; then
+    git -C $PROJECT_DIR/tools/vmlinux-to-elf pull
+else
+    git clone https://github.com/marin-m/vmlinux-to-elf $PROJECT_DIR/tools/vmlinux-to-elf
+fi
 if [ -d "$PROJECT_DIR/tools/Firmware_extractor" ]; then
     git -C $PROJECT_DIR/tools/Firmware_extractor pull --recurse-submodules
 else
