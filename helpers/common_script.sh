@@ -10,7 +10,7 @@
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 
 # Create some folders
-mkdir -p "$PROJECT_DIR/dumps/" "$PROJECT_DIR/working"
+mkdir -p "$PROJECT_DIR/dumps/" "$PROJECT_DIR/working" "$PROJECT_DIR/input"
 
 # clean up
 if [ "$1" == "y" ]; then
