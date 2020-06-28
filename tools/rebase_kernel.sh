@@ -25,6 +25,7 @@ if [[ "$1" == *"http"* ]]; then
 else
     URL=$( realpath "$1" )
     echo "Copying file"
+    [ ! -d ${PROJECT_DIR}/input ] && mkdir -p ${PROJECT_DIR}/input
     cp -a ${1} ${PROJECT_DIR}/input/
 fi
 FILE=${URL##*/}
