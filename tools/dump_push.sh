@@ -32,15 +32,8 @@ for var in "$@"; do
     fi
     repo=$(echo $BRAND\_$DEVICE\_dump | tr '[:upper:]' '[:lower:]')
     repo_desc=$(echo "$MODEL dump")
-    if [[ "$ORGMEMBER" == "y" ]]; then
-        ORG=AndroidDumps
-        GITHUB_EMAIL="${ORG}@github.com"
-        curl -s -X POST -H "Authorization: token ${GIT_TOKEN}" -d '{"name": "'"$repo"'","description": "'"$repo_desc"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' "https://api.github.com/orgs/${ORG}/repos" > /dev/null 2>&1
-        curl -s -X PUT -H "Authorization: token ${GIT_TOKEN}" -H "Accept: application/vnd.github.mercy-preview+json" -d '{ "names": ["'"$TOPIC1"'","'"$TOPIC2"'","'"$TOPIC3"'"]}' "https://api.github.com/repos/${ORG}/${repo}/topics" > /dev/null 2>&1
-    elif [[ ! -z "$GITHUB_EMAIL" ]] && [[ ! -z "$GITHUB_USER" ]]; then
-        ORG="$GITHUB_USER"
-        curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name": "'"$repo"'","description": "'"$repo_desc"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' > /dev/null 2>&1
-    fi
+    ORG="$GITHUB_USER"
+    curl https://api.github.com/user/repos\?access_token=$GIT_TOKEN -d '{"name": "'"$repo"'","description": "'"$repo_desc"'","private": false,"has_issues": true,"has_projects": false,"has_wiki": true}' > /dev/null 2>&1
     [[ -z "$ORG" ]] && echo -e "Missing GitHub user name. Exiting." && exit 1
     wget "https://raw.githubusercontent.com/$ORG/$repo/$BRANCH/all_files.txt" 2>/dev/null && echo "Firmware already dumped!" && exit 1
 
@@ -65,20 +58,3 @@ for var in "$@"; do
     git add system/ > /dev/null 2>&1
     git -c "user.name=${ORG}" -c "user.email=${GITHUB_EMAIL}" commit -asm "Add system for ${DESCRIPTION}" > /dev/null 2>&1
     git push https://$GIT_TOKEN@github.com/$ORG/${repo,,}.git $BRANCH > /dev/null 2>&1
-
-    # Telegram channel
-    if [ ! -z "$TG_API" ] && [[ "$ORGMEMBER" == "y" ]]; then
-        CHAT_ID="@android_dumps"
-        printf "<b>Brand: $BRAND</b>" > $PROJECT_DIR/working/tg.html
-        printf "\n<b>Device: $DEVICE</b>" >> $PROJECT_DIR/working/tg.html
-        printf "\n<b>Version:</b> $VERSION" >> $PROJECT_DIR/working/tg.html
-        printf "\n<b>Fingerprint:</b> $FINGERPRINT" >> $PROJECT_DIR/working/tg.html
-        [[ ! -z "$PLATFORM" ]] && printf "\n<b>Platform:</b> $PLATFORM" >> $PROJECT_DIR/working/tg.html
-        printf "\n<b>GitHub:</b>" >> $PROJECT_DIR/working/tg.html
-        printf "\n<a href=\"https://github.com/$ORG/$repo/tree/$BRANCH/\">$DEVICE</a>" >> $PROJECT_DIR/working/tg.html
-        TEXT=$(cat $PROJECT_DIR/working/tg.html)
-        curl -s "https://api.telegram.org/bot${TG_API}/sendmessage" --data "text=${TEXT}&chat_id=${CHAT_ID}&parse_mode=HTML&disable_web_page_preview=True" > /dev/null
-        rm -rf $PROJECT_DIR/working/tg.html
-    fi
-    cd "$PROJECT_DIR"
-done

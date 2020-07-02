@@ -21,7 +21,7 @@ fi
 GITHUB_EMAIL="$(git config --get user.email)"
 GITHUB_USER="$(git config --get user.name)"
 [[ -z "$DUMMYDT" ]] && DUMMYDT="n"
-[[ -z "$DUMPYARA" ]] && DUMPYARA="n"
+[[ -z "$DUMPPUSH" ]] && DUMPPUSH="n"
 [[ -z "$ORGMEMBER" ]] && ORGMEMBER="n"
 [[ -z "$VERBOSE" ]] && VERBOSE="y"
 export LC_ALL=C make

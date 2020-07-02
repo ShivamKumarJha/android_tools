@@ -6,7 +6,7 @@ Collection of scripts to help with Android ROM stuff.
 `chmod +x setup.sh`  
 `sudo bash setup.sh`
   
-1. **blobs_downloader.sh**: A script to download selected blobs from [AndroidBlobs](https://github.com/AndroidBlobs), [AndroidDumps](https://github.com/AndroidDumps) etc repo. [Example](https://del.dog/olohilylon.txt).  
+1. **blobs_downloader.sh**: A script to download selected blobs from [AndroidBlobs](https://github.com/AndroidBlobs) etc repo. [Example](https://del.dog/olohilylon.txt).  
 Usage: `./tools/blobs_downloader.sh <raw dump repo URL> <path to proprietary-files.txt>`
 
 2. **common_blobs.sh**: A script to list common and device specific blob's between two ROM's.  
