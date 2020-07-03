@@ -326,11 +326,7 @@ for list in $blobs_list ; do
     printf "\n# $list\n" >> $PROJECT_DIR/working/proprietary-files-staging.txt
     for line in $file_lines ; do
         if cat $PROJECT_DIR/working/rom_all.txt | grep "$line"; then
-            if echo "$line" | grep -iE "vendor.qti.hardware.fm@1.0.so" | grep -v "vendor/"; then
-                echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
-            elif echo "$line" | grep -iE "priv-app/imssettings/imssettings.apk"; then
-                echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
-            elif echo "$line" | grep -iE "app/|lib64/com.quicinc.cne|libaudio_log_utils.so|libgpustats.so|libsdm-disp-vndapis.so|libthermalclient.so|WfdCommon.jar|libantradio.so|libsdm-disp-apis.so"; then
+            if echo "$line" | grep -iE "libplatformconfig|apk|jar"; then
                 echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
             else
                 echo "$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
