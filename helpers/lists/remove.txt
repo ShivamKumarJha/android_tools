@@ -1,3 +1,6 @@
+system_ext/etc/mmi/
+system_ext/etc/selinux/
+system_ext/etc/vintf/
 vendor/bin/hw/android.hardware.audio@
 vendor/bin/hw/android.hardware.authsecret@
 vendor/bin/hw/android.hardware.boot@

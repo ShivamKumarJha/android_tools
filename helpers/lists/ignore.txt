@@ -1,3 +1,6 @@
+system_ext/build.prop
+system_ext/etc/NOTICE.xml.gz
+system_ext/etc/passwd
 vendor/bin/acpi
 vendor/bin/awk
 vendor/bin/base64
