@@ -13,8 +13,8 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 source ${PROJECT_DIR}/helpers/common_script.sh
 
 # Arguements check
-if [ -z ${1} ] || [ -z ${2} ] || [ -z ${3} ]; then
-    echo -e "Usage: bash rebase_kernel.sh <kernel zip link/file> <repo name> <tag suffix>"
+if [ -z ${1} ] || [ -z ${2} ]; then
+    echo -e "Usage: bash rebase_kernel.sh <kernel zip link/file> <repo name> <OPTIONAL: tag suffix>"
     exit 1
 fi
 
@@ -65,14 +65,32 @@ git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -
 
 # Find best CAF TAG
 git remote add msm https://source.codeaurora.org/quic/la/kernel/msm-${KERNEL_VERSION}.${KERNEL_PATCHLEVEL}
-echo "Fetching tags ending with $3"
-git fetch msm "refs/tags/*$3:refs/tags/*$3" > /dev/null 2>&1
+if [ -z "$3" ]; then
+    echo "Fetching CAF tags"
+    git fetch msm "refs/tags/L*0:refs/tags/L*0" > /dev/null 2>&1
+else
+    echo "Fetching tags ending with $3"
+    git fetch msm "refs/tags/*$3:refs/tags/*$3" > /dev/null 2>&1
+fi
 echo "Finding best CAF base"
-cp -a ${PROJECT_DIR}/helpers/best-caf-kernel.py ${KERNEL_DIR}/best-caf-kernel.py
-CAF_TAG="$(python3 ${KERNEL_DIR}/best-caf-kernel.py "*$3" )"
+CAF_TAG=""
+BEST_DIFF=999999
+if [ -z "$3" ]; then
+    TAGS=`git tag -l L*0`
+else
+    TAGS=`git tag -l *${3}`
+fi
+for TAG in $TAGS; do
+    echo "Checking $TAG"
+    TAG_DIFF="$(git diff $TAG --shortstat | sed "s|files changed.*||g" | sed "s| ||g")"
+    if [ ${TAG_DIFF} -lt ${BEST_DIFF} ]; then
+        BEST_DIFF=${TAG_DIFF}
+        CAF_TAG=${TAG}
+        [[ "$VERBOSE" != "n" ]] && echo "Current best TAG is ${CAF_TAG} with ${BEST_DIFF} file changes"
+    fi
+done
 [[ -z "$CAF_TAG" ]] && echo -e "Error!" && exit 1
-echo ${CAF_TAG}
-rm -rf ${KERNEL_DIR}/best-caf-kernel.py
+[[ "$VERBOSE" != "n" ]] && echo "Best CAF TAG is ${CAF_TAG} with ${BEST_DIFF} file changes"
 
 # Rebase to best CAF tag
 git checkout -q "refs/tags/${CAF_TAG}" -b "release-${CAF_TAG}"
@@ -81,6 +99,7 @@ git checkout -q "refs/tags/${CAF_TAG}" -b "release-${CAF_TAG}"
 echo "Applying OEM modifications"
 git diff "release-${CAF_TAG}" release | git apply --reject > /dev/null 2>&1
 DIFFPATHS=(
+    "Documentation/"
     "arch/arm/boot/dts"
     "arch/arm64/boot/dts"
     "arch/arm/configs/"
@@ -156,4 +175,5 @@ if [ ! -z ${GIT_TOKEN} ] && [ ! -z ${TG_API} ] && [[ ${ORGMEMBER} == "y" ]]; the
     CHAT_ID="@dummy_dt"
     HTML_FILE=$(cat ${PROJECT_DIR}/working/tg.html)
     curl -s "https://api.telegram.org/bot${TG_API}/sendmessage" --data "text=${HTML_FILE}&chat_id=${CHAT_ID}&parse_mode=HTML&disable_web_page_preview=True" > /dev/null 2>&1
+    rm -rf ${PROJECT_DIR}/working/tg.html
 fi

@@ -37,7 +37,7 @@ For online git repo: `./tools/proprietary-files.sh <raw file link of all_files.t
 For local dump: `./tools/proprietary-files.sh <path to ROM dump OR path to all_files.txt>`
 
 9. **rebase_kernel.sh**: A script to rebase OEM compressed kernel source to its best CAF base.  
-Usage: `./tools/rebase_kernel.sh <kernel zip link/file> <repo name> <tag suffix>`
+Usage: `./tools/rebase_kernel.sh <kernel zip link/file> <repo name>`
 
 10. **rom_compare.sh**: A script to compare source & target ROM. It lists `Added, common, missing & modified` blobs.  
 Usage: `./tools/rom_compare.sh <path to source ROM dump> <path to target ROM dump>`
