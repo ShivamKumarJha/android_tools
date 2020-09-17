@@ -57,10 +57,10 @@ for var in "$@"; do
     # boot.img operations
     if [ -e $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img ]; then
         # extract-ikconfig
-        bash ${PROJECT_DIR}/helpers/extract-ikconfig $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img > $PROJECT_DIR/dumps/${UNZIP_DIR}/ikconfig
+        bash ${PROJECT_DIR}/helpers/extract-ikconfig $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img > $PROJECT_DIR/dumps/${UNZIP_DIR}/bootRE/ikconfig
         # vmlinux-to-elf
         mkdir -p $PROJECT_DIR/dumps/${UNZIP_DIR}/bootRE
-        python3 ${PROJECT_DIR}/tools/vmlinux-to-elf/vmlinux_to_elf/kallsyms_finder.py $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img > $PROJECT_DIR/dumps/${UNZIP_DIR}/bootRE/boot_kallsyms.txt
+        python3 ${PROJECT_DIR}/tools/vmlinux-to-elf/vmlinux_to_elf/kallsyms_finder.py $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img > $PROJECT_DIR/dumps/${UNZIP_DIR}/bootRE/kallsyms.txt 2>&1
         python3 ${PROJECT_DIR}/tools/vmlinux-to-elf/vmlinux_to_elf/main.py $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img $PROJECT_DIR/dumps/${UNZIP_DIR}/bootRE/boot.elf > /dev/null 2>&1
         # Extract kernel
         bash $PROJECT_DIR/tools/mkbootimg_tools/mkboot $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img $PROJECT_DIR/dumps/${UNZIP_DIR}/boot/ > /dev/null 2>&1
