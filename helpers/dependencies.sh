@@ -30,3 +30,6 @@ if [ -d "$PROJECT_DIR/tools/Firmware_extractor" ]; then
 else
     git clone --recurse-submodules https://github.com/ShivamKumarJha/Firmware_extractor $PROJECT_DIR/tools/Firmware_extractor
 fi
+
+# extract-ikconfig
+[[ ! -e ${PROJECT_DIR}/helpers/extract-ikconfig ]] && curl https://raw.githubusercontent.com/torvalds/linux/master/scripts/extract-ikconfig > ${PROJECT_DIR}/helpers/extract-ikconfig

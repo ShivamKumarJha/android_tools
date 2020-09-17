@@ -26,8 +26,11 @@ GITHUB_USER="$(git config --get user.name)"
 [[ -z "$VERBOSE" ]] && VERBOSE="y"
 export LC_ALL=C make
 
-# extract-ikconfig
-[[ ! -e ${PROJECT_DIR}/helpers/extract-ikconfig ]] && curl https://raw.githubusercontent.com/torvalds/linux/master/scripts/extract-ikconfig > ${PROJECT_DIR}/helpers/extract-ikconfig
+# Dependencies check
+if [ ! -d "$PROJECT_DIR/tools/Firmware_extractor" ] || [ ! -d "$PROJECT_DIR/tools/extract-dtb" ] || [ ! -d "$PROJECT_DIR/tools/mkbootimg_tools" ] || [ ! -d "$PROJECT_DIR/tools/vmlinux-to-elf" ]; then
+    [[ "$VERBOSE" != "n" ]] && echo -e "Cloning dependencies..."
+    bash $PROJECT_DIR/helpers/dependencies.sh > /dev/null 2>&1
+fi
 
 function dlrom() {
     echo "Downloading file"
