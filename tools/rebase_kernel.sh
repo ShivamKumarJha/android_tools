@@ -43,9 +43,11 @@ NEST="$( find ${PROJECT_DIR}/kernels/${UNZIP_DIR} -type f -size +50M -printf '%P
 if [ ! -z ${NEST} ] && [[ ! -e ${KERNEL_DIR}/Makefile ]]; then
     bash ${PROJECT_DIR}/tools/rebase_kernel.sh ${PROJECT_DIR}/kernels/${UNZIP_DIR}/${NEST} ${2} ${3}
     rm -rf ${PROJECT_DIR}/input/${NEST}
+    rm -rf ${PROJECT_DIR}/kernels/${UNZIP_DIR}
     exit
 fi
 cd ${KERNEL_DIR}
+[[ -d ${KERNEL_DIR}/.git/ ]] && rm -rf ${KERNEL_DIR}/.git/
 
 # Find kernel version
 KERNEL_VERSION="$( cat Makefile | grep VERSION | head -n 1 | sed "s|.*=||1" | sed "s| ||g" )"
@@ -54,17 +56,27 @@ KERNEL_PATCHLEVEL="$( cat Makefile | grep PATCHLEVEL | head -n 1 | sed "s|.*=||1
 [[ -z "$KERNEL_PATCHLEVEL" ]] && echo -e "Error!" && exit 1
 echo "${KERNEL_VERSION}.${KERNEL_PATCHLEVEL}"
 
+# Move to common msm kernel directory with fetched TAG's
+if [[ ! -d ${PROJECT_DIR}/kernels/msm-${KERNEL_VERSION}.${KERNEL_PATCHLEVEL} ]]; then
+    mkdir -p ${PROJECT_DIR}/kernels/msm-${KERNEL_VERSION}.${KERNEL_PATCHLEVEL}
+    cd ${PROJECT_DIR}/kernels/msm-${KERNEL_VERSION}.${KERNEL_PATCHLEVEL}
+    git init -q
+    git config core.fileMode false
+    git config merge.renameLimit 999999
+    git remote add msm https://source.codeaurora.org/quic/la/kernel/msm-${KERNEL_VERSION}.${KERNEL_PATCHLEVEL}
+fi
+
 # Create release branch
 echo "Creating release branch"
-git init -q
-git config core.fileMode false
+cd ${PROJECT_DIR}/kernels/msm-${KERNEL_VERSION}.${KERNEL_PATCHLEVEL}
 git checkout -b release -q
+cp -a ${KERNEL_DIR}/* ${PROJECT_DIR}/kernels/msm-${KERNEL_VERSION}.${KERNEL_PATCHLEVEL}
 [[ -d ${AUDIO_KERNEL_DIR}/audio-kernel/ ]] && mkdir -p techpack/ && mv ${AUDIO_KERNEL_DIR}/audio-kernel/ techpack/audio
 git add --all > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "OEM Release" > /dev/null 2>&1
+rm -rf ${PROJECT_DIR}/kernels/${UNZIP_DIR}
 
 # Find best CAF TAG
-git remote add msm https://source.codeaurora.org/quic/la/kernel/msm-${KERNEL_VERSION}.${KERNEL_PATCHLEVEL}
 if [ -z "$3" ]; then
     echo "Fetching CAF tags"
     git fetch msm "refs/tags/L*0:refs/tags/L*0" > /dev/null 2>&1
@@ -81,7 +93,7 @@ else
     TAGS=`git tag -l *${3}`
 fi
 for TAG in $TAGS; do
-    echo "Checking $TAG"
+    echo "Comparing with $TAG"
     TAG_DIFF="$(git diff $TAG --shortstat | sed "s|files changed.*||g" | sed "s| ||g")"
     if [ ${TAG_DIFF} -lt ${BEST_DIFF} ]; then
         BEST_DIFF=${TAG_DIFF}
@@ -177,3 +189,7 @@ if [ ! -z ${GIT_TOKEN} ] && [ ! -z ${TG_API} ] && [[ ${ORGMEMBER} == "y" ]]; the
     curl -s "https://api.telegram.org/bot${TG_API}/sendmessage" --data "text=${HTML_FILE}&chat_id=${CHAT_ID}&parse_mode=HTML&disable_web_page_preview=True" > /dev/null 2>&1
     rm -rf ${PROJECT_DIR}/working/tg.html
 fi
+
+# Delete and rename branches
+git branch -D release > /dev/null 2>&1
+git branch -m "release-${CAF_TAG}" "$( echo ${2} | sed "s|kernel_||g" | tr '_' '/' )-${CAF_TAG}-$( date +'%d%m%Y' )"
