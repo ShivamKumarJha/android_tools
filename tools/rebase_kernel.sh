@@ -70,6 +70,7 @@ fi
 echo "Creating release branch"
 cd ${PROJECT_DIR}/kernels/msm-${KERNEL_VERSION}.${KERNEL_PATCHLEVEL}
 git checkout -b release -q
+rm -rf *
 cp -a ${KERNEL_DIR}/* ${PROJECT_DIR}/kernels/msm-${KERNEL_VERSION}.${KERNEL_PATCHLEVEL}
 [[ -d ${AUDIO_KERNEL_DIR}/audio-kernel/ ]] && mkdir -p techpack/ && mv ${AUDIO_KERNEL_DIR}/audio-kernel/ techpack/audio
 git add --all > /dev/null 2>&1
@@ -93,7 +94,7 @@ else
     TAGS=`git tag -l *${3}`
 fi
 for TAG in $TAGS; do
-    echo "Comparing with $TAG"
+    [[ "$VERBOSE" != "n" ]] && echo "Comparing with $TAG"
     TAG_DIFF="$(git diff $TAG --shortstat | sed "s|files changed.*||g" | sed "s| ||g")"
     if [ ${TAG_DIFF} -lt ${BEST_DIFF} ]; then
         BEST_DIFF=${TAG_DIFF}
@@ -112,8 +113,8 @@ echo "Applying OEM modifications"
 git diff "release-${CAF_TAG}" release | git apply --reject > /dev/null 2>&1
 DIFFPATHS=(
     "Documentation/"
-    "arch/arm/boot/dts"
-    "arch/arm64/boot/dts"
+    "arch/arm/boot/dts/"
+    "arch/arm64/boot/dts/"
     "arch/arm/configs/"
     "arch/arm64/configs/"
     "arch/"
@@ -150,11 +151,11 @@ DIFFPATHS=(
     "net/"
     "security/"
     "sound/"
-    "techpack/audio"
-    "techpack/camera"
-    "techpack/display"
-    "techpack/stub"
-    "techpack/video"
+    "techpack/audio/"
+    "techpack/camera/"
+    "techpack/display/"
+    "techpack/stub/"
+    "techpack/video/"
     "techpack/"
     "tools/"
 )
@@ -192,4 +193,5 @@ fi
 
 # Delete and rename branches
 git branch -D release > /dev/null 2>&1
-git branch -m "release-${CAF_TAG}" "$( echo ${2} | sed "s|kernel_||g" | tr '_' '/' )-${CAF_TAG}-$( date +'%d%m%Y' )"
+git branch -D "$( echo ${2} | sed "s|kernel_||g" | tr '_' '/' )-${CAF_TAG}" > /dev/null 2>&1
+git branch -m "release-${CAF_TAG}" "$( echo ${2} | sed "s|kernel_||g" | tr '_' '/' )-${CAF_TAG}"
