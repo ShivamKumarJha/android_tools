@@ -8,5 +8,4 @@ vendor/
 tools/extract-dtb/
 tools/Firmware_extractor/
 tools/mkbootimg_tools/
-tools/vmlinux-to-elf/
 .fuse_*
