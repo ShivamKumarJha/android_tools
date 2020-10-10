@@ -40,12 +40,12 @@ function dlrom() {
         rm -rf ${PROJECT_DIR}/input/*
         FILE_ID="$(echo "${URL:?}" | sed -Er -e 's/https.*id=(.*)/\1/' -e 's/https.*\/d\/(.*)\/(view|edit)/\1/' -e 's/(.*)(&|\?).*/\1/')"
         gdrive download "$FILE_ID" --no-progress || { echo "Download failed!"; }
-        find ${PROJECT_DIR}/input -name "* *" -type f | rename 's/ /_/g'
+        find ${PROJECT_DIR}/input -name "* *" -type f
         URL=$( ls -d $PWD/* )
     elif [[ "$URL" == *"https://mega.nz/"* ]] && [[ -e "/usr/bin/megadl" ]]; then
         rm -rf ${PROJECT_DIR}/input/*
         megadl "${URL}" --no-progress || { echo "Download failed!"; }
-        find ${PROJECT_DIR}/input -name "* *" -type f | rename 's/ /_/g'
+        find ${PROJECT_DIR}/input -name "* *" -type f
         URL=$( ls -d $PWD/* )
     else
         if [[ $(echo $URL | grep ".zip?") ]]; then
@@ -59,7 +59,7 @@ function dlrom() {
         fi
         rm -rf $PROJECT_DIR/input/${FILE}
         aria2c -q -s 16 -x 16 ${URL} -d ${PROJECT_DIR}/input -o ${FILE} || { echo "Download failed!"; }
-        find ${PROJECT_DIR}/input -name "* *" -type f | rename 's/ /_/g'
+        find ${PROJECT_DIR}/input -name "* *" -type f
         URL=$PROJECT_DIR/input/${FILE}
         [[ -e ${URL} ]] && du -sh ${URL}
     fi
