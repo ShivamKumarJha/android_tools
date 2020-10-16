@@ -13,8 +13,8 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null && pwd )"
 source $PROJECT_DIR/helpers/common_script.sh "y"
 
 proprietary_rootdir () {
-    TSTART=$(grep -nr "# Misc" "$DT_DIR"/proprietary-files.txt | sed "s|:.*||g")
-    TEND=$(wc -l "$DT_DIR"/proprietary-files.txt | sed "s| .*||g")
+    TSTART=$(grep -nr "# Misc" "$DT_DIR"/proprietary-files.txt | sed "s|:.*||g" | head -1)
+    TEND=$(wc -l "$DT_DIR"/proprietary-files.txt | sed "s| .*||g" | head -1)
     sed -n "${TSTART},${TEND}p" "$DT_DIR"/proprietary-files.txt > "$PROJECT_DIR"/dummy_dt/working/misc.txt
     while IFS= read -r line; do
         if grep -ril "$line" "$DT_DIR"/rootdir/; then

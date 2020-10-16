@@ -14,7 +14,7 @@ source $PROJECT_DIR/helpers/common_script.sh "y"
 
 # Exit if no arguements
 if [ -z "$1" ] ; then
-    echo -e "Supply sytem &/ vendor build.prop as arguements!"
+    echo -e "Supply ROM directory as arguement!"
     exit 1
 fi
 
@@ -28,7 +28,10 @@ elif [ -d "$1" ]; then
         SYSTEM_PATH="system"
     fi
     find "$1/$SYSTEM_PATH" -maxdepth 1 -name "build*prop" -exec cat {} >> $PROJECT_DIR/working/system_working.prop \;
-    find "$1/vendor" -maxdepth 1 -name "build*prop" -exec cat {} >> $PROJECT_DIR/working/vendor_working.prop \;
+    [[ -d "$1/system/vendor/" ]] && VENDOR_PATH="system/vendor"
+    [[ -d "$1/system/system/vendor/" ]] && VENDOR_PATH="system/system/vendor"
+    [[ -d "$1/vendor/" ]] && VENDOR_PATH="vendor"
+    find "$1/$VENDOR_PATH" -maxdepth 1 -name "build*prop" -exec cat {} >> $PROJECT_DIR/working/vendor_working.prop \;
 else
     cp -a $1 $PROJECT_DIR/working/system_working.prop
 fi
@@ -41,32 +44,24 @@ if [ ! -z "$2" ] ; then
 fi
 
 # system.prop
-TSTART=$(grep -nr "# end build properties" $PROJECT_DIR/working/system_working.prop | sed "s|:.*||g")
-TEND=$(grep -nr "# ADDITIONAL_BUILD_PROPERTIES" $PROJECT_DIR/working/system_working.prop | sed "s|:.*||g")
-sed -n "${TSTART},${TEND}p" $PROJECT_DIR/working/system_working.prop | sort | sed "s|#.*||g" | sed '/^[[:space:]]*$/d' > $PROJECT_DIR/working/system_new.prop
+if [ -s "$PROJECT_DIR/working/system_working.prop" ]; then
+    TSTART=$(grep -nr "# end build properties" $PROJECT_DIR/working/system_working.prop | sed "s|:.*||g" | head -1)
+    TEND=$(grep -nr "# ADDITIONAL_BUILD_PROPERTIES" $PROJECT_DIR/working/system_working.prop | sed "s|:.*||g" | head -1)
+    sed -n "${TSTART},${TEND}p" $PROJECT_DIR/working/system_working.prop | sort | sed "s|#.*||g" | sed '/^[[:space:]]*$/d' > $PROJECT_DIR/working/system_new.prop
+fi
 
 # vendor.prop
-if [ ! -z "$2" ] || [ -e $PROJECT_DIR/working/vendor_working.prop ]; then
-    TSTART=$(grep -nr "ADDITIONAL VENDOR BUILD PROPERTIES" $PROJECT_DIR/working/vendor_working.prop | sed "s|:.*||g")
-    TEND=$(wc -l $PROJECT_DIR/working/vendor_working.prop | sed "s| .*||g")
+if [ -s "$PROJECT_DIR/working/vendor_working.prop" ]; then
+    TSTART=$(grep -nr "ADDITIONAL VENDOR BUILD PROPERTIES" $PROJECT_DIR/working/vendor_working.prop | sed "s|:.*||g" | head -1)
+    TEND=$(wc -l $PROJECT_DIR/working/vendor_working.prop | sed "s| .*||g" | head -1)
     sed -n "${TSTART},${TEND}p" $PROJECT_DIR/working/vendor_working.prop | sort | sed "s|#.*||g" | sed '/^[[:space:]]*$/d' > $PROJECT_DIR/working/vendor_new.prop
 fi
 
-# Lineage vendor security patch support
-source $PROJECT_DIR/helpers/rom_vars.sh $PROJECT_DIR/working/system_working.prop > /dev/null 2>&1
-if [ "$VERSION" -lt 9 ]; then
-    grep "ro.build.version.security_patch=" $PROJECT_DIR/working/system_working.prop | sed "s|ro.build.version.security_patch|ro.lineage.build.vendor_security_patch|g" >> $PROJECT_DIR/working/staging.mk
-fi
-
 # Combine newly generated system.prop & vendor.prop
-if [ ! -z "$2" ] || [ -e $PROJECT_DIR/working/vendor_working.prop ]; then
+if [ -s "$PROJECT_DIR/working/vendor_new.prop" ]; then
     echo "$(cat $PROJECT_DIR/working/system_new.prop $PROJECT_DIR/working/vendor_new.prop | sort -u )" >> $PROJECT_DIR/working/staging.mk
 else
     echo "$(cat $PROJECT_DIR/working/system_new.prop | sort -u )" >> $PROJECT_DIR/working/staging.mk
-fi
-
-if ! grep -q "ro.sf.lcd_density=" $PROJECT_DIR/working/staging.mk; then
-    echo "ro.sf.lcd_density=440" >> $PROJECT_DIR/working/staging.mk
 fi
 
 # Cleanup unrequired prop's
