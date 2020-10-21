@@ -1263,6 +1263,10 @@ function oat2dex() {
         export VDEXEXTRACTOR="$LINEAGE_ROOT"/helpers/extract_blobs/Linux/vdexExtractor
     fi
 
+    if [ -z "$PATCHELF" ]; then
+        export PATCHELF="$LINEAGE_ROOT"/prebuilts/tools-lineage/${HOST}-x86/bin/patchelf
+    fi
+
     # Extract existing boot.oats to the temp folder
     if [ -z "$ARCHES" ]; then
         echo "Checking if system is odexed and locating boot.oats..."
