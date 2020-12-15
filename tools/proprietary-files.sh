@@ -180,6 +180,9 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "keystore|libsp
 # Latency
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "data.latency|qti.latency" | grep -v "odex" | grep -v "vdex" | sort -u >> $PROJECT_DIR/working/proprietary/Latency
 
+# Lights
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "hardware.light|hw/lights" | sort -u >> $PROJECT_DIR/working/proprietary/Lights
+
 # Listen
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "liblisten|hw/sound_trigger.primary" | sort -u >> $PROJECT_DIR/working/proprietary/Listen
 
