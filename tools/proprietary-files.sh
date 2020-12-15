@@ -329,7 +329,7 @@ for list in $blobs_list ; do
     printf "\n# $list\n" >> $PROJECT_DIR/working/proprietary-files-staging.txt
     for line in $file_lines ; do
         if cat $PROJECT_DIR/working/rom_all.txt | grep "$line"; then
-            if echo "$line" | grep -iE "libplatformconfig|apk|jar"; then
+            if echo "$line" | grep -iE "libplatformconfig|apk|jar|etc/vintf/manifest/"; then
                 echo "-$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
             else
                 echo "$line" >> $PROJECT_DIR/working/proprietary-files-staging.txt
