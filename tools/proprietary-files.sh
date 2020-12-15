@@ -313,7 +313,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "lib/hw/vr|lib6
 # WFD
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "bin/wfdservice|etc/init/wfdservice.rc|etc/wfdconfig|framework/WfdCommon.jar|priv-app/WfdService/WfdService.apk" | sort -u >> $PROJECT_DIR/working/proprietary/WFD
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "lib/|lib64/" | grep -iE "wifidisplayhal|libwfd" | grep -v "libwfds.so" | sort -u >> $PROJECT_DIR/working/proprietary/WFD
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "wifidisplayhal|wfdservice|libwfd|wfdconfig" | sort -u >> $PROJECT_DIR/working/proprietary/WFD
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "wifidisplayhal|wfdservice|libwfd|wfdconfig|miracast" | sort -u >> $PROJECT_DIR/working/proprietary/WFD
 
 # Xiaomi
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor.xiaomi.hardware." | grep -v "odex" | grep -v "vdex" | sort -u >> $PROJECT_DIR/working/proprietary/Xiaomi
