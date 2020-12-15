@@ -228,7 +228,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "bin/pm-proxy|b
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "lib/|lib64/|vendor/" | grep -iE "vendor.display.color|vendor.display.postproc" | sort -u >> $PROJECT_DIR/working/proprietary/Postprocessing
 
 # Power-Hardware
-cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/" | grep -iE "hardware.power@|hw/power" | sort -u >> $PROJECT_DIR/working/proprietary/Power-Hardware
+cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/" | grep -iE "hardware.power|hw/power" | sort -u >> $PROJECT_DIR/working/proprietary/Power-Hardware
 
 # Qdutils_disp
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "qdutils_disp" | sort -u >> $PROJECT_DIR/working/proprietary/Qdutils
