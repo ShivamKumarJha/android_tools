@@ -62,7 +62,7 @@ cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/etc/acdb|vendor/etc/audc
 
 # Audio-Hardware
 cat $PROJECT_DIR/working/rom_all.txt | grep -iE "vendor/lib/|vendor/lib64/" | grep -iE "libaudio_log_utils.so|libtinycompress_vendor.so|libqcompostprocbundle.so|libqcomvisualizer.so|libqcomvoiceprocessing.so|libvolumelistener.so" | sort -u >> $PROJECT_DIR/working/proprietary/Audio-Hardware
-cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "hw/audio" | grep -v "bluetooth" | sort -u >> $PROJECT_DIR/working/proprietary/Audio-Hardware
+cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "hardware.audio|hw/audio" | grep -v "bluetooth" | grep -v "etc/permissions" | sort -u >> $PROJECT_DIR/working/proprietary/Audio-Hardware
 
 # Bluetooth
 cat $PROJECT_DIR/working/rom_all.txt | grep "vendor/" | grep -iE "libbthost_if|btnvtool|hci_qcomm_init|wcnss_filter|bluetooth|libbt|btconfigstore" | grep -v "vendor/etc/permissions" | grep -v "libbthost_if" | grep -v "overlay/" | grep -v "bluetooth_qti_audio_policy_configuration.xml" | sort -u >> $PROJECT_DIR/working/proprietary/Bluetooth
