@@ -187,8 +187,17 @@ search_blobs | grep "vendor/" | grep -iE "etc/dsi_|video_dsi_panel" | grep "xml"
 search_blobs | grep -iE "vendor/etc/qdcm_calib" | add_to_section Display-calibration
 
 # Display-Hardware
+display_targets=(
+    "hardware.display"
+    "hardware.graphics"
+    "hardware.memtrack"
+    "vendor.display.config"
+    "hw/gralloc"
+    "hw/hwcomposer"
+    "hw/memtrack"
+)
+search_blobs | get_hardware_module "${display_targets[@]}" | add_to_section Display-Hardware
 search_blobs | grep -iE "lib/|lib64/" | grep -iE "libsdm-disp-apis.so" | add_to_section Display-Hardware
-search_blobs | grep "vendor/" | grep -iE "vendor.qti.hardware.display.allocator|hardware.graphics.mapper|vendor.display.config@|hw/gralloc|hw/hwcomposer|hw/memtrack" | add_to_section Display-Hardware
 
 # Dolby
 search_blobs | grep "vendor/" | grep -iE "dolby" | add_to_section Dolby
