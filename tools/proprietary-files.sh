@@ -298,10 +298,13 @@ search_blobs | grep "vendor/" | grep -iE "IFAA" | add_to_section IFAA
 search_blobs | grep "vendor/firmware/ipa_fws" | add_to_section IPA-Firmware
 
 # Keymaster
-search_blobs | grep "vendor/" | grep -iE "keymaster" | add_to_section Keymaster
-
-# Keystore
-search_blobs | grep "vendor/" | grep -iE "keystore|libspcom" | add_to_section Keystore
+keymaster_targets=(
+    "hardware.keymaster"
+    "hardware.wifi.keystore"
+    "hw/keystore"
+)
+search_blobs | get_hardware_module "${keymaster_targets[@]}" | add_to_section Keymaster
+search_blobs | grep "vendor/" | grep -iE "keymaster|keystore|libspcom" | add_to_section Keymaster
 
 # Latency
 search_blobs | grep -iE "data.latency|qti.latency" | grep -v "odex" | grep -v "vdex" | add_to_section Latency
