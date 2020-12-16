@@ -417,9 +417,13 @@ search_blobs | grep -iE "etc/permissions/qti_" | add_to_section QMI
 search_blobs | grep "vendor/" | grep -iE "libqmi" | add_to_section QMI
 
 # Radio
+radio_targets=(
+    "hardware.radio"
+)
+search_blobs | get_hardware_module "${radio_targets[@]}" | grep -v "ims" | add_to_section Radio
 search_blobs | grep -iE "app/QtiTelephonyService/QtiTelephonyService.apk|app/datastatusnotification/datastatusnotification.apk|app/embms/embms.apk|etc/permissions/embms.xml|etc/permissions/privapp-permissions-qti.xml|etc/permissions/qcrilhook.xml|etc/permissions/telephonyservice.xml|etc/sysconfig/qti_whitelist.xml|priv-app/qcrilmsgtunnel/qcrilmsgtunnel.apk" | add_to_section Radio
 search_blobs | grep "framework/" | grep -iE "QtiTelephonyServicelibrary|embmslibrary|qcnvitems|qcrilhook|qti-telephony-common" | grep ".jar" | add_to_section Radio
-search_blobs | grep "vendor/" | grep -iE "radio/|vendor.qti.hardware.radio" | grep -v "vendor.qti.hardware.radio.ims" | add_to_section Radio
+search_blobs | grep "vendor/" | grep -iE "radio/" | grep -v "vendor.qti.hardware.radio.ims" | add_to_section Radio
 
 # Radio-IMS
 search_blobs | grep -iE "app/imssettings/imssettings.apk|etc/permissions/com.qualcomm.qti.imscmservice|app/uceShimService/uceShimService.apk" | add_to_section Radio-IMS
