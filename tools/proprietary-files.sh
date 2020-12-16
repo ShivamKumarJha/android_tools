@@ -74,7 +74,11 @@ search_blobs | grep -iE "vendor/lib/|vendor/lib64/|bin/adsprpcd" | grep -iE "lib
 search_blobs | grep -iE "vendor/lib/rfsa/adsp/|vendor/dsp/" | grep -v "scve" | add_to_section ADSP-Modules
 
 # Alarm
-search_blobs | grep -iE "framework/vendor.qti.hardware.|vendor/" | grep -iE "alarm" | add_to_section Alarm
+alarm_targets=(
+    "hardware.alarm"
+)
+search_blobs | get_hardware_module "${alarm_targets[@]}" | add_to_section Alarm
+search_blobs | grep -iE "vendor/" | grep -iE "alarm" | add_to_section Alarm
 
 # ANT
 search_blobs | grep -iE "libantradio|qti.ant@" | add_to_section ANT
