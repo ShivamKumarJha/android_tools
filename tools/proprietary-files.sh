@@ -490,6 +490,10 @@ search_blobs | grep "vendor/" | grep -iE "improvetouch" | add_to_section Touch-i
 search_blobs | grep "vendor/" | grep -iE "etc/hbtp/|libhbtp" | add_to_section Touchscreen
 
 # TUI
+tui_targets=(
+    "hardware.tui_comm"
+)
+search_blobs | get_hardware_module "${tui_targets[@]}" | add_to_section TUI
 search_blobs | grep "vendor/" | grep -iE "tui_comm" | add_to_section TUI
 
 # UBWC
