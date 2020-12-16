@@ -526,6 +526,12 @@ vr_targets=(
 search_blobs | get_hardware_module "${vr_targets[@]}" | add_to_section VR
 
 # WFD
+wfd_targets=(
+    "hardware.sigma_miracast"
+    "hardware.wifidisplaysession"
+    "qti.wifidisplayhal"
+)
+search_blobs | get_hardware_module "${wfd_targets[@]}" | add_to_section WFD
 search_blobs | grep -iE "bin/wfdservice|etc/init/wfdservice.rc|etc/wfdconfig|framework/WfdCommon.jar|priv-app/WfdService/WfdService.apk" | add_to_section WFD
 search_blobs | grep -iE "lib/|lib64/" | grep -iE "wifidisplayhal|libwfd" | grep -v "libwfds.so" | add_to_section WFD
 search_blobs | grep "vendor/" | grep -iE "wifidisplayhal|wfdservice|libwfd|wfdconfig|miracast" | add_to_section WFD
