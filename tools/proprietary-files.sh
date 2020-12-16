@@ -519,7 +519,11 @@ search_blobs | get_hardware_module "${voice_targets[@]}" | add_to_section Voice
 search_blobs | grep "vendor/" | grep -iE "vendor/etc/qvop/|libqvop" | add_to_section Voice
 
 # VR
-search_blobs | grep "vendor/" | grep -iE "lib/hw/vr|lib64/hw/vr" | add_to_section VR
+vr_targets=(
+    "hardware.vr"
+    "hw/vr"
+)
+search_blobs | get_hardware_module "${vr_targets[@]}" | add_to_section VR
 
 # WFD
 search_blobs | grep -iE "bin/wfdservice|etc/init/wfdservice.rc|etc/wfdconfig|framework/WfdCommon.jar|priv-app/WfdService/WfdService.apk" | add_to_section WFD
