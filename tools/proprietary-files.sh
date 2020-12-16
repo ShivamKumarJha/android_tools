@@ -392,7 +392,11 @@ search_blobs | grep "vendor/" | grep -iE "iopd" | add_to_section Perf-IOP
 search_blobs | grep "vendor/" | grep -iE "bin/pm-proxy|bin/pm-service|libperipheral" | add_to_section Peripheral
 
 # Postprocessing
-search_blobs | grep -iE "lib/|lib64/|vendor/" | grep -iE "vendor.display.color|vendor.display.postproc" | add_to_section Postprocessing
+postprocessing_targets=(
+    "vendor.display.color"
+    "vendor.display.postproc"
+)
+search_blobs | get_hardware_module "${postprocessing_targets[@]}" | add_to_section Postprocessing
 
 # Power-Hardware
 search_blobs | grep -iE "vendor/" | grep -iE "hardware.power|hw/power" | add_to_section Power-Hardware
