@@ -276,7 +276,11 @@ search_blobs | grep -iE "etc/permissions/com.qti.location.sdk.xml|etc/permission
 search_blobs | grep "vendor/" | grep -iE "libizat_|liblowi_|libloc_|liblocation" | add_to_section GPS
 
 # Graphics
-search_blobs | grep "vendor/" | grep -iE "libc2d30|hw/vulkan|lib/egl/|lib64/egl/" | add_to_section Graphics
+graphics_targets=(
+    "hw/vulkan"
+)
+search_blobs | get_hardware_module "${graphics_targets[@]}" | add_to_section Graphics
+search_blobs | grep "vendor/" | grep -iE "libc2d30|lib/egl/|lib64/egl/" | add_to_section Graphics
 
 # HotwordEnrollment
 search_blobs | grep -iE "app/" | grep -iE "HotwordEnrollment" | grep ".apk" | add_to_section HotwordEnrollment
