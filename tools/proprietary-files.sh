@@ -227,7 +227,10 @@ search_blobs | grep "vendor/" | grep -iE "etc/dts/|libdts|libomx-dts" | add_to_s
 search_blobs | grep -iE "lib/|lib64/|vendor/" | grep -iE "esepowermanager" | add_to_section ESE-Powermanager
 
 # Factory
-search_blobs | grep -iE "vendor.qti.hardware.factory" | add_to_section Factory
+factory_targets=(
+    "vendor.qti.hardware.factory"
+)
+search_blobs | get_hardware_module "${factory_targets[@]}" | add_to_section Factory
 
 # Fido
 search_blobs | grep "vendor/" | grep -iE "fido" | add_to_section Fido
