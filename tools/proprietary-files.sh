@@ -511,7 +511,12 @@ search_blobs | grep "vendor/" | grep -iE "vibrator" | add_to_section Vibrator
 search_blobs | grep "vendor/" | grep -iE "vivo" | add_to_section Vivo
 
 # Voice
-search_blobs | grep "vendor/" | grep -iE "voiceprint@|vendor/etc/qvop/|libqvop" | add_to_section Voice
+voice_targets=(
+    "hardware.voiceprint"
+    "qti.voiceprint"
+)
+search_blobs | get_hardware_module "${voice_targets[@]}" | add_to_section Voice
+search_blobs | grep "vendor/" | grep -iE "vendor/etc/qvop/|libqvop" | add_to_section Voice
 
 # VR
 search_blobs | grep "vendor/" | grep -iE "lib/hw/vr|lib64/hw/vr" | add_to_section VR
