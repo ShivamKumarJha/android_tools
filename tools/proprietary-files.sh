@@ -426,11 +426,18 @@ search_blobs | grep "framework/" | grep -iE "QtiTelephonyServicelibrary|embmslib
 search_blobs | grep "vendor/" | grep -iE "radio/" | grep -v "vendor.qti.hardware.radio.ims" | add_to_section Radio
 
 # Radio-IMS
+radioims_targets=(
+    "com.qualcomm.qti.imscmservice"
+    "com.qualcomm.qti.uceservice"
+    "radio.ims"
+    "qti.ims"
+)
+search_blobs | get_hardware_module "${radioims_targets[@]}" | add_to_section Radio-IMS
 search_blobs | grep -iE "app/imssettings/imssettings.apk|etc/permissions/com.qualcomm.qti.imscmservice|app/uceShimService/uceShimService.apk" | add_to_section Radio-IMS
-search_blobs | grep -iE "framework/com.qualcomm.qti.imscmservice|framework/com.qualcomm.qti.uceservice|framework/vendor.qti.ims|framework/qti-vzw-ims-internal" | add_to_section Radio-IMS
-search_blobs | grep -iE "lib/|lib64" | grep -iE "libdiag_system.so|librcc.so|com.qualcomm.qti.imscmservice@|com.qualcomm.qti.uceservice@|lib-ims|libimscamera_jni|libimsmedia_jni|vendor.qti.ims|lib-dplmedia.so|lib-rtp|lib-siputility" | grep -v "priv-app/" | add_to_section Radio-IMS
+search_blobs | grep -iE "framework/qti-vzw-ims-internal" | add_to_section Radio-IMS
+search_blobs | grep -iE "lib/|lib64" | grep -iE "libdiag_system.so|librcc.so|lib-ims|libimscamera_jni|libimsmedia_jni|lib-dplmedia.so|lib-rtp|lib-siputility" | grep -v "priv-app/" | add_to_section Radio-IMS
 search_blobs | grep -iE "priv-app/ims/ims.apk|priv-app/imssettings/imssettings.apk|vendor/bin/ims_rtp_daemon|vendor/bin/imsdatadaemon|vendor/bin/imsqmidaemon|vendor/bin/imsrcsd|vendor/bin/ims_rtp_daemon" | add_to_section Radio-IMS
-search_blobs | grep "vendor/" | grep -iE "imsrtpservice|imscmservice|uceservice|vendor.qti.ims.|lib-ims|radio.ims@|vendor.qti.hardware.radio.ims" | add_to_section Radio-IMS
+search_blobs | grep "vendor/" | grep -iE "imsrtpservice|imscmservice|uceservice|lib-ims" | add_to_section Radio-IMS
 
 # Samsung
 search_blobs | grep "vendor/" | grep -iE "samsung|SoundAlive" | grep -v "vendor/etc/qdcm_calib" | grep -v "vendor/etc/dsi" | grep -v "vendor/firmware/" | add_to_section Samsung
