@@ -88,6 +88,12 @@ ant_targets=(
 search_blobs | get_hardware_module "${ant_targets[@]}" | add_to_section ANT
 search_blobs | grep -iE "libantradio" | add_to_section ANT
 
+# Atrace
+atrace_targets=(
+    "hardware.atrace"
+)
+search_blobs | get_hardware_module "${atrace_targets[@]}" | add_to_section Atrace
+
 # Audio
 search_blobs | grep -iE "etc/permissions/audiosphere.xml|framework/audiosphere.jar" | add_to_section Audio
 search_blobs | grep "vendor/" | grep -iE "libtinycompress|tfa98xx|libsrsprocessing|libaudio|libacdb|libdirac|etc/dirac|etc/sony_effect/|etc/drc/|etc/surround_sound_3mic/" | grep -v "lib/rfsa/adsp" | grep -v "lib/modules/" | add_to_section Audio
