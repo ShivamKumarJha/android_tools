@@ -147,6 +147,13 @@ search_blobs | grep "vendor/" | grep -iE "cdsprpc|libcdsp|libsdsprpc|libfastrpc|
 # Charger
 search_blobs | grep -iE "vendor/bin/hvdcp_opti|vendor/charge/chargemon/" | add_to_section Charger
 
+# Configstore
+configstore_targets=(
+    "hardware.configstore"
+    "vendor.qti.hardware.capabilityconfigstore"
+)
+search_blobs | get_hardware_module "${configstore_targets[@]}" | add_to_section Configstore
+
 # Consumerir
 search_blobs | grep "vendor/" | grep -iE "consumerir" | grep -v "android.hardware.consumerir.xml" | add_to_section Consumerir
 
