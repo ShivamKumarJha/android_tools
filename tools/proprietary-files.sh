@@ -236,6 +236,11 @@ search_blobs | get_hardware_module "${factory_targets[@]}" | add_to_section Fact
 search_blobs | grep "vendor/" | grep -iE "fido" | add_to_section Fido
 
 # Fingerprint
+fingerprint_targets=(
+    "hardware.biometrics.fingerprint"
+    "hw/fingerprint"
+)
+search_blobs | get_hardware_module "${fingerprint_targets[@]}" | add_to_section Fingerprint
 search_blobs | grep "etc/firmware/goodixfp|etc/firmware/fpctzappfingerprint" | add_to_section Fingerprint
 search_blobs | grep "vendor/" | grep -iE "fpctzappfingerprint|silead|biometrics|etc/qti_fp/|libgf_|fingerprint|goodix|cdfinger|qfp-daemon|init_qfp_daemon|libqfp|fp_hal|libsl_fp|libarm_proxy_skel|libhvx_proxy_stub" | grep -v "android.hardware.fingerprint.xml" | grep -v "/usr/" | add_to_section Fingerprint
 
