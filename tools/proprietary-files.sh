@@ -359,6 +359,10 @@ search_blobs | grep -v "vendor/" | grep -iE "app/NxpNfcNci/NxpNfcNci.apk|app/Nxp
 search_blobs | grep "vendor/" | grep -iE "libpn5|nfc|secure_element|etc/libese|nxp|libp61|ls_client" | grep -v "etc/permissions/android.hardware.nfc" | add_to_section NFC
 
 # Neural-networks
+nn_targets=(
+    "hardware.neuralnetworks"
+)
+search_blobs | get_hardware_module "${nn_targets[@]}" | add_to_section Neural-networks
 search_blobs | grep "vendor/" | grep -iE "neuralnetworks|libhexagon" | add_to_section Neural-networks
 
 # OnePlus
