@@ -449,7 +449,13 @@ search_blobs | grep -iE "lib/|lib64/|vendor/" | grep -iE "scve" | add_to_section
 search_blobs | grep "vendor/" | grep -iE "seccam" | add_to_section Seccam
 
 # Sensors
-search_blobs | grep "vendor/" | grep -iE "libsensor|lib64/sensors|lib/sensors|libAsusRGBSensorHAL|lib/hw/sensors|lib64/hw/sensors|libssc|hw/activity_recognition|hw/sensors|lib/sensors|lib64/sensors" | add_to_section Sensors
+sensors_targets=(
+    "hardware.sensors"
+    "hw/activity_recognition"
+    "hw/sensors"
+)
+search_blobs | get_hardware_module "${sensors_targets[@]}" | add_to_section Sensors
+search_blobs | grep "vendor/" | grep -iE "libsensor|lib64/sensors|lib/sensors|libAsusRGBSensorHAL|libssc|lib/sensors|lib64/sensors" | add_to_section Sensors
 
 # Sensor-calibrate
 search_blobs | grep "vendor/" | grep -iE "sensorscalibrate" | add_to_section Sensor-calibrate
