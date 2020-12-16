@@ -321,7 +321,12 @@ lights_targets=(
 search_blobs | get_hardware_module "${lights_targets[@]}" | add_to_section Lights
 
 # Listen
-search_blobs | grep "vendor/" | grep -iE "liblisten|hw/sound_trigger.primary" | add_to_section Listen
+listen_targets=(
+    "hardware.soundtrigger"
+    "hw/sound_trigger.primary"
+)
+search_blobs | get_hardware_module "${listen_targets[@]}" | add_to_section Listen
+search_blobs | grep "vendor/" | grep -iE "liblisten" | add_to_section Listen
 
 # Machine-Learning
 search_blobs | grep "vendor/" | grep -iE "mlshal" | add_to_section Machine-Learning
