@@ -467,7 +467,11 @@ search_blobs | grep -iE "vendor/etc/sensors/" | grep -v "vendor/etc/sensors/hals
 search_blobs | grep "vendor/" | grep -iE "vendor.semc|vendor.somc|init.sony" | add_to_section Sony
 
 # Soter
-search_blobs | grep -iE "app/SoterService/SoterService.apk|framework/vendor.qti.hardware.soter|lib64/vendor.qti.hardware.soter" | add_to_section Soter
+soter_targets=(
+    "hardware.soter"
+)
+search_blobs | get_hardware_module "${soter_targets[@]}" | add_to_section Soter
+search_blobs | grep -iE "app/SoterService/SoterService.apk" | add_to_section Soter
 search_blobs | grep "vendor/" | grep -iE "soter" | add_to_section Soter
 
 # SSR
