@@ -50,6 +50,23 @@ add_to_section() {
     sort -u >> "$PROJECT_DIR/working/proprietary/${1}"
 }
 
+get_hardware_module() {
+    files=$(cat)
+    arr=("$@")
+    for i in "${arr[@]}"; do
+    case $i in
+        hw/* )
+            echo "$files" | grep -iE "vendor/" | grep -iE "lib/|lib64/" | grep -iE "hw/*${i:3}"
+            ;;
+        * )
+            echo "$files" | grep -iE "vendor/|product/|system_ext/" \
+                          | grep -iE "bin/hw/|etc/init/|etc/vintf/manifest/|framework/|lib/|lib64/" \
+                          | grep -iE "${i}|hw/${i}"
+            ;;
+    esac
+    done
+}
+
 # ADSP
 search_blobs | grep -iE "vendor/lib/|vendor/lib64/|bin/adsprpcd" | grep -iE "libadsp|ibfastcv|adsprpc|mdsprpc|sdsprpc" | grep -v "scve" | grep -v "lib/rfsa/adsp" | add_to_section ADSP
 
