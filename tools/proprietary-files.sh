@@ -123,15 +123,20 @@ search_blobs | grep "vendor/" | grep -iE "libbthost_if|btnvtool|hci_qcomm_init|w
 search_blobs | grep -iE "aptx" | grep -v "lib/rfsa/adsp" | add_to_section Bluetooth-AptX
 
 # Camera blobs
+camera_targets=(
+    "hardware.camera"
+    "hw/camera"
+)
+search_blobs | get_hardware_module "${camera_targets[@]}" | add_to_section Camera
 search_blobs | grep -iE "vendor/lib/libactuator|vendor/lib64/libactuator" | add_to_section Camera-actuators
 search_blobs | grep -iE "vendor/lib/libarcsoft|vendor/lib64/libarcsoft" | add_to_section Camera-arcsoft
-search_blobs | grep "vendor/bin/" | grep -iE "camera" | grep -v "hardware.camera.provider@" | add_to_section Camera-bin
+search_blobs | grep "vendor/bin/" | grep -iE "camera" | grep -v "hardware.camera" | add_to_section Camera-bin
 search_blobs | grep -iE "vendor/lib/libchromatix|vendor/lib64/libchromatix" | add_to_section Camera-chromatix
 search_blobs | grep -iE "vendor/etc/camera|vendor/etc/qvr/|vendor/camera3rd/|vendor/camera_sound|vendor/etc/FLASH_ON/|vendor/etc/IMX|vendor/camera/" | add_to_section Camera-configs
 search_blobs | grep -iE "vendor/etc/" | grep "ISO" | grep ".*\.ncf" | add_to_section Camera-configs
 search_blobs | grep -iE "vendor/firmware/cpp_firmware|vendor/firmware/CAMERA" | add_to_section Camera-firmware
 search_blobs | grep "vendor/" | grep -iE "libcam|libDepthBokeh|libSonyDual|libtriplecam|libremosaic|lib/camera/|lib64/camera/|mibokeh|lib_camera|libgcam|libdualcam|libmakeup|libtriplecam|SuperSensor|SonyIMX|libmialgo|libsnpe" | grep -v "vendor/lib/rfsa/adsp/" | add_to_section Camera
-search_blobs | grep "vendor/" | grep -iE "hw/camera|libMegvii|libVD|libcapi|libextawb|libnti_|vendor.qti.hardware.camera.device" | grep -v "vendor/lib/rfsa/adsp/" | add_to_section Camera
+search_blobs | grep "vendor/" | grep -iE "libMegvii|libVD|libcapi|libextawb|libnti_" | grep -v "vendor/lib/rfsa/adsp/" | add_to_section Camera
 search_blobs | grep "vendor/" | grep -iE "motor" | grep -v "odex" | grep -v "vdex" | grep -v "motorola" | add_to_section Camera-motor
 search_blobs | grep -iE "vendor/lib/libois|vendor/lib64/libois" | add_to_section Camera-ois
 search_blobs | grep -iE "vendor/lib/libmmcamera|vendor/lib64/libmmcamera" | add_to_section Camera-sensors
