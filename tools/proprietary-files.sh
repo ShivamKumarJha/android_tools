@@ -349,6 +349,12 @@ search_blobs | grep "vendor/" | grep -iE "meizu" | add_to_section Meizu
 search_blobs | grep "vendor/" | grep -iE "libmot|lib_mot|motcamera|motobox|motorola" | add_to_section Motorola
 
 # NFC
+nfc_targets=(
+    "hardware.nfc"
+    "hardware.secure_element"
+    "hw/nfc"
+)
+search_blobs | get_hardware_module "${nfc_targets[@]}" | add_to_section NFC
 search_blobs | grep -v "vendor/" | grep -iE "app/NxpNfcNci/NxpNfcNci.apk|app/NxpSecureElement/NxpSecureElement.apk|etc/nfcee_access.xml|etc/permissions/com.nxp.nfc.xml|framework/com.nxp.nfc.jar|libnxpnfc" | add_to_section NFC
 search_blobs | grep "vendor/" | grep -iE "libpn5|nfc|secure_element|etc/libese|nxp|libp61|ls_client" | grep -v "etc/permissions/android.hardware.nfc" | add_to_section NFC
 
