@@ -382,7 +382,11 @@ search_blobs | get_hardware_module "${perf_targets[@]}" | add_to_section Perf
 search_blobs | grep -iE "etc/perf/|libqti-perf|libqti-util|libqti_perf" | add_to_section Perf
 
 # Perf-IOP
-search_blobs | grep "vendor/" | grep -iE "iop@|iopd" | add_to_section Perf-IOP
+perfiop_targets=(
+    "hardware.iop"
+)
+search_blobs | get_hardware_module "${perfiop_targets[@]}" | add_to_section Perf-IOP
+search_blobs | grep "vendor/" | grep -iE "iopd" | add_to_section Perf-IOP
 
 # Peripheral
 search_blobs | grep "vendor/" | grep -iE "bin/pm-proxy|bin/pm-service|libperipheral" | add_to_section Peripheral
