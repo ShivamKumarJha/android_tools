@@ -314,7 +314,11 @@ latency_targets=(
 search_blobs | get_hardware_module "${latency_targets[@]}" | add_to_section Latency
 
 # Lights
-search_blobs | grep "vendor/" | grep -iE "hardware.light|hw/lights" | add_to_section Lights
+lights_targets=(
+    "hardware.light"
+    "hw/lights"
+)
+search_blobs | get_hardware_module "${lights_targets[@]}" | add_to_section Lights
 
 # Listen
 search_blobs | grep "vendor/" | grep -iE "liblisten|hw/sound_trigger.primary" | add_to_section Listen
