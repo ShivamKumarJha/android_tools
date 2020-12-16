@@ -205,6 +205,12 @@ search_blobs | grep "vendor/" | grep -iE "dolby" | add_to_section Dolby
 # DPM
 search_blobs | grep -iE "dpm.api@|libdpm|bin/dpmd|etc/dpm/dpm.conf|etc/init/dpmd.rc|com.qti.dpmframework|dpmapi|framework/tcmclient.jar|priv-app/dpmserviceapp/dpmserviceapp.apk|vendor/bin/dpmQmiMgr" | add_to_section DPM
 
+# DRM-Hardware
+drm_targets=(
+    "hardware.drm"
+)
+search_blobs | get_hardware_module "${drm_targets[@]}" | add_to_section DRM-Hardware
+
 # DRM-HDCP
 search_blobs | grep "vendor/" | grep -iE "libhdcp|hdcpmgr|bin/hdcp" | add_to_section DRM-HDCP
 
@@ -212,7 +218,6 @@ search_blobs | grep "vendor/" | grep -iE "libhdcp|hdcpmgr|bin/hdcp" | add_to_sec
 search_blobs | grep "vendor/" | grep -iE "qteeconnector" | add_to_section DRM-Qteeconnector
 
 # DRM-Widevine
-search_blobs | grep "vendor/" | grep "hardware.drm" | grep "widevine" | add_to_section DRM-Widevine
 search_blobs | grep -iE "firmware/cppf|firmware/widevine|mediadrm/|qcdrm/|lib/libwvhidl.so|lib64/libwvhidl.so" | add_to_section DRM-Widevine
 
 # DTS
