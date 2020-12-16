@@ -307,7 +307,11 @@ search_blobs | get_hardware_module "${keymaster_targets[@]}" | add_to_section Ke
 search_blobs | grep "vendor/" | grep -iE "keymaster|keystore|libspcom" | add_to_section Keymaster
 
 # Latency
-search_blobs | grep -iE "data.latency|qti.latency" | grep -v "odex" | grep -v "vdex" | add_to_section Latency
+latency_targets=(
+    "data.latency"
+    "qti.latency"
+)
+search_blobs | get_hardware_module "${latency_targets[@]}" | add_to_section Latency
 
 # Lights
 search_blobs | grep "vendor/" | grep -iE "hardware.light|hw/lights" | add_to_section Lights
