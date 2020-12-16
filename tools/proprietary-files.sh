@@ -155,7 +155,11 @@ configstore_targets=(
 search_blobs | get_hardware_module "${configstore_targets[@]}" | add_to_section Configstore
 
 # Consumerir
-search_blobs | grep "vendor/" | grep -iE "consumerir" | grep -v "android.hardware.consumerir.xml" | add_to_section Consumerir
+consumerir_targets=(
+    "hardware.consumerir"
+    "hw/consumerir"
+)
+search_blobs | get_hardware_module "${consumerir_targets[@]}" | add_to_section Consumerir
 
 # CNE
 cne_targets=(
