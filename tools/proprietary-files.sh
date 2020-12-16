@@ -544,7 +544,10 @@ wifi_targets=(
 search_blobs | get_hardware_module "${wifi_targets[@]}" | add_to_section WiFi
 
 # Xiaomi
-search_blobs | grep -iE "vendor.xiaomi.hardware." | grep -v "odex" | grep -v "vdex" | add_to_section Xiaomi
+xiaomi_targets=(
+    "vendor.xiaomi.hardware"
+)
+search_blobs | get_hardware_module "${xiaomi_targets[@]}" | add_to_section Xiaomi
 search_blobs | grep "vendor/" | grep -iE "xiaomi|mlipay|mtd|tidad|libtida|libmivendor" | grep -v "camera" | grep -v "vendor/etc/nuance/" | add_to_section Xiaomi
 
 # Delete empty lists
