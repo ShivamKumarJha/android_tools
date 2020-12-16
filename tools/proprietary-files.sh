@@ -500,6 +500,11 @@ search_blobs | grep "vendor/" | grep -iE "tui_comm" | add_to_section TUI
 search_blobs | grep "vendor/" | grep -iE "libUBWC.so|libstreamparser.so" | add_to_section UBWC
 
 # Vibrator
+vibrator_targets=(
+    "hardware.vibrator"
+    "hw/vibrator"
+)
+search_blobs | get_hardware_module "${vibrator_targets[@]}" | add_to_section Vibrator
 search_blobs | grep "vendor/" | grep -iE "vibrator" | add_to_section Vibrator
 
 # Vivo
