@@ -406,6 +406,10 @@ power_targets=(
 search_blobs | get_hardware_module "${power_targets[@]}" | add_to_section Power-Hardware
 
 # Qdutils_disp
+qdutils_targets=(
+    "hardware.qdutils_disp"
+)
+search_blobs | get_hardware_module "${qdutils_targets[@]}" | add_to_section Qdutils
 search_blobs | grep "vendor/" | grep -iE "qdutils_disp" | add_to_section Qdutils
 
 # QMI
