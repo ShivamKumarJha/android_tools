@@ -170,7 +170,11 @@ search_blobs | grep -iE "framework/|lib/|lib64/" | grep -iE "cneapiclient" | gre
 search_blobs | grep "vendor/" | grep -iE "cne.server|vendor/etc/cne/|quicinc.cne.|cneapiclient|vendor.qti.hardware.data|libcne|vendor.qti.data|CneApp|IWlanService|init/cnd.rc|bin/cnd|libwms.so|libwqe.so|libxml.so" | grep -v "latency" | add_to_section CNE
 
 # CVP
-search_blobs | grep "vendor/" | grep -iE "libcvp|cvp@" | grep -v "lib/rfsa/adsp" | add_to_section CVP
+cvp_targets=(
+    "hardware.cvp"
+)
+search_blobs | get_hardware_module "${cvp_targets[@]}" | add_to_section CVP
+search_blobs | grep "vendor/" | grep -iE "libcvp" | grep -v "lib/rfsa/adsp" | add_to_section CVP
 
 # Display
 search_blobs | grep "vendor/" | grep -iE "etc/dsi_|video_dsi_panel" | grep "xml" | add_to_section Display
