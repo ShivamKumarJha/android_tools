@@ -158,8 +158,15 @@ search_blobs | get_hardware_module "${configstore_targets[@]}" | add_to_section 
 search_blobs | grep "vendor/" | grep -iE "consumerir" | grep -v "android.hardware.consumerir.xml" | add_to_section Consumerir
 
 # CNE
+cne_targets=(
+    "cne.server"
+    "quicinc.cne"
+    "qti.data"
+    "qti.hardware.data"
+)
+search_blobs | get_hardware_module "${cne_targets[@]}" | grep -v "latency" | add_to_section CNE
 search_blobs | grep -iE "etc/permissions/cneapiclient.xml|etc/permissions/com.quicinc.cne.xml|priv-app/CNEService/CNEService.apk|etc/cne/|vendor.qti.hardware.data|vendor.qti.data" | grep -v "latency" | add_to_section CNE
-search_blobs | grep -iE "framework/|lib/|lib64/" | grep -iE "cneapiclient|com.quicinc.cne|vendor.qti.hardware.data" | grep -iE ".*\.jar|.*\.so" | grep -v "latency" | add_to_section CNE
+search_blobs | grep -iE "framework/|lib/|lib64/" | grep -iE "cneapiclient" | grep -iE ".*\.jar|.*\.so" | grep -v "latency" | add_to_section CNE
 search_blobs | grep "vendor/" | grep -iE "cne.server|vendor/etc/cne/|quicinc.cne.|cneapiclient|vendor.qti.hardware.data|libcne|vendor.qti.data|CneApp|IWlanService|init/cnd.rc|bin/cnd|libwms.so|libwqe.so|libxml.so" | grep -v "latency" | add_to_section CNE
 
 # CVP
