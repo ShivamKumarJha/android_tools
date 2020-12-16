@@ -399,7 +399,11 @@ postprocessing_targets=(
 search_blobs | get_hardware_module "${postprocessing_targets[@]}" | add_to_section Postprocessing
 
 # Power-Hardware
-search_blobs | grep -iE "vendor/" | grep -iE "hardware.power|hw/power" | add_to_section Power-Hardware
+power_targets=(
+    "hardware.power"
+    "hw/power"
+)
+search_blobs | get_hardware_module "${power_targets[@]}" | add_to_section Power-Hardware
 
 # Qdutils_disp
 search_blobs | grep "vendor/" | grep -iE "qdutils_disp" | add_to_section Qdutils
