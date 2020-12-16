@@ -282,6 +282,12 @@ graphics_targets=(
 search_blobs | get_hardware_module "${graphics_targets[@]}" | add_to_section Graphics
 search_blobs | grep "vendor/" | grep -iE "libc2d30|lib/egl/|lib64/egl/" | add_to_section Graphics
 
+# Health
+health_targets=(
+    "hardware.health"
+)
+search_blobs | get_hardware_module "${health_targets[@]}" | add_to_section Health
+
 # HotwordEnrollment
 search_blobs | grep -iE "app/" | grep -iE "HotwordEnrollment" | grep ".apk" | add_to_section HotwordEnrollment
 
