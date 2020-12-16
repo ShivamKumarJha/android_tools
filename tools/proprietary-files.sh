@@ -248,7 +248,11 @@ search_blobs | grep "vendor/" | grep -iE "fpctzappfingerprint|silead|biometrics|
 search_blobs | grep -iE "vendor/firmware/|etc/firmware/" | grep -v "cpp_firmware" | grep -v "libpn5" | grep -v "ipa_fws" | add_to_section Firmware
 
 # FM
-search_blobs | grep -iE "ftm_fm_lib|vendor.qti.hardware.fm|fm_helium.so|libfm-hci.so|fm_qsoc_patches" | add_to_section FM
+fm_targets=(
+    "hardware.fm"
+)
+search_blobs | get_hardware_module "${fm_targets[@]}" | add_to_section FM
+search_blobs | grep -iE "ftm_fm_lib|fm_helium.so|libfm-hci.so|fm_qsoc_patches" | add_to_section FM
 
 # Gatekeeper
 search_blobs | grep "vendor/" | grep -iE "gatekeeper" | add_to_section Gatekeeper
