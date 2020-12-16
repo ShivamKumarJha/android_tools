@@ -375,7 +375,11 @@ search_blobs | grep "vendor/" | grep -iE "oppo" | add_to_section Oppo
 search_blobs | grep "vendor/" | grep -iE "pasrmanager" | add_to_section Pasrmanager
 
 # Perf
-search_blobs | grep -iE "perf@|etc/perf/|libqti-perf|libqti-util|libqti_perf" | add_to_section Perf
+perf_targets=(
+    "hardware.perf"
+)
+search_blobs | get_hardware_module "${perf_targets[@]}" | add_to_section Perf
+search_blobs | grep -iE "etc/perf/|libqti-perf|libqti-util|libqti_perf" | add_to_section Perf
 
 # Perf-IOP
 search_blobs | grep "vendor/" | grep -iE "iop@|iopd" | add_to_section Perf-IOP
