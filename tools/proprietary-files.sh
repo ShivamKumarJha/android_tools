@@ -102,8 +102,12 @@ search_blobs | grep "vendor/" | grep -iE "libtinycompress|tfa98xx|libsrsprocessi
 search_blobs | grep -iE "vendor/etc/acdb|vendor/etc/audconf" | add_to_section Audio-ACDB
 
 # Audio-Hardware
+audio_targets=(
+    "hardware.audio"
+    "hw/audio"
+)
+search_blobs | get_hardware_module "${audio_targets[@]}" | grep -v "bluetooth" | add_to_section Audio-Hardware
 search_blobs | grep -iE "vendor/lib/|vendor/lib64/" | grep -iE "libaudio_log_utils.so|libtinycompress_vendor.so|libqcompostprocbundle.so|libqcomvisualizer.so|libqcomvoiceprocessing.so|libvolumelistener.so" | add_to_section Audio-Hardware
-search_blobs | grep "vendor/" | grep -iE "hardware.audio|hw/audio" | grep -v "bluetooth" | grep -v "etc/permissions" | add_to_section Audio-Hardware
 
 # Bluetooth
 search_blobs | grep "vendor/" | grep -iE "libbthost_if|btnvtool|hci_qcomm_init|wcnss_filter|bluetooth|libbt|btconfigstore" | grep -v "vendor/etc/permissions" | grep -v "libbthost_if" | grep -v "overlay/" | grep -v "bluetooth_qti_audio_policy_configuration.xml" | add_to_section Bluetooth
