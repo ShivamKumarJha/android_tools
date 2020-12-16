@@ -255,7 +255,11 @@ search_blobs | get_hardware_module "${fm_targets[@]}" | add_to_section FM
 search_blobs | grep -iE "ftm_fm_lib|fm_helium.so|libfm-hci.so|fm_qsoc_patches" | add_to_section FM
 
 # Gatekeeper
-search_blobs | grep "vendor/" | grep -iE "gatekeeper" | add_to_section Gatekeeper
+gatekeeper_targets=(
+    "hardware.gatekeeper"
+    "hw/gatekeeper"
+)
+search_blobs | get_hardware_module "${gatekeeper_targets[@]}" | add_to_section Gatekeeper
 
 # Google
 search_blobs | grep "vendor/" | grep -iE "google" | grep -v "etc/media_codecs_google" | add_to_section Google
