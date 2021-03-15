@@ -53,6 +53,13 @@ for var in "$@"; do
         CAT_FILE="$var"
     fi
 
+    #build.prop cleanup
+    sed -i "s|ro.*\=QUALCOMM||g" "$CAT_FILE"
+    sed -i "s|ro.*\=qssi||g" "$CAT_FILE"
+    sed -i "s|ro.*\=qti||g" "$CAT_FILE"
+    sed -i '/^$/d' "$CAT_FILE"
+    sort -u -o "$CAT_FILE" "$CAT_FILE"
+
     # Set variables
     if grep -q "ro.product.odm.manufacturer=" "$CAT_FILE"; then
         BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product.odm.manufacturer" | sed "s|.*=||g" | head -n 1 )
