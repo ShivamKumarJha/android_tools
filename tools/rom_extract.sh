@@ -56,25 +56,16 @@ for var in "$@"; do
 
     # boot.img operations
     if [ -e $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img ]; then
-        # Extract kernel
-        bash $PROJECT_DIR/tools/mkbootimg_tools/mkboot $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img $PROJECT_DIR/dumps/${UNZIP_DIR}/boot/ > /dev/null 2>&1
-        mv $PROJECT_DIR/dumps/${UNZIP_DIR}/boot/kernel $PROJECT_DIR/dumps/${UNZIP_DIR}/boot/Image.gz-dtb
-        # extract-ikconfig
-        mkdir -p $PROJECT_DIR/dumps/${UNZIP_DIR}/boot
-        bash ${PROJECT_DIR}/helpers/extract-ikconfig $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img > $PROJECT_DIR/dumps/${UNZIP_DIR}/boot/ikconfig
-        # Extract dtb
-        [[ "$VERBOSE" != "n" ]] && echo -e "Extracting dtb"
-        python3 $PROJECT_DIR/tools/extract-dtb/extract-dtb.py $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img -o $PROJECT_DIR/dumps/${UNZIP_DIR}/bootimg > /dev/null 2>&1
-        # Extract dts
-        mkdir $PROJECT_DIR/dumps/${UNZIP_DIR}/bootdts
-        dtb_list=`find $PROJECT_DIR/dumps/${UNZIP_DIR}/bootimg -name '*.dtb' -type f -printf '%P\n' | sort`
-        for dtb_file in $dtb_list; do
-            dtc -I dtb -O dts -o $(echo "$PROJECT_DIR/dumps/${UNZIP_DIR}/bootdts/$dtb_file" | sed -r 's|.dtb|.dts|g') $PROJECT_DIR/dumps/${UNZIP_DIR}/bootimg/$dtb_file > /dev/null 2>&1
-        done
+        cd ${PROJECT_DIR}/tools/android_boot_image_editor
+        rm -rf ${PROJECT_DIR}/tools/android_boot_image_editor/build/ && ./gradlew clean
+        cp -a $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img ${PROJECT_DIR}/tools/android_boot_image_editor/boot.img
+        ./gradlew unpack
+        [[ -d ${PROJECT_DIR}/tools/android_boot_image_editor/build/unzip_boot ]] && cp -a ${PROJECT_DIR}/tools/android_boot_image_editor/build/unzip_boot $PROJECT_DIR/dumps/${UNZIP_DIR}
+        [[ -d $PROJECT_DIR/dumps/${UNZIP_DIR}/unzip_boot ]] && mv $PROJECT_DIR/dumps/${UNZIP_DIR}/unzip_boot $PROJECT_DIR/dumps/${UNZIP_DIR}/boot
     fi
     if [[ -f $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo.img ]]; then
+        [[ "$VERBOSE" != "n" ]] && echo -e "Extracting dtbo"
         python3 $PROJECT_DIR/tools/extract-dtb/extract-dtb.py $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo.img -o $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo > /dev/null 2>&1
-        [[ "$VERBOSE" != "n" ]] && echo -e "dtbo extracted"
     fi
 
     # mounting

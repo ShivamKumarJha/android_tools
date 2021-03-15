@@ -27,7 +27,7 @@ GITHUB_USER="$(git config --get user.name)"
 export LC_ALL=C make
 
 # Dependencies check
-if [ ! -d "$PROJECT_DIR/tools/Firmware_extractor" ] || [ ! -d "$PROJECT_DIR/tools/extract-dtb" ] || [ ! -d "$PROJECT_DIR/tools/mkbootimg_tools" ]; then
+if [ ! -d "$PROJECT_DIR/tools/Firmware_extractor" ] || [ ! -d "$PROJECT_DIR/tools/android_boot_image_editor" ] || [ ! -d "$PROJECT_DIR/tools/extract-dtb" ]; then
     [[ "$VERBOSE" != "n" ]] && echo -e "Cloning dependencies..."
     bash $PROJECT_DIR/helpers/dependencies.sh > /dev/null 2>&1
 fi
