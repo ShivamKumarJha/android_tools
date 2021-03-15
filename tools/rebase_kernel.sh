@@ -46,7 +46,7 @@ else
 fi
 KERNEL_DIR="$(dirname "$(find ${PROJECT_DIR}/kernels/${UNZIP_DIR} -type f -name "AndroidKernel.mk" | head -1)")"
 AUDIO_KERNEL_DIR="$(dirname "$(find ${PROJECT_DIR}/kernels/${UNZIP_DIR} -type d -name "audio-kernel" | head -1)")"
-[[ ! -e ${KERNEL_DIR}/Makefile ]] && KERNEL_DIR="$(dirname "$(find ${PROJECT_DIR}/kernels/${UNZIP_DIR} -type f -name "build.config.goldfish.arm64" | head -1)")"
+[[ ! -e ${KERNEL_DIR}/Makefile ]] && KERNEL_DIR="$(dirname "$(find ${PROJECT_DIR}/kernels/${UNZIP_DIR} -type f -name "kernel_headers.py" | head -1)")"
 NEST="$( find ${PROJECT_DIR}/kernels/${UNZIP_DIR} -type f -size +50M -printf '%P\n' | head -1)"
 if [ ! -z ${NEST} ] && [[ ! -e ${KERNEL_DIR}/Makefile ]]; then
     bash ${PROJECT_DIR}/tools/rebase_kernel.sh ${PROJECT_DIR}/kernels/${UNZIP_DIR}/${NEST} ${2} ${3}
@@ -55,8 +55,8 @@ if [ ! -z ${NEST} ] && [[ ! -e ${KERNEL_DIR}/Makefile ]]; then
     exit
 fi
 cd ${KERNEL_DIR}
-[[ -d ${KERNEL_DIR}/.git/ ]] && rm -rf ${KERNEL_DIR}/.git/
 [[ ! -e ${KERNEL_DIR}/Makefile ]] && echo -e "No MakeFile found!" && exit 1
+[[ -d ${KERNEL_DIR}/.git/ ]] && rm -rf ${KERNEL_DIR}/.git/
 
 # Find kernel version
 KERNEL_VERSION="$( cat Makefile | grep VERSION | head -n 1 | sed "s|.*=||1" | sed "s| ||g" )"
