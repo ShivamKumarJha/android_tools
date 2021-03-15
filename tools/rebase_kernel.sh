@@ -48,6 +48,7 @@ if [ ! -z ${NEST} ] && [[ ! -e ${KERNEL_DIR}/Makefile ]]; then
 fi
 cd ${KERNEL_DIR}
 [[ -d ${KERNEL_DIR}/.git/ ]] && rm -rf ${KERNEL_DIR}/.git/
+[[ ! -e ${KERNEL_DIR}/Makefile ]] && echo -e "No MakeFile found!" && exit 1
 
 # Find kernel version
 KERNEL_VERSION="$( cat Makefile | grep VERSION | head -n 1 | sed "s|.*=||1" | sed "s| ||g" )"
