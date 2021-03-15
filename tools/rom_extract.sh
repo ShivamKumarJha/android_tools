@@ -37,7 +37,7 @@ for var in "$@"; do
     FILE=${URL##*/}
     EXTENSION=${URL##*.}
     UNZIP_DIR=${FILE/.$EXTENSION/}
-    PARTITIONS="system vendor cust odm oem factory product modem xrom systemex oppo_product preload_common system_ext system_other opproduct reserve india my_product"
+    PARTITIONS="system vendor cust odm oem factory product modem xrom systemex oppo_product preload_common system_ext system_other opproduct reserve india my_preload my_odm my_stock my_operator my_country my_product my_company my_engineering my_heytap"
     [[ -d $PROJECT_DIR/dumps/$UNZIP_DIR/ ]] && rm -rf $PROJECT_DIR/dumps/$UNZIP_DIR/
 
     if [ -d "$var" ] ; then
