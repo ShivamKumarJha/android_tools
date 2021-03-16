@@ -57,9 +57,9 @@ for var in "$@"; do
     # boot.img operations
     if [ -e $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img ]; then
         cd ${PROJECT_DIR}/tools/android_boot_image_editor
-        rm -rf ${PROJECT_DIR}/tools/android_boot_image_editor/build/ && ./gradlew clean
+        rm -rf ${PROJECT_DIR}/tools/android_boot_image_editor/build/ && ./gradlew clean > /dev/null 2>&1
         cp -a $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img ${PROJECT_DIR}/tools/android_boot_image_editor/boot.img
-        ./gradlew unpack
+        ./gradlew unpack > /dev/null 2>&1
         [[ -d ${PROJECT_DIR}/tools/android_boot_image_editor/build/unzip_boot ]] && cp -a ${PROJECT_DIR}/tools/android_boot_image_editor/build/unzip_boot $PROJECT_DIR/dumps/${UNZIP_DIR}
         [[ -d $PROJECT_DIR/dumps/${UNZIP_DIR}/unzip_boot ]] && mv $PROJECT_DIR/dumps/${UNZIP_DIR}/unzip_boot $PROJECT_DIR/dumps/${UNZIP_DIR}/boot
     fi
