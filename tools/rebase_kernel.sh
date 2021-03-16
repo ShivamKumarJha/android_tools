@@ -36,11 +36,11 @@ UNZIP_DIR=${FILE/.$EXTENSION/}
 echo "Extracting file"
 mkdir -p ${PROJECT_DIR}/kernels/${UNZIP_DIR}
 if [[ ${EXTENSION} == "gz" ]]; then
-    tar -zvxf ${PROJECT_DIR}/input/${FILE} -C ${PROJECT_DIR}/kernels/${UNZIP_DIR}
+    tar -zvxf ${PROJECT_DIR}/input/${FILE} -C ${PROJECT_DIR}/kernels/${UNZIP_DIR} > /dev/null 2>&1
 elif [[ ${EXTENSION} == "tar" ]]; then
-    tar -xvf ${PROJECT_DIR}/input/${FILE} -C ${PROJECT_DIR}/kernels/${UNZIP_DIR}
+    tar -xvf ${PROJECT_DIR}/input/${FILE} -C ${PROJECT_DIR}/kernels/${UNZIP_DIR} > /dev/null 2>&1
 elif [[ ${EXTENSION} == "tbz2" ]]; then
-    tar -jvxf ${PROJECT_DIR}/input/${FILE} -C ${PROJECT_DIR}/kernels/${UNZIP_DIR}
+    tar -jvxf ${PROJECT_DIR}/input/${FILE} -C ${PROJECT_DIR}/kernels/${UNZIP_DIR} > /dev/null 2>&1
 else
     7z x ${PROJECT_DIR}/input/${FILE} -y -o${PROJECT_DIR}/kernels/${UNZIP_DIR} > /dev/null 2>&1
 fi
