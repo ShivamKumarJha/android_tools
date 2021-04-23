@@ -290,6 +290,7 @@ search_blobs | get_hardware_module "${health_targets[@]}" | add_to_section Healt
 
 # HotwordEnrollment
 search_blobs | grep -iE "app/" | grep -iE "HotwordEnrollment" | grep ".apk" | add_to_section HotwordEnrollment
+search_blobs | grep -iE "system_ext/" | grep -iE "hotwordenrollment" | add_to_section HotwordEnrollment
 
 # IFAA
 search_blobs | grep "vendor/" | grep -iE "IFAA" | add_to_section IFAA
