@@ -9,6 +9,7 @@ vendor/lib/libgrallocutils.so
 vendor/lib/libqdMetaData.so
 vendor/lib/libqdutils.so
 vendor/lib/libqservice.so
+vendor/lib/libsdedrm.so
 vendor/lib/libsdm-colormgr-algo.so
 vendor/lib/libsdmcore.so
 vendor/lib/libsdmextension.so
@@ -24,6 +25,7 @@ vendor/lib64/libgrallocutils.so
 vendor/lib64/libqdMetaData.so
 vendor/lib64/libqdutils.so
 vendor/lib64/libqservice.so
+vendor/lib64/libsdedrm.so
 vendor/lib64/libsdm-colormgr-algo.so
 vendor/lib64/libsdmcore.so
 vendor/lib64/libsdmextension.so
