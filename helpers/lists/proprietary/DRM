@@ -17,7 +17,6 @@ vendor/lib/libops.so
 vendor/lib/libqisl.so
 vendor/lib/librmp.so
 vendor/lib/librpmb.so
-vendor/lib/libsdedrm.so
 vendor/lib/libsecureui.so
 vendor/lib/libsecureui_svcsock.so
 vendor/lib/libsi.so
@@ -43,7 +42,6 @@ vendor/lib64/libprdrmdecrypt.so
 vendor/lib64/libqisl.so
 vendor/lib64/librmp.so
 vendor/lib64/librpmb.so
-vendor/lib64/libsdedrm.so
 vendor/lib64/libsecureui.so
 vendor/lib64/libsecureui_svcsock.so
 vendor/lib64/libsi.so
