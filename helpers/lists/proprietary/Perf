@@ -4,9 +4,11 @@ vendor/etc/powerhint.xml
 vendor/lib/libadaptlaunch.so
 vendor/lib/liblearningmodule.so
 vendor/lib/libmeters.so
+vendor/lib/libperfconfig.so
 vendor/lib/libperfgluelayer.so
 vendor/lib64/libadaptlaunch.so
 vendor/lib64/liblearningmodule.so
 vendor/lib64/libmeters-ns.so
 vendor/lib64/libmeters.so
+vendor/lib64/libperfconfig.so
 vendor/lib64/libperfgluelayer.so
