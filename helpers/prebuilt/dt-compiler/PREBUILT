@@ -1,0 +1,4 @@
+The binaries in this prebuilt directory can be rebuilt using
+the source in external/dtc with build command "make dtc".
+
+dtc: artifact dtc/dtc from git_master@3883748 (https://android-build.googleplex.com/builds/submitted/3883748/angler-userdebug_fastbuild3b_linux/latest)

@@ -63,11 +63,18 @@ for var in "$@"; do
         [[ -d ${PROJECT_DIR}/tools/android_boot_image_editor/build/unzip_boot ]] && cp -a ${PROJECT_DIR}/tools/android_boot_image_editor/build/unzip_boot $PROJECT_DIR/dumps/${UNZIP_DIR}
         [[ -d $PROJECT_DIR/dumps/${UNZIP_DIR}/unzip_boot ]] && mv $PROJECT_DIR/dumps/${UNZIP_DIR}/unzip_boot $PROJECT_DIR/dumps/${UNZIP_DIR}/boot
     fi
+    # dtbo.img operations
     if [[ -f $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo.img ]]; then
         [[ "$VERBOSE" != "n" ]] && echo -e "Extracting dtbo"
-        python3 $PROJECT_DIR/tools/extract-dtb/extract-dtb.py $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo.img -o $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo > /dev/null 2>&1
+        python3 $PROJECT_DIR/tools/extract-dtb/extract_dtb/extract_dtb.py $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo.img -o $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo > /dev/null 2>&1
     fi
-
+    if [[ -d $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo ]]; then
+        mkdir -p $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbs
+        for dtb in $(ls $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo/); do
+        $PROJECT_DIR/helpers/prebuilt/dt-compiler/dtc -f -I dtb -O dts -o "$PROJECT_DIR/dumps/${UNZIP_DIR}/dtbs/`echo "$dtb" | cut -d'.' -f1`.dts" $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo/$dtb  > /dev/null 2>&1
+        done
+    fi
+    
     # mounting
     for file in $PARTITIONS; do
         if [ -e "$PROJECT_DIR/dumps/${UNZIP_DIR}/$file.img" ]; then
