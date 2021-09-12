@@ -71,7 +71,7 @@ for var in "$@"; do
     if [[ -d $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo ]]; then
         mkdir -p $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbs
         for dtb in $(ls $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo/); do
-        $PROJECT_DIR/helpers/prebuilt/dt-compiler/dtc -f -I dtb -O dts -o "$PROJECT_DIR/dumps/${UNZIP_DIR}/dtbs/`echo "$dtb" | cut -d'.' -f1`.dts" $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo/$dtb  > /dev/null 2>&1
+        $PROJECT_DIR/helpers/prebuilt/dt-compiler/dtc -f -I dtb -O dts -o "$PROJECT_DIR/dumps/${UNZIP_DIR}/dtbs/`echo "$dtb" | sed 's/\.dtb$//1'`.dts" $PROJECT_DIR/dumps/${UNZIP_DIR}/dtbo/$dtb  > /dev/null 2>&1
         done
     fi
     
