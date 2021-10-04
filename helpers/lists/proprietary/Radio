@@ -26,6 +26,7 @@ vendor/lib/liboemaids_vendor.so
 vendor/lib/libpdmapper.so
 vendor/lib/libpdnotifier.so
 vendor/lib/libqcmaputils.so
+vendor/lib/libqcrildatactl.so
 vendor/lib/libqcrilFramework.so
 vendor/lib/libqminvapi.so
 vendor/lib/libqrtr.so
@@ -40,6 +41,8 @@ vendor/lib/libsettings.so
 vendor/lib/libsystem_health_mon.so
 vendor/lib/libvsim.so
 vendor/lib/qcrild_librilutils.so
+vendor/lib/qtibus.so
+vendor/lib/qtimutex.so
 vendor/lib64/lib_remote_simlock.so
 vendor/lib64/libconfigdb.so
 vendor/lib64/libdsi_netctrl.so
@@ -54,6 +57,7 @@ vendor/lib64/liboemaids_vendor.so
 vendor/lib64/libpdmapper.so
 vendor/lib64/libpdnotifier.so
 vendor/lib64/libqcmaputils.so
+vendor/lib64/libqcrildatactl.so
 vendor/lib64/libqcrilFramework.so
 vendor/lib64/libqminvapi.so
 vendor/lib64/libqrtr.so
@@ -67,3 +71,5 @@ vendor/lib64/librilqmiservices.so
 vendor/lib64/libsettings.so
 vendor/lib64/libsystem_health_mon.so
 vendor/lib64/qcrild_librilutils.so
+vendor/lib64/qtibus.so
+vendor/lib64/qtimutex.so
