@@ -180,11 +180,11 @@ DIFFPATHS=(
     "tools/"
 )
 for ELEMENT in ${DIFFPATHS[@]}; do
-    [[ -d $ELEMENT ]] && git add $ELEMENT > /dev/null 2>&1
+    [[ -d $ELEMENT ]] && git add $ELEMENT -f > /dev/null 2>&1
     git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add $ELEMENT modifications" > /dev/null 2>&1
 done
 # Remaining OEM modifications
-git add --all > /dev/null 2>&1
+git add --all -f > /dev/null 2>&1
 git -c "user.name=ShivamKumarJha" -c "user.email=jha.shivam3@gmail.com" commit -sm "Add remaining OEM modifications" > /dev/null 2>&1
 
 # Push to GitHub
