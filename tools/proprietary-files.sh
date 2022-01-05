@@ -56,10 +56,10 @@ get_hardware_module() {
     for i in "${arr[@]}"; do
     case $i in
         hw/* )
-            echo "$files" | grep -iE "vendor/" | grep -iE "lib/|lib64/" | grep -iE "hw/*${i:3}"
+            echo "$files" | grep -iE "odm/|vendor/" | grep -iE "lib/|lib64/" | grep -iE "hw/*${i:3}"
             ;;
         * )
-            echo "$files" | grep -iE "vendor/|product/|system_ext/" \
+            echo "$files" | grep -iE "odm/|vendor/|product/|system_ext/" \
                           | grep -iE "bin/hw/|etc/init/|etc/vintf/manifest/|framework/|lib/|lib64/" \
                           | grep -iE "${i}|hw/${i}"
             ;;
@@ -69,6 +69,7 @@ get_hardware_module() {
 
 # ADSP
 search_blobs | grep -iE "vendor/lib/|vendor/lib64/|bin/adsprpcd" | grep -iE "libadsp|ibfastcv|adsprpc|mdsprpc|sdsprpc" | grep -v "scve" | grep -v "lib/rfsa/adsp" | add_to_section ADSP
+search_blobs | grep -iE "odm/lib/|odm/lib64/|bin/adsprpcd" | grep -iE "libadsp|ibfastcv|adsprpc|mdsprpc|sdsprpc" | grep -v "scve" | grep -v "lib/rfsa/adsp" | add_to_section ADSP
 
 # ADSP modules
 search_blobs | grep -iE "vendor/lib/rfsa/adsp/|vendor/dsp/" | grep -v "scve" | add_to_section ADSP-Modules
@@ -97,9 +98,14 @@ search_blobs | get_hardware_module "${atrace_targets[@]}" | add_to_section Atrac
 # Audio
 search_blobs | grep -iE "etc/permissions/audiosphere.xml|framework/audiosphere.jar" | add_to_section Audio
 search_blobs | grep "vendor/" | grep -iE "libtinycompress|tfa98xx|libsrsprocessing|libaudio|libacdb|libdirac|etc/dirac|etc/sony_effect/|etc/drc/|etc/surround_sound_3mic/" | grep -v "lib/rfsa/adsp" | grep -v "lib/modules/" | add_to_section Audio
+search_blobs | grep "odm/" | grep -iE "awinic|libhaptic|libdirac|etc/dirac" | add_to_section Audio
 
 # Audio-ACDB
 search_blobs | grep -iE "vendor/etc/acdb|vendor/etc/audconf" | add_to_section Audio-ACDB
+
+# Audio-configs
+search_blobs | grep -iE "vendor/etc/audio_param|vendor/etc/aurisys_param/" | add_to_section Audio-configs
+search_blobs | grep -iE "odm/etc/audio" | add_to_section Audio-configs
 
 # Audio-Hardware
 audio_targets=(
@@ -129,14 +135,19 @@ camera_targets=(
 )
 search_blobs | get_hardware_module "${camera_targets[@]}" | add_to_section Camera
 search_blobs | grep -iE "vendor/lib/libactuator|vendor/lib64/libactuator" | add_to_section Camera-actuators
+search_blobs | grep -iE "odm/lib/libactuator|odm/lib64/libactuator" | add_to_section Camera-actuators
 search_blobs | grep -iE "vendor/lib/libarcsoft|vendor/lib64/libarcsoft" | add_to_section Camera-arcsoft
+search_blobs | grep -iE "odm/lib/libarcsoft|odm/lib64/libarcsoft" | add_to_section Camera-arcsoft
 search_blobs | grep "vendor/bin/" | grep -iE "camera" | grep -v "hardware.camera" | add_to_section Camera-bin
 search_blobs | grep -iE "vendor/lib/libchromatix|vendor/lib64/libchromatix" | add_to_section Camera-chromatix
 search_blobs | grep -iE "vendor/etc/camera|vendor/etc/qvr/|vendor/camera3rd/|vendor/camera_sound|vendor/etc/FLASH_ON/|vendor/etc/IMX|vendor/camera/" | add_to_section Camera-configs
+search_blobs | grep -iE "odm/etc/camera/|odm/etc/fad/|odm/etc/cooleffect/" | add_to_section Camera-configs
 search_blobs | grep -iE "vendor/etc/" | grep "ISO" | grep ".*\.ncf" | add_to_section Camera-configs
 search_blobs | grep -iE "vendor/firmware/cpp_firmware|vendor/firmware/CAMERA" | add_to_section Camera-firmware
 search_blobs | grep "vendor/" | grep -iE "libcam|libDepthBokeh|libSonyDual|libtriplecam|libremosaic|lib/camera/|lib64/camera/|mibokeh|lib_camera|libgcam|libdualcam|libmakeup|libtriplecam|SuperSensor|SonyIMX|libmialgo|libsnpe" | grep -v "vendor/lib/rfsa/adsp/" | add_to_section Camera
+search_blobs | grep "odm/" | grep -iE "mipi_raw|mipi_mono|libal|libAl|libEIS|libanc|libai|lib2D|libap|libBokeh|libop|libimg|libocam|libst|libFace|libWater|libcam|libDepthBokeh|libSonyDual|libtriplecam|libremosaic|lib/camera/|lib64/camera/|mibokeh|lib_camera|libgcam|libdualcam|libmakeup|libtriplecam|SuperSensor|SonyIMX|libmialgo|libsnpe" | grep -v "odm/lib/rfsa/adsp/" | add_to_section Camera
 search_blobs | grep "vendor/" | grep -iE "libMegvii|libVD|libcapi|libextawb|libnti_" | grep -v "vendor/lib/rfsa/adsp/" | add_to_section Camera
+search_blobs | grep "odm/" | grep -iE "libml_util|liblvimfs|libmpbase|libnp|lib_rectify|libui|libSuperText|libhci_face|libFilter|libOGL|libyuv2|libXDoc|libhyper|libCOp|libcolor|libcoolex|libc++|libPerfect|libRbs|libDeVIS|libPolar|libtf|libmegface|libMegvii|libFDClite|libcore|libVD|libcapi|libextawb|libnti_" | grep -v "odm/lib/rfsa/adsp/" | add_to_section Camera
 search_blobs | grep "vendor/" | grep -iE "motor" | grep -v "odex" | grep -v "vdex" | grep -v "motorola" | add_to_section Camera-motor
 search_blobs | grep -iE "vendor/lib/libois|vendor/lib64/libois" | add_to_section Camera-ois
 search_blobs | grep -iE "vendor/lib/libmmcamera|vendor/lib64/libmmcamera" | add_to_section Camera-sensors
@@ -188,6 +199,7 @@ search_blobs | grep -iE "vendor/etc/qdcm_calib" | add_to_section Display-calibra
 
 # Display-Hardware
 display_targets=(
+    "frameworks.bufferhub"
     "hardware.display"
     "hardware.graphics"
     "hardware.memtrack"
@@ -205,6 +217,9 @@ search_blobs | grep "vendor/" | grep -iE "dolby" | add_to_section Dolby
 # DPM
 search_blobs | grep -iE "dpm.api@|libdpm|bin/dpmd|etc/dpm/dpm.conf|etc/init/dpmd.rc|com.qti.dpmframework|dpmapi|framework/tcmclient.jar|priv-app/dpmserviceapp/dpmserviceapp.apk|vendor/bin/dpmQmiMgr" | add_to_section DPM
 
+# DRM
+search_blobs | grep "odm/" | grep -iE "oemcrypto" | add_to_section DRM
+
 # DRM-Hardware
 drm_targets=(
     "hardware.drm"
@@ -213,6 +228,7 @@ search_blobs | get_hardware_module "${drm_targets[@]}" | add_to_section DRM-Hard
 
 # DRM-HDCP
 search_blobs | grep "vendor/" | grep -iE "libhdcp|hdcpmgr|bin/hdcp" | add_to_section DRM-HDCP
+search_blobs | grep "odm/" | grep -iE "libhdcp|libwvhdcpext|hdcpmgr|bin/hdcp" | add_to_section DRM-HDCP
 
 # DRM-Qteeconnector
 search_blobs | grep "vendor/" | grep -iE "qteeconnector" | add_to_section DRM-Qteeconnector
@@ -234,6 +250,7 @@ search_blobs | get_hardware_module "${factory_targets[@]}" | add_to_section Fact
 
 # Fido
 search_blobs | grep "vendor/" | grep -iE "fido" | add_to_section Fido
+search_blobs | grep "odm/" | grep -iE "fido" | add_to_section Fido
 
 # Fingerprint
 fingerprint_targets=(
@@ -242,10 +259,11 @@ fingerprint_targets=(
 )
 search_blobs | get_hardware_module "${fingerprint_targets[@]}" | add_to_section Fingerprint
 search_blobs | grep "etc/firmware/goodixfp|etc/firmware/fpctzappfingerprint" | add_to_section Fingerprint
-search_blobs | grep "vendor/" | grep -iE "fpctzappfingerprint|silead|biometrics|etc/qti_fp/|libgf_|fingerprint|goodix|cdfinger|qfp-daemon|init_qfp_daemon|libqfp|fp_hal|libsl_fp|libarm_proxy_skel|libhvx_proxy_stub" | grep -v "android.hardware.fingerprint.xml" | grep -v "/usr/" | add_to_section Fingerprint
+search_blobs | grep "vendor/" | grep -iE "fpctzappfingerprint|silead|libegis|biometrics|etc/qti_fp/|libgf_|fingerprint|goodix|cdfinger|qfp-daemon|init_qfp_daemon|libqfp|fp_hal|libsl_fp|libarm_proxy_skel|libhvx_proxy_stub" | grep -v "android.hardware.fingerprint.xml" | grep -v "/usr/" | add_to_section Fingerprint
+search_blobs | grep "odm/" | grep -iE "fpctzappfingerprint|silead|libegis|biometrics|etc/qti_fp/|libgf_|fingerprint|goodix|cdfinger|qfp-daemon|init_qfp_daemon|libqfp|fp_hal|libsl_fp|libarm_proxy_skel|libhvx_proxy_stub" | grep -v "android.hardware.fingerprint.xml" | grep -v "/usr/" | add_to_section Fingerprint
 
 # Firmware
-search_blobs | grep -iE "vendor/firmware/|etc/firmware/" | grep -v "cpp_firmware" | grep -v "libpn5" | grep -v "ipa_fws" | add_to_section Firmware
+search_blobs | grep -iE "vendor/firmware/|etc/firmware/|odm/firmware/" | grep -v "cpp_firmware" | grep -v "libpn5" | grep -v "ipa_fws" | add_to_section Firmware
 
 # FM
 fm_targets=(
@@ -306,6 +324,7 @@ keymaster_targets=(
 )
 search_blobs | get_hardware_module "${keymaster_targets[@]}" | add_to_section Keymaster
 search_blobs | grep "vendor/" | grep -iE "keymaster|keystore|libspcom" | add_to_section Keymaster
+search_blobs | grep "odm/" | grep -iE "libtrustonic_keybox_ca" | add_to_section Keymaster
 
 # Latency
 latency_targets=(
@@ -358,19 +377,30 @@ nfc_targets=(
 search_blobs | get_hardware_module "${nfc_targets[@]}" | add_to_section NFC
 search_blobs | grep -v "vendor/" | grep -iE "app/NxpNfcNci/NxpNfcNci.apk|app/NxpSecureElement/NxpSecureElement.apk|etc/nfcee_access.xml|etc/permissions/com.nxp.nfc.xml|framework/com.nxp.nfc.jar|libnxpnfc" | add_to_section NFC
 search_blobs | grep "vendor/" | grep -iE "libpn5|nfc|secure_element|etc/libese|nxp|libp61|ls_client" | grep -v "etc/permissions/android.hardware.nfc" | add_to_section NFC
+search_blobs | grep "odm/" | grep -iE "libpn5|nfc|secure_element|etc/libese|etc/sn100u|etc/init/init.SN100|nxp|libp61|ls_client|jcos_nq|ese_spi|ls_nq|se_nq|libchrome" | grep -v "etc/permissions/android.hardware.nfc" | add_to_section NFC
 
 # Neural-networks
 nn_targets=(
     "hardware.neuralnetworks"
 )
 search_blobs | get_hardware_module "${nn_targets[@]}" | add_to_section Neural-networks
-search_blobs | grep "vendor/" | grep -iE "neuralnetworks|libhexagon" | add_to_section Neural-networks
+search_blobs | grep "vendor/" | grep -iE "neuralnetworks|libhexagon|libneuron" | add_to_section Neural-networks
+search_blobs | grep "odm/" | grep -iE "neuralnetworks|libhexagon|libneuron|libhmpconfig" | add_to_section Neural-networks
+
+# Novatek
+search_blobs | grep "odm/" | grep -iE "nt3" | add_to_section Novatek
 
 # OnePlus
 search_blobs | grep "vendor/" | grep -iE "oneplus" | add_to_section OnePlus
 
 # Oppo
 search_blobs | grep "vendor/" | grep -iE "oppo" | add_to_section Oppo
+
+# Oplus
+search_blobs | grep "odm/" | grep -iE "oplus|ffmpeg|orms|libav|libdav|libsw|dpservice|libdla|engineer|wifi|self-init|setgisprop|rpmb|bsp|devices_config" | add_to_section Oplus
+
+# Oplus
+search_blobs | grep "vendor/" | grep -iE "oplus" | add_to_section Oplus
 
 # Pasrmanager
 search_blobs | grep "vendor/" | grep -iE "pasrmanager" | add_to_section Pasrmanager
@@ -442,6 +472,7 @@ search_blobs | grep "vendor/" | grep -iE "imsrtpservice|imscmservice|uceservice|
 
 # Samsung
 search_blobs | grep "vendor/" | grep -iE "samsung|SoundAlive" | grep -v "vendor/etc/qdcm_calib" | grep -v "vendor/etc/dsi" | grep -v "vendor/firmware/" | add_to_section Samsung
+search_blobs | grep "odm/" | grep -iE "samsung" | add_to_section Samsung
 
 # SCVE
 search_blobs | grep -iE "lib/|lib64/|vendor/" | grep -iE "scve" | add_to_section SCVE
@@ -454,6 +485,7 @@ sensors_targets=(
     "hardware.sensors"
     "hw/activity_recognition"
     "hw/sensors"
+    "sensors.virtual"
 )
 search_blobs | get_hardware_module "${sensors_targets[@]}" | add_to_section Sensors
 search_blobs | grep "vendor/" | grep -iE "libsensor|lib64/sensors|lib/sensors|libAsusRGBSensorHAL|libssc|lib/sensors|lib64/sensors" | add_to_section Sensors
@@ -463,6 +495,9 @@ search_blobs | grep "vendor/" | grep -iE "sensorscalibrate" | add_to_section Sen
 
 # Sensor-configs
 search_blobs | grep -iE "vendor/etc/sensors/" | grep -v "vendor/etc/sensors/hals.conf" | add_to_section Sensor-configs
+
+# Sensor-configs
+search_blobs | grep -iE "odm/etc/sensor/" | add_to_section Sensor-configs
 
 # Sony
 search_blobs | grep "vendor/" | grep -iE "vendor.semc|vendor.somc|init.sony" | add_to_section Sony
@@ -507,6 +542,7 @@ vibrator_targets=(
 )
 search_blobs | get_hardware_module "${vibrator_targets[@]}" | add_to_section Vibrator
 search_blobs | grep "vendor/" | grep -iE "vibrator" | add_to_section Vibrator
+search_blobs | grep "odm/" | grep -iE "vibrator|aac" | add_to_section Vibrator
 
 # Vivo
 search_blobs | grep "vendor/" | grep -iE "vivo" | add_to_section Vivo
