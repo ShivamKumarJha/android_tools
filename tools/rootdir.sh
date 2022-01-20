@@ -20,8 +20,8 @@ fi
 
 # Get files
 mkdir -p $PROJECT_DIR/working/rootdir/bin/ $PROJECT_DIR/working/rootdir/etc/
-cp -a "$1"/vendor/bin/*.sh $PROJECT_DIR/working/rootdir/bin/
-cp -a "$1"/vendor/etc/init/hw/* $PROJECT_DIR/working/rootdir/etc/
+[[ -f "$1"/vendor/bin/*.sh ]] && cp -a "$1"/vendor/bin/*.sh $PROJECT_DIR/working/rootdir/bin/
+[[ -d "$1"/vendor/etc/init/hw/ ]] && cp -a "$1"/vendor/etc/init/hw/* $PROJECT_DIR/working/rootdir/etc/
 
 # Prepare Android.mk
 printf "LOCAL_PATH := \$(call my-dir)" >> $PROJECT_DIR/working/rootdir/Android.mk

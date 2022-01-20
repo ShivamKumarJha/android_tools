@@ -24,6 +24,7 @@ for var in "$@"; do
     if [ -d "$var" ]; then
         DIR=$( realpath "$var" )
         rm -rf $PROJECT_DIR/working/system_build.prop
+        [[ -f "$DIR/boot/root/prop.default" ]] && cat "$DIR/boot/root/prop.default" >> $PROJECT_DIR/working/system_build.prop
         find "$DIR/" -maxdepth 3 -name "build*prop" -exec cat {} >> $PROJECT_DIR/working/system_build.prop \;
         if [[ -d "$DIR/vendor/euclid/" ]]; then
             EUCLIST=`find "$DIR/vendor/euclid/" -name "*.img" | sort`
@@ -121,6 +122,8 @@ for var in "$@"; do
         MODEL=$( cat "$CAT_FILE" | grep "ro.product.display=" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "ro.semc.product.name" "$CAT_FILE"; then
         MODEL=$( cat "$CAT_FILE" | grep "ro.semc.product.name=" | sed "s|.*=||g" | head -n 1 )
+    elif grep -q "ro.product.vendor.marketname" "$CAT_FILE"; then
+        MODEL=$( cat "$CAT_FILE" | grep "ro.product.vendor.marketname=" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "ro.product.odm.model" "$CAT_FILE"; then
         MODEL=$( cat "$CAT_FILE" | grep "ro.product.odm.model=" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "ro.product.vendor.model" "$CAT_FILE"; then

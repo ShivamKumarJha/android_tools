@@ -60,6 +60,7 @@ for var in "$@"; do
         rm -rf ${PROJECT_DIR}/tools/android_boot_image_editor/build/ && ./gradlew clean > /dev/null 2>&1
         cp -a $PROJECT_DIR/dumps/${UNZIP_DIR}/boot.img ${PROJECT_DIR}/tools/android_boot_image_editor/boot.img
         ./gradlew unpack > /dev/null 2>&1
+        rm -rf ${PROJECT_DIR}/tools/android_boot_image_editor/boot.img
         [[ -d ${PROJECT_DIR}/tools/android_boot_image_editor/build/unzip_boot ]] && cp -a ${PROJECT_DIR}/tools/android_boot_image_editor/build/unzip_boot $PROJECT_DIR/dumps/${UNZIP_DIR}
         [[ -d $PROJECT_DIR/dumps/${UNZIP_DIR}/unzip_boot ]] && mv $PROJECT_DIR/dumps/${UNZIP_DIR}/unzip_boot $PROJECT_DIR/dumps/${UNZIP_DIR}/boot
     fi

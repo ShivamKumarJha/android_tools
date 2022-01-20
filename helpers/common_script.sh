@@ -24,6 +24,7 @@ GITHUB_USER="$(git config --get user.name)"
 [[ -z "$DUMPPUSH" ]] && DUMPPUSH="n"
 [[ -z "$ORGMEMBER" ]] && ORGMEMBER="n"
 [[ -z "$VERBOSE" ]] && VERBOSE="y"
+[[ -z "$TMPDIR" ]] && TMPDIR="/tmp"
 export LC_ALL=C make
 
 # Dependencies check

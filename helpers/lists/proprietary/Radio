@@ -26,8 +26,8 @@ vendor/lib/liboemaids_vendor.so
 vendor/lib/libpdmapper.so
 vendor/lib/libpdnotifier.so
 vendor/lib/libqcmaputils.so
-vendor/lib/libqcrildatactl.so
 vendor/lib/libqcrilFramework.so
+vendor/lib/libqcrildatactl.so
 vendor/lib/libqminvapi.so
 vendor/lib/libqrtr.so
 vendor/lib/libqsocket.so
@@ -57,8 +57,8 @@ vendor/lib64/liboemaids_vendor.so
 vendor/lib64/libpdmapper.so
 vendor/lib64/libpdnotifier.so
 vendor/lib64/libqcmaputils.so
-vendor/lib64/libqcrildatactl.so
 vendor/lib64/libqcrilFramework.so
+vendor/lib64/libqcrildatactl.so
 vendor/lib64/libqminvapi.so
 vendor/lib64/libqrtr.so
 vendor/lib64/libqsocket.so

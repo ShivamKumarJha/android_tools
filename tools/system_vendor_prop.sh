@@ -65,4 +65,4 @@ fi
 # cleanup
 rm -rf $PROJECT_DIR/working/system_working.prop $PROJECT_DIR/working/vendor_new.prop $PROJECT_DIR/working/vendor_working.prop
 
-echo -e "$(ls -d $PROJECT_DIR/working/*) prepared!"
+[[ -f $PROJECT_DIR/working/* ]] && echo -e "$(ls -d $PROJECT_DIR/working/*) prepared!" || echo -e "Error!" && exit 1
