@@ -27,6 +27,7 @@ elif [ -d "$1" ]; then
     elif [ -e "$1"/system/build.prop ]; then
         SYSTEM_PATH="system"
     fi
+    find "$1" -name "prop.default" -exec cat {} >> $PROJECT_DIR/working/boot_working.prop \;
     find "$1/$SYSTEM_PATH" -maxdepth 1 -name "build*prop" -exec cat {} >> $PROJECT_DIR/working/system_working.prop \;
     [[ -d "$1/system/vendor/" ]] && VENDOR_PATH="system/vendor"
     [[ -d "$1/system/system/vendor/" ]] && VENDOR_PATH="system/system/vendor"
@@ -41,6 +42,13 @@ if [ ! -z "$2" ] ; then
     else
         cp -a $2 $PROJECT_DIR/working/vendor_working.prop
     fi
+fi
+
+# boot.prop
+if [ -s "$PROJECT_DIR/working/boot_working.prop" ]; then
+    TSTART=$(grep -nr "# end build properties" $PROJECT_DIR/working/boot_working.prop | sed "s|:.*||g" | head -1)
+    TEND=$(wc -l $PROJECT_DIR/working/boot_working.prop | sed "s| .*||g" | head -1)
+    sed -n "${TSTART},${TEND}p" $PROJECT_DIR/working/boot_working.prop | sort | sed "s|#.*||g" | sed '/^[[:space:]]*$/d' > $PROJECT_DIR/working/boot_new.prop
 fi
 
 # system.prop
@@ -58,7 +66,10 @@ if [ -s "$PROJECT_DIR/working/vendor_working.prop" ]; then
 fi
 
 # Combine newly generated system.prop & vendor.prop
-if [ -s "$PROJECT_DIR/working/vendor_new.prop" ]; then
+if [ -s "$PROJECT_DIR/working/boot_new.prop" ]; then
+    awk '!NF || !seen[$0]++' $PROJECT_DIR/working/boot_new.prop > $PROJECT_DIR/working/boot_new2.prop
+    echo "$(cat $PROJECT_DIR/working/boot_new2.prop | sort -u )" >> $PROJECT_DIR/working/staging.mk
+elif [ -s "$PROJECT_DIR/working/vendor_new.prop" ]; then
     echo "$(cat $PROJECT_DIR/working/system_new.prop $PROJECT_DIR/working/vendor_new.prop | sort -u )" >> $PROJECT_DIR/working/staging.mk
 else
     echo "$(cat $PROJECT_DIR/working/system_new.prop | sort -u )" >> $PROJECT_DIR/working/staging.mk
@@ -89,74 +100,82 @@ sed -i "s|setupwizard.*||g" $PROJECT_DIR/working/staging.mk
 sed -i "s|ro.product.first_api_level=.*||g" $PROJECT_DIR/working/staging.mk
 sed '/^$/d' $PROJECT_DIR/working/staging.mk | sort -u > $PROJECT_DIR/working/temp.mk
 
+add_to_section() {
+	if [[ -z "${3}" ]]; then
+	    cat "$PROJECT_DIR/working/temp.mk" | grep -iE "${1}" | sort -u > "$PROJECT_DIR/working/lists/${2}"
+	else
+	    cat "$PROJECT_DIR/working/temp.mk" | grep -iE "${1}" | grep -v "${2}" | sort -u > "$PROJECT_DIR/working/lists/${3}"
+	fi
+}
+
 # Prop's grouping
 mkdir -p $PROJECT_DIR/working/lists/
 # Audio
-cat $PROJECT_DIR/working/temp.mk | grep -iE "audio|af.|ro.af.|ro.config.media|ro.config.vc_call|dirac.|av.|voice." | sort -u > $PROJECT_DIR/working/lists/Audio
+add_to_section "audio|af.|ro.af.|ro.config.media|ro.config.vc_call|dirac.|av.|voice." Audio
 # Bluetooth
-cat $PROJECT_DIR/working/temp.mk | grep -iE "bt.|bluetooth" | sort -u > $PROJECT_DIR/working/lists/Bluetooth
+add_to_section "bt.|bluetooth" Bluetooth
 # Camera
-cat $PROJECT_DIR/working/temp.mk | grep -iE "ts.|camera" | grep -v "dalvik" | sort -u > $PROJECT_DIR/working/lists/Camera
+add_to_section "ts.|camera" "dalvik" Camera
 # Charging
-cat $PROJECT_DIR/working/temp.mk | grep -iE "persist.chg|chg.|cutoff_voltage_mv" | sort -u > $PROJECT_DIR/working/lists/Charging
+add_to_section "persist.chg|chg.|cutoff_voltage_mv" Charging
 # CNE
-cat $PROJECT_DIR/working/temp.mk | grep -iE "cne." | sort -u > $PROJECT_DIR/working/lists/CNE
+add_to_section "cne." CNE
 # Crypto
-cat $PROJECT_DIR/working/temp.mk | grep -iE "crypto." | sort -u > $PROJECT_DIR/working/lists/Crypto
+add_to_section "crypto." Crypto
 # Dalvik
-cat $PROJECT_DIR/working/temp.mk | grep -iE "dalvik" | sort -u > $PROJECT_DIR/working/lists/Dalvik
+add_to_section "dalvik" Dalvik
 # DPM
-cat $PROJECT_DIR/working/temp.mk | grep -iE "dpm." | sort -u > $PROJECT_DIR/working/lists/DPM
+add_to_section "dpm." DPM
 # DRM
-cat $PROJECT_DIR/working/temp.mk | grep -iE "drm" | sort -u > $PROJECT_DIR/working/lists/DRM
+add_to_section "drm" DRM
 # FM
-cat $PROJECT_DIR/working/temp.mk | grep -iE "fm." | sort -u > $PROJECT_DIR/working/lists/FM
+add_to_section "fm." FM
 # FRP
-cat $PROJECT_DIR/working/temp.mk | grep -iE "frp." | sort -u > $PROJECT_DIR/working/lists/FRP
+add_to_section "frp." FRP
 # FUSE
-cat $PROJECT_DIR/working/temp.mk | grep -iE "fuse" | sort -u > $PROJECT_DIR/working/lists/FUSE
+add_to_section "fuse" FUSE
 # Graphics
-cat $PROJECT_DIR/working/temp.mk | grep -iE "debug.sf.|gralloc|hwui|dev.pm.|hdmi|opengles|lcd_density|display|rotator_downscale|debug.egl.hw" | sort -u > $PROJECT_DIR/working/lists/Graphics
+add_to_section "debug.sf.|gralloc|hwui|dev.pm.|hdmi|opengles|lcd_density|display|rotator_downscale|debug.egl.hw" Graphics
 # Location
-cat $PROJECT_DIR/working/temp.mk | grep -iE "location" | sort -u > $PROJECT_DIR/working/lists/Location
+add_to_section "location" Location
 # Media
-cat $PROJECT_DIR/working/temp.mk | grep -iE "media.|mm.|mmp.|vidc.|aac." | grep -v "audio" | grep -v "bt." | sort -u > $PROJECT_DIR/working/lists/Media
+add_to_section "media.|mm.|mmp.|vidc.|aac." "audio" Media
 # Netflix
-cat $PROJECT_DIR/working/temp.mk | grep -iE "netflix" | sort -u > $PROJECT_DIR/working/lists/Netflix
+add_to_section "netflix" Netflix
 # Netmgr
-cat $PROJECT_DIR/working/temp.mk | grep -iE "netmgrd|data.mode" | sort -u > $PROJECT_DIR/working/lists/Netmgr
+add_to_section "netmgrd|data.mode" Netmgr
 # NFC
-cat $PROJECT_DIR/working/temp.mk | grep -iE "nfc" | sort -u > $PROJECT_DIR/working/lists/NFC
+add_to_section "nfc" NFC
 # NTP
-cat $PROJECT_DIR/working/temp.mk | grep -iE "ntpServer" | sort -u > $PROJECT_DIR/working/lists/NTP
+add_to_section "ntpServer" NTP
 # Perf
-cat $PROJECT_DIR/working/temp.mk | grep -iE "perf." | sort -u > $PROJECT_DIR/working/lists/Perf
+add_to_section "perf." Perf
 # QTI
-cat $PROJECT_DIR/working/temp.mk | grep -iE "qti" | sort -u > $PROJECT_DIR/working/lists/QTI
+add_to_section "qti" QTI
 # Radio
-cat $PROJECT_DIR/working/temp.mk | grep -iE "DEVICE_PROVISIONED|persist.data|radio|ril.|rild.|ro.carrier|dataroaming|telephony" | sort -u > $PROJECT_DIR/working/lists/Radio
+add_to_section "DEVICE_PROVISIONED|persist.data|radio|ril.|rild.|ro.carrier|dataroaming|telephony" Radio
 # Sensors
-cat $PROJECT_DIR/working/temp.mk | grep -iE "sensors." | sort -u > $PROJECT_DIR/working/lists/Sensors
+add_to_section "sensors." Sensors
 # Skip_validate
-cat $PROJECT_DIR/working/temp.mk | grep -iE "skip_validate" | sort -u > $PROJECT_DIR/working/lists/Skip_validate
+add_to_section "skip_validate" Skip_validate
 # Shutdown
-cat $PROJECT_DIR/working/temp.mk | grep -iE "shutdown" | sort -u > $PROJECT_DIR/working/lists/Shutdown
+add_to_section "shutdown" Shutdown
 # SSR
-cat $PROJECT_DIR/working/temp.mk | grep -iE "ssr." | grep -v "audio" | sort -u > $PROJECT_DIR/working/lists/SSR
+add_to_section "ssr." "audio" SSR
 # Thermal
-cat $PROJECT_DIR/working/temp.mk | grep -iE "thermal." | sort -u > $PROJECT_DIR/working/lists/Thermal
+add_to_section "thermal." Thermal
 # Time
-cat $PROJECT_DIR/working/temp.mk | grep -iE "timed." | sort -u > $PROJECT_DIR/working/lists/Time
+add_to_section "timed." Time
 # UBWC
-cat $PROJECT_DIR/working/temp.mk | grep -iE "ubwc" | sort -u > $PROJECT_DIR/working/lists/UBWC
+add_to_section "ubwc" UBWC
 # USB
-cat $PROJECT_DIR/working/temp.mk | grep -iE "usb." | grep -v "audio" | sort -u > $PROJECT_DIR/working/lists/USB
+add_to_section "usb." "audio" USB
 # WFD
-cat $PROJECT_DIR/working/temp.mk | grep -iE "wfd." | sort -u > $PROJECT_DIR/working/lists/WFD
+add_to_section "wfd." WFD
 # WLAN
-cat $PROJECT_DIR/working/temp.mk | grep -iE "wlan." | sort -u > $PROJECT_DIR/working/lists/WLAN
+add_to_section "wlan." WLAN
 # ZRAM
-cat $PROJECT_DIR/working/temp.mk | grep -iE "zram" | sort -u > $PROJECT_DIR/working/lists/ZRAM
+add_to_section "zram" ZRAM
 
 # Store missing props as Misc
 cat $PROJECT_DIR/working/lists/* > $PROJECT_DIR/working/tempall.mk
@@ -170,28 +189,19 @@ done
 # Delete empty lists
 find $PROJECT_DIR/working/lists/ -size  0 -print0 | xargs -0 rm --
 
-# var for my format o/p. staging hence use untill ready.
-WILL_CHECK=n
-
 # Add props from lists
 props_list=`find $PROJECT_DIR/working/lists -type f -printf '%P\n' | sort`
 for list in $props_list; do
-    if [ "$WILL_CHECK" == "y" ]; then
-        echo "# $list" >> $PROJECT_DIR/working/temp_prop.mk
-        echo "PRODUCT_PROPERTY_OVERRIDES += \\" >> $PROJECT_DIR/working/temp_prop.mk
-    fi
+    echo "# $list" >> $PROJECT_DIR/working/temp_prop.mk
+    echo "PRODUCT_PROPERTY_OVERRIDES += \\" >> $PROJECT_DIR/working/temp_prop.mk
     awk 'NF{print $0 " \\"}' $PROJECT_DIR/working/lists/$list >> $PROJECT_DIR/working/temp_prop.mk
 done
 
 # Remove duplicate props & text formatting
 awk '/^PRODUCT_PROPERTY_OVERRIDES/ || !seen[$0]++' $PROJECT_DIR/working/temp_prop.mk > $PROJECT_DIR/working/vendor_prop.mk
 sed -i -e 's/^/    /' $PROJECT_DIR/working/vendor_prop.mk
-if [ "$WILL_CHECK" == "y" ]; then
-    sed -i "s|    #|#|g" $PROJECT_DIR/working/vendor_prop.mk
-    sed -i "s|    PRODUCT_PROPERTY_OVERRIDES|PRODUCT_PROPERTY_OVERRIDES|g" $PROJECT_DIR/working/vendor_prop.mk
-else
-    sed -i '1 i\PRODUCT_PROPERTY_OVERRIDES += \\' $PROJECT_DIR/working/vendor_prop.mk
-fi
+sed -i "s|    #|#|g" $PROJECT_DIR/working/vendor_prop.mk
+sed -i "s|    PRODUCT_PROPERTY_OVERRIDES|PRODUCT_PROPERTY_OVERRIDES|g" $PROJECT_DIR/working/vendor_prop.mk
 
 # cleanup temp files
 find $PROJECT_DIR/working/* ! -name 'vendor_prop.mk' -type d,f -exec rm -rf {} +
