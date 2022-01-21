@@ -1,3 +1,4 @@
+config_displayWhiteBalanceColorTemperatureSensorName
 config_dozeComponent
 config_ethernet_iface_regex
 config_ims_package

@@ -1,6 +1,8 @@
 config_apexBootImagePinnerServiceFiles
+config_biometric_sensors
 config_defaultPinnerServiceFiles
 config_gpsParameters
+config_jitzygoteBootImagePinnerServiceFiles
 config_mobile_tcp_buffers
 config_tether_bluetooth_regexs
 config_tether_dhcp_range
