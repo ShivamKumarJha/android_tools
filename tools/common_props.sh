@@ -38,6 +38,8 @@ comm -13 <(sort $TMPDIR/dt_common/prop_source) <(sort $TMPDIR/dt_common/prop_tar
 sed -i "s|PRODUCT_PROPERTY_OVERRIDES.*||g" $PROJECT_DIR/working/common-vendor_prop.mk $PROJECT_DIR/working/source-vendor_prop.mk $PROJECT_DIR/working/target-vendor_prop.mk
 sed -i '1 i\PRODUCT_PROPERTY_OVERRIDES += \\' $PROJECT_DIR/working/common-vendor_prop.mk $PROJECT_DIR/working/source-vendor_prop.mk $PROJECT_DIR/working/target-vendor_prop.mk
 sed -i '/^$/d' $PROJECT_DIR/working/common-vendor_prop.mk $PROJECT_DIR/working/source-vendor_prop.mk $PROJECT_DIR/working/target-vendor_prop.mk
+sed -i "s|#.*||g" $PROJECT_DIR/working/common-vendor_prop.mk $PROJECT_DIR/working/source-vendor_prop.mk $PROJECT_DIR/working/target-vendor_prop.mk
+sed -i '/^$/d' $PROJECT_DIR/working/common-vendor_prop.mk $PROJECT_DIR/working/source-vendor_prop.mk $PROJECT_DIR/working/target-vendor_prop.mk
 
 # Final results
 rm -rf $TMPDIR/dt_common/
