@@ -86,7 +86,7 @@ call_methods () {
 
     # DummyDT
     [[ "$VERBOSE" != "n" ]] && echo -e "Preparing vendor_prop.mk"
-    bash $PROJECT_DIR/tools/system_vendor_prop.sh $PROJECT_DIR/dummy_dt/working/system_build.prop $PROJECT_DIR/dummy_dt/working/vendor_build.prop > /dev/null 2>&1
+    bash $PROJECT_DIR/tools/vendor_prop.sh ${ROM_PATH} > /dev/null 2>&1
     cp -a $PROJECT_DIR/working/* "$DT_DIR"/
     common_dt
     common_overlay > /dev/null 2>&1
