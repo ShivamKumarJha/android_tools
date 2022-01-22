@@ -48,7 +48,7 @@ Usage: `./tools/rom_extract.sh <path to OTA file(s)>`
 12. **rootdir.sh**: A script to prepare ramdisk from a ROM dump along with Makefile.  
 Usage: `./tools/rootdir.sh <path to ROM dump>`
 
-13. **system_vendor_prop.sh**: A script to prepare properties Makefile from a ROM dump.  
+13. **system_vendor_prop.sh**: A script to prepare properties Makefile from a ROM dump. (Does not support lahaina, use vendor_prop.sh instead)  
 Usage: `./tools/system_vendor_prop.sh <path to ROM dump>`  
 Output: `system.prop` & `vendor_prop.mk` files.  
 
