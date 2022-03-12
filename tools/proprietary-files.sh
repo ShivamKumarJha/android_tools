@@ -73,6 +73,7 @@ search_blobs | grep -iE "odm/lib/|odm/lib64/|bin/adsprpcd" | grep -iE "libadsp|i
 
 # ADSP modules
 search_blobs | grep -iE "vendor/lib/rfsa/adsp/|vendor/dsp/" | grep -v "scve" | add_to_section ADSP-Modules
+search_blobs | grep -iE "odm/lib/rfsa/adsp/|odm/dsp/" | grep -v "scve" | add_to_section ADSP-Modules
 
 # Alarm
 alarm_targets=(
