@@ -341,6 +341,7 @@ lights_targets=(
     "hw/lights"
 )
 search_blobs | get_hardware_module "${lights_targets[@]}" | add_to_section Lights
+search_blobs | grep "vendor/" | grep -iE "lights-mtk-default" | add_to_section Lights
 
 # Listen
 listen_targets=(
