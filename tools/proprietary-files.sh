@@ -158,6 +158,7 @@ search_blobs | grep "vendor/" | grep -iE "cdsprpc|libcdsp|libsdsprpc|libfastrpc|
 
 # Charger
 search_blobs | grep -iE "vendor/bin/hvdcp_opti|vendor/charge/chargemon/" | add_to_section Charger
+search_blobs | grep -iE "bin/kpoc_charger|lib/libshowlogo.so|etc/init/kpoc_charger.rc" | add_to_section Charger
 
 # Configstore
 configstore_targets=(
