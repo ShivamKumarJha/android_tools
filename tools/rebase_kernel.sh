@@ -41,6 +41,8 @@ elif [[ ${EXTENSION} == "tar" ]]; then
     tar -xvf ${PROJECT_DIR}/input/${FILE} -C ${PROJECT_DIR}/kernels/${UNZIP_DIR} > /dev/null 2>&1
 elif [[ ${EXTENSION} == "tbz2" ]]; then
     tar -jvxf ${PROJECT_DIR}/input/${FILE} -C ${PROJECT_DIR}/kernels/${UNZIP_DIR} > /dev/null 2>&1
+elif [[ ${EXTENSION} == "zip" ]]; then
+    unzip ${PROJECT_DIR}/input/${FILE} -d ${PROJECT_DIR}/kernels/${UNZIP_DIR} > /dev/null 2>&1    
 else
     7z x ${PROJECT_DIR}/input/${FILE} -y -o${PROJECT_DIR}/kernels/${UNZIP_DIR} > /dev/null 2>&1
 fi
