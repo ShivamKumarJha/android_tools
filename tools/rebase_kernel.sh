@@ -72,7 +72,7 @@ if [[ ! -d ${PROJECT_DIR}/kernels/msm-${KERNEL_VERSION}.${KERNEL_PATCHLEVEL} ]];
     git init -q
     git config core.fileMode false
     git config merge.renameLimit 999999
-    git remote add msm https://source.codeaurora.org/quic/la/kernel/msm-${KERNEL_VERSION}.${KERNEL_PATCHLEVEL}
+    git remote add msm https://git.codelinaro.org/clo/la/kernel/msm-${KERNEL_VERSION}.${KERNEL_PATCHLEVEL}
 fi
 
 # Create release branch
