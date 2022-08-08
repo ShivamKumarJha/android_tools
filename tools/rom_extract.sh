@@ -37,7 +37,7 @@ for var in "$@"; do
     FILE=${URL##*/}
     EXTENSION=${URL##*.}
     UNZIP_DIR=${FILE/.$EXTENSION/}
-    PARTITIONS="system vendor cust odm oem factory product modem xrom systemex oppo_product preload_common system_ext system_other opproduct reserve india my_preload my_odm my_stock my_operator my_country my_product my_company my_engineering my_heytap"
+    PARTITIONS="super system vendor cust odm oem factory product xrom modem dtbo dtb boot recovery tz systemex oppo_product preload_common system_ext system_other opproduct reserve india my_preload my_odm my_stock my_operator my_country my_product my_company my_engineering my_heytap my_custom my_manifest my_carrier my_region my_bigball my_version special_preload vendor_dlkm odm_dlkm system_dlkm init_boot vendor_kernel_boot vendor_boot"
     [[ -d $PROJECT_DIR/dumps/$UNZIP_DIR/ ]] && rm -rf $PROJECT_DIR/dumps/$UNZIP_DIR/
 
     if [ -d "$var" ] ; then
@@ -92,7 +92,10 @@ for var in "$@"; do
             echo $user_password | sudo -S umount -l "$PROJECT_DIR/dumps/${UNZIP_DIR}/tempmount" > /dev/null 2>&1
             # if empty partitions dump, try with 7z
             if [[ -z "$(ls -A $PROJECT_DIR/dumps/$UNZIP_DIR/$DIR_NAME)" ]]; then
-                7z x $PROJECT_DIR/dumps/${UNZIP_DIR}/$file.img -y -o$PROJECT_DIR/dumps/${UNZIP_DIR}/$file/ 2>/dev/null >> $PROJECT_DIR/dumps/${UNZIP_DIR}/zip.log
+                7z x $PROJECT_DIR/dumps/${UNZIP_DIR}/$file.img -y -o$PROJECT_DIR/dumps/${UNZIP_DIR}/$file/ 2>/dev/null >> $PROJECT_DIR/dumps/${UNZIP_DIR}/zip.log || {
+                    rm -rf $PROJECT_DIR/dumps/${UNZIP_DIR}/$file/* 2>/dev/null >> $PROJECT_DIR/dumps/${UNZIP_DIR}/zip.log
+                    $PROJECT_DIR/tools/Firmware_extractor/tools/Linux/bin/fsck.erofs --extract=$PROJECT_DIR/dumps/${UNZIP_DIR}/$file $PROJECT_DIR/dumps/${UNZIP_DIR}/$file.img 2>/dev/null >> $PROJECT_DIR/dumps/${UNZIP_DIR}/zip.log2>/dev/null >> $PROJECT_DIR/dumps/${UNZIP_DIR}/zip.log
+                }
             fi
             # cleanup
             rm -rf $PROJECT_DIR/dumps/${UNZIP_DIR}/$file.img $PROJECT_DIR/dumps/${UNZIP_DIR}/zip.log $PROJECT_DIR/dumps/$UNZIP_DIR/tempmount > /dev/null 2>&1
