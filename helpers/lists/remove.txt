@@ -37,6 +37,7 @@ vendor/etc/audio/audio_policy_configuration
 vendor/etc/audio_
 vendor/etc/default_volume_tables
 vendor/etc/ext_xml/
+vendor/etc/fstab
 vendor/etc/init/android.hardware.audio@
 vendor/etc/init/android.hardware.authsecret@
 vendor/etc/init/android.hardware.boot@
