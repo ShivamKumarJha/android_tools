@@ -22,7 +22,7 @@ fi
 
 # Password
 if [ "$EUID" -ne 0 ] && [ -z "$user_password" ]; then
-    read -p "Enter user password: " user_password
+    read -rsp "Enter user password: " user_password
 fi
 
 for var in "$@"; do
