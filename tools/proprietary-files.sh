@@ -438,6 +438,7 @@ power_targets=(
     "hw/power"
 )
 search_blobs | get_hardware_module "${power_targets[@]}" | add_to_section Power-Hardware
+search_blobs | grep "vendor/" | grep -iE "power-default" | add_to_section Power-Hardware
 
 # Qdutils_disp
 qdutils_targets=(
