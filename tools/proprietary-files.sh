@@ -212,6 +212,7 @@ display_targets=(
 )
 search_blobs | get_hardware_module "${display_targets[@]}" | add_to_section Display-Hardware
 search_blobs | grep -iE "lib/|lib64/" | grep -iE "libsdm-disp-apis.so" | add_to_section Display-Hardware
+search_blobs | grep "vendor/" | grep -iE "android.hardware.gpu" | add_to_section Power-Hardware
 
 # Dolby
 search_blobs | grep "vendor/" | grep -iE "dolby" | add_to_section Dolby
