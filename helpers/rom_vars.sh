@@ -74,6 +74,7 @@ for var in "$@"; do
         BRAND_TEMP=$( cat "$CAT_FILE" | grep "ro.product" | grep "manufacturer=" | sed "s|.*=||g" | head -n 1 )
     fi
     BRAND=$(echo $BRAND_TEMP | tr '[:upper:]' '[:lower:]')
+    [[ "${BRAND}" == "xiaomi" ]] && BRAND="Xiaomi"
     if grep -q "ro.vivo.product.release.name" "$CAT_FILE"; then
         DEVICE=$( cat "$CAT_FILE" | grep "ro.vivo.product.release.name=" | sed "s|.*=||g" | head -n 1 )
     elif grep -q "ro.vendor.product.oem=" "$CAT_FILE"; then
