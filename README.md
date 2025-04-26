@@ -1,6 +1,8 @@
 
 # Android tools
 Collection of scripts to help with Android ROM stuff.  
+
+[DeepWiki](https://deepwiki.com/ShivamKumarJha/android_tools/3-proprietary-blob-management)  
   
 **Setup**:  
 `chmod +x setup.sh`  
